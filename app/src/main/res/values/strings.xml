@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Moki</string>
+    <string name="loading">Loading...</string>
+    <string name="register_button_text">Đăng ký</string>
+    <string name="button_cancel_signup">Bỏ qua</string>
+    <string name="login_button_text">Đăng nhập</string>
+    <string name="phone_number_hint">Số điện thoại</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="phone_number_empty">Bạn chưa nhập số điện thoại</string>
+    <string name="password_empty">Bạn chưa nhập mật khẩu</string>
+</resources>
