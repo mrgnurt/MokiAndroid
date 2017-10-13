@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/refreshScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:background="@color/gray_light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/red_dark"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip">
+
+                    <TextView
+                        android:id="@+id/txtLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/common_padding_small"
+                        android:paddingRight="5.0dip"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/like_and"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/txtComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/common_padding_small"
+                        android:paddingRight="5.0dip"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:text="@string/comment"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <com.coho.moki.ui.product.SquareImageView
+                        android:id="@+id/imgLike"
+                        android:layout_width="35.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_padding_small"
+                        android:layout_marginRight="@dimen/common_padding_small" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10.0dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:onClick="clickUserInfo"
+                android:orientation="horizontal"
+                android:paddingBottom="10.0dip"
+                android:paddingLeft="10.0dip"
+                android:paddingTop="10.0dip">
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="@dimen/user_avatar_size_small"
+                    android:layout_height="@dimen/user_avatar_size_small"
+                    android:onClick="clickUserInfo"
+                    android:scaleType="centerCrop"
+                    app:siBorderColor="@android:color/white"
+                    app:siBorderWidth="1.0dip"
+                    app:siRadius="6.0dip"
+                    app:siSquare="true" />
+
+                <LinearLayout
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:onClick="clickUserInfo"
+                    android:orientation="vertical"
+                    android:paddingLeft="10.0dip">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:onClick="clickUserInfo"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/red_dark"
+                        android:textSize="@dimen/common_text_size_medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="clickUserInfo"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="clickUserInfo"
+                            android:text="@string/score"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="clickUserInfo"
+                            android:paddingRight="10.0dip"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="clickUserInfo"
+                            android:text="@string/product"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtProduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="clickUserInfo"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10.0dip"
+                    android:onClick="clickUserInfo"
+                    android:src="@drawable/icon_nextarrow_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.product.SquareImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="wrap_content"
+                    android:onClick="helpShift"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_umbrella" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/common_padding_medium">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="helpShift"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:text="@string/buy_item_on_moki"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="helpShift"
+                        android:paddingBottom="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:text="@string/view_return_and_refund"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="@color/gray_dark" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_padding_medium"
+                android:layout_marginRight="@dimen/common_padding_medium"
+                android:layout_marginTop="2.0dip"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="shareFriend"
+                android:orientation="horizontal"
+                android:padding="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.product.SquareImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="wrap_content"
+                    android:onClick="shareFriend"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_share_product" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common_padding_medium"
+                    android:text="@string/share_with_friend"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="10.0dip">
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="100"
+                    android:paddingBottom="4.0dip"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_normal"
+                    android:visibility="gone" />
+
+                <com.bluejamesbond.text.DocumentView
+                    android:id="@+id/dvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/small_square_size"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/icon_clock"
+                            android:layout_width="@dimen/clock_size"
+                            android:layout_height="@dimen/clock_size"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/icon_clock" />
+
+                        <TextView
+                            android:id="@+id/txtTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/common_padding_small"
+                            android:gravity="center_vertical"
+                            android:textAppearance="?android:textAppearanceSmall"
+                            android:textSize="@dimen/common_text_size_small" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtExpandable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:lineSpacingExtra="1.0dip"
+                        android:text="@string/view_more"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/red_dark"
+                        android:textSize="@dimen/common_text_size_normal"
+                        android:visibility="invisible" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip">
+
+                    <com.coho.moki.ui.product.SquareImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/category_icon" />
+
+                    <TextView
+                        android:layout_width="120.0dip"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/common_padding_small"
+                        android:text="@string/category"
+                        android:textColor="@android:color/black" />
+
+                    <LinearLayout
+                        android:id="@+id/llCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="15.0dip"
+                        android:paddingTop="15.0dip" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dip"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/llSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="15.0dip">
+
+                        <com.coho.moki.ui.product.SquareImageView
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/size_icon" />
+
+                        <TextView
+                            android:layout_width="120.0dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/common_padding_small"
+                            android:text="@string/size"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtSize"
+                            android:layout_width="0.0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dip"
+                        android:background="@color/gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="15.0dip">
+
+                        <com.coho.moki.ui.product.SquareImageView
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/weight_icon" />
+
+                        <TextView
+                            android:layout_width="120.0dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/common_padding_small"
+                            android:text="@string/weight"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtWeight"
+                            android:layout_width="0.0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dip"
+                        android:background="@color/gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDimension"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="15.0dip">
+
+                        <com.coho.moki.ui.product.SquareImageView
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/size" />
+
+                        <TextView
+                            android:layout_width="120.0dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/common_padding_small"
+                            android:text="@string/dimens"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtDimension"
+                            android:layout_width="0.0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dip"
+                        android:background="@color/gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="15.0dip">
+
+                        <com.coho.moki.ui.product.SquareImageView
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/brand_icon" />
+
+                        <TextView
+                            android:layout_width="120.0dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/common_padding_small"
+                            android:text="@string/brand"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/txtBrand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/user_info_yellow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dip"
+                        android:background="@color/gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15.0dip"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip"
+                    android:paddingTop="15.0dip">
+
+                    <com.coho.moki.ui.product.SquareImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/status_product_icon" />
+
+                    <TextView
+                        android:layout_width="120.0dip"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/common_padding_small"
+                        android:text="@string/status"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/txtProductStatus"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dip"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15.0dip"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip"
+                    android:paddingTop="15.0dip">
+
+                    <com.coho.moki.ui.product.SquareImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/location_icon" />
+
+                    <TextView
+                        android:layout_width="120.0dip"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/common_padding_small"
+                        android:text="@string/buy_place"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/txtBuyPlace"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dip"
+                    android:background="@color/gray" />
+            </LinearLayout>
+
+            <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                android:id="@+id/listComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:listSelector="@color/gray_light"
+                android:padding="10.0dip" />
+
+            <Button
+                android:id="@+id/btnViewComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="@dimen/common_btn_height_large"
+                android:layout_marginRight="30.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@drawable/background_red_dark"
+                android:text="@string/view_all_comment"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

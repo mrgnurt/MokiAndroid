@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -252,6 +253,14 @@ public class Utils {
         return info != null && info.isConnected() && info.isAvailable();
     }
 
+    public static int getColorWrapper(Context context, int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(id);
+        } else {
+            //noinspection deprecation
+            return context.getResources().getColor(id);
+        }
+    }
 
 
 
