@@ -8,4 +8,19 @@
     <string name="password_hint">Mật khẩu</string>
     <string name="phone_number_empty">Bạn chưa nhập số điện thoại</string>
     <string name="password_empty">Bạn chưa nhập mật khẩu</string>
+    <string name="text_empty_list">Danh sách trống</string>
+    <string name="sidemenu_title_store">Trang chủ</string>
+    <string name="sidemenu_title_buy">Danh sách mua</string>
+    <string name="sidemenu_title_charity">Từ thiện</string>
+    <string name="sidemenu_title_contact">Trung tâm hỗ trợ</string>
+    <string name="sidemenu_title_exhibit">Danh sách bán</string>
+    <string name="sidemenu_title_invite">Giới thiệu MOKI</string>
+    <string name="sidemenu_title_like">Danh sách yêu thích</string>
+    <string name="sidemenu_title_logout">Đăng xuất</string>
+    <string name="sidemenu_title_news">Tin tức</string>
+    <string name="sidemenu_title_setting">Thiết lập</string>
+    <string name="txt_order">Sắp xếp</string>
+    <string name="txt_filter">Lọc</string>
+    <string name="txt_around">Xung quanh</string>
+    <string name="imgdesc">ImageView</string>
 </resources>

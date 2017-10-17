@@ -20,6 +20,22 @@ public class Product {
 
     private String description;
 
+    private String numLike;
+
+    private String numComment;
+
+    public Product(String productId, String name, String imageUrl, String price, String pricePercent, String brand, String description, String numLike, String numComment) {
+        this.productId = productId;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.pricePercent = pricePercent;
+        this.brand = brand;
+        this.description = description;
+        this.numLike = numLike;
+        this.numComment = numComment;
+    }
+
     public String getProductId() {
         return productId;
     }
@@ -74,5 +90,21 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getNumLike() {
+        return numLike;
+    }
+
+    public void setNumLike(String numLike) {
+        this.numLike = numLike;
+    }
+
+    public String getNumComment() {
+        return numComment;
+    }
+
+    public void setNumComment(String numComment) {
+        this.numComment = numComment;
     }
 }

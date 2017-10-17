@@ -38,9 +38,16 @@
     <!--Colors copy-->
     <color name="gray_status">#8b8b8b</color>
     <color name="red_dark">#d8202a</color>
+    <color name="gray_dark">#565658</color>
+    <color name="divider">#c8c8c8</color>
+    <color name="gray">#dbd9da</color>
+    <color name="transparent">#00000000</color>
+    <color name="red">#fff32828</color>
 
     <!-- Colors for app -->
     <color name="background_splash">@color/red_A700</color>
     <color name="text_loading">@color/white</color>
+    <color name="text_side_menu">@color/black</color>
 
 </resources>
+

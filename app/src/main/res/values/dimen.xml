@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="common_padding_small">5dp</dimen>
+    <dimen name="common_padding_large">15dp</dimen>
+    <dimen name="navi_bar_height">44dp</dimen>
+    <dimen name="negative_double_nav_height">-88dp</dimen>
+    <dimen name="common_text_size_medium">16dp</dimen>
+    <dimen name="_5sdp">5dp</dimen>
+    <dimen name="campaign_banner_h">120dp</dimen>
+    <dimen name="sale_text_size">20dp</dimen>
+    <dimen name="common_text_size_small">13dp</dimen>
+    <dimen name="common_text_size_normal">14dp</dimen>
+    <dimen name="common_padding_medium">10dp</dimen>
+    <dimen name="_35sdp">35.0dip</dimen>
+    <dimen name="_30sdp">30.0dip</dimen>
+    <dimen name="_20sdp">20.0dip</dimen>
+    <dimen name="_85sdp">85.0dip</dimen>
+    <dimen name="side_layout_width">280.0dip</dimen>
+    <dimen name="empty_image_size">100.0dip</dimen>
+    <dimen name="_50sdp">50.0dip</dimen>
+    <dimen name="_22sdp">22.0dip</dimen>
+    <dimen name="sale_view_height">46dp</dimen>
+    <dimen name="sale_view_width">40dp</dimen>
+    <dimen name="clock_size">13.0sp</dimen>
+    <dimen name="user_avatar_size_small">60.0dip</dimen>
+    <dimen name="_15sdp">15.0dip</dimen>
+    <dimen name="_12sdp">12.0dip</dimen>
 </resources>
