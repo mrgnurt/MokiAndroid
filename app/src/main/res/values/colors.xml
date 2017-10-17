@@ -34,14 +34,13 @@
     <color name="red_A200">#FF5252</color>
     <color name="red_A400">#FF1744</color>
     <color name="red_A700">#D50000</color>
-
-    <!--Colors copy-->
-    <!--<color name="gray_status">#8b8b8b</color>-->
-    <!--<color name="red_dark">#d8202a</color>-->
+    <color name="transparent">#00000000</color>
+    <color name="red">#fff32828</color>
 
     <!-- Colors for app -->
     <color name="background_splash">@color/red_A700</color>
     <color name="text_loading">@color/white</color>
+    <color name="text_side_menu">@color/black</color>
 
     <!--add by Khanh-->
     <color name="notification_action_color_filter">#ffffffff</color>
@@ -269,10 +268,8 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <color name="red">#fff32828</color>
     <color name="red_btn_bg_color">#ffdd6b55</color>
     <color name="red_btn_bg_pressed_color">#ffcd5b55</color>
-    <color name="red_dark">#ffd8202a</color>
     <color name="red_light">#ffff513b</color>
     <color name="ripple_material_dark">#33ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
@@ -292,7 +289,6 @@
     <color name="text_helper_color">#ffa8a8a8</color>
     <color name="text_main_color">#ff5d6b7a</color>
     <color name="trans_success_stroke_color">#33a5dc86</color>
-    <color name="transparent">#00000000</color>
     <color name="user_info_bg">#fff2f2f2</color>
     <color name="user_info_pink">#fff1a3a3</color>
     <color name="user_info_yellow">#fffea901</color>
@@ -325,3 +321,4 @@
 
 
 </resources>
+

@@ -1,7 +1,5 @@
 <resources>
     <string name="loading">Loading...</string>
-    <string name="phone_number_empty">Bạn chưa nhập số điện thoại</string>
-    <string name="password_empty">Bạn chưa nhập mật khẩu</string>
 
     <!--add by Khanh-->
     <string name="abc_action_bar_home_description">Navigate home</string>
@@ -724,7 +722,6 @@ Please try again later."</string>
     <string name="hint_selectmoney">Số tiền muốn rút</string>
     <string name="hour_format">HH:mm:ss</string>
     <string name="image_from_gallary">Ảnh từ thư viện</string>
-    <string name="imgdesc">ImageView</string>
     <string name="in_progress">Đang xử lý</string>
     <string name="incorrect_code">Không đúng</string>
     <string name="info_filter">Tìm Kiếm Nâng Cao</string>
@@ -921,6 +918,8 @@ hoặc
     <string name="shipping_fee">Phí giao hàng</string>
     <string name="shipping_to_address">Địa chỉ giao hàng</string>
     <string name="sidemenu_icon_login">Đăng nhập</string>
+    <string name="phone_number_empty">Bạn chưa nhập số điện thoại</string>
+    <string name="password_empty">Bạn chưa nhập mật khẩu</string>
     <string name="sidemenu_title_buy">Danh sách mua</string>
     <string name="sidemenu_title_charity">Từ thiện</string>
     <string name="sidemenu_title_contact">Trung tâm hỗ trợ</string>
@@ -930,7 +929,6 @@ hoặc
     <string name="sidemenu_title_logout">Đăng xuất</string>
     <string name="sidemenu_title_news">Tin tức</string>
     <string name="sidemenu_title_setting">Thiết lập</string>
-    <string name="sidemenu_title_store">Trang chủ</string>
     <string name="simple_date_format">dd/MM/yyyy</string>
     <string name="size">Kích cỡ</string>
     <string name="sold">Đã bán</string>
@@ -1010,16 +1008,13 @@ Giảm thiểu rủi ro lừa đảo."</string>
     <string name="tx_order_desc_like">Yêu thích nhất</string>
     <string name="tx_order_desc_price">Giá từ cao xuống thấp</string>
     <string name="txt_apply">Áp dụng</string>
-    <string name="txt_around">Xung quanh</string>
     <string name="txt_call">Gọi</string>
     <string name="txt_discount">"SAVE
 %s"</string>
-    <string name="txt_filter">Lọc</string>
     <string name="txt_filter_clear">Xoá hết</string>
     <string name="txt_free">FREE</string>
     <string name="txt_gps_message">Bạn cần bật chia sẻ vị trí để sử dụng chức năng này</string>
     <string name="txt_gps_setting">Cài đặt GPS</string>
-    <string name="txt_order">Sắp xếp</string>
     <string name="txt_xu_ly">Xử lý</string>
     <string name="type_report">Loại báo cáo (*)</string>
     <string name="unblock_user">Bỏ chặn người dùng</string>
@@ -1078,4 +1073,10 @@ Giảm thiểu rủi ro lừa đảo."</string>
 
 
 
+=======
+    <string name="txt_order">Sắp xếp</string>
+    <string name="txt_filter">Lọc</string>
+    <string name="txt_around">Xung quanh</string>
+    <string name="imgdesc">ImageView</string>
+>>>>>>> 7fd4805b5bce0e6a1c484a65bc3493374cb57708
 </resources>

@@ -71,7 +71,6 @@
     <dimen name="avatar_size">50.0dip</dimen>
     <dimen name="bottomsheet_image_tile_spacing">4.0dip</dimen>
     <dimen name="camera_arrow__margin_right">115.0dip</dimen>
-    <dimen name="campaign_banner_h">120.0dip</dimen>
     <dimen name="card_cvc_initial_margin">1000.0dip</dimen>
     <dimen name="card_expiry_initial_margin">200.0dip</dimen>
     <dimen name="card_icon_padding">12.0dip</dimen>
@@ -81,7 +80,6 @@
     <dimen name="cardview_default_radius">2.0dip</dimen>
     <dimen name="change_mode_arrow__margin_right">60.0dip</dimen>
     <dimen name="change_mode_rect_size">44.0dip</dimen>
-    <dimen name="clock_size">13.0sp</dimen>
     <dimen name="collection_view_padding">3.0dip</dimen>
     <dimen name="com_adobe_image_action_bar_elevation">3.0dip</dimen>
     <dimen name="com_adobe_image_bottombar_crop_gallery_item_width">70.0dip</dimen>
@@ -149,14 +147,9 @@
     <dimen name="common_btn_height_small">35.0dip</dimen>
     <dimen name="common_circle_width">3.0dip</dimen>
     <dimen name="common_padding_extra_large">30.0dip</dimen>
-    <dimen name="common_padding_large">15.0dip</dimen>
-    <dimen name="common_padding_medium">10.0dip</dimen>
     <dimen name="common_row_height">50.0dip</dimen>
     <dimen name="common_text_size_ex_small">10.0dip</dimen>
     <dimen name="common_text_size_large">18.0dip</dimen>
-    <dimen name="common_text_size_medium">16.0dip</dimen>
-    <dimen name="common_text_size_normal">14.0dip</dimen>
-    <dimen name="common_text_size_small">13.0dip</dimen>
     <dimen name="corner_6">6.0dip</dimen>
     <dimen name="default_circle_indicator_radius">3.0dip</dimen>
     <dimen name="default_circle_indicator_stroke_width">1.0dip</dimen>
@@ -173,7 +166,6 @@
     <dimen name="default_title_indicator_top_padding">7.0dip</dimen>
     <dimen name="design_bottom_sheet_modal_peek_height">256.0dip</dimen>
     <dimen name="divider">0.5dip</dimen>
-    <dimen name="empty_image_size">100.0dip</dimen>
     <dimen name="fab_actions_spacing">16.0dip</dimen>
     <dimen name="fab_icon_size">24.0dip</dimen>
     <dimen name="fab_labels_margin">8.0dip</dimen>
@@ -206,8 +198,6 @@
     <dimen name="mic_image_size">80.0dip</dimen>
     <dimen name="mic_search_size">40.0dip</dimen>
     <dimen name="min_height">40.0dip</dimen>
-    <dimen name="navi_bar_height">44.0dip</dimen>
-    <dimen name="negative_double_nav_height">-88.0dip</dimen>
     <dimen name="padding_tut">40.0dip</dimen>
     <dimen name="picker_border_size">3.0dip</dimen>
     <dimen name="picker_photo_spacing">4.0dip</dimen>
@@ -228,7 +218,6 @@
     <dimen name="register_button_padding">5.0dip</dimen>
     <dimen name="sell_product_size">60.0dip</dimen>
     <dimen name="setting_icon">25.0dip</dimen>
-    <dimen name="side_layout_width">280.0dip</dimen>
     <dimen name="side_menu_decor_padding">0.0dip</dimen>
     <dimen name="small_square_size">20.0dip</dimen>
     <dimen name="status_user_info_corner">28.0dip</dimen>
@@ -242,7 +231,6 @@
     <dimen name="ttlm_default_padding">20.0dip</dimen>
     <dimen name="ttlm_default_stroke_weight">0.0dip</dimen>
     <dimen name="user_avatar_size_large">100.0dip</dimen>
-    <dimen name="user_avatar_size_small">60.0dip</dimen>
     <dimen name="user_avatar_size_small_1">40.0dip</dimen>
     <dimen name="value_size">15.0sp</dimen>
 
@@ -278,7 +266,6 @@
     <dimen name="_127sdp">127.0dip</dimen>
     <dimen name="_128sdp">128.0dip</dimen>
     <dimen name="_129sdp">129.0dip</dimen>
-    <dimen name="_12sdp">12.0dip</dimen>
     <dimen name="_130sdp">130.0dip</dimen>
     <dimen name="_131sdp">131.0dip</dimen>
     <dimen name="_132sdp">132.0dip</dimen>
@@ -311,7 +298,6 @@
     <dimen name="_157sdp">157.0dip</dimen>
     <dimen name="_158sdp">158.0dip</dimen>
     <dimen name="_159sdp">159.0dip</dimen>
-    <dimen name="_15sdp">15.0dip</dimen>
     <dimen name="_160sdp">160.0dip</dimen>
     <dimen name="_161sdp">161.0dip</dimen>
     <dimen name="_162sdp">162.0dip</dimen>
@@ -367,7 +353,6 @@
     <dimen name="_207sdp">207.0dip</dimen>
     <dimen name="_208sdp">208.0dip</dimen>
     <dimen name="_209sdp">209.0dip</dimen>
-    <dimen name="_20sdp">20.0dip</dimen>
     <dimen name="_210sdp">210.0dip</dimen>
     <dimen name="_211sdp">211.0dip</dimen>
     <dimen name="_212sdp">212.0dip</dimen>
@@ -389,7 +374,6 @@
     <dimen name="_227sdp">227.0dip</dimen>
     <dimen name="_228sdp">228.0dip</dimen>
     <dimen name="_229sdp">229.0dip</dimen>
-    <dimen name="_22sdp">22.0dip</dimen>
     <dimen name="_230sdp">230.0dip</dimen>
     <dimen name="_231sdp">231.0dip</dimen>
     <dimen name="_232sdp">232.0dip</dimen>
@@ -469,12 +453,10 @@
     <dimen name="_29sdp">29.0dip</dimen>
     <dimen name="_2sdp">2.0dip</dimen>
     <dimen name="_300sdp">300.0dip</dimen>
-    <dimen name="_30sdp">30.0dip</dimen>
     <dimen name="_31sdp">31.0dip</dimen>
     <dimen name="_32sdp">32.0dip</dimen>
     <dimen name="_33sdp">33.0dip</dimen>
     <dimen name="_34sdp">34.0dip</dimen>
-    <dimen name="_35sdp">35.0dip</dimen>
     <dimen name="_36sdp">36.0dip</dimen>
     <dimen name="_37sdp">37.0dip</dimen>
     <dimen name="_38sdp">38.0dip</dimen>
@@ -491,7 +473,6 @@
     <dimen name="_48sdp">48.0dip</dimen>
     <dimen name="_49sdp">49.0dip</dimen>
     <dimen name="_4sdp">4.0dip</dimen>
-    <dimen name="_50sdp">50.0dip</dimen>
     <dimen name="_51sdp">51.0dip</dimen>
     <dimen name="_52sdp">52.0dip</dimen>
     <dimen name="_53sdp">53.0dip</dimen>
@@ -501,7 +482,6 @@
     <dimen name="_57sdp">57.0dip</dimen>
     <dimen name="_58sdp">58.0dip</dimen>
     <dimen name="_59sdp">59.0dip</dimen>
-    <dimen name="_5sdp">5.0dip</dimen>
     <dimen name="_60sdp">60.0dip</dimen>
     <dimen name="_61sdp">61.0dip</dimen>
     <dimen name="_62sdp">62.0dip</dimen>
@@ -529,7 +509,6 @@
     <dimen name="_82sdp">82.0dip</dimen>
     <dimen name="_83sdp">83.0dip</dimen>
     <dimen name="_84sdp">84.0dip</dimen>
-    <dimen name="_85sdp">85.0dip</dimen>
     <dimen name="_86sdp">86.0dip</dimen>
     <dimen name="_87sdp">87.0dip</dimen>
     <dimen name="_88sdp">88.0dip</dimen>
@@ -549,4 +528,29 @@
 
 
 
+=======
+    <dimen name="common_padding_large">15dp</dimen>
+    <dimen name="navi_bar_height">44dp</dimen>
+    <dimen name="negative_double_nav_height">-88dp</dimen>
+    <dimen name="common_text_size_medium">16dp</dimen>
+    <dimen name="_5sdp">5dp</dimen>
+    <dimen name="campaign_banner_h">120dp</dimen>
+    <dimen name="sale_text_size">20dp</dimen>
+    <dimen name="common_text_size_small">13dp</dimen>
+    <dimen name="common_text_size_normal">14dp</dimen>
+    <dimen name="common_padding_medium">10dp</dimen>
+    <dimen name="_35sdp">35.0dip</dimen>
+    <dimen name="_30sdp">30.0dip</dimen>
+    <dimen name="_20sdp">20.0dip</dimen>
+    <dimen name="_85sdp">85.0dip</dimen>
+    <dimen name="side_layout_width">280.0dip</dimen>
+    <dimen name="empty_image_size">100.0dip</dimen>
+    <dimen name="_50sdp">50.0dip</dimen>
+    <dimen name="_22sdp">22.0dip</dimen>
+    <dimen name="sale_view_height">46dp</dimen>
+    <dimen name="sale_view_width">40dp</dimen>
+    <dimen name="clock_size">13.0sp</dimen>
+    <dimen name="user_avatar_size_small">60.0dip</dimen>
+    <dimen name="_15sdp">15.0dip</dimen>
+    <dimen name="_12sdp">12.0dip</dimen>
 </resources>

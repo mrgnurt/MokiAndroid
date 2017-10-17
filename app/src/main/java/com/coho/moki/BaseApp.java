@@ -2,6 +2,7 @@ package com.coho.moki;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.coho.moki.di.component.ActivityComponent;
 import com.coho.moki.di.component.DaggerActivityComponent;
@@ -10,6 +11,20 @@ import com.coho.moki.di.component.ServiceComponent;
 import com.coho.moki.di.module.ActivityModule;
 import com.coho.moki.di.module.ServiceModule;
 import com.coho.moki.util.SharedPrefUtils;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * Created by trung on 21/09/2017.
@@ -40,6 +55,26 @@ public class BaseApp extends Application {
                 .activityModule(new ActivityModule())
                 .build();
 
+        setDefaultRefreshLayout();
+    }
+
+    private void setDefaultRefreshLayout(){
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                ClassicsHeader classicsHeader = new ClassicsHeader(context);
+//                classicsHeader.getTitleText().setText("loading");
+                ClassicsHeader.REFRESH_HEADER_PULLDOWN = "pull";
+                ClassicsHeader.REFRESH_HEADER_LOADING = "load";
+                ClassicsHeader.REFRESH_HEADER_REFRESHING = "refresh";
+                ClassicsHeader.REFRESH_HEADER_RELEASE = "relase";
+                ClassicsHeader.REFRESH_HEADER_FINISH = "finish";
+//                ClassicsHeader.REFRESH_HEADER_LASTTIME = "last";
+                ClassicsHeader.REFRESH_HEADER_FAILED = "fails";
+                classicsHeader.setTimeFormat(new SimpleDateFormat("M-d HH:mm", Locale.CHINA));
+                return classicsHeader;
+            }
+        });
     }
 
     public static BaseApp get(Context context) {
