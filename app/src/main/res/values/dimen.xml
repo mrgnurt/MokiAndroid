@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="common_padding_small">5dp</dimen>
-
-    <!--add by Khanh-->
     <dimen name="adobe_csdk_dialog_fragment_margin_right">35.0dip</dimen>
     <dimen name="bottomsheet_default_sheet_width">0.0dip</dimen>
     <dimen name="com_adobe_image_action_bar_progress_height">40.0dip</dimen>
@@ -525,10 +523,6 @@
     <dimen name="_98sdp">98.0dip</dimen>
     <dimen name="_99sdp">99.0dip</dimen>
     <dimen name="_9sdp">9.0dip</dimen>
-
-
-
-=======
     <dimen name="common_padding_large">15dp</dimen>
     <dimen name="navi_bar_height">44dp</dimen>
     <dimen name="negative_double_nav_height">-88dp</dimen>

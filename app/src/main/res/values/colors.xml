@@ -3,10 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
     <color name="red_dark">#d8202a</color>
-
-    <!--<color name="black">#000000</color>-->
     <color name="white">#FFFFFF</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_700">#616161</color>
@@ -38,13 +35,9 @@
     <color name="red_A700">#D50000</color>
     <color name="transparent">#00000000</color>
     <color name="red">#fff32828</color>
-
-    <!-- Colors for app -->
     <color name="background_splash">@color/red_A700</color>
     <color name="text_loading">@color/white</color>
     <color name="text_side_menu">@color/black</color>
-
-    <!--add by Khanh-->
     <color name="notification_action_color_filter">#ffffffff</color>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#ff7fa87f</color>
@@ -318,9 +311,5 @@
     <color name="warning_stroke_color">#fff8bb86</color>
     <color name="window_background">#ffffffff</color>
     <color name="yellow_status">#fff5cb38</color>
-
-    <!--<color name="tab_text_color">res/color/tab_color.xml</color>-->
-
-
 </resources>
 
