@@ -1,6 +1,7 @@
 package com.coho.moki.ui.product;
 
 import com.bluejamesbond.text.DocumentView;
+import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImagePagerAdapter;
 import com.coho.moki.data.model.ProductComment;
@@ -10,8 +11,10 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -40,6 +43,9 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 public class ProductDetailActivity extends BaseActivity implements ProductDetailView {
 
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
+    private boolean isExpand = false;
+    private static final Integer DESCRIPTON_NO_EXPAND_MAX = 2;
+    private static final Integer DESCRIPTION_EXPAND_MAX = 40;
 
     // bind view from product_detail
     @BindView(R.id.bottom_sheet)
@@ -97,6 +103,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 //    private ListView listComment;
     private ExpandableHeightListView listComment;
     private ImageView iconNextArrow;
+    private LinearLayout layoutUserInfo;
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -141,8 +148,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtProduct.setText(": 3");
         txtTime.setText("2 giờ trước");
         txtExpandable.setVisibility(View.VISIBLE);
-        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao");
-
+        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - " +
+                "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao");
+        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTON_NO_EXPAND_MAX);
+        dvDescription.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
@@ -202,13 +211,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         imgLike = mRootView.findViewById(R.id.imgLike);
         imgAvatar = mRootView.findViewById(R.id.imgAvatar);
 
-        imgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickUserInfo();
-            }
-        });
-
         txtName = mRootView.findViewById(R.id.txtName);
         txtScore = mRootView.findViewById(R.id.txtScore);
         txtProduct = mRootView.findViewById(R.id.txtProduct);
@@ -234,6 +236,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         iconClock = mRootView.findViewById(R.id.icon_clock);
         iconNextArrow = mRootView.findViewById(R.id.icon_next_arrow);
 
+        layoutUserInfo = mRootView.findViewById(R.id.layout_user_info);
+
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenHeight = localDisplayMetrics.heightPixels;
@@ -249,6 +253,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         viewPager = mRootView.findViewById(R.id.viewPager);
         btnPrevious = mRootView.findViewById(R.id.btnPrevious);
         btnNext = mRootView.findViewById(R.id.btnNext);
+
+        // fake data
         final List<Integer> imgList = new ArrayList<>();
         imgList.add(R.drawable.hm);
         imgList.add(R.drawable.hm01);
@@ -292,8 +298,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             });
 
-//            btnPrevious.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true));
-
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -301,10 +305,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             });
 
-//            btnNext.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true));
-
         }
 
+//        fake data
 //         set comment at here
         listComment = mRootView.findViewById(R.id.listComment);
         List<ProductComment> productCommentList = new ArrayList<>();
@@ -315,11 +318,34 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         listComment.setAdapter(commentAdapter);
 //         This actually do the magic
         listComment.setExpanded(true);
+
+        layoutUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickUserInfo();
+            }
+        });
+
+        txtExpandable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "txtExpandable clicked");
+                if (!isExpand) {
+                    dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+                    dvDescription.requestLayout();
+                    isExpand = true;
+                } else {
+                    dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTON_NO_EXPAND_MAX);
+                    dvDescription.requestLayout();
+                    isExpand = false;
+                }
+            }
+        });
     }
 
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
-        this.startActivity(intent);
+        startActivity(intent);
     }
 
 }

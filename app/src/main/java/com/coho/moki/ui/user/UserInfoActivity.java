@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -34,6 +35,8 @@ import ru.noties.scrollable.ScrollableLayout;
 public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     private static final String LOG_TAG = UserInfoActivity.class.getSimpleName();
+    private boolean isFirstCall = true;
+    private boolean isCollapse = false;
 
     @BindView(R.id.bottomsheet)
     BottomSheetLayout bottomSheet;
@@ -186,9 +189,46 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             }
         });
 
-        tab1.setOnClickListener(new TabsClickListener());
-        tab2.setOnClickListener(new TabsClickListener());
-        tab3.setOnClickListener(new TabsClickListener());
+        TabsClickListener tabsClickListener = new TabsClickListener();
+        tab1.setOnClickListener(tabsClickListener);
+        tab2.setOnClickListener(tabsClickListener);
+        tab3.setOnClickListener(tabsClickListener);
+
+        txtStatus.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - " +
+                "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao");
+
+        // set text for txtStatus before
+        txtStatus.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (isFirstCall) {
+                    int currentLine = txtStatus.getLayout().getLineCount();
+                    if (currentLine <= 2) {
+                        btnCollapse.setVisibility(View.GONE);
+                    } else {
+                        btnCollapse.setVisibility(View.VISIBLE);
+                        btnCollapse.setText(getResources().getString(R.string.collapse));
+                    }
+                    isFirstCall = false;
+                }
+            }
+        });
+
+        btnCollapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 if (!isCollapse) {
+                     btnCollapse.setText(getResources().getString(R.string.view_more));
+                     txtStatus.setMaxLines(2);
+                     isCollapse = true;
+                } else {
+                     btnCollapse.setText(getResources().getString(R.string.collapse));
+                     txtStatus.setMaxLines(40);
+                     isCollapse = false;
+                 }
+            }
+        });
+
     }
 
     private void setTabsStatus(int position) {
@@ -227,7 +267,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     }
 
     private class TabsClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             int position = -1;
