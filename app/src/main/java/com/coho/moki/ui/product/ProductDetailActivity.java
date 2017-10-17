@@ -1,13 +1,14 @@
 package com.coho.moki.ui.product;
 
 import com.bluejamesbond.text.DocumentView;
+import com.coho.moki.adapter.product.ProductCommentAdapter;
+import com.coho.moki.adapter.product.ProductImagePagerAdapter;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.ui.base.BaseActivity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;

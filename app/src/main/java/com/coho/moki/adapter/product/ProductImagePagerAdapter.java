@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.adapter.product;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

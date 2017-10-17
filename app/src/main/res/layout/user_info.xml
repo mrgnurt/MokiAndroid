@@ -92,7 +92,7 @@
                 app:scrollable_considerIdleMillis="125"
                 app:scrollable_defaultCloseUp="true"
                 app:scrollable_friction="0.075"
-                app:scrollable_maxScroll="260dp"
+                app:scrollable_maxScroll="268dp"
                 app:scrollable_scrollerFlywheel="false">
 
                 <LinearLayout

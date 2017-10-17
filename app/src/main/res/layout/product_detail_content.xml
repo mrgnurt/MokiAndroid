@@ -64,7 +64,7 @@
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@android:color/white" />
 
-                    <com.coho.moki.ui.product.SquareImageView
+                    <com.coho.moki.ui.custom.SquareImageView
                         android:id="@+id/imgLike"
                         android:layout_width="35.0dip"
                         android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/common_padding_medium">
 
-                <com.coho.moki.ui.product.SquareImageView
+                <com.coho.moki.ui.custom.SquareImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="wrap_content"
                     android:onClick="helpShift"
@@ -230,7 +230,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/common_padding_medium">
 
-                <com.coho.moki.ui.product.SquareImageView
+                <com.coho.moki.ui.custom.SquareImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="wrap_content"
                     android:onClick="shareFriend"
@@ -336,7 +336,7 @@
                     android:paddingLeft="10.0dip"
                     android:paddingRight="10.0dip">
 
-                    <com.coho.moki.ui.product.SquareImageView
+                    <com.coho.moki.ui.custom.SquareImageView
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
@@ -380,7 +380,7 @@
                         android:paddingRight="10.0dip"
                         android:paddingTop="15.0dip">
 
-                        <com.coho.moki.ui.product.SquareImageView
+                        <com.coho.moki.ui.custom.SquareImageView
                             android:layout_width="@dimen/icon_size"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
@@ -425,7 +425,7 @@
                         android:paddingRight="10.0dip"
                         android:paddingTop="15.0dip">
 
-                        <com.coho.moki.ui.product.SquareImageView
+                        <com.coho.moki.ui.custom.SquareImageView
                             android:layout_width="@dimen/icon_size"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
@@ -470,7 +470,7 @@
                         android:paddingRight="10.0dip"
                         android:paddingTop="15.0dip">
 
-                        <com.coho.moki.ui.product.SquareImageView
+                        <com.coho.moki.ui.custom.SquareImageView
                             android:layout_width="@dimen/icon_size"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
@@ -514,7 +514,7 @@
                         android:paddingRight="10.0dip"
                         android:paddingTop="15.0dip">
 
-                        <com.coho.moki.ui.product.SquareImageView
+                        <com.coho.moki.ui.custom.SquareImageView
                             android:layout_width="@dimen/icon_size"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
@@ -551,7 +551,7 @@
                     android:paddingRight="10.0dip"
                     android:paddingTop="15.0dip">
 
-                    <com.coho.moki.ui.product.SquareImageView
+                    <com.coho.moki.ui.custom.SquareImageView
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
@@ -588,7 +588,7 @@
                     android:paddingRight="10.0dip"
                     android:paddingTop="15.0dip">
 
-                    <com.coho.moki.ui.product.SquareImageView
+                    <com.coho.moki.ui.custom.SquareImageView
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
