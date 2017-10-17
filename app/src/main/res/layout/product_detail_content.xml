@@ -158,8 +158,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_next_arrow"
+                    android:layout_width="12dp"
+                    android:layout_height="21.333333dp"
                     android:layout_margin="10.0dip"
                     android:onClick="clickUserInfo"
                     android:src="@drawable/icon_nextarrow_normal" />

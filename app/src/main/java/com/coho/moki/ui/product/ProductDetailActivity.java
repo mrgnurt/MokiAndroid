@@ -4,10 +4,11 @@ import com.bluejamesbond.text.DocumentView;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.ui.base.BaseActivity;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.coho.moki.ui.user.UserInfoActivity;
 import com.coho.moki.util.Utils;
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
-
-
 import com.flipboard.bottomsheet.BottomSheetLayout;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import com.coho.moki.R;
-import com.github.paolorotolo.expandableheightlistview.*;
+import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 
 
 /**
@@ -38,7 +38,7 @@ import com.github.paolorotolo.expandableheightlistview.*;
 
 public class ProductDetailActivity extends BaseActivity implements ProductDetailView {
 
-    private static final String TAG = ProductDetailActivity.class.getSimpleName();
+    private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
     // bind view from product_detail
     @BindView(R.id.bottom_sheet)
@@ -86,7 +86,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private TextView txtBrand;
     private TextView txtProductStatus;
     private TextView txtBuyPlace;
-//    private ExpandableHeightListView listCommnent;
     private Button btnViewComment;
     private TextView txtCategory;
     private ImageView imgThumb;
@@ -96,6 +95,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private ViewPager viewPager;
 //    private ListView listComment;
     private ExpandableHeightListView listComment;
+    private ImageView iconNextArrow;
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -140,7 +140,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtProduct.setText(": 3");
         txtTime.setText("2 giờ trước");
         txtExpandable.setVisibility(View.VISIBLE);
-        dvDescription.setText("Gau bong si Ha Quoc chat luong cao, Gau bong si Ha Quoc chat luong cao");
+        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao");
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
@@ -181,9 +181,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         txtProductStatus.setText("Còn mới");
         txtBuyPlace.setText("Hai Bà Trưng - Hà Nội");
-
+        txtHeaderRunning.setText("Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao");
         txtHeaderRunning.setSelected(true);
-
     }
 
     private void loadViewForCode() {
@@ -201,6 +200,14 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtComment = mRootView.findViewById(R.id.txtComment);
         imgLike = mRootView.findViewById(R.id.imgLike);
         imgAvatar = mRootView.findViewById(R.id.imgAvatar);
+
+        imgAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickUserInfo();
+            }
+        });
+
         txtName = mRootView.findViewById(R.id.txtName);
         txtScore = mRootView.findViewById(R.id.txtScore);
         txtProduct = mRootView.findViewById(R.id.txtProduct);
@@ -224,13 +231,15 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnPrevious = mRootView.findViewById(R.id.btnPrevious);
         btnNext = mRootView.findViewById(R.id.btnNext);
         iconClock = mRootView.findViewById(R.id.icon_clock);
+        iconNextArrow = mRootView.findViewById(R.id.icon_next_arrow);
 
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenHeight = localDisplayMetrics.heightPixels;
         int mScreenWidth = localDisplayMetrics.widthPixels;
-        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
+//        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
 //        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, mScreenHeight);
+        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth);
         scrollView.setHeaderLayoutParams(localObject);
 
 //         load view from zoom view
@@ -282,12 +291,17 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             });
 
+//            btnPrevious.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true));
+
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
                 }
             });
+
+//            btnNext.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true));
+
         }
 
 //         set comment at here
@@ -300,7 +314,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         listComment.setAdapter(commentAdapter);
 //         This actually do the magic
         listComment.setExpanded(true);
+    }
 
+    private void clickUserInfo() {
+        Intent intent = new Intent(this, UserInfoActivity.class);
+        this.startActivity(intent);
     }
 
 }

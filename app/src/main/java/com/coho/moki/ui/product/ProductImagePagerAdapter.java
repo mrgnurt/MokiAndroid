@@ -43,6 +43,12 @@ public class ProductImagePagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.slide_image, container, false);
         ImageView imgView = view.findViewById(R.id.imgItem);
         imgView.setImageResource(imgList.get(position));
+        imgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         container.addView(view);
         return view;
     }

@@ -12,9 +12,10 @@
         android:gravity="center"
         android:paddingLeft="@dimen/navi_bar_height"
         android:paddingRight="@dimen/navi_bar_height"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="@color/red_dark"
-        android:textSize="@dimen/common_text_size_medium" />
+        android:textSize="@dimen/common_text_size_medium"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/txtHeaderRunning"
@@ -31,10 +32,10 @@
         android:singleLine="true"
         android:textColor="@color/red_dark"
         android:textSize="@dimen/common_text_size_medium"
-        android:text="Ban chua nhap so dien thoai Ban chua nhap so dien thoai"/>
+        android:visibility="gone"/>
 
     <ImageButton
-        android:id="@+id/btnBack"
+        android:id="@+id/btnNavLeft"
         android:layout_width="@dimen/navi_bar_height"
         android:layout_height="@dimen/navi_bar_height"
         android:layout_alignParentStart="true"
@@ -45,116 +46,15 @@
         android:visibility="visible" />
 
     <ImageButton
-        android:id="@+id/btnMenu"
+        android:id="@+id/btnNavRight"
         android:layout_width="@dimen/navi_bar_height"
         android:layout_height="@dimen/navi_bar_height"
         android:layout_alignParentEnd="true"
         android:adjustViewBounds="true"
         android:background="@android:color/white"
         android:scaleType="fitXY"
-        android:src="@drawable/icon_back"
+        android:src="@drawable/icon_share_product"
         android:visibility="visible" />
-
-
-
-    <!--<ImageButton-->
-        <!--android:id="@+id/btnMenu"-->
-        <!--android:layout_width="@dimen/navi_bar_height"-->
-        <!--android:layout_height="@dimen/navi_bar_height"-->
-        <!--android:layout_marginLeft="@dimen/common_padding_small"-->
-        <!--android:layout_toRightOf="@id/btnBack"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:background="@null"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:src="@drawable/icon_menu"-->
-        <!--android:visibility="gone" />-->
-
-    <!--<ImageButton-->
-        <!--android:id="@id/iconAppName"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginLeft="@dimen/common_padding_small"-->
-        <!--android:layout_toRightOf="@id/btnMenu"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:background="@null"-->
-        <!--android:paddingBottom="5.0dip"-->
-        <!--android:paddingTop="5.0dip"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:src="@drawable/icon_app_name"-->
-        <!--android:visibility="gone" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentRight="true">-->
-
-        <!--<ImageButton-->
-            <!--android:id="@id/btnSearch"-->
-            <!--android:layout_width="@dimen/navi_bar_height"-->
-            <!--android:layout_height="@dimen/navi_bar_height"-->
-            <!--android:layout_marginLeft="@dimen/common_padding_small"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:background="@android:color/white"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:src="@drawable/icon_search_on_bar"-->
-            <!--android:visibility="gone" />-->
-
-        <!--<RelativeLayout-->
-            <!--android:id="@id/layout_message_count"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:visibility="gone">-->
-
-            <!--<ImageButton-->
-                <!--android:id="@id/btnChat"-->
-                <!--android:layout_width="@dimen/navi_bar_height"-->
-                <!--android:layout_height="@dimen/navi_bar_height"-->
-                <!--android:layout_marginRight="@dimen/common_padding_small"-->
-                <!--android:adjustViewBounds="true"-->
-                <!--android:background="@null"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/ic_icon_message" />-->
-
-            <!--<TextView-->
-                <!--android:id="@id/message_count"-->
-                <!--android:layout_width="18.0dip"-->
-                <!--android:layout_height="18.0dip"-->
-                <!--android:layout_marginLeft="20.0dip"-->
-                <!--android:layout_marginTop="5.0dip"-->
-                <!--android:background="@drawable/notification_count_shape"-->
-                <!--android:gravity="center"-->
-                <!--android:text="0"-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:textSize="10.0sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:visibility="gone" />-->
-        <!--</RelativeLayout>-->
-
-        <!--<include-->
-            <!--android:id="@id/btnAlert"-->
-            <!--layout="@layout/noti_count" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@id/btnSwitch"-->
-            <!--android:layout_width="@dimen/navi_bar_height"-->
-            <!--android:layout_height="@dimen/navi_bar_height"-->
-            <!--android:layout_marginRight="@dimen/common_padding_small"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:background="@android:color/white"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:src="@drawable/icon_timeline"-->
-            <!--android:visibility="gone" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@id/btnShare"-->
-            <!--android:layout_width="@dimen/navi_bar_height"-->
-            <!--android:layout_height="@dimen/navi_bar_height"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:background="@android:color/white"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:src="@drawable/icon_more"-->
-            <!--android:visibility="gone" />-->
-    <!--</LinearLayout>-->
 
     <View
         android:id="@+id/separatorLine"

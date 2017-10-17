@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
 
-    private static final String TAG = ProductCommentAdapter.class.getSimpleName();
+    private static final String LOG_TAG = ProductCommentAdapter.class.getSimpleName();
 
     LayoutInflater mLayoutInflater;
     List<ProductComment> productCommentList;
@@ -34,7 +34,13 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
         this.productCommentList = objects;
     }
 
-
+    /**
+     * Return a view: view item in ListView
+     * @param position position in the product list
+     * @param convertView is new view inflate from xml layout, or scrapview in case reuse
+     * @param parent parent view, in this case is ListView
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -59,7 +65,7 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
         viewHolder.iconClock.setImageResource(R.drawable.icon_clock);
     }
 
-    // optimize performance of ListView
+    // using ViewHolder pattern to optimize performance of ListView
     private static class ViewHolder {
         private TextView txtName;
         private ImageView imgAvatar;
@@ -67,12 +73,12 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
         private ImageView iconClock;
         private TextView txtTime;
 
-        private ViewHolder(View convertView) {
-            txtName = convertView.findViewById(R.id.txtName);
-            imgAvatar = convertView.findViewById(R.id.imgAvatar);
-            txtComment = convertView.findViewById(R.id.txtComment);
-            iconClock = convertView.findViewById(R.id.icon_clock);
-            txtTime = convertView.findViewById(R.id.txtTime);
+        private ViewHolder(View view) {
+            txtName = view.findViewById(R.id.txtName);
+            imgAvatar = view.findViewById(R.id.imgAvatar);
+            txtComment = view.findViewById(R.id.txtComment);
+            iconClock = view.findViewById(R.id.icon_clock);
+            txtTime = view.findViewById(R.id.txtTime);
         }
 
     }

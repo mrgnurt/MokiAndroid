@@ -321,4 +321,7 @@
     <color name="window_background">#ffffffff</color>
     <color name="yellow_status">#fff5cb38</color>
 
+    <!--<color name="tab_text_color">res/color/tab_color.xml</color>-->
+
+
 </resources>
