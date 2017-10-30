@@ -27,6 +27,7 @@
         <!--</intent-filter>-->
         <!--</activity>-->
 
+        <!--android:theme="@style/AppTheme.NoActionBar"-->
         <activity
             android:name=".ui.product.ProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -42,6 +43,19 @@
             android:name=".ui.user.UserInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.product.MediaActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.product.UserRateActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.product.ProductMessengerActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.main.MainActivity"

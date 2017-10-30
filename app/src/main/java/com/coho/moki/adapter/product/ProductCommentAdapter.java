@@ -25,12 +25,12 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
     private static final String LOG_TAG = ProductCommentAdapter.class.getSimpleName();
 
     LayoutInflater mLayoutInflater;
-    List<ProductComment> productCommentList;
+    List<ProductComment> mProductCommentList;
 
     public ProductCommentAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ProductComment> objects) {
         super(context, resource, objects);
         mLayoutInflater = LayoutInflater.from(context);
-        this.productCommentList = objects;
+        this.mProductCommentList = objects;
     }
 
     /**
@@ -56,7 +56,7 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
     }
 
     private void bindItem(ViewHolder viewHolder, int position) {
-        ProductComment p = productCommentList.get(position);
+        ProductComment p = mProductCommentList.get(position);
         viewHolder.txtName.setText(p.getName());
         viewHolder.imgAvatar.setImageResource(R.drawable.unknown_user);
         viewHolder.txtComment.setText(p.getComment());

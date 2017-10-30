@@ -92,7 +92,8 @@
                 app:scrollable_considerIdleMillis="125"
                 app:scrollable_defaultCloseUp="true"
                 app:scrollable_friction="0.075"
-                app:scrollable_maxScroll="268dp"
+                app:scrollable_autoMaxScroll="true"
+                app:scrollable_autoMaxScrollViewId="@+id/header"
                 app:scrollable_scrollerFlywheel="false">
 
                 <LinearLayout
@@ -310,21 +311,23 @@
                             android:orientation="vertical">
 
                             <ScrollView
-                                android:layout_width="fill_parent"
+                                android:id="@+id/scroll_wrap_text"
+                                android:scrollbars="vertical"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fillViewport="true"
-                                android:scrollbars="vertical">
+                                android:fillViewport="true">
 
                                 <TextView
                                     android:id="@+id/txtStatus"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:background="@drawable/status_user_info"
                                     android:ellipsize="end"
                                     android:gravity="center_vertical"
                                     android:hint="@string/no_description"
                                     android:minLines="2"
-                                    android:padding="12.0dip" />
+                                    android:padding="12.0dip"
+                                    android:scrollbars="vertical"/>
                             </ScrollView>
 
                             <Button
@@ -339,7 +342,7 @@
                                 android:textAllCaps="false"
                                 android:textColor="@android:color/white"
                                 android:textSize="12.0dip"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
                         </LinearLayout>
                     </LinearLayout>
 
