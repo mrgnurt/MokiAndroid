@@ -56,5 +56,7 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
 
+    compile project(':SlidingMenu')
+
     testCompile 'junit:junit:4.12'
 }
