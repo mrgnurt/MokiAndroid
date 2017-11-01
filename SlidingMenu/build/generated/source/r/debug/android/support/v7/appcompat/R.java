@@ -602,7 +602,7 @@ public final class R {
         public static int action_mode_bar_stub = 0x7f0a0057;
         public static int action_mode_close_button = 0x7f0a003b;
         public static int action_text = 0x7f0a006c;
-        public static int actions = 0x7f0a0079;
+        public static int actions = 0x7f0a007a;
         public static int activity_chooser_view_content = 0x7f0a003c;
         public static int add = 0x7f0a001e;
         public static int alertTitle = 0x7f0a004f;
@@ -624,7 +624,7 @@ public final class R {
         public static int forever = 0x7f0a0023;
         public static int home = 0x7f0a0004;
         public static int icon = 0x7f0a0041;
-        public static int icon_group = 0x7f0a007a;
+        public static int icon_group = 0x7f0a007b;
         public static int image = 0x7f0a003e;
         public static int info = 0x7f0a0077;
         public static int italic = 0x7f0a0024;
@@ -644,7 +644,7 @@ public final class R {
         public static int progress_circular = 0x7f0a0007;
         public static int progress_horizontal = 0x7f0a0008;
         public static int radio = 0x7f0a0054;
-        public static int right_icon = 0x7f0a007b;
+        public static int right_icon = 0x7f0a0079;
         public static int right_side = 0x7f0a0074;
         public static int screen = 0x7f0a001a;
         public static int scrollIndicatorDown = 0x7f0a004a;

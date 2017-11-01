@@ -56,6 +56,10 @@
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/notification_action_tombstone.xml",
+        "source": "/home/trung/.android/build-cache/2fc33942a54542120e98c119c3f220857d4433a4/output/res/layout/notification_action_tombstone.xml"
+    },
+    {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/layout/abc_action_menu_layout.xml"
     },
@@ -158,6 +162,14 @@
     {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/abc_dialog_title_material.xml",
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/layout/abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/notification_action.xml",
+        "source": "/home/trung/.android/build-cache/2fc33942a54542120e98c119c3f220857d4433a4/output/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
+        "source": "/home/trung/.android/build-cache/2fc33942a54542120e98c119c3f220857d4433a4/output/res/layout/notification_template_icon_group.xml"
     },
     {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",

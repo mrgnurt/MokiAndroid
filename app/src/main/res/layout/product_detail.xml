@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.flipboard.bottomsheet.BottomSheetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/product_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/gray_light"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navi_bar_height"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingLeft="@dimen/navi_bar_height"
+                android:paddingRight="@dimen/navi_bar_height"
+                android:maxLines="1"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/common_text_size_medium"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/txtHeaderRunning"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/navi_bar_height"
+                android:paddingRight="@dimen/navi_bar_height"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/common_text_size_medium"
+                android:visibility="visible"/>
+
+            <ImageButton
+                android:id="@+id/btnNavLeft"
+                android:layout_width="@dimen/navi_bar_height"
+                android:layout_height="@dimen/navi_bar_height"
+                android:layout_alignParentStart="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_back"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/btnNavRight"
+                android:layout_width="@dimen/navi_bar_height"
+                android:layout_height="@dimen/navi_bar_height"
+                android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:src="@drawable/ic_menu_horiz_more"
+                android:visibility="visible" />
+
+            <View
+                android:id="@+id/separatorLine"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_alignParentBottom="true"
+                android:background="@color/red_dark" />
+        </RelativeLayout>
+
+        <com.ecloud.pulltozoomview.PullToZoomScrollViewEx
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0" />
+
+        <LinearLayout
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@color/gray_main"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/common_padding_medium">
+
+                    <TextView
+                        android:layout_width="45.0dip"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Giá:"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/txtPrice"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:alpha="0.7"
+                        android:background="@color/gray_main"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/salePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55.0dip"
+                    android:layout_marginTop="-15.0dip"
+                    android:alpha="0.7"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/common_padding_small"
+                    android:singleLine="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:alpha="0.7"
+                android:background="@color/red_dark"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</com.flipboard.bottomsheet.BottomSheetLayout>

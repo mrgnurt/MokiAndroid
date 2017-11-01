@@ -600,7 +600,7 @@ int id action_mode_bar 0x7f0a0058
 int id action_mode_bar_stub 0x7f0a0057
 int id action_mode_close_button 0x7f0a003b
 int id action_text 0x7f0a006c
-int id actions 0x7f0a0079
+int id actions 0x7f0a007a
 int id activity_chooser_view_content 0x7f0a003c
 int id add 0x7f0a001e
 int id alertTitle 0x7f0a004f
@@ -630,7 +630,7 @@ int id fullscreen 0x7f0a0035
 int id home 0x7f0a0004
 int id homeAsUp 0x7f0a0013
 int id icon 0x7f0a0041
-int id icon_group 0x7f0a007a
+int id icon_group 0x7f0a007b
 int id ifRoom 0x7f0a0030
 int id image 0x7f0a003e
 int id info 0x7f0a0077
@@ -656,7 +656,7 @@ int id progress_circular 0x7f0a0007
 int id progress_horizontal 0x7f0a0008
 int id radio 0x7f0a0054
 int id right 0x7f0a0034
-int id right_icon 0x7f0a007b
+int id right_icon 0x7f0a0079
 int id right_side 0x7f0a0074
 int id screen 0x7f0a001a
 int id scrollIndicatorDown 0x7f0a004a

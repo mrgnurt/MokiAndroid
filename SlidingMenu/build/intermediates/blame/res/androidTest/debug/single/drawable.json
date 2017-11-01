@@ -12,6 +12,10 @@
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
     },
     {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_edit_text_material.xml",
+        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_edit_text_material.xml"
+    },
+    {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_btn_check_material.xml",
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_btn_check_material.xml"
     },
@@ -36,12 +40,12 @@
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_btn_default_mtrl_shape.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_ic_search_api_material.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_ic_search_api_material.xml"
-    },
-    {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_ratingbar_material.xml",
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_ic_search_api_material.xml",
+        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_ic_search_api_material.xml"
     },
     {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_tab_indicator_material.xml",
@@ -102,6 +106,10 @@
     {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_btn_borderless_material.xml",
         "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/abc_btn_colored_material.xml",
+        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/drawable/abc_btn_colored_material.xml"
     },
     {
         "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/drawable/notification_icon_background.xml",
