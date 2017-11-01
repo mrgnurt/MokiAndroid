@@ -23,7 +23,7 @@ public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     List<Product> mProducts;
 
-    public ListProductAdapter(ArrayList<Product> products){
+    public ListProductAdapter(List<Product> products){
         mProducts = products;
     }
 

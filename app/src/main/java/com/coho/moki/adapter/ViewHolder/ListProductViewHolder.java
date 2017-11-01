@@ -41,8 +41,8 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     public void populate(Product product){
         mFirstImage.setImageResource(R.drawable.no_image);
         mTxtName.setText(product.getName());
-        mTxtLike.setText(product.getNumLike());
-        mTxtComment.setText(product.getNumComment());
-        mTxtPrice.setText(product.getPrice());
+        mTxtLike.setText(product.getNumLike() + "");
+        mTxtComment.setText(product.getNumComment() + "");
+        mTxtPrice.setText(product.getNumComment() + "");
     }
 }

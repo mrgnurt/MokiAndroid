@@ -2,28 +2,22 @@ package com.coho.moki.ui.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.coho.moki.R;
-import com.coho.moki.adapter.customadapter.SideMenuAdapter;
-import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
-import com.coho.moki.ui.fragment.ProductPagerFragment;
-import com.github.siyamed.shapeimageview.CircularImageView;
+import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements MainView{
+
+    @Inject
+    MainPresenter mMainPresenter;
 
     private Fragment currentDisplayFragment;
     private ProductPagerFragment productPagerFragment;
@@ -63,7 +57,7 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @Override
     public void initView() {
-        this.productPagerFragment = new ProductPagerFragment();
+        this.productPagerFragment = ProductPagerFragment.newInstance();
 //        initRv();
         onMenuHomeSelect();
     }

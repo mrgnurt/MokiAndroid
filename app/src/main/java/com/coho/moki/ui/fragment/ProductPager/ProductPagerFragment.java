@@ -1,8 +1,7 @@
-package com.coho.moki.ui.fragment;
+package com.coho.moki.ui.fragment.ProductPager;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 
 import com.coho.moki.R;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import ru.noties.scrollable.OnScrollChangedListener;
-import ru.noties.scrollable.OverScrollListener;
 import ru.noties.scrollable.ScrollableLayout;
 
 /**
@@ -37,6 +35,11 @@ public class ProductPagerFragment extends BaseFragment {
 
     ArrayList<Category> categories = new ArrayList<Category>();
 
+    public static ProductPagerFragment newInstance(){
+        ProductPagerFragment productPagerFragment = new ProductPagerFragment();
+        return productPagerFragment;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_main;
@@ -57,9 +60,9 @@ public class ProductPagerFragment extends BaseFragment {
     }
 
     public void initTabLayout(){
-        categories.add(new Category("0", "Tat ca"));
-        categories.add(new Category("0", "Mien phi"));
-        categories.add(new Category("1", "Be an"));
+        categories.add(new Category("", "Tat ca"));
+        categories.add(new Category("59e96abffe038830efc1a71e", "Mien phi"));
+        categories.add(new Category("", "Be an"));
         categories.add(new Category("2", "Be an"));
         categories.add(new Category("3", "Be an"));
         categories.add(new Category("4", "Be an"));

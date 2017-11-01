@@ -7,16 +7,16 @@ import java.util.ArrayList;
  */
 
 public class GetListProductResponceData {
-    private ArrayList<ProductSmallResponceData> productSmallResponceDatas;
+    private ArrayList<ProductSmallResponceData> products;
     private String newItems;
     private String lastId;
 
-    public ArrayList<ProductSmallResponceData> getProductSmallResponceDatas() {
-        return productSmallResponceDatas;
+    public ArrayList<ProductSmallResponceData> getProducts() {
+        return products;
     }
 
-    public void setProductSmallResponceDatas(ArrayList<ProductSmallResponceData> productSmallResponceDatas) {
-        this.productSmallResponceDatas = productSmallResponceDatas;
+    public void setProducts(ArrayList<ProductSmallResponceData> productSmallResponceDatas) {
+        this.products = productSmallResponceDatas;
     }
 
     public String getNewItems() {
