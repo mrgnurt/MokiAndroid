@@ -1,5 +1,7 @@
 package com.coho.moki.data.model;
 
+import com.coho.moki.data.constant.ResponseCode;
+
 /**
  * Created by trung on 05/10/2017.
  */

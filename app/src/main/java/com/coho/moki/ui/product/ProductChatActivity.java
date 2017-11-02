@@ -75,12 +75,11 @@ public class ProductChatActivity extends BaseActivity {
     ProductChatAdapter productChatAdapter;
 
     private static final String CHAT_SERVER_URL = "http://chat.socket.io";
-    private static final String RECEIVE_NEW_MESSAGE = "receiveNewMessage";
+    private static final String NEW_MESSAGE = "receiveNewMessage";
 
     private boolean isConnected = true;
     String mUsername = "username";
     String message = "message to server";
-
 
     private Socket mSocket;
     {
@@ -143,7 +142,7 @@ public class ProductChatActivity extends BaseActivity {
         mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.on(RECEIVE_NEW_MESSAGE, onNewMessage);
+        mSocket.on(NEW_MESSAGE, onNewMessage);
         mSocket.connect();
     }
 
@@ -153,7 +152,7 @@ public class ProductChatActivity extends BaseActivity {
         mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
         mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off(RECEIVE_NEW_MESSAGE, onNewMessage);
+        mSocket.off(NEW_MESSAGE, onNewMessage);
     }
 
     @Override
