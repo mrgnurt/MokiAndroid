@@ -3,6 +3,7 @@ package com.coho.moki.ui.fragment.ListProduct;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
@@ -15,6 +16,7 @@ import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.ProductSmallResponceData;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
+import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.util.SpaceItem;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import ru.noties.scrollable.OnScrollChangedListener;
+import ru.noties.scrollable.ScrollableLayout;
 
 /**
  * Created by trung on 14/10/2017.
@@ -73,6 +77,28 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         initRV();
         initRefreshLayout();
 //        showProducts();
+        final ProductPagerFragment productPagerFragment = ((ProductPagerFragment)getFragmentManager().findFragmentByTag("home"));
+        mRVProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                Log.d("trung", "dx" + dx);
+                Log.d("trung", "dy " + dy);
+
+                if (dy > 15){
+                    productPagerFragment.setVisibleButtonCamera(false);
+                }
+                else if (dy < -15){
+                    productPagerFragment.setVisibleButtonCamera(true);
+                }
+
+                int offsetScroll = recyclerView.computeVerticalScrollOffset();
+
+                if (offsetScroll < 3){
+                    productPagerFragment.setVisibleScrollableLayout(true);
+                }
+            }
+        });
     }
 
     @Override

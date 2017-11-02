@@ -8,6 +8,7 @@ import com.coho.moki.data.model.Category;
 import com.coho.moki.ui.fragment.ListProduct.ListProductFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by trung on 14/10/2017.
@@ -15,9 +16,9 @@ import java.util.ArrayList;
 
 public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Category> mCategories;
+    List<Category> mCategories;
 
-    public CategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+    public CategoryPagerAdapter(FragmentManager fm, List<Category> categories) {
         super(fm);
         mCategories = categories;
     }

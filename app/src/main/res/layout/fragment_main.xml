@@ -48,27 +48,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
+            <ss.com.bannerslider.views.BannerSlider
+                android:id="@+id/banner_slider"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="trung"/>
+                android:layout_height="120dp"
+                app:loopSlides="true"
+                app:defaultIndicators="circle"
+                app:interval="2000" />
 
-            <!--<com.imbryk.viewPager.LoopViewPager-->
-            <!--android:id="@+id/campaign_pager"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="@dimen/campaign_banner_h"-->
-            <!--android:visibility="gone" />-->
-
-            <!--<com.viewpagerindicator.IconPageIndicator-->
-            <!--android:id="@+id/campaign_pager_indicator"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="20.0dip"-->
-            <!--android:layout_below="@+id/campaign_pager"-->
-            <!--android:layout_marginTop="-30.0dip"-->
-            <!--android:visibility="gone" />-->
         </RelativeLayout>
 
         <LinearLayout

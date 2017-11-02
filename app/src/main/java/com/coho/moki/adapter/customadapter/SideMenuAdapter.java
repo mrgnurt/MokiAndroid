@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.ViewHolder.SideMenuViewHolder;
+import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.SideMenuItem;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class SideMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<SideMenuItem> mSideMenuItems;
     private Context mContext;
+    private OnClickSideMenuItemListener mListener;
 
     public SideMenuAdapter(List<SideMenuItem> mSideMenuItems, Context mContext) {
         this.mSideMenuItems = mSideMenuItems;
@@ -32,6 +34,7 @@ public class SideMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         View view = layoutInflater.inflate(R.layout.side_menu_item, parent, false);
         SideMenuViewHolder sideMenuViewHolder = new SideMenuViewHolder(view);
+        sideMenuViewHolder.setListener(mListener);
 
         return sideMenuViewHolder;
     }
@@ -44,5 +47,9 @@ public class SideMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return mSideMenuItems.size();
+    }
+
+    public void addListener(OnClickSideMenuItemListener listener){
+        mListener = listener;
     }
 }

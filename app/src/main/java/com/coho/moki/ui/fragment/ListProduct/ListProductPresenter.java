@@ -6,6 +6,8 @@ import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.service.ProductService;
 import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
+import com.coho.moki.ui.fragment.ProductPager.ProductPagerContract;
+import com.coho.moki.ui.fragment.ProductPager.ProductPagerPresenter;
 
 /**
  * Created by trung on 23/10/2017.
@@ -29,4 +31,5 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     public void callGetProductsService(String token, String categoryId, String campaignId, String lastId, String index, int count, ResponseListener<GetListProductResponceData> listener) {
         mProductService.getListProduct(token, categoryId, campaignId, lastId, index, count, listener);
     }
+
 }

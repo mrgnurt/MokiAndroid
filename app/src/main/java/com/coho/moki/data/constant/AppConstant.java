@@ -19,4 +19,5 @@ public class AppConstant {
 
     //tag app
     public static final String CATEGORY_TAG = "CATEGORY";
+    public static final int Home_MENU_INDEX = 0;
 }

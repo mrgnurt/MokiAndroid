@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
 
         ProductAPI service = ServiceGenerator.createService(ProductAPI.class);
         Call<BaseResponse<GetListProductResponceData>> call =  service.callGetListProduct(data);
-        Log.d("trung", "abc");
         call.enqueue(new Callback<BaseResponse<GetListProductResponceData>>() {
             @Override
             public void onResponse(Call<BaseResponse<GetListProductResponceData>> call, Response<BaseResponse<GetListProductResponceData>> response) {
