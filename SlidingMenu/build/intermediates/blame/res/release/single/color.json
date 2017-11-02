@@ -1,78 +1,78 @@
 [
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_hint_foreground_material_light.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_hint_foreground_material_light.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/switch_thumb_material_light.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_spinner.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_spinner.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_secondary_text_material_light.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_btn_colored_text_material.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_btn_colored_text_material.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_edittext.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_edittext.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_secondary_text_material_dark.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_switch_track.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_switch_track.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_edittext.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_edittext.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_btn_colored_borderless_text_material.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_btn_colored_borderless_text_material.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_default.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_default.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_hint_foreground_material_dark.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_hint_foreground_material_dark.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_btn_colored_text_material.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_btn_colored_text_material.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\switch_thumb_material_light.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_primary_text_material_light.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_secondary_text_material_light.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_primary_text_disable_only_material_dark.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_primary_text_material_light.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_default.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_default.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_hint_foreground_material_light.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_search_url_text.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_btn_checkable.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_btn_colored_borderless_text_material.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_seek_thumb.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_btn_checkable.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_primary_text_disable_only_material_light.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\switch_thumb_material_dark.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/switch_thumb_material_dark.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_seek_thumb.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_seek_thumb.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_primary_text_material_dark.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_search_url_text.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_secondary_text_material_dark.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_primary_text_material_dark.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/color/abc_tint_spinner.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\release\\color\\abc_tint_switch_track.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\color\\abc_tint_switch_track.xml"
     }
 ]

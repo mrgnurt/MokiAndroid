@@ -1,50 +1,50 @@
 [
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_fade_out.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/tooltip_exit.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/tooltip_exit.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_popup_exit.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_enter.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_popup_enter.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_fade_in.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_fade_in.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_slide_in_top.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_slide_out_bottom.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\tooltip_enter.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\tooltip_enter.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_shrink_fade_out_from_bottom.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_fade_out.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_exit.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_popup_exit.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_slide_in_bottom.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\tooltip_exit.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\tooltip_exit.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_grow_fade_in_from_bottom.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/abc_slide_out_top.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     },
     {
-        "merged": "/DATA/Source code/Android/Moki/SlidingMenu/build/intermediates/res/merged/androidTest/debug/anim/tooltip_enter.xml",
-        "source": "/home/trung/.android/build-cache/8512687d384a12f4028e9f14b67c0b3fe9be3db4/output/res/anim/tooltip_enter.xml"
+        "merged": "E:\\AndroidStudioProject\\MokiAndroid\\SlidingMenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\Khanh Nguyen\\.android\\build-cache\\58d63d5122d3f0538d216262c35e0e13306e15f8\\output\\res\\anim\\abc_slide_in_bottom.xml"
     }
 ]

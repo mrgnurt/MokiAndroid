@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/DATA/Source code/Android/Moki/SlidingMenu/assets"/><source path="/DATA/Source code/Android/Moki/SlidingMenu/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/DATA/Source code/Android/Moki/SlidingMenu/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\AndroidStudioProject\MokiAndroid\SlidingMenu\assets"/><source path="E:\AndroidStudioProject\MokiAndroid\SlidingMenu\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\AndroidStudioProject\MokiAndroid\SlidingMenu\src\release\assets"/></dataSet></merger>

@@ -1,19 +1,28 @@
 package com.coho.moki.ui.product;
 
 import com.bluejamesbond.text.DocumentView;
+import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
-import com.coho.moki.adapter.product.ProductImagePagerAdapter;
+import com.coho.moki.adapter.product.ProductImageAdapter;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.ui.base.BaseActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -40,6 +49,10 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 public class ProductDetailActivity extends BaseActivity implements ProductDetailView {
 
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
+    private boolean isExpand = false;
+    private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
+    private static final Integer DESCRIPTION_EXPAND_MAX = 40;
+    private boolean isFirstSetDocument = true;
 
     // bind view from product_detail
     @BindView(R.id.bottom_sheet)
@@ -94,15 +107,23 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private Button btnNext;
     private FrameLayout frameImage;
     private ViewPager viewPager;
-//    private ListView listComment;
+    //    private ListView listComment;
     private ExpandableHeightListView listComment;
     private ImageView iconNextArrow;
+    private LinearLayout layoutUserInfo;
+
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
 
     @BindView(R.id.txtHeaderRunning)
     TextView txtHeaderRunning;
+
+    @BindView(R.id.btnNavLeft)
+    ImageButton btnBack;
+
+    @BindView(R.id.btnNavRight)
+    ImageButton btnMenu;
 
     @Override
     public int setContentViewId() {
@@ -141,8 +162,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtProduct.setText(": 3");
         txtTime.setText("2 giờ trước");
         txtExpandable.setVisibility(View.VISIBLE);
-        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao");
-
+        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao" +
+                "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao"
+        );
+        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+        dvDescription.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
@@ -184,6 +208,66 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtBuyPlace.setText("Hai Bà Trưng - Hà Nội");
         txtHeaderRunning.setText("Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao");
         txtHeaderRunning.setSelected(true);
+
+        salePrice.setVisibility(View.VISIBLE);
+        salePrice.setText("1,000,000 VNĐ");
+        salePrice.setPaintFlags(salePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+//        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+//        dvDescription.requestLayout();
+//        Log.d(LOG_TAG, "dv line count before: " + dvDescription.getLayout().getLineCount());
+
+        // check this code again
+//        dvDescription.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                Log.d(LOG_TAG, "dv line count: " + dvDescription.getLayout().getLineCount());
+//                if (dvDescription.getLayout().getLineCount() <= 2) {
+//                    txtExpandable.setVisibility(View.INVISIBLE);
+//                } else {
+//                    txtExpandable.setVisibility(View.VISIBLE);
+//                }
+//                dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTON_NO_EXPAND_MAX);
+//                dvDescription.requestLayout();
+//                Log.d(LOG_TAG, "dv line count after: " + dvDescription.getLayout().getLineCount());
+//                // after first call, remove listener on dvDescription
+//                dvDescription.removeOnLayoutChangeListener(this);
+//            }
+//        });
+
+        dvDescription.setOnLayoutProgressListener(new DocumentView.ILayoutProgressListener() {
+            @Override
+            public void onCancelled() {
+                Log.d(LOG_TAG, "dv cancel");
+            }
+
+            @Override
+            public void onFinish() {
+                Log.d(LOG_TAG, "dv finish");
+                if (isFirstSetDocument) {
+                    Log.d(LOG_TAG, "dv update : line count : " + dvDescription.getLayout().getLineCount());
+                    if (dvDescription.getLayout().getLineCount() > 2) {
+                        txtExpandable.setVisibility(View.VISIBLE);
+                        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
+                        dvDescription.requestLayout();
+                    } else {
+                        txtExpandable.setVisibility(View.INVISIBLE);
+                    }
+                    isFirstSetDocument = false;
+                }
+            }
+
+            @Override
+            public void onStart() {
+                Log.d(LOG_TAG, "dv start");
+            }
+
+            @Override
+            public void onProgressUpdate(float progress) {
+                Log.d(LOG_TAG, "dv update");
+            }
+        });
+
     }
 
     private void loadViewForCode() {
@@ -201,13 +285,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtComment = mRootView.findViewById(R.id.txtComment);
         imgLike = mRootView.findViewById(R.id.imgLike);
         imgAvatar = mRootView.findViewById(R.id.imgAvatar);
-
-        imgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickUserInfo();
-            }
-        });
 
         txtName = mRootView.findViewById(R.id.txtName);
         txtScore = mRootView.findViewById(R.id.txtScore);
@@ -234,6 +311,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         iconClock = mRootView.findViewById(R.id.icon_clock);
         iconNextArrow = mRootView.findViewById(R.id.icon_next_arrow);
 
+        layoutUserInfo = mRootView.findViewById(R.id.layout_user_info);
+
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenHeight = localDisplayMetrics.heightPixels;
@@ -249,11 +328,20 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         viewPager = mRootView.findViewById(R.id.viewPager);
         btnPrevious = mRootView.findViewById(R.id.btnPrevious);
         btnNext = mRootView.findViewById(R.id.btnNext);
+
+        // fake data
         final List<Integer> imgList = new ArrayList<>();
-        imgList.add(R.drawable.hm);
         imgList.add(R.drawable.hm01);
         imgList.add(R.drawable.hm02);
-        viewPager.setAdapter(new ProductImagePagerAdapter(ProductDetailActivity.this, imgList));
+        imgList.add(R.drawable.hm03);
+        imgList.add(R.drawable.hm04);
+        imgList.add(R.drawable.hm05);
+
+        // not using fragment for view pager
+//        viewPager.setAdapter(new ProductImagePagerAdapter(ProductDetailActivity.this, imgList));
+
+        // using fragment for view pager
+        viewPager.setAdapter(new ProductImageAdapter(getSupportFragmentManager(), imgList));
 
         if (imgList != null && imgList.size() > 1) {
 
@@ -292,8 +380,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             });
 
-//            btnPrevious.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true));
-
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -301,10 +387,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             });
 
-//            btnNext.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true));
-
         }
 
+//        fake data
 //         set comment at here
         listComment = mRootView.findViewById(R.id.listComment);
         List<ProductComment> productCommentList = new ArrayList<>();
@@ -315,11 +400,76 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         listComment.setAdapter(commentAdapter);
 //         This actually do the magic
         listComment.setExpanded(true);
+
+        layoutUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickUserInfo();
+            }
+        });
+
+        txtExpandable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "txtExpandable clicked");
+                if (!isExpand) {
+                    txtExpandable.setText(getResources().getString(R.string.collapse));
+                    dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+                    dvDescription.requestLayout();
+                    isExpand = true;
+                    Log.d(LOG_TAG, "expand: line count = " + dvDescription.getLayout().getLineCount());
+                } else {
+                    txtExpandable.setText(getResources().getString(R.string.view_more));
+                    dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
+                    dvDescription.requestLayout();
+                    isExpand = false;
+                    Log.d(LOG_TAG, "un expand: line count = " + dvDescription.getLayout().getLineCount());
+                }
+            }
+        });
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomDialog();
+            }
+        });
+
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
+                // put data before switch activity
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
-        this.startActivity(intent);
+        startActivity(intent);
+    }
+
+    private void showCustomDialog() {
+//        final Dialog dialog = new Dialog(this, R.style.full_screen_dialog); // other solution for full screen dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_product_detail);
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setWindowAnimations(R.style.DialogAnimation);
+        View.OnClickListener closeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        };
+        dialog.findViewById(R.id.viewTop).setOnClickListener(closeListener);
+        dialog.findViewById(R.id.btnCancel).setOnClickListener(closeListener);
+        dialog.show();
     }
 
 }

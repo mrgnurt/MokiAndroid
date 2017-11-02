@@ -81,7 +81,7 @@ public class ListProductFragment extends BaseFragment {
         products.add(new Product("", "Đồ ăn cho bé", "", "50 K", "", "", "", "100", "100"));
         products.add(new Product("", "Đồ ăn cho bé", "", "50 K", "", "", "", "100", "100"));
 
-        ListProductAdapter adapter = new ListProductAdapter(products);
+        ListProductAdapter adapter = new ListProductAdapter(products, this);
         mRVProductList.setAdapter(adapter);
     }
 
