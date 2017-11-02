@@ -7,6 +7,7 @@ import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.AccountUntil;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void initView() {
+        AccountUntil.removeInfoAccount();
         BaseApp.getActivityComponent().inject(this);
         mSplashPresenter.onAttach(this);
         mSplashPresenter.checkUserLogin();

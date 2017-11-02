@@ -21,6 +21,7 @@ import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.ui.fragment.ProductPagerFragment;
+import com.coho.moki.util.AccountUntil;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -38,6 +39,9 @@ public class MainActivity extends BaseActivity implements MainView{
 
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
+
+//    @BindView(R.id.user_name)
+    TextView mTxtUserName;
 
 //    @BindView(R.id.side_menu_list)
     RecyclerView mRVSideMenu;
@@ -90,10 +94,21 @@ public class MainActivity extends BaseActivity implements MainView{
         mSlidingMenu.setBehindOffset(240);
         mSlidingMenu.setMenu(R.layout.side_menu);
         mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        initRv();
+
+        initMenu();
     }
 
-    public void initRv(){
+    private void showUserName(){
+        mTxtUserName.setText(AccountUntil.getUsername());
+    }
+
+    private void initMenu(){
+
+        mTxtUserName = (TextView) findViewById(R.id.user_name);
+        if (AccountUntil.getAccountId() != null){
+            showUserName();
+        }
+
         mRVSideMenu = (RecyclerView) findViewById(R.id.side_menu_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

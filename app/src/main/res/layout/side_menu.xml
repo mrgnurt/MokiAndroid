@@ -35,7 +35,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/common_padding_small"
-                android:text="Dac san tay nguyen"
+                android:text="Đăng nhập"
                 android:textColor="@color/red_dark"
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
