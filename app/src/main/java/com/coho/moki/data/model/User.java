@@ -14,6 +14,13 @@ public class User {
 
     private String avatarUrl;
 
+    public User(String userId, String username, String token, String avatarUrl) {
+        this.userId = userId;
+        this.username = username;
+        this.token = token;
+        this.avatarUrl = avatarUrl;
+    }
+
     public String getUserId() {
         return userId;
     }

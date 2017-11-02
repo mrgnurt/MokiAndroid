@@ -46,7 +46,7 @@ public class SideMenuItem {
 
     public static ArrayList<SideMenuItem> getListSideMenuItem(){
         ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
-        sideMenuItems.add(new SideMenuItem(0, R.drawable.sidemenu_icon_store_normal, R.string.sidemenu_title_store));
+        sideMenuItems.add(new SideMenuItem(AppConstant.Home_MENU_INDEX, R.drawable.sidemenu_icon_store_normal, R.string.sidemenu_title_store));
         sideMenuItems.add(new SideMenuItem(1, R.drawable.sidemenu_icon_news_normal, R.string.sidemenu_title_news));
         sideMenuItems.add(new SideMenuItem(2, R.drawable.sidemenu_icon_like_normal, R.string.sidemenu_title_like));
         sideMenuItems.add(new SideMenuItem(3, R.drawable.sidemenu_icon_exhibit_normal, R.string.sidemenu_title_exhibit));
