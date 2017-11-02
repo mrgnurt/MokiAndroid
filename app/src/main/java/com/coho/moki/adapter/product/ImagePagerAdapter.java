@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.coho.moki.R;
+import com.coho.moki.util.network.LoadImageUtils;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ImagePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = inflater.inflate(R.layout.image_item, container, false);
         ImageView imgView = view.findViewById(R.id.imgItem);
-        imgView.setImageResource(imgList.get(position));
+        LoadImageUtils.loadImageFromDrawable(imgList.get(position), imgView);
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

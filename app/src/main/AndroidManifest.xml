@@ -17,21 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <!--<activity-->
-        <!--android:name=".ui.splash.SplashActivity"-->
-        <!--android:theme="@style/SplashTheme">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
-
-        <!--android:theme="@style/AppTheme.NoActionBar"-->
         <activity
-            android:name=".ui.product.ProductDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,22 +28,42 @@
         </activity>
 
         <activity
+        android:name=".ui.product.ProductDetailActivity"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:screenOrientation="portrait" />
+
+        <!--android:theme="@style/AppTheme.NoActionBar"-->
+
+        <!--<activity-->
+        <!--android:name=".ui.product.ProductDetailActivity"-->
+        <!--android:theme="@style/AppTheme.NoActionBar"-->
+        <!--android:screenOrientation="portrait">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <activity
             android:name=".ui.user.UserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.product.MediaActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.product.UserRateActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.product.UserRateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.product.ProductMessengerActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.product.ProductChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.main.MainActivity"
@@ -63,7 +71,7 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

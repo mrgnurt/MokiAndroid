@@ -3,7 +3,7 @@ package com.coho.moki.ui.product;
 import com.bluejamesbond.text.DocumentView;
 import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
-import com.coho.moki.adapter.product.ProductImagePagerAdapter;
+import com.coho.moki.adapter.product.ProductImageAdapter;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.ui.base.BaseActivity;
 
@@ -331,10 +331,17 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         // fake data
         final List<Integer> imgList = new ArrayList<>();
-        imgList.add(R.drawable.hm);
         imgList.add(R.drawable.hm01);
         imgList.add(R.drawable.hm02);
-        viewPager.setAdapter(new ProductImagePagerAdapter(ProductDetailActivity.this, imgList));
+        imgList.add(R.drawable.hm03);
+        imgList.add(R.drawable.hm04);
+        imgList.add(R.drawable.hm05);
+
+        // not using fragment for view pager
+//        viewPager.setAdapter(new ProductImagePagerAdapter(ProductDetailActivity.this, imgList));
+
+        // using fragment for view pager
+        viewPager.setAdapter(new ProductImageAdapter(getSupportFragmentManager(), imgList));
 
         if (imgList != null && imgList.size() > 1) {
 
@@ -431,7 +438,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailActivity.this, ProductMessengerActivity.class);
+                Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
                 startActivity(intent);
             }

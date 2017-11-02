@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.coho.moki.R;
 import com.coho.moki.ui.product.MediaActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class ProductImagePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = inflater.inflate(R.layout.slide_image, container, false);
         ImageView imgView = view.findViewById(R.id.imgItem);
-        imgView.setImageResource(imgList.get(position));
+        Picasso.with(context).load(imgList.get(position)).into(imgView);
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
