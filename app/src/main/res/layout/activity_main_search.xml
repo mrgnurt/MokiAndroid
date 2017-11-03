@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <EditText
+                    android:id="@+id/edtKeyword"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_padding_small"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_weight="2.0"
+                    android:background="@drawable/layout_transparent_bg_gray_corner"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search"
+                    android:imeOptions="actionDone"
+                    android:padding="6.0dip"
+                    android:singleLine="true"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColorHint="@color/gray" />
+
+                <ImageButton
+                    android:id="@+id/btnSearchVoice"
+                    android:layout_width="@dimen/mic_search_size"
+                    android:layout_height="@dimen/mic_search_size"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/common_padding_small"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mic_voice" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:id="@+id/layout_category"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="@dimen/common_padding_large"
+                    android:src="@drawable/search_filter_category_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="@string/category"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/common_text_size_normal" />
+
+                <TextView
+                    android:id="@+id/txtCategory"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:drawablePadding="5.0dip"
+                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="@string/all"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/red_dark"
+                    android:textSize="@dimen/common_text_size_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:id="@+id/layout_brand"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="@dimen/common_padding_large"
+                    android:src="@drawable/search_filter_brand_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:text="@string/brand"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/common_text_size_normal" />
+
+                <TextView
+                    android:id="@+id/txtBrand"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:drawablePadding="5.0dip"
+                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:gravity="right"
+                    android:text="@string/all"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/red_dark"
+                    android:textSize="@dimen/common_text_size_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:id="@+id/layout_size"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="@dimen/common_padding_large"
+                    android:src="@drawable/search_filter_size_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:text="@string/size"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/common_text_size_normal" />
+
+                <TextView
+                    android:id="@+id/txtSize"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:drawablePadding="5.0dip"
+                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:gravity="right"
+                    android:text="@string/all"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/red_dark"
+                    android:textSize="@dimen/common_text_size_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="@dimen/common_padding_large"
+                    android:src="@drawable/search_filter_price_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:text="@string/price"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/common_text_size_normal" />
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.0"
+                    android:background="@drawable/layout_transparent_bg_gray_corner"
+                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="5.0dip"
+                    android:singleLine="true"
+                    android:textSize="@dimen/common_text_size_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:id="@+id/layout_condition"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:paddingRight="@dimen/common_padding_large"
+                    android:src="@drawable/search_filter_condition_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="@string/status"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/common_text_size_normal" />
+
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawablePadding="5.0dip"
+                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:gravity="right"
+                    android:text="@string/all"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/red_dark"
+                    android:textSize="@dimen/common_text_size_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="vertical"
+                android:paddingLeft="30.0dip"
+                android:paddingRight="30.0dip"
+                android:paddingTop="20.0dip">
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_disable_button"
+                    android:minHeight="45.0dip"
+                    android:text="@string/search"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/common_text_size_medium" />
+
+                <Button
+                    android:id="@+id/btnSearchGuide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/common_btn_height_small"
+                    android:layout_marginTop="@dimen/common_padding_medium"
+                    android:background="@drawable/layout_transparent_bg_red_corner"
+                    android:paddingLeft="@dimen/common_padding_medium"
+                    android:paddingRight="@dimen/common_padding_medium"
+                    android:text="@string/search_guide"
+                    android:textAllCaps="false"
+                    android:textColor="@color/red_dark"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
