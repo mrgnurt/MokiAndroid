@@ -23,7 +23,14 @@ public final class LoadImageUtils {
     public static void loadImageFromUrl(String url, final ImageView imgView, final OnLoadImageListener listener) {
         Picasso.with(BaseApp.getContext())
                 .load(url)
-                .placeholder(R.drawable.image_placeholder)
+                .placeholder(R.drawable.no_image)
+                .into(imgView, listener);
+    }
+
+    public static void loadImageFromUrl(String url, int placeholder, final ImageView imgView, final OnLoadImageListener listener) {
+        Picasso.with(BaseApp.getContext())
+                .load(url)
+                .placeholder(placeholder)
                 .into(imgView, listener);
     }
 

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.coho.moki.BaseApp;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -263,6 +264,48 @@ public class Utils {
             //noinspection deprecation
             return context.getResources().getColor(id);
         }
+    }
+
+    public static String formatTime(String time) {
+        StringBuilder res = new StringBuilder();
+        String minuteAgo = " phút trước";
+        String hourAgo = " giờ trước";
+        String dayAgo = " ngày trước";
+        String yearAgo = " năm trước";
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diff = new Date().getTime() - date.getTime(); // return diff in microseconds
+        long diffSeconds = diff / 1000;
+        long diffMinutes = diffSeconds / 60;
+        long diffHours = diffMinutes / 60;
+        long diffDays = diffHours / 24;
+        long diffYears = diffDays /365;
+        if (diffSeconds < 60) {
+             res.append("vừa xong");
+        } else if (diffMinutes < 60) {
+            res.append(diffMinutes).append(minuteAgo);
+        } else if (diffHours < 24) {
+            res.append(diffHours).append(hourAgo);
+        } else if (diffDays < 365){
+            res.append(diffDays).append(dayAgo);
+        } else {
+            res.append(diffYears).append(yearAgo);
+        }
+        return res.toString();
+    }
+
+    public static String formatPrice(String price) {
+        StringBuilder res = new StringBuilder();
+        String pattern = "#,###";
+        DecimalFormat df = new DecimalFormat(pattern);
+        df.setGroupingSize(3);
+        res.append(df.format(Double.parseDouble(price)));
+        return res.append(" VNĐ").toString();
     }
 
     public static Bitmap getBitmapFromResource(Context context, int resId) {

@@ -18,10 +18,10 @@ import java.util.List;
 
 public class ImagePagerAdapter extends PagerAdapter {
 
-    private List<Integer> imgList;
+    private List<String> imgList;
     private LayoutInflater inflater;
 
-    public ImagePagerAdapter(Context context, List<Integer> imgList) {
+    public ImagePagerAdapter(Context context, List<String> imgList) {
         this.imgList = imgList;
         this.inflater = LayoutInflater.from(context);
     }
@@ -40,7 +40,8 @@ public class ImagePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = inflater.inflate(R.layout.image_item, container, false);
         ImageView imgView = view.findViewById(R.id.imgItem);
-        LoadImageUtils.loadImageFromDrawable(imgList.get(position), imgView);
+//        LoadImageUtils.loadImageFromDrawable(imgList.get(position), imgView);
+        LoadImageUtils.loadImageFromUrl(imgList.get(position), imgView, null);
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

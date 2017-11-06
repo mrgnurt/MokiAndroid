@@ -19,6 +19,8 @@ import com.coho.moki.service.LoginService;
 import com.coho.moki.service.LoginServiceImpl;
 import com.coho.moki.ui.login.LoginPresenter;
 import com.coho.moki.ui.login.LoginPresenterImpl;
+import com.coho.moki.ui.product.ProductDetailPresenter;
+import com.coho.moki.ui.product.ProductDetailPresenterImpl;
 import com.coho.moki.ui.splash.SplashPresenter;
 import com.coho.moki.ui.splash.SplashPresenterImpl;
 
@@ -45,4 +47,11 @@ public class ActivityModule {
     LoginPresenter provideLoginPresenter(LoginPresenterImpl loginPresenter){
         return loginPresenter;
     }
+
+    @Singleton
+    @Provides
+    ProductDetailPresenter provideProductDetailPresenter(ProductDetailPresenterImpl productDetailPresenter) {
+        return productDetailPresenter;
+    }
+
 }

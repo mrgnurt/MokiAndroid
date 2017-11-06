@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.coho.moki.R;
 import com.coho.moki.data.model.ProductComment;
+import com.coho.moki.data.remote.ProductCommentResponse;
+import com.coho.moki.util.Utils;
+import com.coho.moki.util.network.LoadImageUtils;
 
 import java.util.List;
 
@@ -20,14 +23,14 @@ import java.util.List;
  * Created by Khanh Nguyen on 10/13/2017.
  */
 
-public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
+public class ProductCommentAdapter extends ArrayAdapter<ProductCommentResponse> {
 
     private static final String LOG_TAG = ProductCommentAdapter.class.getSimpleName();
 
     LayoutInflater mLayoutInflater;
-    List<ProductComment> mProductCommentList;
+    List<ProductCommentResponse> mProductCommentList;
 
-    public ProductCommentAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ProductComment> objects) {
+    public ProductCommentAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ProductCommentResponse> objects) {
         super(context, resource, objects);
         mLayoutInflater = LayoutInflater.from(context);
         this.mProductCommentList = objects;
@@ -56,11 +59,12 @@ public class ProductCommentAdapter extends ArrayAdapter<ProductComment> {
     }
 
     private void bindItem(ViewHolder viewHolder, int position) {
-        ProductComment p = mProductCommentList.get(position);
-        viewHolder.txtName.setText(p.getName());
-        viewHolder.imgAvatar.setImageResource(R.drawable.unknown_user);
-        viewHolder.txtComment.setText(p.getComment());
-        viewHolder.txtTime.setText("10 giờ trước");
+        ProductCommentResponse comment = mProductCommentList.get(position);
+        ProductCommentResponse.Poster poster = comment.getPoster();
+        viewHolder.txtName.setText(poster.getName());
+        LoadImageUtils.loadImageFromUrl(poster.getAvatar(), R.drawable.unknown_user, viewHolder.imgAvatar, null);
+        viewHolder.txtComment.setText(comment.getComment());
+        viewHolder.txtTime.setText(Utils.formatTime(comment.getCreated()));
         viewHolder.iconClock.setImageResource(R.drawable.icon_clock);
     }
 

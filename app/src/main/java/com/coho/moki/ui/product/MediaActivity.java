@@ -33,7 +33,7 @@ public class MediaActivity extends BaseActivity {
     @BindView(R.id.imgCancel)
     Button btnCancel;
 
-    private List<Integer> imgList;
+    private List<String> imgList;
 
     @Override
     public int setContentViewId() {
@@ -49,7 +49,7 @@ public class MediaActivity extends BaseActivity {
     public void initData() {
         // set list image
         Intent intent = getIntent();
-        imgList = intent.getIntegerArrayListExtra("listImage");
+        imgList = intent.getStringArrayListExtra("listImage");
         initImage();
     }
 
