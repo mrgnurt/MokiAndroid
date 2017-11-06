@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.ViewHolder.ListProductViewHolder;
+import com.coho.moki.callback.OnClickProductItemListenner;
+import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
@@ -27,11 +29,10 @@ import dagger.Provides;
 public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<Product> mProducts;
-    Fragment fm;
+    OnClickProductItemListenner mListener;
 
-    public ListProductAdapter(ArrayList<Product> products, Fragment fm){
+    public ListProductAdapter(ArrayList<Product> products){
         mProducts = products;
-        this.fm = fm;
     }
 
     @Override
@@ -41,15 +42,8 @@ public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         View view = layoutInflater.inflate(R.layout.product_item_small, parent, false);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context ctx = fm.getContext();
-                ctx.startActivity(new Intent(ctx, ProductDetailActivity.class));
-            }
-        });
-
         ListProductViewHolder viewHolder = new ListProductViewHolder(view);
+        viewHolder.setListener(mListener);
 
         return viewHolder;
     }
@@ -62,5 +56,28 @@ public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         return mProducts.size();
+    }
+
+    public void addListener(OnClickProductItemListenner listener){
+        mListener = listener;
+    }
+
+    public void insertLastItem(List<Product> products){
+
+        if (products != null && products.size() > 0){
+
+            int positionStart = mProducts.size();
+            mProducts.addAll(products);
+            notifyItemRangeInserted(positionStart, products.size());
+        }
+    }
+
+    public void insertHeadItem(List<Product> products){
+
+        if (products != null && products.size() > 0){
+
+            mProducts.addAll(0, products);
+            notifyItemRangeInserted(0, products.size());
+        }
     }
 }
