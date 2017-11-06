@@ -1,23 +1,29 @@
 package com.coho.moki.ui.fragment.ListProduct;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
+import com.coho.moki.callback.OnClickProductItemListenner;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.Brand;
 import com.coho.moki.data.model.Category;
+import com.coho.moki.data.model.Image;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.BrandResponceData;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.ImageResponseData;
 import com.coho.moki.data.remote.ProductSmallResponceData;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.util.SpaceItem;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -43,8 +49,8 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mRefreshLayout;
 
-    Category mCategory;
-    List<Product> mProducts;
+    ProductPagerFragment mProductPagerFragment;
+
     ListProductAdapter mListProductAdapter;
 
     ListProductContract.Presenter mPresenter;
@@ -61,9 +67,10 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 
     @Override
     protected void handleArguments(Bundle arguments) {
-        mCategory = arguments.getParcelable(AppConstant.CATEGORY_TAG);
+        Category category = arguments.getParcelable(AppConstant.CATEGORY_TAG);
         mPresenter = new ListProductPresenter();
         mPresenter.onAttach(this);
+        mPresenter.setCategory(category);
     }
 
     @Override
@@ -76,29 +83,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         super.initView();
         initRV();
         initRefreshLayout();
-//        showProducts();
-        final ProductPagerFragment productPagerFragment = ((ProductPagerFragment)getFragmentManager().findFragmentByTag("home"));
-        mRVProductList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-//                Log.d("trung", "dx" + dx);
-                Log.d("trung", "dy " + dy);
-
-                if (dy > 15){
-                    productPagerFragment.setVisibleButtonCamera(false);
-                }
-                else if (dy < -15){
-                    productPagerFragment.setVisibleButtonCamera(true);
-                }
-
-                int offsetScroll = recyclerView.computeVerticalScrollOffset();
-
-                if (offsetScroll < 3){
-                    productPagerFragment.setVisibleScrollableLayout(true);
-                }
-            }
-        });
+        getProducts();
+        mProductPagerFragment= (ProductPagerFragment) getFragmentManager().findFragmentByTag("home");
+        mRVProductList.addOnScrollListener(onScrollListener);
     }
 
     @Override
@@ -107,7 +94,8 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     }
 
     public void initRV(){
-        mProducts = new ArrayList<Product>();
+
+        mPresenter.initProducts();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRVProductList.setLayoutManager(gridLayoutManager);
 
@@ -115,24 +103,47 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         SpaceItem spaceItem = new SpaceItem(space);
         mRVProductList.addItemDecoration(spaceItem);
 
-//        ArrayList<Product> products = new ArrayList<Product>();
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-        mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-
-        mListProductAdapter = new ListProductAdapter(mProducts);
+        mListProductAdapter = new ListProductAdapter(mPresenter.getProducts());
         mRVProductList.setAdapter(mListProductAdapter);
+
+        mListProductAdapter.addListener(new OnClickProductItemListenner() {
+            @Override
+            public void onClick() {
+                startActivity(new Intent(BaseApp.getContext(), ProductDetailActivity.class));
+            }
+        });
     }
+
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener(){
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+//                Log.d("trung", "dx" + dx);
+//            Log.d("trung", "dy " + dy);
+
+            if (dy > 15){
+                mProductPagerFragment.setVisibleButtonCamera(false);
+            }
+            else if (dy < -15){
+                mProductPagerFragment.setVisibleButtonCamera(true);
+            }
+
+            int offsetScroll = recyclerView.computeVerticalScrollOffset();
+            Log.d("trung", "offset " + offsetScroll);
+            if (offsetScroll < 3){
+                mProductPagerFragment.setVisibleScrollableLayout(true);
+            }
+            else{
+                mProductPagerFragment.setVisibleScrollableLayout(false);
+            }
+        }
+    };
 
     public void initRefreshLayout(){
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+
                 refreshlayout.finishRefresh(2000);
             }
         });
@@ -140,54 +151,27 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-                mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-                mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-                mProducts.add(new Product("", "Đồ ăn cho bé", null, 50, 10, null, "", 100, 100));
-                mListProductAdapter.notifyDataSetChanged();
-                refreshlayout.finishLoadmore(2000);
+
+                mPresenter.callGetLoadMoreProducts();
             }
         });
     }
 
-    public void showProducts(){
-        mPresenter.callGetProductsService("", mCategory.getCategoryId(), "", "", "0", 6,
-                new ResponseListener<GetListProductResponceData>() {
-                    @Override
-                    public void onSuccess(GetListProductResponceData dataResponse) {
-                        createProducts(dataResponse.getProducts());
-                        mListProductAdapter.notifyDataSetChanged();
-                    }
+    public void getProducts(){
 
-                    @Override
-                    public void onFailure(String errorMessage) {
-
-                    }
-                });
+        mPresenter.callGetProducts();
     }
 
-    public void createProducts(ArrayList<ProductSmallResponceData> productSmallResponceDatas){
-        for (ProductSmallResponceData productSmallResponceData:
-             productSmallResponceDatas) {
-
-            List<BrandResponceData> brandResponceDatas = productSmallResponceData.getBrand();
-            List<Brand> brands = new ArrayList<>();
-            for (BrandResponceData brandResponceData: brandResponceDatas){
-                Brand brand = new Brand(brandResponceData.getId(), brandResponceData.getName());
-                brands.add(brand);
-            }
-
-            Product product = new Product(
-                    productSmallResponceData.getId(),
-                    productSmallResponceData.getName(),
-                    productSmallResponceData.getImage(),
-                    productSmallResponceData.getPrice(),
-                    productSmallResponceData.getPricePercent(),
-                    brands,
-                    productSmallResponceData.getDescribed(),
-                    productSmallResponceData.getLike(),
-                    productSmallResponceData.getComment());
-            mProducts.add(product);
-        }
+    public void showProducts(List<Product> products){
+        mListProductAdapter.insertLastItem(products);
     }
+
+    public void invisibleLoadMore(){
+        mRefreshLayout.finishLoadmore();
+    }
+
+    public void invisibleRefresh(){
+        mRefreshLayout.finishRefresh();
+    }
+
 }

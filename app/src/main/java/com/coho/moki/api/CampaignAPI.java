@@ -4,6 +4,7 @@ import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.GetListCampaignResponseData;
 import com.coho.moki.data.remote.GetListProductResponceData;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -16,5 +17,5 @@ import retrofit2.http.POST;
 
 public interface CampaignAPI {
     @POST("/campaigns")
-    Call<BaseResponse<GetListCampaignResponseData>> callGetListCampaign();
+    Call<BaseResponse<List<GetListCampaignResponseData>>> callGetListCampaign();
 }

@@ -8,6 +8,8 @@ import com.coho.moki.service.CampaignService;
 import com.coho.moki.service.CampaignServiceImpl;
 import com.coho.moki.service.ResponseListener;
 
+import java.util.List;
+
 /**
  * Created by trung on 02/11/2017.
  */
@@ -23,15 +25,14 @@ public class ProductPagerPresenter implements ProductPagerContract.Presenter {
 
     @Override
     public void onAttach(ProductPagerContract.View view) {
-        Log.d("trung", "vao day");
         mView = view;
     }
 
     @Override
     public void callServiceGetCampaigns() {
-        mCampaignService.getListCampaign(new ResponseListener<GetListCampaignResponseData>() {
+        mCampaignService.getListCampaign(new ResponseListener<List<GetListCampaignResponseData>>() {
             @Override
-            public void onSuccess(GetListCampaignResponseData dataResponse) {
+            public void onSuccess(List<GetListCampaignResponseData> dataResponse) {
 
             }
 

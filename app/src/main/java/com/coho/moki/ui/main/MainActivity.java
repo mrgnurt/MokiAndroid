@@ -3,10 +3,13 @@ package com.coho.moki.ui.main;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.util.AccountUntil;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
@@ -41,6 +45,9 @@ public class MainActivity extends BaseActivity implements MainView{
 
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
+
+//    @BindView(R.id.user_name)
+    TextView mTxtUserName;
 
 //    @BindView(R.id.side_menu_list)
     RecyclerView mRVSideMenu;
@@ -96,10 +103,21 @@ public class MainActivity extends BaseActivity implements MainView{
         mSlidingMenu.setBehindOffset(240);
         mSlidingMenu.setMenu(R.layout.side_menu);
         mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        initRv();
+
+        initMenu();
     }
 
-    public void initRv(){
+    private void showUserName(){
+        mTxtUserName.setText(AccountUntil.getUsername());
+    }
+
+    private void initMenu(){
+
+        mTxtUserName = (TextView) findViewById(R.id.user_name);
+        if (AccountUntil.getAccountId() != null){
+            showUserName();
+        }
+
         mRVSideMenu = (RecyclerView) findViewById(R.id.side_menu_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

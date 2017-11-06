@@ -18,14 +18,17 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
-        android:name=".ui.splash.SplashActivity"
-        android:theme="@style/SplashTheme">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <activity android:name=".ui.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.product.ProductDetailActivity"
@@ -40,12 +43,23 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.product.MediaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.UserRateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.ProductChatActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

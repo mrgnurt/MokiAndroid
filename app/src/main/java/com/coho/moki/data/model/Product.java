@@ -32,7 +32,7 @@ public class Product {
         this.imageUrls = imageUrls;
         this.price = price;
         this.pricePercent = pricePercent;
-        this.brand = brand;
+        this.brand = brands;
         this.description = description;
         this.numLike = numLike;
         this.numComment = numComment;
@@ -52,14 +52,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
     }
 
     public int getPrice() {
@@ -108,5 +100,13 @@ public class Product {
 
     public void setNumComment(int numComment) {
         this.numComment = numComment;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }

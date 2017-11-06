@@ -39,14 +39,6 @@ public class ProductSmallResponceData {
         this.name = name;
     }
 
-    public List<String> getImage() {
-        return image;
-    }
-
-    public void setImage(List<String> image) {
-        this.image = image;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -141,5 +133,13 @@ public class ProductSmallResponceData {
 
     public void setSeller(SellerResponceData seller) {
         this.seller = seller;
+    }
+
+    public List<String> getImage() {
+        return image;
+    }
+
+    public void setImage(List<String> image) {
+        this.image = image;
     }
 }

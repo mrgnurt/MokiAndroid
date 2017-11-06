@@ -1,25 +1,37 @@
 package com.coho.moki.ui.user;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Point;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.product.MediaActivity;
+import com.coho.moki.ui.product.UserRateActivity;
 import com.coho.moki.util.Utils;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -34,6 +46,15 @@ import ru.noties.scrollable.ScrollableLayout;
 public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     private static final String LOG_TAG = UserInfoActivity.class.getSimpleName();
+    private boolean isFirstCall = true;
+    private boolean isCollapse = true;
+
+    // not effect?
+    private int maxScroll = 272; // default height + 2 line = 252, + button height = 268, + line = ?
+    private int maxScrollButtonCollapse = maxScroll + 16;
+    private int heightStatusCollapse = 0;
+    private int defaultStatusHeight = 0;
+
 
     @BindView(R.id.bottomsheet)
     BottomSheetLayout bottomSheet;
@@ -120,6 +141,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     @BindView(R.id.tab3)
     TextView tab3;
 
+    @BindView(R.id.scroll_wrap_text)
+    ScrollView scrollWrapText;
 
     @Override
     public int setContentViewId() {
@@ -186,9 +209,150 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             }
         });
 
-        tab1.setOnClickListener(new TabsClickListener());
-        tab2.setOnClickListener(new TabsClickListener());
-        tab3.setOnClickListener(new TabsClickListener());
+        TabsClickListener tabsClickListener = new TabsClickListener();
+        tab1.setOnClickListener(tabsClickListener);
+        tab2.setOnClickListener(tabsClickListener);
+        tab3.setOnClickListener(tabsClickListener);
+
+        txtViewAllRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInfoActivity.this, UserRateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        StringBuilder status = new StringBuilder("Gấu bông chất lượng cao Hà Nội - ");
+
+        for (int i = 0; i < 5; ++i) {
+            status.append(status);
+        }
+
+        txtStatus.setText(status.toString());
+
+//         set text for txtStatus before, if number line of status > 2
+
+//        txtStatus.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                Log.d(LOG_TAG, "on layout change listener: " + getTextViewHeight(txtStatus));
+//                int currentLine = txtStatus.getLayout().getLineCount();
+//                if (currentLine <= 2) {
+//                    btnCollapse.setVisibility(View.GONE);
+//                    scrollableLayout.setMaxScrollY(maxScroll);
+//                    scrollableLayout.requestLayout();
+//                } else {
+//                    btnCollapse.setVisibility(View.VISIBLE);
+//                    btnCollapse.setText(getResources().getString(R.string.view_more));
+//                    scrollableLayout.setMaxScrollY(maxScrollButtonCollapse);
+//                    scrollableLayout.requestLayout();
+//                    txtStatus.setMaxLines(10);
+//                    txtStatus.requestLayout();
+//                    defaultStatusHeight = txtStatus.getMeasuredHeight();
+//                    Log.d(LOG_TAG, "defaultStatusHeight = " + defaultStatusHeight);
+//                    txtStatus.setMaxLines(2);
+//                    txtStatus.requestLayout();
+//                    heightStatusCollapse = txtStatus.getLayout().getHeight();
+//                    Log.d(LOG_TAG, "heightStatusCollapse = " + heightStatusCollapse);
+//                }
+//                isFirstCall = false;
+//            }
+//        });
+
+        txtStatus.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.d(LOG_TAG, "global layout change listener: " + getTextViewHeight(txtStatus));
+                if (isFirstCall) {
+                    int currentLine = txtStatus.getLayout().getLineCount();
+                    if (currentLine <= 2) {
+                        btnCollapse.setVisibility(View.GONE);
+                        scrollableLayout.setMaxScrollY(maxScroll);
+                        scrollableLayout.requestLayout();
+                    } else {
+                        btnCollapse.setVisibility(View.VISIBLE);
+                        btnCollapse.setText(getResources().getString(R.string.view_more));
+                        scrollableLayout.setMaxScrollY(maxScrollButtonCollapse);
+                        scrollableLayout.requestLayout();
+                        txtStatus.setMaxLines(10);
+                        txtStatus.requestLayout();
+                        defaultStatusHeight = txtStatus.getMeasuredHeight();
+                        Log.d(LOG_TAG, "defaultStatusHeight = " + defaultStatusHeight);
+                        txtStatus.setMaxLines(2);
+                        txtStatus.requestLayout();
+                        heightStatusCollapse = txtStatus.getLayout().getHeight();
+                        Log.d(LOG_TAG, "heightStatusCollapse = " + heightStatusCollapse);
+                    }
+                    isFirstCall = false;
+                }
+            }
+        });
+
+        btnCollapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isCollapse) {
+                    btnCollapse.setText(getResources().getString(R.string.view_more));
+                    txtStatus.setMaxLines(2);
+                    isCollapse = false;
+                    scrollableLayout.setMaxScrollY(maxScrollButtonCollapse);
+                    scrollableLayout.requestLayout();
+                } else {
+                    btnCollapse.setText(getResources().getString(R.string.collapse));
+                    txtStatus.setMaxLines(10);
+                    isCollapse = true;
+                    scrollableLayout.setMaxScrollY(maxScrollButtonCollapse + defaultStatusHeight - heightStatusCollapse);
+                    scrollableLayout.requestLayout();
+
+                    Log.d(LOG_TAG, "global layout change listener collapse false: " + getTextViewHeight(txtStatus));
+                }
+            }
+        });
+
+//        txtStatus.setMovementMethod(new ScrollingMovementMethod());
+
+//        scrollWrapText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                txtStatus.getParent().requestDisallowInterceptTouchEvent(false);
+//                return false;
+//            }
+//        });
+//
+//        txtStatus.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                txtStatus.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+
+    }
+
+    /**
+     * Get the TextView height before the TextView will render
+     * @param textView the TextView to measure
+     * @return the height of the textView
+     */
+    public  int getTextViewHeight(TextView textView) {
+        WindowManager wm =
+                (WindowManager) textView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int deviceWidth;
+
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            Point size = new Point();
+            display.getSize(size);
+            deviceWidth = size.x;
+        } else {
+            deviceWidth = display.getWidth();
+        }
+
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        textView.measure(widthMeasureSpec, heightMeasureSpec);
+        return textView.getMeasuredHeight();
     }
 
     private void setTabsStatus(int position) {
@@ -227,7 +391,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     }
 
     private class TabsClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             int position = -1;

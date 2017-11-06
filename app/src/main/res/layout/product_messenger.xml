@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navi_bar_height"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/navi_bar_height"
+                android:paddingRight="@dimen/navi_bar_height"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/common_text_size_medium"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txtHeaderRunning"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/navi_bar_height"
+                android:paddingRight="@dimen/navi_bar_height"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/common_text_size_medium"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/btnNavLeft"
+                android:layout_width="@dimen/navi_bar_height"
+                android:layout_height="@dimen/navi_bar_height"
+                android:layout_alignParentStart="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_back"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/btnNavRight"
+                android:layout_width="@dimen/navi_bar_height"
+                android:layout_height="@dimen/navi_bar_height"
+                android:layout_alignParentEnd="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:src="@drawable/ic_menu_horiz_more"
+                android:visibility="visible" />
+
+            <View
+                android:id="@+id/separatorLine"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_alignParentBottom="true"
+                android:background="@color/red_dark" />
+        </RelativeLayout>
+
+        <ru.noties.scrollable.ScrollableLayout
+            android:id="@+id/scrollable_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            app:scrollable_closeUpAnimationMillis="250"
+            app:scrollable_closeUpAnimatorInterpolator="@android:anim/accelerate_decelerate_interpolator"
+            app:scrollable_considerIdleMillis="125"
+            app:scrollable_defaultCloseUp="true"
+            app:scrollable_friction="0.075"
+            app:scrollable_scrollerFlywheel="false">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="200.0dip"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@color/red_dark"
+                    android:orientation="horizontal"
+                    android:padding="8.0dip">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/txtPrice"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="right"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTransaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/btnBade"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/layout_transparent_bg_red_corner"
+                        android:minHeight="0.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:text="@string/bade"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red_dark" />
+
+                    <Button
+                        android:id="@+id/btnBuyNow"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/layout_transparent_bg_red_corner"
+                        android:minHeight="0.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:text="@string/buy_now"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red_dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSeller"
+                    android:layout_width="match_parent"
+                    android:layout_height="50.0dip"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/layout_transparent_bg_red_corner"
+                        android:minHeight="0.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:text="@string/alert_cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red_dark" />
+
+                    <Button
+                        android:id="@+id/btnAgree"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/layout_transparent_bg_red_corner"
+                        android:minHeight="0.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:text="@string/alert_confirm_text_agree"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red_dark" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/messInstruct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center|top"
+                    android:lineSpacingExtra="@dimen/common_padding_small"
+                    android:text="@string/mess_instruct"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_medium"
+                    android:visibility="gone" />
+
+                <!--<ListView-->
+                <!--android:id="@+id/listView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:divider="@android:color/transparent"-->
+                <!--android:showDividers="none"-->
+                <!--android:stackFromBottom="true"-->
+                <!--android:transcriptMode="alwaysScroll" />-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@android:color/transparent"
+                    android:showDividers="none"
+                    android:stackFromBottom="true"
+                    android:transcriptMode="alwaysScroll" />
+            </FrameLayout>
+        </ru.noties.scrollable.ScrollableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/red_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0.0dip"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/common_padding_small"
+                android:layout_weight="1.0"
+                android:background="@drawable/input_frame"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5.0dip">
+
+                <EditText
+                    android:id="@+id/edtComment"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="25.0dip"
+                    android:layout_height="25.0dip"
+                    android:background="@drawable/close_icon"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSent"
+                android:layout_width="40.0dip"
+                android:layout_height="40.0dip"
+                android:layout_margin="@dimen/common_padding_small"
+                android:background="@drawable/send_comment_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/left_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginLeft="10.0dip"
+        android:background="@android:color/white"
+        android:choiceMode="singleChoice" />
+</android.support.v4.widget.DrawerLayout>

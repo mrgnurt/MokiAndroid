@@ -64,7 +64,6 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        Log.d("trung", "abc");
         mPresenter = new ProductPagerPresenter();
         mPresenter.onAttach(this);
     }
@@ -74,7 +73,8 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         super.initView();
         initTabLayout();
         showBannerSlider();
-        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
+        mPresenter.callServiceGetCampaigns();
+//        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
     }
 
     @Override
@@ -84,15 +84,15 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     }
 
     public void initTabLayout(){
-        categories.add(new Category("", "Tat ca"));
-        categories.add(new Category("59e96abffe038830efc1a71e", "Mien phi"));
-        categories.add(new Category("", "Be an"));
-        categories.add(new Category("2", "Be an"));
-        categories.add(new Category("3", "Be an"));
-        categories.add(new Category("4", "Be an"));
-        categories.add(new Category("5", "Be an"));
-        categories.add(new Category("6", "Be an"));
-        categories.add(new Category("7", "Be an"));
+        categories.add(new Category("", "Tất cả"));
+        categories.add(new Category("", "Miễn phí"));
+        categories.add(new Category("", "Bé ăn"));
+        categories.add(new Category("", "Bé mặc"));
+        categories.add(new Category("", "Bé ngủ"));
+        categories.add(new Category("", "Bé tắm"));
+        categories.add(new Category("", "Bé vệ sinh"));
+        categories.add(new Category("", "Bé khỏe - an toàn"));
+        categories.add(new Category("", "Bé đi ra ngoài"));
         CategoryPagerAdapter adapter = new CategoryPagerAdapter(getFragmentManager(), categories);
         mVPContent.setAdapter(adapter);
         mTLCategories.setupWithViewPager(mVPContent);
@@ -102,7 +102,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         @Override
         public void onScrollChanged(int y, int oldY, int maxY) {
             if (y == maxY) {
-                setVisibleScrollableLayout(false);
+//                setVisibleScrollableLayout(false);
             }
         }
     };
