@@ -7,10 +7,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
@@ -20,17 +21,22 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
-import com.coho.moki.ui.fragment.ProductPagerFragment;
 import com.coho.moki.util.AccountUntil;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements MainView{
+
+    @Inject
+    MainPresenter mMainPresenter;
 
     private Fragment currentDisplayFragment;
     private ProductPagerFragment productPagerFragment;
@@ -63,6 +69,9 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @BindView(R.id.iconAppName)
     View mIconAppName;
+
+    @BindView(R.id.topbar)
+    RelativeLayout mTopBar;
 
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
@@ -147,7 +156,7 @@ public class MainActivity extends BaseActivity implements MainView{
 //            this.currentDisplayFragment = showFragment;
 //        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.main_content, showFragment).commit();
+        fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
     private void showTopButton() {
@@ -172,5 +181,15 @@ public class MainActivity extends BaseActivity implements MainView{
         TextView textView = (TextView) v.findViewById(R.id.item_title);
         textView.setTextColor(Color.BLACK);
         mCurrentMenuIndex = index;
+    }
+
+    public void setVisibleTopBar(boolean visible){
+
+        if (visible) {
+            mTopBar.setVisibility(View.VISIBLE);
+        }
+        else {
+            mTopBar.setVisibility(View.GONE);
+        }
     }
 }

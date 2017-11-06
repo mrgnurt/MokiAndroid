@@ -1,5 +1,7 @@
 package com.coho.moki.data.remote;
 
+import java.util.List;
+
 /**
  * Created by trung on 17/10/2017.
  */
@@ -7,18 +9,18 @@ package com.coho.moki.data.remote;
 public class ProductSmallResponceData {
     private String id;
     private String name;
-    private String image;
-    private String price;
-    private String pricePercent;
-    private String brand;
+    private List<String> image;
+    private int price;
+    private int pricePercent;
+    private List<BrandResponceData> brand;
     private String described;
     private String created;
-    private String like;
-    private String comment;
-    private String isLiked;
-    private String isBlocked;
-    private String canEdit;
-    private String banned;
+    private int like;
+    private int comment;
+    private int isLiked;
+    private int isBlocked;
+    private int canEdit;
+    private int banned;
     private SellerResponceData seller;
 
     public String getId() {
@@ -37,35 +39,83 @@ public class ProductSmallResponceData {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getPricePercent() {
+    public int getPricePercent() {
         return pricePercent;
     }
 
-    public void setPricePercent(String pricePercent) {
+    public void setPricePercent(int pricePercent) {
         this.pricePercent = pricePercent;
     }
 
-    public String getBrand() {
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getComment() {
+        return comment;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
+
+    public int getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(int isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public int getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(int isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+
+    public int getCanEdit() {
+        return canEdit;
+    }
+
+    public void setCanEdit(int canEdit) {
+        this.canEdit = canEdit;
+    }
+
+    public int getBanned() {
+        return banned;
+    }
+
+    public void setBanned(int banned) {
+        this.banned = banned;
+    }
+
+    public List<BrandResponceData> getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(List<BrandResponceData> brand) {
         this.brand = brand;
     }
 
@@ -77,67 +127,19 @@ public class ProductSmallResponceData {
         this.described = described;
     }
 
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
-    public String getLike() {
-        return like;
-    }
-
-    public void setLike(String like) {
-        this.like = like;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getIsLiked() {
-        return isLiked;
-    }
-
-    public void setIsLiked(String isLiked) {
-        this.isLiked = isLiked;
-    }
-
-    public String getIsBlocked() {
-        return isBlocked;
-    }
-
-    public void setIsBlocked(String isBlocked) {
-        this.isBlocked = isBlocked;
-    }
-
-    public String getCanEdit() {
-        return canEdit;
-    }
-
-    public void setCanEdit(String canEdit) {
-        this.canEdit = canEdit;
-    }
-
-    public String getBanned() {
-        return banned;
-    }
-
-    public void setBanned(String banned) {
-        this.banned = banned;
-    }
-
     public SellerResponceData getSeller() {
         return seller;
     }
 
     public void setSeller(SellerResponceData seller) {
         this.seller = seller;
+    }
+
+    public List<String> getImage() {
+        return image;
+    }
+
+    public void setImage(List<String> image) {
+        this.image = image;
     }
 }

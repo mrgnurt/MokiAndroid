@@ -26,7 +26,8 @@
                 android:layout_height="@dimen/user_avatar_size_small"
                 android:scaleType="centerCrop"
                 app:siBorderColor="@color/gray"
-                app:siBorderWidth="1.0dip" />
+                app:siBorderWidth="1.0dip"
+                android:src="@drawable/unknown_user"/>
 
             <TextView
                 android:id="@+id/user_name"

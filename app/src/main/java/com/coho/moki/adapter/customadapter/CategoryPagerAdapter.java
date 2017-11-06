@@ -3,13 +3,12 @@ package com.coho.moki.adapter.customadapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.coho.moki.data.model.Category;
-import com.coho.moki.ui.fragment.ListProductFragment;
-import com.coho.moki.ui.fragment.ProductPagerFragment;
+import com.coho.moki.ui.fragment.ListProduct.ListProductFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by trung on 14/10/2017.
@@ -17,16 +16,16 @@ import java.util.ArrayList;
 
 public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Category> mCategories;
+    List<Category> mCategories;
 
-    public CategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+    public CategoryPagerAdapter(FragmentManager fm, List<Category> categories) {
         super(fm);
         mCategories = categories;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new ListProductFragment();
+        return ListProductFragment.newInstance(mCategories.get(position));
     }
 
     @Override

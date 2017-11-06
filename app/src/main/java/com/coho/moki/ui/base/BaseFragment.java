@@ -51,6 +51,7 @@ public abstract class BaseFragment extends Fragment {
     private View createRootView(LayoutInflater inflater, ViewGroup container) {
         rootView = (ViewGroup) inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
+        initPresenter();
         initView();
         initData();
         return rootView;
@@ -75,6 +76,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected void initData() {
     }
+
+    protected void initPresenter(){}
 
     protected void reInitData() {
         if (isVisible()) {

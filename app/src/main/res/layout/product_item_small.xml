@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/ll_product_item_small">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -19,6 +20,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2.0dip"
+                android:scaleType="centerCrop"
                 android:src="@drawable/no_image" />
 
             <RelativeLayout
