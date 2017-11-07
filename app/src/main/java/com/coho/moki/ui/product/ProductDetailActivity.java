@@ -5,7 +5,6 @@ import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.BaseApp;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImageAdapter;
-import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.ui.base.BaseActivity;
@@ -23,7 +22,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,12 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import com.coho.moki.R;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -63,7 +59,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     @Inject
     ProductDetailPresenter mProductDetailPresenter;
 
-    private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
+    private static final String LOG_TAG = "ProductDetailActivity";
     private boolean isExpand = false;
     private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
     private static final Integer DESCRIPTION_EXPAND_MAX = 40;
@@ -168,12 +164,13 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         // load data from intent
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "5a0073061ca2a017f87d656f";
+        productId = "59e96a91fe038830efc153de";
     }
 
     @Override
     public void initData() {
         initFakeData();
+        Log.d(LOG_TAG, "get product detail remote");
         mProductDetailPresenter.getProductDetailRemote(token, productId);
         mProductDetailPresenter.getProductCommentRemote(productId);
     }
@@ -307,41 +304,41 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         scrollView.setZoomView(zoomView);
         scrollView.setScrollContentView(contentView);
 
-        View mRootView = scrollView.getPullRootView();
+        View rootView = scrollView.getPullRootView();
 
         // load view from content view
-        txtLike = mRootView.findViewById(R.id.txtLike);
-        txtComment = mRootView.findViewById(R.id.txtComment);
-        imgLike = mRootView.findViewById(R.id.imgLike);
-        imgAvatar = mRootView.findViewById(R.id.imgAvatar);
+        txtLike = rootView.findViewById(R.id.txtLike);
+        txtComment = rootView.findViewById(R.id.txtComment);
+        imgLike = rootView.findViewById(R.id.imgLike);
+        imgAvatar = rootView.findViewById(R.id.imgAvatar);
 
-        txtName = mRootView.findViewById(R.id.txtName);
-        txtScore = mRootView.findViewById(R.id.txtScore);
-        txtProduct = mRootView.findViewById(R.id.txtProduct);
-        dvDescription = mRootView.findViewById(R.id.dvDescription);
-        txtExpandable = mRootView.findViewById(R.id.txtExpandable);
-        txtTime = mRootView.findViewById(R.id.txtTime);
-        btnViewComment = mRootView.findViewById(R.id.btnViewComment);
-        llCategory = mRootView.findViewById(R.id.llCategory);
-        llBrand = mRootView.findViewById(R.id.llBrand);
-        txtBrand = mRootView.findViewById(R.id.txtBrand);
-        llSize = mRootView.findViewById(R.id.llSize);
-        txtSize = mRootView.findViewById(R.id.txtSize);
-        llWeight = mRootView.findViewById(R.id.llWeight);
-        txtWeight = mRootView.findViewById(R.id.txtWeight);
-        llDimension = mRootView.findViewById(R.id.llDimension);
-        txtDimension = mRootView.findViewById(R.id.txtDimension);
-        llProductStatus = mRootView.findViewById(R.id.llProductStatus);
-        txtProductStatus = mRootView.findViewById(R.id.txtProductStatus);
-        txtBuyPlace = mRootView.findViewById(R.id.txtBuyPlace);
-        imgThumb = mRootView.findViewById(R.id.imgThumb);
-        txtDescription = mRootView.findViewById(R.id.txtDescription);
-        btnPrevious = mRootView.findViewById(R.id.btnPrevious);
-        btnNext = mRootView.findViewById(R.id.btnNext);
-        iconClock = mRootView.findViewById(R.id.icon_clock);
-        iconNextArrow = mRootView.findViewById(R.id.icon_next_arrow);
-        layoutUserInfo = mRootView.findViewById(R.id.layout_user_info);
-        llCategoryParent = mRootView.findViewById(R.id.llCategoryParent);
+        txtName = rootView.findViewById(R.id.txtName);
+        txtScore = rootView.findViewById(R.id.txtScore);
+        txtProduct = rootView.findViewById(R.id.txtProduct);
+        dvDescription = rootView.findViewById(R.id.dvDescription);
+        txtExpandable = rootView.findViewById(R.id.txtExpandable);
+        txtTime = rootView.findViewById(R.id.txtTime);
+        btnViewComment = rootView.findViewById(R.id.btnViewComment);
+        llCategory = rootView.findViewById(R.id.llCategory);
+        llBrand = rootView.findViewById(R.id.llBrand);
+        txtBrand = rootView.findViewById(R.id.txtBrand);
+        llSize = rootView.findViewById(R.id.llSize);
+        txtSize = rootView.findViewById(R.id.txtSize);
+        llWeight = rootView.findViewById(R.id.llWeight);
+        txtWeight = rootView.findViewById(R.id.txtWeight);
+        llDimension = rootView.findViewById(R.id.llDimension);
+        txtDimension = rootView.findViewById(R.id.txtDimension);
+        llProductStatus = rootView.findViewById(R.id.llProductStatus);
+        txtProductStatus = rootView.findViewById(R.id.txtProductStatus);
+        txtBuyPlace = rootView.findViewById(R.id.txtBuyPlace);
+        imgThumb = rootView.findViewById(R.id.imgThumb);
+        txtDescription = rootView.findViewById(R.id.txtDescription);
+        btnPrevious = rootView.findViewById(R.id.btnPrevious);
+        btnNext = rootView.findViewById(R.id.btnNext);
+        iconClock = rootView.findViewById(R.id.icon_clock);
+        iconNextArrow = rootView.findViewById(R.id.icon_next_arrow);
+        layoutUserInfo = rootView.findViewById(R.id.layout_user_info);
+        llCategoryParent = rootView.findViewById(R.id.llCategoryParent);
 
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
@@ -353,15 +350,15 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         scrollView.setHeaderLayoutParams(localObject);
 
 //         load view from zoom view
-        frameImage = mRootView.findViewById(R.id.frameImage);
+        frameImage = rootView.findViewById(R.id.frameImage);
         frameImage.setVisibility(View.VISIBLE);
-        viewPager = mRootView.findViewById(R.id.viewPager);
-        btnPrevious = mRootView.findViewById(R.id.btnPrevious);
-        btnNext = mRootView.findViewById(R.id.btnNext);
+        viewPager = rootView.findViewById(R.id.viewPager);
+        btnPrevious = rootView.findViewById(R.id.btnPrevious);
+        btnNext = rootView.findViewById(R.id.btnNext);
 
 //        fake data
 //         set comment at here
-        listComment = mRootView.findViewById(R.id.listComment);
+        listComment = rootView.findViewById(R.id.listComment);
 //        List<ProductComment> productCommentList = new ArrayList<>();
 //        productCommentList.add(new ProductComment("Khanh", "My first comment: Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao: Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao"));
 //        productCommentList.add(new ProductComment("Khanh", "My first comment 2"));
@@ -398,12 +395,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             }
         });
 
-        btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCustomDialog();
-            }
-        });
+//        btnMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showCustomDialog();
+//            }
+//        });
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -421,7 +418,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         startActivity(intent);
     }
 
-    private void showCustomDialog() {
+    @OnClick(R.id.btnNavRight)
+    public void showCustomDialog() {
 //        final Dialog dialog = new Dialog(this, R.style.full_screen_dialog); // other solution for full screen dialog
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

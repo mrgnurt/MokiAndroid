@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class ProductDetailServiceImpl implements ProductDetailService {
 
-    private static final String LOG_TAG = ProductDetailServiceImpl.class.getSimpleName();
+    private static final String LOG_TAG = "PdDetailServiceImpl";
 
     @Inject
     public ProductDetailServiceImpl() {}

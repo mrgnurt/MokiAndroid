@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +24,8 @@ import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.util.AccountUntil;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 

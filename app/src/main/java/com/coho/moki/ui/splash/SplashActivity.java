@@ -35,9 +35,6 @@ public class SplashActivity extends BaseActivity implements SplashView {
         mSplashPresenter.onAttach(this);
         mSplashPresenter.checkUserLogin();
 
-//        Log.d("Token device:", FirebaseInstanceId.getInstance().getToken());
-//        FirebaseMessaging.getInstance().subscribeToTopic("news");
-
     }
 
     @Override

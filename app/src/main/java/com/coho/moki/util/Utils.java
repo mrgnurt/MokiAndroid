@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -20,7 +21,9 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -270,6 +273,8 @@ public class Utils {
         StringBuilder res = new StringBuilder();
         String minuteAgo = " phút trước";
         String hourAgo = " giờ trước";
+        String current = "vừa xong";
+        String yesterday = "hôm qua";
         String dayAgo = " ngày trước";
         String yearAgo = " năm trước";
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -279,19 +284,25 @@ public class Utils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long diff = new Date().getTime() - date.getTime(); // return diff in microseconds
-        long diffSeconds = diff / 1000;
+        long diffMilliSecond = new Date().getTime() - date.getTime(); // return diff in milliseconds
+        long diffSeconds = diffMilliSecond / 1000;
         long diffMinutes = diffSeconds / 60;
         long diffHours = diffMinutes / 60;
         long diffDays = diffHours / 24;
-        long diffYears = diffDays /365;
+        long diffYears = diffDays / 365;
         if (diffSeconds < 60) {
-             res.append("vừa xong");
+             res.append(current);
         } else if (diffMinutes < 60) {
             res.append(diffMinutes).append(minuteAgo);
         } else if (diffHours < 24) {
             res.append(diffHours).append(hourAgo);
-        } else if (diffDays < 365){
+        } else if (diffDays == 1) {
+            res.append(yesterday);
+        }
+        else if (diffDays < 365){
+            if (diffDays < 2) {
+
+            }
             res.append(diffDays).append(dayAgo);
         } else {
             res.append(diffYears).append(yearAgo);
@@ -301,7 +312,7 @@ public class Utils {
 
     public static String formatPrice(String price) {
         StringBuilder res = new StringBuilder();
-        String pattern = "#,###";
+        String pattern = "#,#";
         DecimalFormat df = new DecimalFormat(pattern);
         df.setGroupingSize(3);
         res.append(df.format(Double.parseDouble(price)));
@@ -324,6 +335,32 @@ public class Utils {
         // RECREATE THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
         return resizedBitmap;
+    }
+
+    /**
+     * Get the TextView height before the TextView will render
+     * @param textView the TextView to measure
+     * @return the height of the textView
+     */
+    public static int getTextViewHeight(TextView textView) {
+        WindowManager wm =
+                (WindowManager) textView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int deviceWidth;
+
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            Point size = new Point();
+            display.getSize(size);
+            deviceWidth = size.x;
+        } else {
+            deviceWidth = display.getWidth();
+        }
+
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        textView.measure(widthMeasureSpec, heightMeasureSpec);
+        return textView.getMeasuredHeight();
     }
 
 }

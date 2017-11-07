@@ -27,6 +27,16 @@
             </intent-filter>
         </activity>
 
+        <!--<activity-->
+            <!--android:name=".ui.user.UserInfoActivity"-->
+            <!--android:theme="@style/SplashTheme">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <!-- [START firebase_service] -->
         <service
             android:name=".pushnontification.MyFirebaseMessagingService">
