@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
-import com.coho.moki.ui.product.UserRateActivity;
 import com.coho.moki.util.Utils;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.github.siyamed.shapeimageview.CircularImageView;

@@ -10,6 +10,8 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
+        <include layout="@layout/nav_bar_custom"/>
+
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="0.0dip"
@@ -182,7 +184,7 @@
                             android:gravity="right"
                             app:kswAnimationDuration="300"
                             app:kswBackDrawable="@drawable/ios_back_drawable"
-                            app:kswBackMeasureRatio="1.5"
+                            app:kswThumbRangeRatio="1.5"
                             app:kswThumbDrawable="@drawable/ios_thumb"
                             app:kswThumbMarginBottom="-10.0dip"
                             app:kswThumbMarginLeft="-5.5dip"
@@ -240,7 +242,7 @@
                                 android:gravity="right"
                                 app:kswAnimationDuration="300"
                                 app:kswBackDrawable="@drawable/ios_back_drawable"
-                                app:kswBackMeasureRatio="1.5"
+                                app:kswThumbRangeRatio="1.5"
                                 app:kswThumbDrawable="@drawable/ios_thumb"
                                 app:kswThumbMarginBottom="-10.0dip"
                                 app:kswThumbMarginLeft="-5.5dip"
@@ -299,7 +301,7 @@
                                 android:gravity="right"
                                 app:kswAnimationDuration="300"
                                 app:kswBackDrawable="@drawable/ios_back_drawable"
-                                app:kswBackMeasureRatio="1.5"
+                                app:kswThumbRangeRatio ="1.5"
                                 app:kswThumbDrawable="@drawable/ios_thumb"
                                 app:kswThumbMarginBottom="-10.0dip"
                                 app:kswThumbMarginLeft="-5.5dip"

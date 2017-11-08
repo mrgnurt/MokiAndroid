@@ -41,7 +41,7 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
             @Override
             public void onSuccess(ProductDetailResponse dataResponse) {
                 Log.d(LOG_TAG, dataResponse.toString());
-                mProductDetailView.fetchData(dataResponse);
+                mProductDetailView.setData(dataResponse);
             }
 
             @Override

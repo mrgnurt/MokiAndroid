@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ProductDetailView {
 
-    public void fetchData(ProductDetailResponse productDetailResponse);
+    public void setData(ProductDetailResponse productDetailResponse);
 
     public void setProductComment(List<ProductCommentResponse> productCommentResponse);
 

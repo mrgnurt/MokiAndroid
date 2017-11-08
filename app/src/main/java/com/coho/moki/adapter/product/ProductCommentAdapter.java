@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ProductCommentAdapter extends ArrayAdapter<ProductCommentResponse> {
 
-    private static final String LOG_TAG = "ProductCommentAdapter";
+    private static final String TAG = "ProductCommentAdapter";
 
     LayoutInflater mLayoutInflater;
     List<ProductCommentResponse> mProductCommentList;

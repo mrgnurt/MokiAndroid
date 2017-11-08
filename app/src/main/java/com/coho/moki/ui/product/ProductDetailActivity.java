@@ -39,6 +39,7 @@ import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,15 +60,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     @Inject
     ProductDetailPresenter mProductDetailPresenter;
 
-    private static final String LOG_TAG = "ProductDetailActivity";
+    private static final String TAG = "ProductDetailActivity";
     private boolean isExpand = false;
     private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
     private static final Integer DESCRIPTION_EXPAND_MAX = 40;
     private boolean isFirstSetDocument = true;
 
     // bind view from product_detail
+//    @BindView(R.id.bottom_sheet)
+//    BottomSheetLayout bottomSheet;
+
     @BindView(R.id.bottom_sheet)
-    BottomSheetLayout bottomSheet;
+    LinearLayout bottomSheet;
 
     @BindView(R.id.product_layout)
     LinearLayout productLayout;
@@ -148,29 +152,17 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @Override
     public void initView() {
+        Log.d(TAG, "initView");
         BaseApp.getActivityComponent().inject(this);
         mProductDetailPresenter.onAttach(this);
         loadViewForCode();
-
-//        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
-//        mActionBar.setDisplayShowHomeEnabled(false);
-//        mActionBar.setDisplayShowTitleEnabled(false);
-//        LayoutInflater mInflater = LayoutInflater.from(this);
-//        View mCustomView = mInflater.inflate(R.layout.navigation_bar, null);
-//        mActionBar.setCustomView(mCustomView);
-//        mActionBar.setDisplayShowCustomEnabled(true);
-
-        // load data from API
-
-        // load data from intent
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "59e96a91fe038830efc153de";
+        productId = "5a015ba597180d170c6919bd";
     }
 
     @Override
     public void initData() {
-        initFakeData();
-        Log.d(LOG_TAG, "get product detail remote");
+//        initFakeData();
         mProductDetailPresenter.getProductDetailRemote(token, productId);
         mProductDetailPresenter.getProductCommentRemote(productId);
     }
@@ -187,7 +179,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtScore.setText(": 0");
         txtProduct.setText(": 3");
         txtTime.setText("2 giờ trước");
+
         txtExpandable.setVisibility(View.VISIBLE);
+//        dvDescription.setText("dfidgfidgjfg ifgfg fdfd");
         dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao" +
                 "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao"
         );
@@ -238,61 +232,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         salePrice.setVisibility(View.VISIBLE);
         salePrice.setText("1,000,000 VNĐ");
         salePrice.setPaintFlags(salePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-//        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
-//        dvDescription.requestLayout();
-//        Log.d(LOG_TAG, "dv line count before: " + dvDescription.getLayout().getLineCount());
-
-        // check this code again
-//        dvDescription.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                Log.d(LOG_TAG, "dv line count: " + dvDescription.getLayout().getLineCount());
-//                if (dvDescription.getLayout().getLineCount() <= 2) {
-//                    txtExpandable.setVisibility(View.INVISIBLE);
-//                } else {
-//                    txtExpandable.setVisibility(View.VISIBLE);
-//                }
-//                dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTON_NO_EXPAND_MAX);
-//                dvDescription.requestLayout();
-//                Log.d(LOG_TAG, "dv line count after: " + dvDescription.getLayout().getLineCount());
-//                // after first call, remove listener on dvDescription
-//                dvDescription.removeOnLayoutChangeListener(this);
-//            }
-//        });
-
-        dvDescription.setOnLayoutProgressListener(new DocumentView.ILayoutProgressListener() {
-            @Override
-            public void onCancelled() {
-                Log.d(LOG_TAG, "dv cancel");
-            }
-
-            @Override
-            public void onFinish() {
-                Log.d(LOG_TAG, "dv finish");
-                if (isFirstSetDocument) {
-                    Log.d(LOG_TAG, "dv update : line count : " + dvDescription.getLayout().getLineCount());
-                    if (dvDescription.getLayout().getLineCount() > 2) {
-                        txtExpandable.setVisibility(View.VISIBLE);
-                        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
-                        dvDescription.requestLayout();
-                    } else {
-                        txtExpandable.setVisibility(View.INVISIBLE);
-                    }
-                    isFirstSetDocument = false;
-                }
-            }
-
-            @Override
-            public void onStart() {
-                Log.d(LOG_TAG, "dv start");
-            }
-
-            @Override
-            public void onProgressUpdate(float progress) {
-                Log.d(LOG_TAG, "dv update");
-            }
-        });
 
     }
 
@@ -356,17 +295,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnPrevious = rootView.findViewById(R.id.btnPrevious);
         btnNext = rootView.findViewById(R.id.btnNext);
 
-//        fake data
-//         set comment at here
         listComment = rootView.findViewById(R.id.listComment);
-//        List<ProductComment> productCommentList = new ArrayList<>();
-//        productCommentList.add(new ProductComment("Khanh", "My first comment: Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao: Gấu Bông Chất Lượng Cao - Gấu Bông Chất Lượng Cao"));
-//        productCommentList.add(new ProductComment("Khanh", "My first comment 2"));
-//        productCommentList.add(new ProductComment("Khanh", "My first comment 3"));
-//        ProductCommentAdapter commentAdapter = new ProductCommentAdapter(this, R.layout.product_comment_item, productCommentList);
-//        listComment.setAdapter(commentAdapter);
-////         This actually do the magic
-//        listComment.setExpanded(true);
 
         layoutUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -374,33 +303,23 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 clickUserInfo();
             }
         });
-
         txtExpandable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "txtExpandable clicked");
                 if (!isExpand) {
                     txtExpandable.setText(getResources().getString(R.string.collapse));
                     dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
                     dvDescription.requestLayout();
                     isExpand = true;
-                    Log.d(LOG_TAG, "expand: line count = " + dvDescription.getLayout().getLineCount());
                 } else {
                     txtExpandable.setText(getResources().getString(R.string.view_more));
                     dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
                     dvDescription.requestLayout();
                     isExpand = false;
-                    Log.d(LOG_TAG, "un expand: line count = " + dvDescription.getLayout().getLineCount());
                 }
             }
         });
 
-//        btnMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showCustomDialog();
-//            }
-//        });
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -410,6 +329,47 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 startActivity(intent);
             }
         });
+
+        dvDescription.setOnLayoutProgressListener(new DocumentView.ILayoutProgressListener() {
+            @Override
+            public void onCancelled() {
+                Log.d(TAG, "dv cancel");
+            }
+
+            @Override
+            public void onFinish() {
+                Log.d(TAG, "dv finish");
+                if (isFirstSetDocument) {
+                    Log.d(TAG, "dv update : line count : " + dvDescription.getLayout().getLineCount());
+                    if (dvDescription.getLayout().getLineCount() > 2) {
+                        txtExpandable.setVisibility(View.VISIBLE);
+                        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
+                        dvDescription.requestLayout();
+                    } else {
+                        txtExpandable.setVisibility(View.INVISIBLE);
+                    }
+                    isFirstSetDocument = false;
+                }
+            }
+
+            @Override
+            public void onStart() {
+                Log.d(TAG, "dv start");
+            }
+
+            @Override
+            public void onProgressUpdate(float progress) {
+                Log.d(TAG, "dv update");
+            }
+        });
+
+        btnViewComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductDetailActivity.this, ProductCommentActivity.class));
+            }
+        });
+
 
     }
 
@@ -441,7 +401,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void fetchData(final ProductDetailResponse response) {
+    public void setData(final ProductDetailResponse response) {
         txtLike.setText(response.getLike().toString());
         txtComment.setText(response.getComment().toString());
         if (response.getIsLiked() == 0) {
@@ -449,17 +409,27 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         } else {
             LoadImageUtils.loadImageFromDrawable(R.drawable.icon_like_on, imgLike);
         }
-        // name ?
         ProductDetailResponse.Seller seller = response.getSeller();
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
         txtScore.setText(": " + response.getSeller().getScore());
         txtProduct.setText(": " + response.getSeller().getListing());
-        dvDescription.setText(response.getDescribed());
-        // format time ago
+        txtExpandable.setVisibility(View.VISIBLE);
+
+        dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao" +
+                "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao"
+        );
+        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+        dvDescription.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
+
+//        dvDescription.setText(response.getDescribed());
+//        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+//        dvDescription.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
+//        dvDescription.requestLayout();
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
         txtTime.setText(Utils.formatTime(response.getCreated()));
-        // load category...
-        // load comment
         Integer pricePercent = response.getPricePercent();
         Integer price = response.getPrice();
         if (price == null || price == 0) {
@@ -476,6 +446,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         Integer canEdit = response.getCanEdit();
         if (canEdit == 0) {
             btnBuy.setText(R.string.edit);
+            btnBuy.setVisibility(View.VISIBLE);
             btnBuy.setBackgroundResource(R.color.green_status);
         } else if (response.getIsBlocked() == 1) {
             btnBuy.setVisibility(View.GONE);
@@ -504,9 +475,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             txtDimension.setVisibility(View.VISIBLE);
         }
         List<ProductDetailResponse.Category> categoryList = response.getCategory();
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        );
         if (categoryList != null && categoryList.size() > 0) {
             llCategory.setVisibility(View.VISIBLE);
             llCategory.removeAllViews();
@@ -551,7 +519,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             public void afterTextChanged(Editable s) {
                 final int lineCount = txtHeader.getLayout().getLineCount();
                 if (lineCount > 1) {
-                    txtHeaderRunning.setText(response.getName());
+                    txtHeaderRunning.setText(Utils.toTitleCase(response.getName()));
                     txtHeaderRunning.setVisibility(View.VISIBLE);
                     txtHeaderRunning.setSelected(true);
                     txtHeader.setVisibility(View.GONE);
@@ -560,7 +528,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 }
             }
         });
-        txtHeader.setText(response.getName());
+        txtHeader.setText(Utils.toTitleCase(response.getName()));
         List<ProductDetailResponse.Size> size = response.getSize();
         if (size != null && size.size() > 0) {
             txtSize.setText(size.get(0).getName());
@@ -595,18 +563,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     private void loadImageViewPager(List<String> urlList) {
-        // fake data
         final List<String> imgList = urlList;
-//        imgList.add(R.drawable.hm01);
-//        imgList.add(R.drawable.hm02);
-//        imgList.add(R.drawable.hm03);
-//        imgList.add(R.drawable.hm04);
-//        imgList.add(R.drawable.hm05);
-
-        // not using fragment for view pager
-//        viewPager.setAdapter(new ProductImagePagerAdapter(ProductDetailActivity.this, imgList));
-
-        // using fragment for view pager
         viewPager.setAdapter(new ProductImageAdapter(getSupportFragmentManager(), imgList));
 
         if (imgList != null && imgList.size() > 1) {
@@ -656,11 +613,22 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void setProductComment(List<ProductCommentResponse> commentList) {
-        ProductCommentAdapter commentAdapter = new ProductCommentAdapter(this, R.layout.product_comment_item, commentList);
-        listComment.setAdapter(commentAdapter);
+    public void setProductComment(List<ProductCommentResponse > commentList) {
+        if (commentList != null && commentList.size() > 0) {
+            Collections.reverse(commentList);
+            int listSize = commentList.size();
+            listSize = listSize > 3 ? 3 : listSize;
+            ProductCommentAdapter commentAdapter = new ProductCommentAdapter(
+                    this, R.layout.product_comment_item, commentList.subList(0, listSize));
+            listComment.setAdapter(commentAdapter);
 //         This actually do the magic
-        listComment.setExpanded(true);
+            listComment.setExpanded(true);
+        }
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void onClickButtonNavLeft() {
+        onBackPressed();
     }
 
 }
