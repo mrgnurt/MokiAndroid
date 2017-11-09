@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:animateLayoutChanges="true">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
@@ -14,9 +14,9 @@
             android:layout_height="fill_parent">
 
             <!--<SurfaceView-->
-                <!--android:id="@+id/surfaceView"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent" />-->
+            <!--android:id="@+id/surfaceView"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
         </FrameLayout>
 
         <FrameLayout

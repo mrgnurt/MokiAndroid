@@ -1,9 +1,9 @@
 package com.coho.moki.ui.product;
 
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.coho.moki.ui.base.BaseActivity;
 
 import com.coho.moki.R;
+import com.coho.moki.ui.custom.CameraView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,10 +66,13 @@ public class CameraActivity extends BaseActivity {
     @BindView(R.id.imgCaptureVideo)
     ImageView imgCaptureVideo;
 
-    private boolean isCapturePhoto;
+    private boolean isCapturePhoto = true;
 
     private Camera mCamera = null;
     private CameraView mCameraView = null;
+    private int currentCameraType;
+    private boolean isSupportFlash;
+    private boolean isFlashOn;
 
     @Override
     public int setContentViewId() {
@@ -77,16 +81,24 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        try{
-            mCamera = Camera.open();//you can use open(int) to use different cameras
+        try {
+            mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);//you can use open(int) to use different cameras
+            currentCameraType = Camera.CameraInfo.CAMERA_FACING_BACK;
             Log.d(TAG, "open camera success");
-        } catch (Exception e){
-            Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to get camera: " + e.getMessage());
         }
 
-        if(mCamera != null) {
+        if (mCamera != null) {
             mCameraView = new CameraView(this, mCamera);//create a SurfaceView to show camera data
             preview.addView(mCameraView);//add the SurfaceView to the layout
+        }
+        isSupportFlash = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        if (!isSupportFlash) {
+            btnFlash.setVisibility(View.GONE);
+        } else {
+            btnFlash.setVisibility(View.VISIBLE);
+            isFlashOn = false;
         }
     }
 
@@ -135,6 +147,53 @@ public class CameraActivity extends BaseActivity {
     @OnClick(R.id.btnCancel)
     public void onClickButtonCancel() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.btnSwitch)
+    public void onClickButtonSwitch() {
+        // code to destroy surfaceview
+        if (mCamera != null) {
+            mCameraView.surfaceDestroyed(mCameraView.getHolder());
+            mCameraView.getHolder().removeCallback(mCameraView);
+            mCameraView.destroyDrawingCache();
+            preview.removeView(mCameraView);
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.release();
+            mCamera = null;
+        }
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+            if (Camera.getNumberOfCameras() < currentCameraType) {
+                currentCameraType = Camera.CameraInfo.CAMERA_FACING_BACK;
+            }
+            try {
+                mCamera.open(currentCameraType);
+                Log.d(TAG, "Open camera success");
+            } catch (Exception e) {
+                Log.d(TAG, "Failed to get camera: " + e.getMessage());
+            }
+            if (mCamera != null) {
+                mCameraView = new CameraView(this, mCamera);//create a SurfaceView to show camera data
+                preview.addView(mCameraView);//add the SurfaceView to the layout
+            }
+        }
+    }
+
+    @OnClick(R.id.btnFlash)
+    public void onClickButtonFlash() {
+        if (isSupportFlash && mCamera != null) {
+            Camera.Parameters params = mCamera.getParameters();
+            if (params != null && !isFlashOn) {
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                // need create new instance of camera and surfaceview?
+                mCamera.setParameters(params);
+                mCamera.startPreview();
+            } else {
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                mCamera.setParameters(params);
+                mCamera.startPreview();
+            }
+        }
     }
 
 }

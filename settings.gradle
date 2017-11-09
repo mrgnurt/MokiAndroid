@@ -1,1 +1,1 @@
-include ':SlidingMenu', ':app', ':pulltorefresh-and-loadmore'
+include ':SlidingMenu', ':app', ':pulltorefresh-and-loadmore', ':mediapicker'

@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.custom;
 
 import android.content.Context;
 
@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by Khanh Nguyen on 11/9/2017.
  */
 
-public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
+public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mHolder;
     private Camera mCamera;

@@ -123,4 +123,6 @@ public class AddProductActivity extends BaseActivity {
         onBackPressed();
     }
 
+    
+
 }
