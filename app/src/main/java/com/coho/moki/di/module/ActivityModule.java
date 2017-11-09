@@ -25,6 +25,8 @@ import com.coho.moki.ui.product_search.ProductSearchContract;
 import com.coho.moki.ui.product_search.ProductSearchPresenter;
 import com.coho.moki.ui.size.SizeContract;
 import com.coho.moki.ui.size.SizePresenter;
+import com.coho.moki.ui.product.ProductDetailPresenter;
+import com.coho.moki.ui.product.ProductDetailPresenterImpl;
 import com.coho.moki.ui.splash.SplashPresenter;
 import com.coho.moki.ui.splash.SplashPresenterImpl;
 
@@ -69,4 +71,11 @@ public class ActivityModule {
     SizeContract.Presenter provideSizePresenter(SizePresenter presenter){
         return presenter;
     }
+
+    @Singleton
+    @Provides
+    ProductDetailPresenter provideProductDetailPresenter(ProductDetailPresenterImpl productDetailPresenter) {
+        return productDetailPresenter;
+    }
+
 }

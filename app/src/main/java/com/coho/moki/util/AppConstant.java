@@ -11,4 +11,5 @@ public class AppConstant {
     public static final String MY_USERNAME = "MY_USERNAME";
 
     public static final String MY_AVATAR_URL = "MY_AVATAR_URL";
+
 }

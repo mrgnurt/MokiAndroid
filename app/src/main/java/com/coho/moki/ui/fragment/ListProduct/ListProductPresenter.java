@@ -2,6 +2,7 @@ package com.coho.moki.ui.fragment.ListProduct;
 
 import android.util.Log;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.Brand;
 import com.coho.moki.data.model.Category;
@@ -16,6 +17,7 @@ import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerContract;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerPresenter;
+import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
             @Override
             public void onFailure(String errorMessage) {
-
+                Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });
     }
@@ -72,7 +74,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
                     @Override
                     public void onFailure(String errorMessage) {
-
+                        Utils.toastShort(BaseApp.getContext(), errorMessage);
                     }
                 });
     }

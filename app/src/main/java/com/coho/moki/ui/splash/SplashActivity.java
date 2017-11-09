@@ -1,6 +1,7 @@
 package com.coho.moki.ui.splash;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
@@ -8,6 +9,8 @@ import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.util.AccountUntil;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import javax.inject.Inject;
 
@@ -31,6 +34,10 @@ public class SplashActivity extends BaseActivity implements SplashView {
         BaseApp.getActivityComponent().inject(this);
         mSplashPresenter.onAttach(this);
         mSplashPresenter.checkUserLogin();
+
+//        Log.d("Token device:", FirebaseInstanceId.getInstance().getToken());
+//        FirebaseMessaging.getInstance().subscribeToTopic("news");
+
     }
 
     @Override

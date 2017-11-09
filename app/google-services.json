@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "608695223928",
+    "firebase_url": "https://moki-17478.firebaseio.com",
+    "project_id": "moki-17478",
+    "storage_bucket": "moki-17478.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608695223928:android:5106c7c06924dc4f",
+        "android_client_info": {
+          "package_name": "com.coho.moki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608695223928-e7djjcc60dtq6kv23ls6pdbal684jlkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7gOiAbj7ADbAeuKpVWceedyrXmKRF-Tk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

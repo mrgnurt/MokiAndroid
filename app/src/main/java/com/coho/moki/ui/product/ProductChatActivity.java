@@ -1,5 +1,6 @@
 package com.coho.moki.ui.product;
 
+import android.os.AsyncTask;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductChatAdapter;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.model.ProductChatItem;
 import com.coho.moki.ui.base.BaseActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -36,7 +41,7 @@ import butterknife.BindView;
 
 public class ProductChatActivity extends BaseActivity {
 
-    private static final String LOG_TAG = Product.class.getSimpleName();
+    private static final String LOG_TAG = ProductChatActivity.class.getSimpleName();
 
     @BindView(R.id.img_product)
     ImageView imgProduct;
@@ -74,7 +79,7 @@ public class ProductChatActivity extends BaseActivity {
     List<ProductChatItem> chatItemList;
     ProductChatAdapter productChatAdapter;
 
-    private static final String CHAT_SERVER_URL = "http://chat.socket.io";
+//    private static final String CHAT_SERVER_URL = "http://chat.socket.io";
     private static final String NEW_MESSAGE = "receiveNewMessage";
 
     private boolean isConnected = true;
@@ -82,9 +87,6 @@ public class ProductChatActivity extends BaseActivity {
     String message = "message to server";
 
     private Socket mSocket;
-    {
-        initSocket();
-    }
 
     @Override
     public int setContentViewId() {
@@ -99,6 +101,7 @@ public class ProductChatActivity extends BaseActivity {
     @Override
     public void initData() {
         initFakeData();
+        initSocket();
     }
 
     private void initFakeData() {
@@ -134,16 +137,20 @@ public class ProductChatActivity extends BaseActivity {
 
     public void initSocket() {
         try {
-            mSocket = IO.socket(CHAT_SERVER_URL);
+            mSocket = IO.socket(AppConstant.BASEURL_TAG);
+            if (mSocket == null) {
+                Log.e(LOG_TAG, "mSocket is null");
+            } else {
+                mSocket.on(Socket.EVENT_CONNECT, onConnect);
+                mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+                mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+                mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+                mSocket.on(NEW_MESSAGE, onNewMessage);
+                mSocket.connect();
+            }
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            Log.e(LOG_TAG, "error socket: " + e.getMessage());
         }
-        mSocket.on(Socket.EVENT_CONNECT, onConnect);
-        mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.on(NEW_MESSAGE, onNewMessage);
-        mSocket.connect();
     }
 
     public void destroySocket() {

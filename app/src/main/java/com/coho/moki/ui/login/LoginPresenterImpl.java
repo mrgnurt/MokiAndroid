@@ -19,6 +19,7 @@ import javax.inject.Inject;
 public class LoginPresenterImpl implements LoginPresenter {
 
     LoginView mLoginView;
+
     LoginService mLoginService;
 
     @Inject

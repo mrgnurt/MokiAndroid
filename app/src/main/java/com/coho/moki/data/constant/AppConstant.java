@@ -7,7 +7,7 @@ package com.coho.moki.data.constant;
 public class AppConstant {
 
     //tag api request
-    public static final String BASEURL_TAG = "http://192.168.43.47:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.129:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -19,6 +19,11 @@ public class AppConstant {
     public static final String COUNT_TAG = "count";
     public static final String KEYWORD_TAG = "keyword";
     public static final String PRODUCT_SIZE_ID_TAG = "productSizeId";
+
+    public static final String TOKEN = "token";
+    public static final String ID = "id";
+
+    public static final String PRODUCT_ID = "productId";
 
     //tag app
     public static final String CATEGORY_TAG = "CATEGORY";
