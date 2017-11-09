@@ -41,11 +41,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public void openLoginActivity() {
         Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     @Override
     public void openMainActivity() {
         Intent intent = new Intent(BaseApp.getContext(), MainActivity.class);
         startActivity(intent);
+        this.finish();
     }
 }

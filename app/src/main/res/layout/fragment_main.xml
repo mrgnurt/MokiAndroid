@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlContainer"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
     <LinearLayout
@@ -31,7 +31,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scrollable_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/layout_category_list"
         android:scrollbars="none"
         app:scrollable_closeUpAnimationMillis="250"
@@ -48,32 +48,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
+            <ss.com.bannerslider.views.BannerSlider
+                android:id="@+id/banner_slider"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="trung"/>
+                android:layout_height="120dp"
+                app:loopSlides="true"
+                app:defaultIndicators="circle"
+                app:interval="2000" />
 
-            <!--<com.imbryk.viewPager.LoopViewPager-->
-            <!--android:id="@+id/campaign_pager"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="@dimen/campaign_banner_h"-->
-            <!--android:visibility="gone" />-->
-
-            <!--<com.viewpagerindicator.IconPageIndicator-->
-            <!--android:id="@+id/campaign_pager_indicator"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="20.0dip"-->
-            <!--android:layout_below="@+id/campaign_pager"-->
-            <!--android:layout_marginTop="-30.0dip"-->
-            <!--android:visibility="gone" />-->
         </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="120dp"-->
+                <!--android:src="@drawable/prof_bg"/>-->
+
+        <!--</RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -165,7 +164,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/content_viewpager"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </ru.noties.scrollable.ScrollableLayout>
 
@@ -189,16 +188,13 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="@dimen/_85sdp"
+        android:background="@drawable/sell_button"
         android:layout_alignParentBottom="true"
-        android:gravity="right">
+        android:layout_alignParentRight="true"/>
 
-        <Button
-            android:id="@+id/btnCamera"
-            android:layout_width="@dimen/_85sdp"
-            android:layout_height="@dimen/_85sdp"
-            android:background="@drawable/sell_button" />
-    </LinearLayout>
+
 </RelativeLayout>

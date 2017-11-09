@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/side_layout"
         android:layout_width="@dimen/side_layout_width"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -18,12 +18,12 @@
     <FrameLayout
         android:id="@+id/main_layout_container"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/white">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include
@@ -33,7 +33,7 @@
             <FrameLayout
                 android:id="@+id/main_content"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/topbar"
                 android:background="@android:color/white" />
         </RelativeLayout>

@@ -3,10 +3,13 @@ package com.coho.moki.ui.base;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 
 import com.coho.moki.BaseApp;
+import com.coho.moki.R;
 import com.coho.moki.di.component.ActivityComponent;
 import com.coho.moki.di.module.ActivityModule;
 import com.coho.moki.util.DebugLog;
@@ -32,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         setContentView(setContentViewId());
         ButterKnife.bind(this);
+        initPresenter();
         handleIntent(intent);
         initView();
         initData();
@@ -84,4 +88,14 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param intent
      */
     public void handleIntent(Intent intent) {}
+
+    public void initPresenter(){}
+
+    public void createCustomTitleBar() {
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.nav_bar_custom);
+        View view = getSupportActionBar().getCustomView();
+    }
+
 }

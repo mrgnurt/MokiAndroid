@@ -1,10 +1,14 @@
 package com.coho.moki.ui.login;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coho.moki.BaseApp;
@@ -36,6 +40,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.login_button)
     Button mButtonLogin;
 
+    @BindView(R.id.txtForgotPass)
+    TextView txtForgotPass;
+
     @OnClick(R.id.login_button)
     public void onClickLoginButton(){
         checkLoginInput();
@@ -55,6 +62,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void initView() {
         BaseApp.getActivityComponent().inject(this);
         mLoginPresenter.onAttach(this);
+        txtForgotPass.setPaintFlags(txtForgotPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        txtForgotPass.setText(R.string.forgot_pass);
     }
 
     @Override

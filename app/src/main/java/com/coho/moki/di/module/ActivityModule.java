@@ -19,6 +19,12 @@ import com.coho.moki.service.LoginService;
 import com.coho.moki.service.LoginServiceImpl;
 import com.coho.moki.ui.login.LoginPresenter;
 import com.coho.moki.ui.login.LoginPresenterImpl;
+import com.coho.moki.ui.main_search.MainSearchContract;
+import com.coho.moki.ui.main_search.MainSearchPresenter;
+import com.coho.moki.ui.product_search.ProductSearchContract;
+import com.coho.moki.ui.product_search.ProductSearchPresenter;
+import com.coho.moki.ui.size.SizeContract;
+import com.coho.moki.ui.size.SizePresenter;
 import com.coho.moki.ui.splash.SplashPresenter;
 import com.coho.moki.ui.splash.SplashPresenterImpl;
 
@@ -44,5 +50,23 @@ public class ActivityModule {
     @Provides
     LoginPresenter provideLoginPresenter(LoginPresenterImpl loginPresenter){
         return loginPresenter;
+    }
+
+    @Singleton
+    @Provides
+    MainSearchContract.Presenter provideMainSearchPresenter(MainSearchPresenter presenter){
+        return presenter;
+    }
+
+    @Singleton
+    @Provides
+    ProductSearchContract.Presenter provideProductSearchPresenter(ProductSearchPresenter presenter){
+        return presenter;
+    }
+
+    @Singleton
+    @Provides
+    SizeContract.Presenter provideSizePresenter(SizePresenter presenter){
+        return presenter;
     }
 }

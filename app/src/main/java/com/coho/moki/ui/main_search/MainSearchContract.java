@@ -8,10 +8,9 @@ import com.coho.moki.ui.base.BasePresenter;
 
 public interface MainSearchContract {
     interface View {
-
+        void openProductSearchActivity(String keyword, String sizeId);
     }
 
     interface Presenter extends BasePresenter<MainSearchContract.View> {
-
     }
 }

@@ -5,6 +5,54 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navi_bar_height"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/txtHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingLeft="@dimen/navi_bar_height"
+            android:paddingRight="@dimen/navi_bar_height"
+            android:maxLines="1"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/common_text_size_medium"
+            android:text="Tìm kiếm"/>
+
+        <ImageButton
+            android:id="@+id/btnNavLeft"
+            android:layout_width="@dimen/navi_bar_height"
+            android:layout_height="@dimen/navi_bar_height"
+            android:layout_alignParentStart="true"
+            android:adjustViewBounds="true"
+            android:background="@android:color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_back"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btnNavRight"
+            android:layout_width="@dimen/navi_bar_height"
+            android:layout_height="@dimen/navi_bar_height"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:background="@android:color/white"
+            android:src="@drawable/btn_delete"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separatorLine"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:layout_alignParentBottom="true"
+            android:background="@color/red_dark" />
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -84,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.0"
                     android:drawablePadding="5.0dip"
-                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:drawableRight="@drawable/icon_nextarrow_normal_right"
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
@@ -129,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.0"
                     android:drawablePadding="5.0dip"
-                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:drawableRight="@drawable/icon_nextarrow_normal_right"
                     android:gravity="right"
                     android:text="@string/all"
                     android:textAppearance="?android:textAppearanceMedium"
@@ -172,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.0"
                     android:drawablePadding="5.0dip"
-                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:drawableRight="@drawable/icon_nextarrow_normal_right"
                     android:gravity="right"
                     android:text="@string/all"
                     android:textAppearance="?android:textAppearanceMedium"
@@ -214,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.0"
                     android:background="@drawable/layout_transparent_bg_gray_corner"
-                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:drawableRight="@drawable/icon_arrow_down_right"
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:padding="5.0dip"
@@ -257,7 +305,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:drawablePadding="5.0dip"
-                    android:drawableRight="@drawable/icon_nextarrow_normal"
+                    android:drawableRight="@drawable/icon_nextarrow_normal_right"
                     android:gravity="right"
                     android:text="@string/all"
                     android:textAppearance="?android:textAppearanceMedium"

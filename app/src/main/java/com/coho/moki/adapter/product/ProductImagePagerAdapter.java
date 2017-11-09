@@ -1,15 +1,19 @@
 package com.coho.moki.adapter.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.coho.moki.R;
+import com.coho.moki.ui.product.MediaActivity;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,11 +46,14 @@ public class ProductImagePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = inflater.inflate(R.layout.slide_image, container, false);
         ImageView imgView = view.findViewById(R.id.imgItem);
-        imgView.setImageResource(imgList.get(position));
+        Picasso.with(context).load(imgList.get(position)).into(imgView);
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, MediaActivity.class);
+                ArrayList<Integer> mList = new ArrayList<>(imgList);
+                intent.putIntegerArrayListExtra("listImage", mList);
+                context.startActivity(intent);
             }
         });
         container.addView(view);

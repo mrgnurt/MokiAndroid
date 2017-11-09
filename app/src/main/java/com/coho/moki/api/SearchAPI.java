@@ -3,7 +3,9 @@ package com.coho.moki.api;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.SearchProductResponseData;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,5 +17,5 @@ import retrofit2.http.POST;
 
 public interface SearchAPI {
     @POST("/searches/products")
-    Call<BaseResponse<SearchProductResponseData>> callSearchProduct(@Body Map<String, String> tag);
+    Call<BaseResponse<List<SearchProductResponseData>>> callSearchProduct(@Body Map<String, Object> tag);
 }
