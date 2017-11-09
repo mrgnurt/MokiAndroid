@@ -45,38 +45,36 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     @Override
     public void callGetProducts() {
         convertDataResponsetoProducts(new ArrayList<ProductSmallResponceData>());
-//        mProductService.getListProduct("", mCategory.getCategoryId(), "", "", "0",
-//                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
-//            @Override
-//            public void onSuccess(GetListProductResponceData dataResponse) {
-//                convertDataResponsetoProducts(dataResponse.getProducts());
-//            }
-//
-//            @Override
-//            public void onFailure(String errorMessage) {
-//
-//            }
-//        });
+        mProductService.getListProduct("", mCategory.getCategoryId(), "", "", "0",
+                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
+            @Override
+            public void onSuccess(GetListProductResponceData dataResponse) {
+                convertDataResponsetoProducts(dataResponse.getProducts());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
     }
 
     @Override
     public void callGetLoadMoreProducts() {
-        convertDataResponsetoProducts(new ArrayList<ProductSmallResponceData>());
-        mView.invisibleLoadMore();
-//        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, "0",
-//                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
-//                    @Override
-//                    public void onSuccess(GetListProductResponceData dataResponse) {
-//                        convertDataResponsetoProducts(dataResponse.getProducts());
-//                        mLastId = dataResponse.getLastId();
-//                        mView.invisibleLoadMore();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String errorMessage) {
-//
-//                    }
-//                });
+        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, "0",
+                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
+                    @Override
+                    public void onSuccess(GetListProductResponceData dataResponse) {
+                        convertDataResponsetoProducts(dataResponse.getProducts());
+                        mLastId = dataResponse.getLastId();
+                        mView.invisibleLoadMore();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+
+                    }
+                });
     }
 
 
@@ -114,15 +112,6 @@ public class ListProductPresenter implements ListProductContract.Presenter {
             products.add(product);
 
         }
-
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-        products.add(new Product("", "dksk", null, 0, 0, null, "", 0, 0));
-
-
         mView.showProducts(products);
     }
 
