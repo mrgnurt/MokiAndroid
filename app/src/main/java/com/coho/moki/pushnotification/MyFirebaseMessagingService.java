@@ -1,4 +1,4 @@
-package com.coho.moki.pushnontification;
+package com.coho.moki.pushnotification;
 
 import android.util.Log;
 

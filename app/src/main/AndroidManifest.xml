@@ -41,9 +41,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="vn.tungdx.mediapicker.activities.MediaPickerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MediaPickerTheme" />
+
         <!-- [START firebase_service] -->
         <service
-            android:name=".pushnontification.MyFirebaseMessagingService">
+            android:name=".pushnotification.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
@@ -51,7 +56,7 @@
         <!-- [END firebase_service] -->
         <!-- [START firebase_iid_service] -->
         <service
-            android:name=".pushnontification.MyFirebaseInstanceIDService">
+            android:name=".pushnotification.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>

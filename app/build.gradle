@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+/* 1) Apply the Gradle Retrolambda Plugin */
+//apply plugin: 'me.tatarka.retrolambda'
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -10,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [appPackageName: "${applicationId}"]
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -18,6 +23,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    /* 2) Compile for Java 1.8 or greater */
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+
+    /* 3) Exclude duplicate licenses */
+//    packagingOptions {
+//        exclude 'META-INF/LICENSE.txt'
+//        exclude 'META-INF/LICENSE'
+//        exclude 'META-INF/NOTICE.txt'
+//        exclude 'META-INF/NOTICE'
+//        exclude 'META-INF/DEPENDENCIES'
+//        pickFirst 'AndroidManifest.xml'
+//    }
+
+    /* 4) Enable jumbo mode */
+//    dexOptions {
+//        jumboMode true
+//    }
 
 }
 
@@ -31,6 +57,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
     })
     compile 'com.android.support:appcompat-v7:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -79,6 +106,11 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:11.4.2'
     compile 'com.kyleduo.switchbutton:library:2.0.0'
     compile 'com.ss.bannerslider:bannerslider:1.8.0'
+
+    /* Add the CSDK framework dependencies (Make sure these version numbers are correct) */
+//    compile 'com.adobe.creativesdk.foundation:auth:0.9.1251'
+//    compile 'com.adobe.creativesdk:image:4.8.4'
+//    compile 'com.localytics.android:library:3.8.0'
 
     compile project(':SlidingMenu')
     compile project(':pulltorefresh-and-loadmore')

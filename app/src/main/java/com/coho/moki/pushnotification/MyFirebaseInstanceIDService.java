@@ -1,4 +1,4 @@
-package com.coho.moki.pushnontification;
+package com.coho.moki.pushnotification;
 
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
