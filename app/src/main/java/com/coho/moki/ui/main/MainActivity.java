@@ -28,6 +28,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.util.AccountUntil;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -196,6 +197,22 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void setViewItemMenuSelect(int index){
+
+
+        switch (index) {
+            case 9:
+                AccountUntil.removeInfoAccount();
+                Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
+            default:
+                closeSlidingMenu(index);
+                break;
+        }
+    }
+
+    private void closeSlidingMenu(int index){
         mSlidingMenu.toggle();
         View v = mRVSideMenu.getLayoutManager().findViewByPosition(mCurrentMenuIndex);
         TextView textView = (TextView) v.findViewById(R.id.item_title);
