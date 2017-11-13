@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr0" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr1" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr2" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr3" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr4" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr5" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr6" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr7" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr8" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr9" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr10" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr11" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr12" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr13" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr13" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr15" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr16" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr17" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr18" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr19" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr20" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr21" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr22" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr23" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr24" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr25" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr26" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr27" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr28" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr29" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr30" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr31" />
+    <item android:duration="@integer/loading_animation_time" android:drawable="@drawable/pr32" />
+</animation-list>
