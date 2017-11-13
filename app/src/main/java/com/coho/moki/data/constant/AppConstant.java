@@ -7,7 +7,7 @@ package com.coho.moki.data.constant;
 public class AppConstant {
 
     //tag api request
-    public static final String BASEURL_TAG = "http://192.168.1.129:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.50:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -33,5 +33,12 @@ public class AppConstant {
     public static final int COUNT_SEARCH_PRODUCT = 6;
     public static final int REQUEST_CODE_SIZE = 1;
     public static final int RESULT_CODE_SIZE = 2;
+
+    public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
+    public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";
+    public static final String SOCKET_UPDATE_MSG_STATUS = "update_message_status";
+    public static final String SOCKET_MESSAGE = "message";
+
+    public static final String NO_INTERNET = "Kiểm tra kết nối Internet";
 
 }
