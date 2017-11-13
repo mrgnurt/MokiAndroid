@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.adobe.creativesdk.aviary.AdobeImageIntent;
+//import com.adobe.creativesdk.aviary.AdobeImageIntent;
 import com.coho.moki.ui.base.BaseActivity;
 
 import com.coho.moki.R;
@@ -245,11 +245,11 @@ public class CameraActivity extends BaseActivity {
                     Uri uri = item.getUriOrigin();
                     /* 1) Create a new Intent */
                     if (uri != null) {
-                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
-                                .setData(uri) // Set in onActivityResult()
-                                .build();
-//                        /* 2) Start the Image Editor with request code 1 */
-                        startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
+//                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
+//                                .setData(uri) // Set in onActivityResult()
+//                                .build();
+////                        /* 2) Start the Image Editor with request code 1 */
+//                        startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
                     }
 
                 }
