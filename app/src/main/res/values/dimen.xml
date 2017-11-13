@@ -547,4 +547,9 @@
     <dimen name="user_avatar_size_small">60.0dip</dimen>
     <dimen name="_15sdp">15.0dip</dimen>
     <dimen name="_12sdp">12.0dip</dimen>
+    <dimen name="add_product_padding_left">10dp</dimen>
+    <dimen name="add_product_ic_size">25dp</dimen>
+    <dimen name="add_product_tv_padding_left">6dp</dimen>
+    <dimen name="add_product_switch_btn_size">50dp</dimen>
+    <dimen name="add_product_price_ic_size">37dp</dimen>
 </resources>

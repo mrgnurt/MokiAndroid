@@ -41,7 +41,7 @@ import butterknife.BindView;
 
 public class ProductChatActivity extends BaseActivity {
 
-    private static final String LOG_TAG = ProductChatActivity.class.getSimpleName();
+    private static final String LOG_TAG = "ProductChatActivity";
 
     @BindView(R.id.img_product)
     ImageView imgProduct;
