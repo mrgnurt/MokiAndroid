@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 public class ProductDetailPresenterImpl implements ProductDetailPresenter {
 
-    private static final String LOG_TAG = ProductDetailPresenterImpl.class.getSimpleName();
+    private static final String LOG_TAG = "PdDetailPresenterImpl";
 
     ProductDetailView mProductDetailView;
 
@@ -40,11 +40,12 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
 
     @Override
     public void getProductDetailRemote(String token, String productId) {
+        Log.d(LOG_TAG, "ProductDetailPresenterImpl");
         mProductDetailService.getProductDetailRemote(token, productId, new ResponseListener<ProductDetailResponse>() {
             @Override
             public void onSuccess(ProductDetailResponse dataResponse) {
                 Log.d(LOG_TAG, dataResponse.toString());
-                mProductDetailView.fetchData(dataResponse);
+                mProductDetailView.setData(dataResponse);
             }
 
             @Override

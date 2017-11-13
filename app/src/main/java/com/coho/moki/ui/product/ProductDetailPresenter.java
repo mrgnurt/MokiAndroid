@@ -1,6 +1,5 @@
 package com.coho.moki.ui.product;
 
-import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.ui.base.BasePresenter;
 
 /**
