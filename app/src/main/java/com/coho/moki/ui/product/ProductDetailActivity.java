@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -35,6 +36,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.coho.moki.ui.user.UserInfoActivity;
+import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
@@ -134,6 +136,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     private String productId;
     private String token;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mSellerName;
+
+    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
 
 
     @BindView(R.id.txtHeader)
@@ -340,8 +354,23 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (AccountUntil.getAccountId().equals(mSellerId)) {
+                    Log.d("i_am_seller", "La seller coi sp chinh no");
+                    return;
+                }
+
                 Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
+                Bundle data = new Bundle();
+                data.putString("partner_id", mPartnerId);
+                data.putString("partner_avatar", mPartnerAvatar);
+                data.putString("seller_name", mSellerName);
+                data.putString("seller_id", mSellerId);
+                data.putString("seller_avatar", mSellerAvatar);
+                data.putBoolean("is_owner_product", false);
+
+                intent.putExtra("package", data);
                 startActivity(intent);
             }
         });
@@ -434,6 +463,16 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             isLiked = true;
         }
         ProductDetailResponse.Seller seller = response.getSeller();
+
+        ///////////////////////////////////////////////////
+        mPartnerId = seller.getId();
+        mPartnerAvatar = seller.getAvatar();
+        mSellerId = seller.getId();
+        mSellerAvatar = seller.getAvatar();
+        mSellerName = seller.getName();
+        /////////////////////////////////////////////////
+
+
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
         txtScore.setText(": " + response.getSeller().getScore());

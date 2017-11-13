@@ -1,10 +1,12 @@
 package com.coho.moki.adapter.product;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
@@ -70,6 +72,7 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
         ImageView imgLeft;
         ImageView imgRight;
         TextView txtMessage;
+        LinearLayout messageLayout;
 
         String unKnownMessage = "Unknown message";
         int unKnownAvatarId = R.drawable.unknown_user;
@@ -80,6 +83,7 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
             imgLeft = itemView.findViewById(R.id.imgLeft);
             imgRight = itemView.findViewById(R.id.imgRight);
             txtMessage = itemView.findViewById(R.id.txtMessage);
+            messageLayout = itemView.findViewById(R.id.llMessage);
         }
 
         public void populate(ProductChatItem item) {
@@ -94,10 +98,12 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
             if (item.getRole() == ProductChatItem.SENDER) {
                 imgRight.setVisibility(View.VISIBLE);
                 imgLeft.setVisibility(View.INVISIBLE);
+                messageLayout.setGravity(Gravity.RIGHT);
                 LoadImageUtils.loadImageFromUrl(item.getAvatar(), imgRight, null);
             } else {
                 imgLeft.setVisibility(View.VISIBLE);
                 imgRight.setVisibility(View.INVISIBLE);
+                messageLayout.setGravity(Gravity.LEFT);
                 LoadImageUtils.loadImageFromUrl(item.getAvatar(), imgLeft, null);
             }
         }

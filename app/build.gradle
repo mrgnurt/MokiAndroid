@@ -15,6 +15,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [appPackageName: "${applicationId}"]
         multiDexEnabled true
+        applicationId "com.coho.moki"
     }
 
     buildTypes {

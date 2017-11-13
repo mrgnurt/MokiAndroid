@@ -1,6 +1,7 @@
 package com.coho.moki.ui.product;
 
-import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +21,17 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.model.ProductChatItem;
+import com.coho.moki.data.remote.Conversation;
+import com.coho.moki.data.remote.ConversationResponseData;
+import com.coho.moki.data.remote.ProductCons;
+import com.coho.moki.service.ConversationService;
+import com.coho.moki.service.ConversationServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.StringUtil;
 import com.coho.moki.util.Utils;
+import com.coho.moki.util.network.LoadImageUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +40,6 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-import java.io.Console;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,17 +92,40 @@ public class ProductChatActivity extends BaseActivity {
 
     ProductChatAdapter productChatAdapter;
 
+    ConversationService conversationService;
+
     private boolean isConnected = true;
 
     private Socket mSocket;
 
     private String mToken;
 
-    private String mReceiverId;
-
     private String mProductId;
 
+    private String mMyId;
+
+    private String mMyAvatar;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mSellerName;
+
+    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
+
     private String mSendToken;
+
+    private int currIndex;
+
+    private int limitPerLoad;
+
+    private ProductCons mProductCons;
+
 
     @Override
     public int setContentViewId() {
@@ -103,32 +133,33 @@ public class ProductChatActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() {
-
+    public void handleIntent(Intent intent) {
+        Bundle data = intent.getBundleExtra("package");
+        mPartnerId = data.getString("partner_id");
+        mPartnerAvatar = data.getString("partner_avatar");
+        mSellerName = data.getString("seller_name");
+        mSellerId = data.getString("seller_id");
+        mSellerAvatar = data.getString("seller_avatar");
+        isOwnerProduct = data.getBoolean("is_owner_product");
     }
 
     @Override
-    public void initData() {
-        initFakeData();
-    }
-
-    private void initFakeData() {
-        imgProduct.setImageResource(R.drawable.hm01);
-        txtName.setText("Gấu bông chất lượng cao");
-        txtPrice.setText("100,000 VNĐ");
+    public void initView() {
         btnNavRight.setBackgroundResource(R.drawable.ic_icon_message);
-        txtHeader.setText("Shop ABC");
-        llTransaction.setVisibility(View.VISIBLE);
-        messInstruct.setVisibility(View.GONE);
+
+        if (isOwnerProduct) {
+            llTransaction.setVisibility(View.GONE);
+            messInstruct.setVisibility(View.GONE);
+        } else {
+            llTransaction.setVisibility(View.VISIBLE);
+            messInstruct.setVisibility(View.VISIBLE);
+        }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMessage.setLayoutManager(mLayoutManager);
         rvMessage.setItemAnimator(new DefaultItemAnimator());
 
         chatItemList = new ArrayList<>();
-        chatItemList.add(null);
-        chatItemList.add(null);
-        chatItemList.add(null);
         productChatAdapter = new ProductChatAdapter(chatItemList);
         rvMessage.setAdapter(productChatAdapter);
 
@@ -138,10 +169,94 @@ public class ProductChatActivity extends BaseActivity {
                 sendMessage();
             }
         });
+    }
 
-        mToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNWEwNzc4ZmVlZDAxOWMwZTkzZWNkYmI4IiwidXNlcm5hbWUiOiJKb2R5IFplbWxhayIsInBob25lTnVtYmVyIjoiMDE2NzIwMTgyNDAiLCJyb2xlIjoxLCJ1cmwiOiJodHRwOi8vcmhlYS5iaXoiLCJhdmF0YXIiOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vdWlmYWNlcy9mYWNlcy90d2l0dGVyL3RvZGRyZXcvMTI4LmpwZyJ9LCJleHBpcmVkQXQiOiIyMDE3LTExLTE1VDA5OjU1OjMwLjc4MVoifQ.FcnGxmlehCCDwtGnLp6OZiMkPmllyYCKIxTM_0IyrJE";
-        mReceiverId = "5a077900ed019c0e93ecdbd6";
+    @Override
+    public void initData() {
+        conversationService = new ConversationServiceImpl();
+        currIndex = 0;
+        limitPerLoad = 20;
+        loadMyInfo();
+        loadHistoryConversations();
+    }
+
+    private void initFakeData() {
+        imgProduct.setImageResource(R.drawable.hm01);
+        txtName.setText("Gấu bông chất lượng cao");
+        txtPrice.setText("100,000 VNĐ");
+        txtHeader.setText("Shop ABC");
+
+
+
+        mToken = AccountUntil.getUserToken();
+        Log.d("user_token", mToken);
+
+//        mToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNWEwNzc4ZmVlZDAxOWMwZTkzZWNkYmI4IiwidXNlcm5hbWUiOiJKb2R5IFplbWxhayIsInBob25lTnVtYmVyIjoiMDE2NzIwMTgyNDAiLCJyb2xlIjoxLCJ1cmwiOiJodHRwOi8vcmhlYS5iaXoiLCJhdmF0YXIiOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vdWlmYWNlcy9mYWNlcy90d2l0dGVyL3RvZGRyZXcvMTI4LmpwZyJ9LCJleHBpcmVkQXQiOiIyMDE3LTExLTE1VDA5OjU1OjMwLjc4MVoifQ.FcnGxmlehCCDwtGnLp6OZiMkPmllyYCKIxTM_0IyrJE";
+        mPartnerId = "5a077900ed019c0e93ecdbd6";
         mProductId = "5a077903ed019c0e93ecdc1a";
+    }
+
+    public void loadMyInfo() {
+        mToken = AccountUntil.getUserToken();
+        mMyId = AccountUntil.getAccountId();
+        mMyAvatar = AccountUntil.getAvatarUrl();
+    }
+
+    public void loadHistoryConversations() {
+
+        conversationService.loadConversationDetail(mToken, mPartnerId, mProductId, limitPerLoad, currIndex, new ResponseListener<ConversationResponseData>() {
+            @Override
+            public void onSuccess(ConversationResponseData dataResponse) {
+                List<Conversation> chats = dataResponse.getConversation();
+                ProductCons product = dataResponse.getProduct();
+
+                populateConversation(chats, product);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.d("failure_get_cons_detail", errorMessage);
+            }
+        });
+    }
+
+    public void populateConversation(List<Conversation> historyChats, ProductCons product) {
+
+        if (product == null) {
+            return;
+        }
+
+        this.mProductCons = product;
+        LoadImageUtils.loadImageFromUrl(product.getImage(), imgProduct, null);
+        txtName.setText(product.getName());
+        String price = product.getPrice() + "";
+        String priceFormated = Utils.formatPrice(price);
+        txtPrice.setText(priceFormated);
+        txtHeader.setText(mSellerName);
+
+        if (historyChats == null || historyChats.size() < 1) {
+            return;
+        }
+
+        List<ProductChatItem> addItems = new ArrayList<>();
+        for (Conversation historyLine : historyChats) {
+            ProductChatItem addItem = new ProductChatItem();
+            addItem.setMessage(historyLine.getMessage());
+            addItem.setSendAt(new Date());
+
+            int role = ProductChatItem.SENDER;
+            String avatar = mMyAvatar;
+            if (mProductId.equals(historyLine.getSender().getId())) {
+                role = ProductChatItem.RECEIVER;
+                avatar = mPartnerAvatar;
+            }
+            addItem.setRole(role);
+            addItem.setAvatar(avatar);
+
+            addItems.add(addItem);
+        }
+
+        productChatAdapter.addItems(addItems);
     }
 
     public void initSocket() {
@@ -332,7 +447,7 @@ public class ProductChatActivity extends BaseActivity {
             JSONObject joinRoomParam = new JSONObject();
             try {
                 joinRoomParam.put("token", mToken);
-                joinRoomParam.put("receiverId", mReceiverId);
+                joinRoomParam.put("receiverId", mPartnerId);
                 joinRoomParam.put("productId", mProductId);
 
                 mSocket.emit(AppConstant.SOCKET_JOIN_ROOM_REQUEST, joinRoomParam);
