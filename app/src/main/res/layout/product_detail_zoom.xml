@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/frameImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop" />
+
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="@dimen/common_row_height"
+            android:layout_height="@dimen/common_row_height"
+            android:layout_gravity="center|left"
+            android:background="@drawable/icon_backarrow_normal"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="@dimen/common_row_height"
+            android:layout_height="@dimen/common_row_height"
+            android:layout_gravity="center|right"
+            android:background="@drawable/icon_nextarrow_normal_"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgThumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:onClick="playVideo"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/playVideo"
+            android:layout_width="@dimen/play_video_width"
+            android:layout_height="@dimen/play_video_height"
+            android:layout_gravity="center"
+            android:onClick="playVideo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/play_video_icon" />
+    </FrameLayout>
+</LinearLayout>

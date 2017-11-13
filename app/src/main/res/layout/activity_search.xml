@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10.0dip"
+        android:paddingTop="@dimen/common_padding_small">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/navi_bar_height"
+            android:layout_height="@dimen/navi_bar_height"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_back" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:layout_marginRight="10.0dip"
+            android:layout_weight="2.0"
+            android:background="@drawable/layout_transparent_bg_gray_corner"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:imeOptions="actionDone"
+            android:padding="6.0dip"
+            android:singleLine="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColorHint="@color/gray" />
+
+        <ImageButton
+            android:id="@+id/btnSearchVoice"
+            android:layout_width="@dimen/mic_search_size"
+            android:layout_height="@dimen/mic_search_size"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="@dimen/common_padding_small"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/mic_voice" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separatorLine"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red_dark" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/btnCatagory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="@dimen/common_padding_medium">
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_weight="1.0"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/category"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="20.0dip"
+                    android:layout_marginRight="@dimen/common_padding_large"
+                    android:src="@drawable/icon_nextarrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/btnStall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="@dimen/common_padding_medium">
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_weight="1.0"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/brand"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="20.0dip"
+                    android:layout_marginRight="@dimen/common_padding_large"
+                    android:src="@drawable/icon_nextarrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:gravity="left"
+                    android:padding="@dimen/common_padding_large"
+                    android:text="@string/saved_search"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnEditSaveSearch"
+                    android:layout_width="30.0dip"
+                    android:layout_height="30.0dip"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:background="@drawable/edit_image" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <com.baoyz.swipemenulistview.SwipeMenuListView
+                    android:id="@+id/listSavedSearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+                <TextView
+                    android:id="@+id/txtNotSearch1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:padding="10.0dip"
+                    android:text="@string/not_search" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:gravity="left"
+                    android:padding="@dimen/common_padding_large"
+                    android:text="@string/recently_search"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnEditRecentSearch"
+                    android:layout_width="30.0dip"
+                    android:layout_height="30.0dip"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:background="@drawable/edit_image" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0">
+
+                <com.baoyz.swipemenulistview.SwipeMenuListView
+                    android:id="@+id/listRecentlySearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+                <TextView
+                    android:id="@+id/txtNotSearch2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:padding="10.0dip"
+                    android:text="@string/not_search" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <Button
+                android:id="@+id/btnSearchGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_btn_height_small"
+                android:layout_margin="@dimen/common_padding_large"
+                android:background="@drawable/layout_transparent_bg_red_corner"
+                android:paddingLeft="@dimen/common_padding_medium"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:text="@string/search_guide"
+                android:textAllCaps="false"
+                android:textColor="@color/red_dark"
+                android:textSize="12.0sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
