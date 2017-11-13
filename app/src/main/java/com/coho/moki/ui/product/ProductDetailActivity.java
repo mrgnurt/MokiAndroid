@@ -38,6 +38,7 @@ import android.widget.TextView;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.user.UserInfoActivity;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
@@ -389,6 +390,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
                 intent.putExtra("productId", productId);
+                DialogUtil.showProgress(ProductDetailActivity.this);
                 startActivity(intent);
             }
         });
@@ -397,6 +399,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         imgLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DialogUtil.showProgress(ProductDetailActivity.this);
                 if (token == null) {
                     ProductDetailActivity.this.finish();
                     Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
@@ -410,6 +413,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
+        DialogUtil.showProgress(this);
         startActivity(intent);
     }
 
@@ -684,5 +688,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     protected void onDestroy() {
         Log.d("abc", "Xong");
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
     }
 }

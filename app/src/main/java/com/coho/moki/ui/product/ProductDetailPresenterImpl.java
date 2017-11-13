@@ -8,6 +8,7 @@ import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.service.ProductDetailService;
 import com.coho.moki.service.ResponseListener;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.google.gson.annotations.Until;
 
@@ -46,11 +47,13 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
             @Override
             public void onSuccess(ProductDetailResponse dataResponse) {
                 Log.d(LOG_TAG, dataResponse.toString());
+                DialogUtil.hideProgress();
                 mProductDetailView.setData(dataResponse);
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Log.d(LOG_TAG, errorMessage);
             }
         });
@@ -62,11 +65,13 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
             @Override
             public void onSuccess(List<ProductCommentResponse> dataResponse) {
                 Log.d(LOG_TAG, dataResponse.toString());
+                DialogUtil.hideProgress();
                 mProductDetailView.setProductComment(dataResponse);
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Log.d(LOG_TAG, errorMessage);
             }
         });
@@ -77,11 +82,13 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
         mProductDetailService.likeProductRemote(token, productId, new ResponseListener<LikeResponseData>() {
             @Override
             public void onSuccess(LikeResponseData dataResponse) {
+                DialogUtil.hideProgress();
                 mProductDetailView.setLikeProduct(dataResponse);
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });
