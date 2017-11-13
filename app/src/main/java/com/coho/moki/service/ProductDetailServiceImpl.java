@@ -6,6 +6,7 @@ import com.coho.moki.api.ProductDetailAPI;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 
@@ -84,6 +85,33 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
             @Override
             public void onFailure(Call<BaseResponse<List<ProductCommentResponse>>> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void likeProductRemote(String token, String productId, final ResponseListener<LikeResponseData> listener) {
+        Map<String, String> data = new HashMap<>();
+        data.put(AppConstant.TOKEN, token);
+        data.put(AppConstant.PRODUCT_ID, productId);
+        ProductDetailAPI service = ServiceGenerator.createService(ProductDetailAPI.class);
+        Call<BaseResponse<LikeResponseData>> call = service.likeProduct(data);
+        call.enqueue(new Callback<BaseResponse<LikeResponseData>>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse<LikeResponseData>> call, Response<BaseResponse<LikeResponseData>> response) {
+                int code = response.body().getCode();
+                if (code == ResponseCode.OK.code){
+                    listener.onSuccess(response.body().getData());
+                }
+                else{
+                    listener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<LikeResponseData>> call, Throwable t) {
                 listener.onFailure(t.getMessage());
             }
         });

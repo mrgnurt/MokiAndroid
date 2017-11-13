@@ -6,6 +6,7 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImageAdapter;
 import com.coho.moki.data.model.ProductComment;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.ui.base.BaseActivity;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import com.coho.moki.R;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
@@ -68,6 +70,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
     private static final Integer DESCRIPTION_EXPAND_MAX = 40;
     private boolean isFirstSetDocument = true;
+    private boolean isLiked = false;
 
     // bind view from product_detail
     @BindView(R.id.bottom_sheet)
@@ -167,8 +170,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         // load data from API
 
         // load data from intent
-        token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "5a0073061ca2a017f87d656f";
+        token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjEyMzQ1Njc4OSIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIiwiYXZhdGFyIjoiaHR0cHM6Ly9zMy5hbWF6b25hd3MuY29tL3VpZmFjZXMvZmFjZXMvdHdpdHRlci9kdWNrNGZ1Y2svMTI4LmpwZyJ9LCJleHBpcmVkQXQiOiIyMDE3LTExLTE1VDA5OjA2OjQ2LjEzNloifQ.7duU0zS3OyepZobDG3G3bv2hP4Bzg3CQLM2TVb86ouE";
+        productId = "59e96abbfe038830efc1a1f0";
     }
 
     @Override
@@ -414,6 +417,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             }
         });
 
+        imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProductDetailPresenter.likeProductRemote(token, productId);
+            }
+        });
     }
 
     private void clickUserInfo() {
@@ -448,8 +457,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtComment.setText(response.getComment().toString());
         if (response.getIsLiked() == 0) {
             LoadImageUtils.loadImageFromDrawable(R.drawable.icon_like_off, imgLike);
+            isLiked = false;
         } else {
             LoadImageUtils.loadImageFromDrawable(R.drawable.icon_like_on, imgLike);
+            isLiked = true;
         }
         // name ?
         ProductDetailResponse.Seller seller = response.getSeller();
@@ -665,4 +676,15 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         listComment.setExpanded(true);
     }
 
+    @Override
+    public void setLikeComment(LikeResponseData likeResponseData) {
+        if (isLiked == false) {
+            imgLike.setImageResource(R.drawable.icon_like_on);
+            isLiked = true;
+        } else {
+            imgLike.setImageResource(R.drawable.icon_like_off);
+            isLiked = false;
+        }
+        txtLike.setText(likeResponseData.getLike().toString());
+    }
 }
