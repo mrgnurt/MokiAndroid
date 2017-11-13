@@ -10,6 +10,7 @@ import com.coho.moki.data.remote.LoginResponseData;
 import com.coho.moki.service.LoginService;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -49,7 +50,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         mLoginService.login(phoneNumber, password, deviceId, new ResponseListener<LoginResponseData>() {
             @Override
             public void onSuccess(LoginResponseData response) {
-
+                DialogUtil.hideProgress();
                 User user = new User(response.getId(), response.getUsername(), response.getToken(), response.getAvatar());
                 AccountUntil.saveInfoAccount(user);
                 if (AccountUntil.getDeviceId() == null){
@@ -61,6 +62,7 @@ public class LoginPresenterImpl implements LoginPresenter {
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });

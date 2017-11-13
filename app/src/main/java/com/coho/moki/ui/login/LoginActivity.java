@@ -15,6 +15,7 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -85,7 +86,14 @@ public class LoginActivity extends BaseActivity implements LoginView {
             Utils.toastShort(LoginActivity.this, R.string.password_empty);
         }
         else{
-            mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
+            if (Utils.checkInternetAvailable()){
+                DialogUtil.showProgress(this);
+                mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
+            }
+            else {
+                DialogUtil.showPopupError(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+            }
+
         }
     }
 

@@ -17,6 +17,7 @@ import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerContract;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerPresenter;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
@@ -51,11 +52,13 @@ public class ListProductPresenter implements ListProductContract.Presenter {
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
             @Override
             public void onSuccess(GetListProductResponceData dataResponse) {
+                DialogUtil.hideProgress();
                 convertDataResponsetoProducts(dataResponse.getProducts());
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });
