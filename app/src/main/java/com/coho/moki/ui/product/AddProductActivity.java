@@ -1,10 +1,13 @@
 package com.coho.moki.ui.product;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
@@ -20,6 +23,8 @@ import butterknife.OnClick;
  */
 
 public class AddProductActivity extends BaseActivity {
+
+    private final String TAG = "AddProductActivity";
 
     @BindView(R.id.img1)
     ImageView img1;
@@ -51,11 +56,14 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.edtName)
     EditText edtName;
 
-    @BindView(R.id.edtComment)
-    EditText edtComment;
+    @BindView(R.id.edtDescription)
+    EditText edtDescription;
 
     @BindView(R.id.topContainer)
     LinearLayout topContainer;
+
+    @BindView(R.id.switch_product_type)
+    SwitchButton switchProductType;
 
     @BindView(R.id.layout_fast_sell)
     LinearLayout layoutFastSell;
@@ -67,7 +75,7 @@ public class AddProductActivity extends BaseActivity {
     LinearLayout layoutBargain;
 
     @BindView(R.id.switch_allow_offer)
-    SwitchButton switch_allow_offer;
+    SwitchButton switchAllowOffer;
 
     @BindView(R.id.edtCategory)
     EditText edtCategory;
@@ -99,6 +107,45 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.edtDimension)
     EditText edtDimension;
 
+    @BindView(R.id.titleAddress)
+    TextView titleAddress;
+
+    @BindView(R.id.edtBuyPlace)
+    EditText edtBuyPlace;
+
+    @BindView(R.id.bottomContainer)
+    LinearLayout bottomContainer;
+
+    @BindView(R.id.edtBuyPrice)
+    EditText edtBuyPrice;
+
+    @BindView(R.id.productPriceContainer)
+    LinearLayout productPriceContainer;
+
+    @BindView(R.id.txtTotal)
+    TextView txtTotal;
+
+    @BindView(R.id.txtServiceArticle)
+    TextView txtServiceArticle;
+
+    @BindView(R.id.btnAddProduct)
+    Button btnAddProduct;
+
+    @BindView(R.id.topKeyboardLayout)
+    RelativeLayout topKeyboardLayout;
+
+    @BindView(R.id.preBtn)
+    ImageButton btnPrev;
+
+    @BindView(R.id.preBtnContainer)
+    RelativeLayout preBtnContainer;
+
+    @BindView(R.id.nextBtn)
+    ImageButton btnNext;
+
+    @BindView(R.id.doneBtn)
+    TextView btnDone;
+
     @Override
     public int setContentViewId() {
         return R.layout.add_product;
@@ -106,11 +153,16 @@ public class AddProductActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        txtHeaderRunning.setVisibility(View.INVISIBLE);
+       initHeader();
+    }
+
+    private void initHeader() {
+        txtHeaderRunning.setVisibility(View.GONE);
         txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.add_product)));
         btnBack.setVisibility(View.VISIBLE);
         btnNavRight.setVisibility(View.VISIBLE);
-        btnNavRight.setImageResource(R.drawable.delete);
+        btnNavRight.setScaleType(ImageView.ScaleType.FIT_XY);
+        btnNavRight.setImageResource(R.drawable.btn_delete);
     }
 
     @Override
@@ -123,6 +175,10 @@ public class AddProductActivity extends BaseActivity {
         onBackPressed();
     }
 
-    
+    @OnClick(R.id.btnNavRight)
+    public void onClickButtonDelete() {
+
+    }
+
 
 }

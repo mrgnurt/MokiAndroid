@@ -281,11 +281,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
-        int mScreenHeight = localDisplayMetrics.heightPixels;
-        int mScreenWidth = localDisplayMetrics.widthPixels;
+        int screenHeight = localDisplayMetrics.heightPixels;
+        int sccreenWidth = localDisplayMetrics.widthPixels;
 //        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
 //        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, mScreenHeight);
-        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth);
+        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(sccreenWidth, sccreenWidth);
         scrollView.setHeaderLayoutParams(localObject);
 
 //         load view from zoom view
