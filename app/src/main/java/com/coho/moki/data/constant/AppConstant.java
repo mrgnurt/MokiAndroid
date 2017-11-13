@@ -24,6 +24,13 @@ public class AppConstant {
     public static final String ID = "id";
 
     public static final String PRODUCT_ID = "productId";
+    public static final String COMMENT = "comment";
+    public static final String INDEX = "index";
+
+    public static final String DEVICE_ID_TAG_HEADER = "device-id";
+    public static final String DEVICE_TYPE_TAG_HEADER = "device-type";
+    public static final String DEVICE_TOKEN_TAG = "deviceToken";
+    public static final String DEVICE_TYPE_TAG = "deviceType";
 
     //tag app
     public static final String CATEGORY_TAG = "CATEGORY";
@@ -33,6 +40,13 @@ public class AppConstant {
     public static final int COUNT_SEARCH_PRODUCT = 6;
     public static final int REQUEST_CODE_SIZE = 1;
     public static final int RESULT_CODE_SIZE = 2;
+    public static final String IS_PASS_TUTORIALSCREEN = "IS_PASS_TUTORIALSCREEN";
+    public static final String MY_ID = "MY_ID";
+    public static final String MY_USERNAME = "MY_USERNAME";
+    public static final String MY_AVATAR_URL = "MY_AVATAR_URL";
+    public static final String MY_TOKEN = "MY_TOKEN";
+    public static final String ANDROID_TYPE = "1";
+
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";

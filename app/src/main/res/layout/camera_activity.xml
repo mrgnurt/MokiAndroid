@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:animateLayoutChanges="true">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:id="@+id/preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <!--<SurfaceView-->
+            <!--android:id="@+id/surfaceView"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/cameraAction"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="20.0dip"
+                android:background="@android:color/transparent">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="40.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_marginLeft="20.0dip"
+                    android:background="@drawable/camera_cancel" />
+
+                <Button
+                    android:id="@+id/btnSwitch"
+                    android:layout_width="40.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20.0dip"
+                    android:background="@drawable/camera_front" />
+
+                <Button
+                    android:id="@+id/btnFlash"
+                    android:layout_width="40.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_marginRight="20.0dip"
+                    android:layout_toLeftOf="@+id/btnSwitch"
+                    android:background="@drawable/camera_flash_off" />
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="45.0dip"
+                android:max="500"
+                android:progress="0"
+                android:progressDrawable="@drawable/yellow_progress"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="60.0dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red_dark">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:background="@android:color/white" />
+
+                <ImageView
+                    android:id="@+id/imgPhoto"
+                    android:layout_width="40.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20.0dip"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/camera_lib" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10.0dip"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rlSwitchMode"
+                        android:layout_width="100.0dip"
+                        android:layout_height="18.0dip"
+                        android:background="@drawable/layout_transparent_bg_white_corner"
+                        android:padding="2.0dip">
+
+                        <Button
+                            android:layout_width="36.0dip"
+                            android:layout_height="18.0dip"
+                            android:background="@drawable/layout_white_bg_no_border" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/common_padding_small">
+
+                        <Button
+                            android:id="@+id/btnPhoto"
+                            android:layout_width="24.0dip"
+                            android:layout_height="20.0dip"
+                            android:background="@drawable/camera_photo" />
+
+                        <Button
+                            android:id="@+id/btnVideo"
+                            android:layout_width="28.0dip"
+                            android:layout_height="20.0dip"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/camera_video" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgCapturePhoto"
+                android:layout_width="92.0dip"
+                android:layout_height="70.0dip"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/camera_photo_btn" />
+
+            <ImageView
+                android:id="@+id/imgCaptureVideo"
+                android:layout_width="92.0dip"
+                android:layout_height="70.0dip"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/camera_video_btn"
+                android:visibility="gone" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

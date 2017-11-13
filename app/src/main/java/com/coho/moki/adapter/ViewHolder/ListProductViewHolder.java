@@ -57,6 +57,7 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     TextView mTxtSalePercent;
 
     OnClickProductItemListenner mListener;
+    String mProductId;
 
     public ListProductViewHolder(View itemView) {
         super(itemView);
@@ -65,6 +66,8 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populate(Product product){
+        mProductId = product.getProductId();
+
         mFirstImage.setImageResource(R.drawable.no_image);
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
@@ -102,7 +105,7 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
         mLLProductItemSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onClick();
+                mListener.onClick(mProductId);
             }
         });
     }

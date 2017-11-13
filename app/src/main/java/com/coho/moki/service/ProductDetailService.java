@@ -1,5 +1,6 @@
 package com.coho.moki.service;
 
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 
@@ -15,4 +16,7 @@ public interface ProductDetailService {
 
     public void getProductCommentRemote(String productId, final ResponseListener<List<ProductCommentResponse>> listener);
 
+    public void likeProductRemote(String token, String productId, final ResponseListener<LikeResponseData> listener);
+
+    public void addProductCommentRemote(String token, String productId, String comment, String index, final ResponseListener<List<ProductCommentResponse>> listener);
 }

@@ -9,5 +9,7 @@ import com.coho.moki.data.remote.LoginResponseData;
 
 public interface LoginService {
 
-    void login(String phoneNumber, String password, final ResponseListener<LoginResponseData> listener);
+    void login(String phoneNumber, String password, String deviceId, final ResponseListener<LoginResponseData> listener);
+
+    void setDeviceToken(String token, String deviceToken, final ResponseListener<String> listener);
 }
