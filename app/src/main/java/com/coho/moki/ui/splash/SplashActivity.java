@@ -8,6 +8,7 @@ import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.ui.start_tutorial.StartTutorialActivity2;
 import com.coho.moki.util.AccountUntil;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -30,14 +31,18 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void initView() {
-        AccountUntil.removeInfoAccount();
-        BaseApp.getActivityComponent().inject(this);
-        mSplashPresenter.onAttach(this);
-        mSplashPresenter.checkUserLogin();
+        Log.d("pass", AccountUntil.isPassTutorialScreen() + "");
+        if (AccountUntil.isPassTutorialScreen()){
 
-//        Log.d("Token device:", FirebaseInstanceId.getInstance().getToken());
-//        FirebaseMessaging.getInstance().subscribeToTopic("news");
-
+            AccountUntil.removeInfoAccount();
+            BaseApp.getActivityComponent().inject(this);
+            mSplashPresenter.onAttach(this);
+            mSplashPresenter.checkUserLogin();
+        }
+        else {
+            Intent intent = new Intent(BaseApp.getContext(), StartTutorialActivity2.class);
+            startActivity(intent);
+        }
     }
 
     @Override

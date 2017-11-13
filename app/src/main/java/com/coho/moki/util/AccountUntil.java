@@ -2,6 +2,7 @@ package com.coho.moki.util;
 
 import android.os.AsyncTask;
 
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.User;
 
 /**
@@ -20,6 +21,10 @@ public class AccountUntil {
 
     public static String getAvatarUrl() {
         return SharedPrefUtils.getString(AppConstant.MY_AVATAR_URL, null);
+    }
+
+    public static boolean isPassTutorialScreen(){
+        return SharedPrefUtils.getBoolean(AppConstant.IS_PASS_TUTORIALSCREEN, false);
     }
 
     public synchronized static void saveInfoAccount(final User user) {
@@ -49,5 +54,17 @@ public class AccountUntil {
             }
         }.execute();
 
+    }
+
+    public synchronized static void passTutorialScreen() {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                SharedPrefUtils.putBoolean(AppConstant.IS_PASS_TUTORIALSCREEN, true);
+                return null;
+            }
+        }.execute();
     }
 }
