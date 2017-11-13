@@ -5,5 +5,5 @@ package com.coho.moki.callback;
  */
 
 public interface OnClickProductItemListenner {
-    void onClick();
+    void onClick(String productId);
 }

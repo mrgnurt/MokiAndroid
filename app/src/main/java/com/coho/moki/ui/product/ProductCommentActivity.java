@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.login.LoginActivity;
+import com.coho.moki.util.AccountUntil;
 import com.costum.android.widget.PullAndLoadListView;
 import com.costum.android.widget.PullToRefreshListView;
 
@@ -68,8 +71,8 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
         BaseApp.getActivityComponent().inject(this);
         mCommentPresenter.onAttach(this);
         Intent intent = getIntent();
-        productId = intent.getStringExtra("productId");
-        token = intent.getStringExtra("token");
+        productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
+        token = AccountUntil.getUserToken();
         lastId = "";
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -94,15 +97,21 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String comment = txtComment.getText().toString();
-                mCommentPresenter.addProductCommentRemote(token, productId, comment, lastId);
+                if (token == null) {
+                    ProductCommentActivity.this.finish();
+                    Intent intent = new Intent(ProductCommentActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    String comment = txtComment.getText().toString();
+                    mCommentPresenter.addProductCommentRemote(token, productId, comment, lastId);
+                    txtComment.setText("");
+                }
             }
         });
     }
 
     @Override
     public void initData() {
-        Log.d("fuck", productId);
         mCommentPresenter.getProductCommentRemote(productId);
     }
 
@@ -138,7 +147,6 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
         if (commentList != null && commentList.size() > 0) {
             Collections.reverse(commentList);
             lastId = commentList.get(commentList.size() - 1).getId();
-            Log.d("lastId", lastId);
             ProductCommentAdapter commentAdapter = new ProductCommentAdapter(
                     this, R.layout.product_comment_item, commentList);
             listView.setAdapter(commentAdapter);
@@ -205,7 +213,7 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
 
 //            for (int i = 0; i < mAnimals.length; i++)
 //                mListItems.addFirst(mAnimals[i]);
-            commentList.addFirst(fake());
+//            commentList.addFirst(fake());
 
             return null;
         }
@@ -215,7 +223,7 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
 //            mListItems.addFirst("Added after pull to refresh");
 
             // We need notify the adapter that the data have been changed
-            commentAdapter.notifyDataSetChanged();
+//            commentAdapter.notifyDataSetChanged();
 
             // Call onLoadMoreComplete when the LoadMore task, has finished
             listView.onRefreshComplete();

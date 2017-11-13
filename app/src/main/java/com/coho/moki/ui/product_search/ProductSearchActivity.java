@@ -87,8 +87,10 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
 
         mListProductAdapter.addListener(new OnClickProductItemListenner() {
             @Override
-            public void onClick() {
-                startActivity(new Intent(BaseApp.getContext(), ProductDetailActivity.class));
+            public void onClick(String productId) {
+                Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                startActivity(intent);
             }
         });
     }

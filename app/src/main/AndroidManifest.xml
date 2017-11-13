@@ -107,6 +107,11 @@
             android:name=".ui.size.SizeActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <activity
+            android:name=".ui.start_tutorial.StartTutorialActivity2"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 
