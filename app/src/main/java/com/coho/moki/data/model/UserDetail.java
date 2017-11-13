@@ -25,6 +25,10 @@ public class UserDetail extends User{
 
     private List<String> followedList;
 
+    public UserDetail(String userId, String username, String token, String avatarUrl) {
+        super(userId, username, token, avatarUrl);
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

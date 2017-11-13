@@ -3,11 +3,15 @@ package com.coho.moki.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 import com.coho.moki.BaseApp;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -252,7 +257,73 @@ public class Utils {
         return info != null && info.isConnected() && info.isAvailable();
     }
 
+    public static int getColorWrapper(Context context, int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(id);
+        } else {
+            //noinspection deprecation
+            return context.getResources().getColor(id);
+        }
+    }
 
+    public static String formatTime(String time) {
+        StringBuilder res = new StringBuilder();
+        String minuteAgo = " phút trước";
+        String hourAgo = " giờ trước";
+        String dayAgo = " ngày trước";
+        String yearAgo = " năm trước";
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diff = new Date().getTime() - date.getTime(); // return diff in microseconds
+        long diffSeconds = diff / 1000;
+        long diffMinutes = diffSeconds / 60;
+        long diffHours = diffMinutes / 60;
+        long diffDays = diffHours / 24;
+        long diffYears = diffDays /365;
+        if (diffSeconds < 60) {
+             res.append("vừa xong");
+        } else if (diffMinutes < 60) {
+            res.append(diffMinutes).append(minuteAgo);
+        } else if (diffHours < 24) {
+            res.append(diffHours).append(hourAgo);
+        } else if (diffDays < 365){
+            res.append(diffDays).append(dayAgo);
+        } else {
+            res.append(diffYears).append(yearAgo);
+        }
+        return res.toString();
+    }
 
+    public static String formatPrice(String price) {
+        StringBuilder res = new StringBuilder();
+        String pattern = "#,###";
+        DecimalFormat df = new DecimalFormat(pattern);
+        df.setGroupingSize(3);
+        res.append(df.format(Double.parseDouble(price)));
+        return res.append(" VNĐ").toString();
+    }
+
+    public static Bitmap getBitmapFromResource(Context context, int resId) {
+        return BitmapFactory.decodeResource(context.getResources(), resId);
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+        // RECREATE THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
 
 }

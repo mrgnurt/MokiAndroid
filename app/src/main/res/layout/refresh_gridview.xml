@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!--<ViewFlipper-->
+        <!--android:id="@+id/view_flipper"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent">-->
+
+        <!--<mq.info.moki.ui.PullToRefreshCustom.PullToRefreshAutoLoadMoreGridView xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:ptr="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@id/layout_grid"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:animationCache="false"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:horizontalSpacing="@dimen/common_padding_small"-->
+            <!--android:numColumns="2"-->
+            <!--android:padding="@dimen/common_padding_small"-->
+            <!--android:verticalSpacing="@dimen/common_padding_small"-->
+            <!--ptr:ptrAnimationStyle="flip" />-->
+
+        <!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:id="@+id/swipe_container"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent">-->
+
+            <!--<se.emilsjolander.stickylistheaders.StickyListHeadersListView-->
+                <!--android:id="@+id/layout_timeline"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:animationCache="false"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:horizontalSpacing="@dimen/common_padding_small"-->
+                <!--android:numColumns="1"-->
+                <!--android:scrollingCache="false"-->
+                <!--android:smoothScrollbar="true"-->
+                <!--android:verticalSpacing="@dimen/common_padding_small" />-->
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+    <!--</ViewFlipper>-->
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_100">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</RelativeLayout>

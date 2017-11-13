@@ -6,6 +6,7 @@ import com.coho.moki.data.remote.LoginResponseData;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -14,6 +15,6 @@ import retrofit2.http.QueryMap;
  */
 
 public interface LoginAPI {
-    @POST("login/normal")
-    Call<BaseResponse<LoginResponseData>> callNormalLogin(@QueryMap Map<String, String> tag);
+    @POST("/login")
+    Call<BaseResponse<LoginResponseData>> callNormalLogin(@Body Map<String, String> tag);
 }
