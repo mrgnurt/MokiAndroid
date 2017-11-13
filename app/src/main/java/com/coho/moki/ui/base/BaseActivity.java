@@ -35,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         setContentView(setContentViewId());
         ButterKnife.bind(this);
+        initPresenter();
         handleIntent(intent);
         initView();
         initData();
@@ -87,6 +88,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param intent
      */
     public void handleIntent(Intent intent) {}
+
+    public void initPresenter(){}
 
     public void createCustomTitleBar() {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

@@ -1,9 +1,12 @@
 package com.coho.moki.ui.fragment.ProductPager;
 
+import android.animation.Animator;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 
 import com.coho.moki.R;
@@ -124,12 +127,10 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     public void setVisibleButtonCamera(boolean visible) {
 
         if (visible) {
-            mBtnCamera.setVisibility(View.VISIBLE);
-//            ((MainActivity)getActivity()).setVisibleTopBar(visible);
+            ((MainActivity)getActivity()).setVisibleTopBar(visible, mBtnCamera);
         }
         else {
-            mBtnCamera.setVisibility(View.INVISIBLE);
-//            ((MainActivity)getActivity()).setVisibleTopBar(visible);
+            ((MainActivity)getActivity()).setVisibleTopBar(visible, mBtnCamera);
         }
     }
 }

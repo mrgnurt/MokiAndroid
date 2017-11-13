@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlContainer"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
     <LinearLayout
@@ -31,7 +31,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scrollable_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/layout_category_list"
         android:scrollbars="none"
         app:scrollable_closeUpAnimationMillis="250"
@@ -72,7 +72,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -164,7 +164,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/content_viewpager"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </ru.noties.scrollable.ScrollableLayout>
 
@@ -188,16 +188,13 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="@dimen/_85sdp"
+        android:background="@drawable/sell_button"
         android:layout_alignParentBottom="true"
-        android:gravity="right">
+        android:layout_alignParentRight="true"/>
 
-        <Button
-            android:id="@+id/btnCamera"
-            android:layout_width="@dimen/_85sdp"
-            android:layout_height="@dimen/_85sdp"
-            android:background="@drawable/sell_button" />
-    </LinearLayout>
+
 </RelativeLayout>

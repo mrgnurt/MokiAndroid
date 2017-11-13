@@ -19,6 +19,9 @@ import com.coho.moki.di.module.ActivityModule;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.login.LoginPresenterImpl;
 import com.coho.moki.ui.product.ProductDetailActivity;
+import com.coho.moki.ui.main_search.MainSearchActivity;
+import com.coho.moki.ui.product_search.ProductSearchActivity;
+import com.coho.moki.ui.size.SizeActivity;
 import com.coho.moki.ui.splash.SplashActivity;
 
 import javax.inject.Singleton;
@@ -36,6 +39,12 @@ public interface ActivityComponent {
     void inject(SplashActivity activity);
 
     void inject(LoginActivity activity);
+
+    void inject(MainSearchActivity activity);
+
+    void inject(ProductSearchActivity activity);
+
+    void inject(SizeActivity activity);
 
     void inject(ProductDetailActivity activity);
 
