@@ -27,4 +27,7 @@ public interface ProductDetailAPI {
 
     @POST("/products/like-product")
     Call<BaseResponse<LikeResponseData>> likeProduct(@Body Map<String, String> data);
+
+    @POST("/products/add-comment")
+    Call<BaseResponse<List<ProductCommentResponse>>> setProductComment(@Body Map<String, String> data);
 }

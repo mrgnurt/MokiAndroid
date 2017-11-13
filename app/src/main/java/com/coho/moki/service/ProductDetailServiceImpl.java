@@ -116,4 +116,33 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             }
         });
     }
+
+    @Override
+    public void addProductCommentRemote(String token, String productId, String comment, String index, final ResponseListener<List<ProductCommentResponse>> listener) {
+        Map<String, String> data = new HashMap<>();
+        data.put(AppConstant.TOKEN, token);
+        data.put(AppConstant.PRODUCT_ID, productId);
+        data.put(AppConstant.COMMENT, comment);
+        data.put(AppConstant.INDEX, index);
+        ProductDetailAPI service = ServiceGenerator.createService(ProductDetailAPI.class);
+        Call<BaseResponse<List<ProductCommentResponse>>> call = service.setProductComment(data);
+        call.enqueue(new Callback<BaseResponse<List<ProductCommentResponse>>>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse<List<ProductCommentResponse>>> call, Response<BaseResponse<List<ProductCommentResponse>>> response) {
+                int code = response.body().getCode();
+                if (code == ResponseCode.OK.code){
+                    listener.onSuccess(response.body().getData());
+                }
+                else{
+                    listener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<List<ProductCommentResponse>>> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
 }

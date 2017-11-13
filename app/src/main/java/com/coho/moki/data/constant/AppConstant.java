@@ -24,6 +24,8 @@ public class AppConstant {
     public static final String ID = "id";
 
     public static final String PRODUCT_ID = "productId";
+    public static final String COMMENT = "comment";
+    public static final String INDEX = "index";
 
     //tag app
     public static final String CATEGORY_TAG = "CATEGORY";
