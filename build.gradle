@@ -25,9 +25,9 @@ allprojects {
         /* 2) Add mavenCentral */
 //        mavenCentral()
 //
-//        maven {
-//            url "https://maven.google.com"
-//        }
+        maven {
+            url "https://maven.google.com"
+        }
 //
 //        /* 3) Add the Creative SDK Maven repo URL */
 //        maven {

@@ -160,7 +160,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         mProductDetailPresenter.onAttach(this);
         loadViewForCode();
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "5a015ba597180d170c6919bd";
+        productId = "59e96abbfe038830efc1a1f0";
 
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
