@@ -5,6 +5,8 @@ import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.BaseApp;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImageAdapter;
+import com.coho.moki.data.model.ProductComment;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.ui.base.BaseActivity;
@@ -65,6 +67,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
     private static final Integer DESCRIPTION_EXPAND_MAX = 40;
     private boolean isFirstSetDocument = true;
+    private boolean isLiked = false;
 
     // bind view from product_detail
 //    @BindView(R.id.bottom_sheet)
@@ -158,6 +161,19 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         loadViewForCode();
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
         productId = "5a015ba597180d170c6919bd";
+
+
+//        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
+//        mActionBar.setDisplayShowHomeEnabled(false);
+//        mActionBar.setDisplayShowTitleEnabled(false);
+//        LayoutInflater mInflater = LayoutInflater.from(this);
+//        View mCustomView = mInflater.inflate(R.layout.navigation_bar, null);
+//        mActionBar.setCustomView(mCustomView);
+//        mActionBar.setDisplayShowCustomEnabled(true);
+
+        // load data from API
+
+        // load data from intent
     }
 
     @Override
@@ -371,6 +387,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         });
 
 
+        imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProductDetailPresenter.likeProductRemote(token, productId);
+            }
+        });
     }
 
     private void clickUserInfo() {
@@ -406,8 +428,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtComment.setText(response.getComment().toString());
         if (response.getIsLiked() == 0) {
             LoadImageUtils.loadImageFromDrawable(R.drawable.icon_like_off, imgLike);
+            isLiked = false;
         } else {
             LoadImageUtils.loadImageFromDrawable(R.drawable.icon_like_on, imgLike);
+            isLiked = true;
         }
         ProductDetailResponse.Seller seller = response.getSeller();
         txtName.setText(seller.getName());
@@ -631,4 +655,15 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         onBackPressed();
     }
 
+    @Override
+    public void setLikeComment(LikeResponseData likeResponseData) {
+        if (isLiked == false) {
+            imgLike.setImageResource(R.drawable.icon_like_on);
+            isLiked = true;
+        } else {
+            imgLike.setImageResource(R.drawable.icon_like_off);
+            isLiked = false;
+        }
+        txtLike.setText(likeResponseData.getLike().toString());
+    }
 }

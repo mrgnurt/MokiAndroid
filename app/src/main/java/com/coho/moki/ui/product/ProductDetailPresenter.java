@@ -12,4 +12,6 @@ public interface ProductDetailPresenter extends BasePresenter<ProductDetailView>
 
     public void getProductCommentRemote(String productId);
 
+    public void likeProductRemote(String token, String productId);
+
 }
