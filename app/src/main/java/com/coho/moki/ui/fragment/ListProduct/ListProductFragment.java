@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ViewFlipper;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
@@ -51,6 +52,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mRefreshLayout;
 
+    @BindView(R.id.view_flipper)
+    ViewFlipper mViewFlipper;
+
     ProductPagerFragment mProductPagerFragment;
 
     ListProductAdapter mListProductAdapter;
@@ -83,6 +87,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     @Override
     protected void initView() {
         super.initView();
+//        mViewFlipper.setDisplayedChild();
         initRV();
         initRefreshLayout();
         getProducts();
@@ -182,6 +187,11 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 
     public void invisibleRefresh(){
         mRefreshLayout.finishRefresh();
+    }
+
+    public void changeViewMode() {
+//        refreshView(false);
+        AnimationFactory.flipTransition(this.mViewFlipper, AnimationFactory.FlipDirection.LEFT_RIGHT);
     }
 
 }

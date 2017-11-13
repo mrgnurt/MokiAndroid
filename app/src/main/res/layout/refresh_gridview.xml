@@ -3,10 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <!--<ViewFlipper-->
-        <!--android:id="@+id/view_flipper"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent">-->
+    <ViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey_100">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <!--<mq.info.moki.ui.PullToRefreshCustom.PullToRefreshAutoLoadMoreGridView xmlns:android="http://schemas.android.com/apk/res/android"-->
             <!--xmlns:ptr="http://schemas.android.com/apk/res-auto"-->
@@ -38,18 +51,5 @@
                 <!--android:smoothScrollbar="true"-->
                 <!--android:verticalSpacing="@dimen/common_padding_small" />-->
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->
-    <!--</ViewFlipper>-->
-
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_product_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/grey_100">
-
-        </android.support.v7.widget.RecyclerView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </ViewFlipper>
 </RelativeLayout>
