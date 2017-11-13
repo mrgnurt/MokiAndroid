@@ -1,11 +1,15 @@
 package com.coho.moki.ui.product;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.data.remote.ProductCommentResponse;
@@ -15,6 +19,9 @@ import com.costum.android.widget.PullToRefreshListView;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +30,14 @@ import butterknife.OnClick;
  * Created by Khanh Nguyen on 11/8/2017.
  */
 
-public class ProductCommentActivity extends BaseActivity {
+public class ProductCommentActivity extends BaseActivity implements CommentView {
+
+    private String productId;
+    private String token;
+    private String lastId;
+
+    @Inject
+    CommentPresenter mCommentPresenter;
 
     @BindView(R.id.listView)
     PullAndLoadListView listView;
@@ -51,6 +65,13 @@ public class ProductCommentActivity extends BaseActivity {
     @Override
     public void initView() {
 
+        BaseApp.getActivityComponent().inject(this);
+        mCommentPresenter.onAttach(this);
+        Intent intent = getIntent();
+        productId = intent.getStringExtra("productId");
+        token = intent.getStringExtra("token");
+        lastId = "";
+
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 
             public void onRefresh() {
@@ -59,21 +80,30 @@ public class ProductCommentActivity extends BaseActivity {
             }
         });
 
-        listView.setOnLoadMoreListener(new PullAndLoadListView.OnLoadMoreListener() {
+//        listView.setOnLoadMoreListener(new PullAndLoadListView.OnLoadMoreListener() {
+//
+//            public void onLoadMore() {
+//                // Do the work to load more items at the end of list
+//                // here
+//                new LoadMoreDataTask().execute();
+//            }
+//        });
 
-            public void onLoadMore() {
-                // Do the work to load more items at the end of list
-                // here
-                new LoadMoreDataTask().execute();
+
+
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String comment = txtComment.getText().toString();
+                mCommentPresenter.addProductCommentRemote(token, productId, comment, lastId);
             }
         });
-
-
     }
 
     @Override
     public void initData() {
-        fakeComment();
+        Log.d("fuck", productId);
+        mCommentPresenter.getProductCommentRemote(productId);
     }
 
     private ProductCommentResponse fake() {
@@ -98,6 +128,18 @@ public class ProductCommentActivity extends BaseActivity {
         if (commentList != null && commentList.size() > 0) {
             Collections.reverse(commentList);
             commentAdapter = new ProductCommentAdapter(
+                    this, R.layout.product_comment_item, commentList);
+            listView.setAdapter(commentAdapter);
+        }
+    }
+
+    @Override
+    public void setProductComment(List<ProductCommentResponse> commentList) {
+        if (commentList != null && commentList.size() > 0) {
+            Collections.reverse(commentList);
+            lastId = commentList.get(commentList.size() - 1).getId();
+            Log.d("lastId", lastId);
+            ProductCommentAdapter commentAdapter = new ProductCommentAdapter(
                     this, R.layout.product_comment_item, commentList);
             listView.setAdapter(commentAdapter);
         }

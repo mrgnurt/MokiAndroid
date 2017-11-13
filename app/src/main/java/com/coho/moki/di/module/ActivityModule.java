@@ -27,6 +27,8 @@ import com.coho.moki.ui.size.SizeContract;
 import com.coho.moki.ui.size.SizePresenter;
 import com.coho.moki.ui.product.ProductDetailPresenter;
 import com.coho.moki.ui.product.ProductDetailPresenterImpl;
+import com.coho.moki.ui.product.CommentPresenter;
+import com.coho.moki.ui.product.CommentPresenterImpl;
 import com.coho.moki.ui.splash.SplashPresenter;
 import com.coho.moki.ui.splash.SplashPresenterImpl;
 
@@ -78,4 +80,9 @@ public class ActivityModule {
         return productDetailPresenter;
     }
 
+    @Singleton
+    @Provides
+    CommentPresenter provideCommentPresenter(CommentPresenterImpl commentPresenter) {
+        return commentPresenter;
+    }
 }

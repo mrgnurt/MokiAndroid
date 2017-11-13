@@ -25,6 +25,7 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
 
     ProductDetailView mProductDetailView;
 
+
     ProductDetailService mProductDetailService;
 
     @Inject
@@ -76,7 +77,7 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
         mProductDetailService.likeProductRemote(token, productId, new ResponseListener<LikeResponseData>() {
             @Override
             public void onSuccess(LikeResponseData dataResponse) {
-                mProductDetailView.setLikeComment(dataResponse);
+                mProductDetailView.setLikeProduct(dataResponse);
             }
 
             @Override
@@ -85,4 +86,5 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
             }
         });
     }
+
 }

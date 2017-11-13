@@ -160,7 +160,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         mProductDetailPresenter.onAttach(this);
         loadViewForCode();
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "59e96abbfe038830efc1a1f0";
+        productId = "59e96a91fe038830efc153de";
 
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
@@ -382,7 +382,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnViewComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProductDetailActivity.this, ProductCommentActivity.class));
+                Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
+                intent.putExtra("productId", productId);
+                intent.putExtra("token", token);
+                startActivity(intent);
             }
         });
 
@@ -656,7 +659,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void setLikeComment(LikeResponseData likeResponseData) {
+    public void setLikeProduct(LikeResponseData likeResponseData) {
         if (isLiked == false) {
             imgLike.setImageResource(R.drawable.icon_like_on);
             isLiked = true;
