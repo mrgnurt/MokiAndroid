@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.coho.moki.ui.main.MainActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/side_layout"
+        android:layout_width="@dimen/side_layout_width"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/side_menu_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/main_layout_container"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/navigation_bar" />
+
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/topbar"
+                android:background="@android:color/white" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/main_layout_mask"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/empty_layout"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/intro_tut_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_notification"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/backgroud_mask"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/notification_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/common_padding_large"
+            android:layout_marginLeft="@dimen/common_padding_large"
+            android:layout_marginRight="@dimen/common_padding_large"
+            android:layout_marginTop="39.0dip" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_message"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/backgroud_mask"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/message_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/common_padding_large"
+            android:layout_marginLeft="@dimen/common_padding_large"
+            android:layout_marginRight="@dimen/common_padding_large"
+            android:layout_marginTop="39.0dip" />
+    </RelativeLayout>
+</FrameLayout>

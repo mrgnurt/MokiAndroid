@@ -1,12 +1,16 @@
 package com.coho.moki.ui.splash;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.AccountUntil;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import javax.inject.Inject;
 
@@ -26,9 +30,11 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void initView() {
+        AccountUntil.removeInfoAccount();
         BaseApp.getActivityComponent().inject(this);
         mSplashPresenter.onAttach(this);
         mSplashPresenter.checkUserLogin();
+
     }
 
     @Override
@@ -39,11 +45,13 @@ public class SplashActivity extends BaseActivity implements SplashView {
     public void openLoginActivity() {
         Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     @Override
     public void openMainActivity() {
         Intent intent = new Intent(BaseApp.getContext(), MainActivity.class);
         startActivity(intent);
+        this.finish();
     }
 }

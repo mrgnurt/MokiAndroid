@@ -1,5 +1,7 @@
 package com.coho.moki.data.model;
 
+import java.util.List;
+
 /**
  * Created by trung on 27/09/2017.
  */
@@ -10,15 +12,31 @@ public class Product {
 
     private String name;
 
-    private String imageUrl;
+    private List<String> imageUrls;
 
-    private String price;
+    private int price;
 
-    private String pricePercent;
+    private int pricePercent;
 
-    private String brand;
+    private List<Brand> brand;
 
     private String description;
+
+    private int numLike;
+
+    private int numComment;
+
+    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, List<Brand> brands, String description, int numLike, int numComment) {
+        this.productId = productId;
+        this.name = name;
+        this.imageUrls = imageUrls;
+        this.price = price;
+        this.pricePercent = pricePercent;
+        this.brand = brands;
+        this.description = description;
+        this.numLike = numLike;
+        this.numComment = numComment;
+    }
 
     public String getProductId() {
         return productId;
@@ -36,35 +54,27 @@ public class Product {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getPricePercent() {
+    public int getPricePercent() {
         return pricePercent;
     }
 
-    public void setPricePercent(String pricePercent) {
+    public void setPricePercent(int pricePercent) {
         this.pricePercent = pricePercent;
     }
 
-    public String getBrand() {
+    public List<Brand> getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(List<Brand> brand) {
         this.brand = brand;
     }
 
@@ -74,5 +84,29 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getNumLike() {
+        return numLike;
+    }
+
+    public void setNumLike(int numLike) {
+        this.numLike = numLike;
+    }
+
+    public int getNumComment() {
+        return numComment;
+    }
+
+    public void setNumComment(int numComment) {
+        this.numComment = numComment;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }

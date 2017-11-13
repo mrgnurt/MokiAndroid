@@ -1,21 +1,59 @@
 apply plugin: 'com.android.application'
 
+/* 1) Apply the Gradle Retrolambda Plugin */
+apply plugin: 'me.tatarka.retrolambda'
+
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.coho.moki"
-        minSdkVersion 21
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [appPackageName: "${applicationId}"]
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    /* 2) Compile for Java 1.8 or greater */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    /* 3) Exclude duplicate licenses */
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+        pickFirst 'AndroidManifest.xml'
+    }
+
+    /* 4) Enable jumbo mode */
+    dexOptions {
+        jumboMode true
+    }
+
+    configurations {
+        all*.exclude module: 'play-services-awareness'
+    }
+
+}
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -23,6 +61,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
     })
     compile 'com.android.support:appcompat-v7:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -44,8 +83,61 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'javax.inject:javax.inject:1'
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
+    compile 'com.flipboard:bottomsheet-core:1.5.3'
+    compile 'com.flipboard:bottomsheet-commons:1.5.3' // optional
+    compile 'com.github.frank-zhu:pullzoomview:1.0.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+    compile 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    compile 'com.github.paolorotolo:expandableheightlistview:1.0.0'
+    compile 'ru.noties:scrollable:1.3.0'
+
+    compile 'se.emilsjolander:stickylistheaders:2.1.5'
+    compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
+    compile 'com.kyleduo.switchbutton:library:1.4.6'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    compile 'com.google.firebase:firebase-core:10.2.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
+    compile 'com.kyleduo.switchbutton:library:2.0.0'
+    compile 'com.ss.bannerslider:bannerslider:1.8.0'
+    compile 'com.uncopt:android.justified:1.0'
+    /* Add the CSDK framework dependencies (Make sure these version numbers are correct) */
+    compile 'com.adobe.creativesdk:image:4.8.4'
+    compile 'com.localytics.android:library:3.8.0'
+    compile ('com.adobe.creativesdk.foundation:auth:0.9.1251'){
+        transitive = true
+        exclude group: 'com.google.android.gms'
+    }
+
+    compile 'com.baoyz.swipemenulistview:library:1.3.0'
+
+    compile project(':SlidingMenu')
+    compile project(':pulltorefresh-and-loadmore')
+    compile project(':mediapicker')
 
     testCompile 'junit:junit:4.12'
 }
+
+task findDuplicates {
+    doLast {
+        def findMe = 'com/google/android/gms/common/api/zza.class'
+        configurations.compile.asFileTree.matching {
+            include '**/*.jar'
+        }.files.each { File jarFile ->
+            zipTree(jarFile).visit { FileVisitDetails fvd ->
+                if (fvd.path == findMe) {
+                    println "Found $findMe in $jarFile.name"
+                }
+            }
+        }
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'
