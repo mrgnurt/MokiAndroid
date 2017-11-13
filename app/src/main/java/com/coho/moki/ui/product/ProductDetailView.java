@@ -1,6 +1,7 @@
 package com.coho.moki.ui.product;
 
 import com.coho.moki.data.model.ProductComment;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 
@@ -12,8 +13,9 @@ import java.util.List;
 
 public interface ProductDetailView {
 
-    public void fetchData(ProductDetailResponse productDetailResponse);
+    public void setData(ProductDetailResponse productDetailResponse);
 
     public void setProductComment(List<ProductCommentResponse> productCommentResponse);
 
+    public void setLikeComment(LikeResponseData likeResponseData);
 }

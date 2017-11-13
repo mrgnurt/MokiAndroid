@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_light"
+    android:orientation="vertical">
+
+    <include layout="@layout/nav_bar_custom"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="10.0dip"
+        android:text="@string/comment_notification"
+        android:textColor="@android:color/black" />
+
+    <com.costum.android.widget.PullAndLoadListView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:divider="@android:color/transparent"
+        android:listSelector="@color/gray_light"
+        android:padding="@dimen/common_padding_small"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="pullDownFromTop"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_padding_small">
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/input_frame"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5.0dip">
+
+            <EditText
+                android:id="@+id/edtComment"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@android:color/transparent"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:background="@drawable/close_icon"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnComment"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:background="@drawable/send_comment_btn" />
+    </LinearLayout>
+</LinearLayout>

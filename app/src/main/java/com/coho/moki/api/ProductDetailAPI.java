@@ -1,6 +1,7 @@
 package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 
@@ -24,4 +25,9 @@ public interface ProductDetailAPI {
     @POST("/products/comments")
     Call<BaseResponse<List<ProductCommentResponse>>> getProductComment(@Body Map<String, String> data);
 
+    @POST("/products/like-product")
+    Call<BaseResponse<LikeResponseData>> likeProduct(@Body Map<String, String> data);
+
+    @POST("/products/add-comment")
+    Call<BaseResponse<List<ProductCommentResponse>>> setProductComment(@Body Map<String, String> data);
 }

@@ -16,6 +16,8 @@ import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.util.Utils;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import javax.inject.Inject;
 
