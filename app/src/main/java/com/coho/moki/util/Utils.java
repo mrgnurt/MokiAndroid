@@ -248,6 +248,8 @@ public class Utils {
                 ActivityCompat.requestPermissions(activity, new String[]{idPermission}, requestPermissionCode);
                 Log.e("tuton", "k show");
             }
+        } else {
+
         }
         return isPermission;
     }

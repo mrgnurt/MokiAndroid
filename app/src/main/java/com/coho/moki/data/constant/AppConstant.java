@@ -48,5 +48,8 @@ public class AppConstant {
     public static final String MY_TOKEN = "MY_TOKEN";
     public static final String ANDROID_TYPE = "1";
 
+    public static final String ADD_PRODUCT_IMG = "IMAGE";
+    public static final String ADD_PRODUCT_IMG_POS = "IMG_POS";
+
 
 }

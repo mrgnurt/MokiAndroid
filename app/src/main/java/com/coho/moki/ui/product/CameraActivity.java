@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -18,7 +19,8 @@ import android.widget.RelativeLayout;
 
 //import com.adobe.creativesdk.aviary.AdobeImageIntent;
 import com.coho.moki.BaseApp;
-import com.coho.moki.callback.ITakePhotoListener;
+import com.coho.moki.callback.OnTakePhotoListener;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 
 import com.coho.moki.R;
@@ -97,6 +99,8 @@ public class CameraActivity extends BaseActivity {
     private boolean isSupportFlash;
     private boolean isCameraFront;
 
+    private Integer imgPos;
+
     @Override
     public int setContentViewId() {
         return R.layout.camera_activity;
@@ -127,6 +131,11 @@ public class CameraActivity extends BaseActivity {
             btnSwitch.setVisibility(View.VISIBLE);
             isCameraFront = false;
         }
+
+        // get data from AddProductActivity
+        Intent intent = getIntent();
+        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 1);
+
     }
 
     @Override
@@ -253,40 +262,52 @@ public class CameraActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Log.d(TAG, "camera capture ok");
-            Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
-            Uri uri = saveImage(picture);
-            Log.d(TAG, "uri img = " + uri);
-            Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
-            intent.putExtra("image", uri);
-            startActivity(intent);
-
-//            imageView.setImageBitmap(picture); //for example I put bmp in an ImageView
-        } else if (requestCode == REQUEST_MEDIA) {
-            if (resultCode == RESULT_OK) {
-                List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
-                if (mediaSelectedList != null && !mediaSelectedList.isEmpty()) {
-                    MediaItem item = mediaSelectedList.get(0);
-                    Uri uri = item.getUriOrigin();
-                    /* 1) Create a new Intent */
-                    Log.d(TAG, "uri = " + uri.getPath());
-                    if (uri != null) {
-                        Intent intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
-                        intent.putExtra("image", uri);
+        if (resultCode == Activity.RESULT_OK) {
+            Uri uri;
+            Intent intent;
+            switch (requestCode) {
+                case CAMERA_REQUEST:
+                    Log.d(TAG, "camera capture ok");
+                    Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
+                    uri = saveImage(picture);
+                    Log.d(TAG, "uri img = " + uri);
+                    if (imgPos == 1) {
+                        intent = new Intent(CameraActivity.this, AddProductActivity.class);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
                         startActivity(intent);
+                        finish();
+                    } else {
+                        intent = new Intent();
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
+                    break;
+                case REQUEST_MEDIA:
+                    List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
+                    if (mediaSelectedList != null && !mediaSelectedList.isEmpty()) {
+                        MediaItem item = mediaSelectedList.get(0);
+                        uri = item.getUriOrigin();
+                    /* 1) Create a new Intent */
+                        Log.d(TAG, "uri = " + uri.getPath());
+                        if (uri != null) {
+                            intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
+                            intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                            startActivity(intent);
 
 //                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
 //                                .setData(uri) // Set in onActivityResult()
 //                                .build();
 ////                        /* 2) Start the Image Editor with request code 1 */
 //                        startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
+                        }
                     }
+                    break;
+                case REQ_CODE_CSDK_IMAGE_EDITOR:
 
-                }
+                    break;
             }
-        } else if (requestCode == REQ_CODE_CSDK_IMAGE_EDITOR) {
-
         }
     }
 
@@ -297,19 +318,19 @@ public class CameraActivity extends BaseActivity {
         destroyCamera();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        destroyCamera();
-//
-//    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        destroyCamera();
+//        finish();
+    }
 
     @OnClick(R.id.imgCapturePhoto)
     public void onClickCapturePhoto() {
 //        takePicture();
 
         if (mCamera != null) {
-            mCamera.takePicture(null, null, new PhotoHandler(this, new ITakePhotoListener() {
+            mCamera.takePicture(null, null, new PhotoHandler(this, new OnTakePhotoListener() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
@@ -318,7 +339,6 @@ public class CameraActivity extends BaseActivity {
                 }
             }));
         }
-
 
     }
 

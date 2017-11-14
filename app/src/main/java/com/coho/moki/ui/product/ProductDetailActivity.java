@@ -695,4 +695,5 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         super.onResume();
     }
+
 }

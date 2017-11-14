@@ -1,5 +1,6 @@
 package com.coho.moki.ui.product;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -13,11 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,8 +37,8 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.img1)
     ImageView img1;
 
-//    @BindView(R.id.imgPlayVideoIcon)
-//    ImageView imgPlayVideoIcon;
+    @BindView(R.id.imgPlayVideoIcon)
+    ImageView imgPlayVideoIcon;
 
     @BindView(R.id.img2)
     ImageView img2;
@@ -150,7 +154,10 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.doneBtn)
     TextView btnDone;
 
-    String uri1;
+    private int imgPos;
+    private List<Uri> uriList = new ArrayList<>();
+    private static final int REQUEST_CAMERA = 1001;
+//    private List<ImageView> imgViewList;
 
     @Override
     public int setContentViewId() {
@@ -160,11 +167,44 @@ public class AddProductActivity extends BaseActivity {
     @Override
     public void initView() {
         Intent intent = getIntent();
-        Uri uri = intent.getParcelableExtra("image");
-        Log.d(TAG, uri.getPath());
+        Uri uri = intent.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
+        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+        uriList.add(uri);
+        Log.d(TAG, "uri = " + uri.getPath());
+        Log.d(TAG, "imgPos = " + imgPos);
         img1.setImageURI(uri);
         img1.setVisibility(View.VISIBLE);
+        img2.setVisibility(View.VISIBLE);
         initHeader();
+        initListenerChooseImage();
+    }
+
+    private void initListenerChooseImage() {
+        // get data from camera activity
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.img1:
+
+                        break;
+                    case R.id.img2:
+                        openCamera(2);
+                        break;
+                    case R.id.img3:
+                        openCamera(3);
+                        break;
+                    case R.id.img4:
+                        openCamera(4);
+                        break;
+                }
+            }
+        };
+        img1.setOnClickListener(listener);
+        img2.setOnClickListener(listener);
+        img3.setOnClickListener(listener);
+        img4.setOnClickListener(listener);
+
     }
 
     private void initHeader() {
@@ -191,5 +231,36 @@ public class AddProductActivity extends BaseActivity {
 
     }
 
+    private void openCamera(int imgPos) {
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Intent intent;
+            Uri uri;
+            switch (requestCode) {
+                case REQUEST_CAMERA:
+                    intent = getIntent();
+                    imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+                    uri = intent.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
+                    uriList.add(uri);
+                    int len = uriList.size();
+                    Log.d(TAG, "uri lis size = " + len);
+                    if (len == 2) {
+                        img2.setImageURI(uri);
+                        img3.setVisibility(View.VISIBLE);
+                    } else if (len == 3) {
+                        img3.setImageURI(uri);
+                        img4.setVisibility(View.VISIBLE);
+                    } else if (len == 4) {
+                        img4.setImageURI(uri);
+                    }
+                    break;
+            }
+        }
+    }
 }

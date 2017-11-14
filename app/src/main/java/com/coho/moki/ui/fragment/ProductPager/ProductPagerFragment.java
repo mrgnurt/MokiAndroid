@@ -1,18 +1,15 @@
 package com.coho.moki.ui.fragment.ProductPager;
 
-import android.animation.Animator;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.CategoryPagerAdapter;
+import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.main.MainActivity;
@@ -34,6 +31,8 @@ import ss.com.bannerslider.views.BannerSlider;
 
 public class ProductPagerFragment extends BaseFragment implements ProductPagerContract.View {
 
+    private  static final String TAG = "ProductPagerFragment";
+
     @BindView(R.id.tl_categories)
     TabLayout mTLCategories;
 
@@ -53,6 +52,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     Button mBtnCamera;
 
     ProductPagerContract.Presenter mPresenter;
+    private OnClickSellListener mOnClickSellListener;
 
     List<Banner> banners = new ArrayList<Banner>();
     List<Category> categories = new ArrayList<Category>();
@@ -81,13 +81,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         showBannerSlider();
         mPresenter.callServiceGetCampaigns();
 //        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
-
-        mBtnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CameraActivity.class));
-            }
-        });
+        initClickSellListener();
 
     }
 
@@ -143,6 +137,19 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         else {
             ((MainActivity)getActivity()).setVisibleTopBar(visible, mBtnCamera);
         }
+    }
+
+    public void setSellListener(OnClickSellListener listener) {
+        this.mOnClickSellListener = listener;
+    }
+
+    private void initClickSellListener() {
+        mBtnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnClickSellListener.onClick();
+            }
+        });
     }
 
 }

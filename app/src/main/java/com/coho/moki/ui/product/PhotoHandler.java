@@ -13,16 +13,16 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.coho.moki.callback.ITakePhotoListener;
+import com.coho.moki.callback.OnTakePhotoListener;
 
 public class PhotoHandler implements PictureCallback {
 
     private static final String T = "PhotoHandler";
 
     private final Context context;
-    private ITakePhotoListener listener;
+    private OnTakePhotoListener listener;
 
-    public PhotoHandler(Context context, ITakePhotoListener listener) {
+    public PhotoHandler(Context context, OnTakePhotoListener listener) {
         this.context = context;
         this.listener = listener;
     }
