@@ -23,8 +23,8 @@ public final class LoadImageUtils {
     public static void loadImageFromUrl(String url, final ImageView imgView, final OnLoadImageListener listener) {
         Picasso picasso;
         picasso = Picasso.with(BaseApp.getContext());
-        picasso.setIndicatorsEnabled(true);
         picasso.load(url)
+                .fit()
                 .placeholder(R.drawable.no_image)
                 .into(imgView, listener);
     }

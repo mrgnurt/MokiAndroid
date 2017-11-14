@@ -18,6 +18,7 @@ package com.coho.moki.di.component;
 import com.coho.moki.di.module.ActivityModule;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.login.LoginPresenterImpl;
+import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product_search.ProductSearchActivity;
@@ -47,5 +48,7 @@ public interface ActivityComponent {
     void inject(SizeActivity activity);
 
     void inject(ProductDetailActivity activity);
+
+    void inject(ProductCommentActivity activity);
 
 }

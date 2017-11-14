@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="220dp"
+        android:layout_height="350dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/secondImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="230dp"
+            android:layout_marginLeft="170dp"
+            android:src="@drawable/product_icon5" />
+
+        <ImageView
+            android:id="@+id/deviceImage"
+            android:layout_width="155dp"
+            android:layout_height="315dp"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/tutorial_devicebg2" />
+
+        <ImageView
+            android:id="@+id/thirdImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/product_icon3" />
+
+        <ImageView
+            android:id="@+id/firstImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/product_icon2" />
+    </RelativeLayout>
+
+    <!--<com.coho.moki.ui.start_tutorial.Pager-->
+        <!--android:id="@+id/scrollView"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" />-->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/second_page_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="45.0dip"
+                android:layout_marginLeft="@dimen/common_padding_small"
+                android:layout_marginRight="@dimen/common_padding_small"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="Phù hợp với thói quen mua bán của mẹ trong thời gian mang thai, nuôi con nhỏ"
+                android:textColor="@android:color/black"
+                android:textSize="18.0dip"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

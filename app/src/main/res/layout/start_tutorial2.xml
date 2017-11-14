@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="5.0">
+
+    <FrameLayout
+        android:id="@+id/thirdPageLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="3.2"
+        android:background="@drawable/tutorial_background_white">
+
+        <com.coho.moki.ui.start_tutorial.CircularImageViewFrame
+            android:id="@+id/firstZoomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava_1"
+            app:siBorderColor="@android:color/white"
+            app:siBorderWidth="2.0dip" />
+
+        <com.coho.moki.ui.start_tutorial.CircularImageViewFrame
+            android:id="@+id/secondZoomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava_2"
+            app:siBorderColor="@android:color/white"
+            app:siBorderWidth="2.0dip" />
+
+        <com.coho.moki.ui.start_tutorial.CircularImageViewFrame
+            android:id="@+id/thirdZoomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava_3"
+            app:siBorderColor="@android:color/white"
+            app:siBorderWidth="2.0dip" />
+
+        <com.coho.moki.ui.start_tutorial.CircularImageViewFrame
+            android:id="@+id/fouthZoomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava_4"
+            app:siBorderColor="@android:color/white"
+            app:siBorderWidth="2.0dip" />
+
+        <com.coho.moki.ui.start_tutorial.CircularImageViewFrame
+            android:id="@+id/fifthZoomIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava_5"
+            app:siBorderColor="@android:color/white"
+            app:siBorderWidth="2.0dip" />
+
+        <com.coho.moki.ui.start_tutorial.ImageViewFrame
+            android:id="@+id/thirdPageDeviceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tutorial_devicebg" />
+
+        <ScrollView
+            android:id="@+id/productImageScroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fadingEdge="none"
+            android:scrollbars="none">
+
+            <com.coho.moki.ui.start_tutorial.ImageViewFrame
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/tutorial_main_view" />
+        </ScrollView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.8"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/third_page_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="120.0dip"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:layout_marginRight="@dimen/common_padding_small"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="aaaa"
+            android:textColor="@android:color/black"
+            android:textSize="18.0dip"
+            android:textStyle="bold" />
+    </FrameLayout>
+</LinearLayout>
