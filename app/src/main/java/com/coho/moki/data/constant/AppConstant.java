@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.1.50:3000";
+    public static final String BASEURL_TAG = "http://192.168.43.152:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -55,5 +55,11 @@ public class AppConstant {
     public static final String SOCKET_MESSAGE = "message";
 
     public static final String NO_INTERNET = "Kiểm tra kết nối Internet";
+
+    public static final String NO_FETCH_DATA = "Không thể lấy được dữ liệu lúc này!";
+
+    public static final String UNAUTHENTICATED = "Để thực hiện chức năng bạn cần phải đăng nhập";
+
+    public static final String CALL_ERR = "Có lỗi xảy ra, làm ơn hãy thử lại";
 
 }

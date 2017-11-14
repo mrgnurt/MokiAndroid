@@ -140,6 +140,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private String productId;
     private String token;
 
+    private String mProductAvatar;
+
     private String mPartnerId;
 
     private String mPartnerAvatar;
@@ -180,7 +182,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
         token = AccountUntil.getUserToken();
 
-
+        if (AccountUntil.getAccountId() == null) {
+            btnBuy.setClickable(false);
+        }
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
 //        mActionBar.setDisplayShowHomeEnabled(false);
@@ -373,7 +377,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 data.putString("seller_name", mSellerName);
                 data.putString("seller_id", mSellerId);
                 data.putString("seller_avatar", mSellerAvatar);
+                data.putString("product_id", productId);
                 data.putBoolean("is_owner_product", false);
+                data.putString("product_avatar", mProductAvatar);
 
                 intent.putExtra("package", data);
                 startActivity(intent);
@@ -485,6 +491,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         mSellerId = seller.getId();
         mSellerAvatar = seller.getAvatar();
         mSellerName = seller.getName();
+        mProductAvatar = response.getImage().get(0).getUrl();
+
         /////////////////////////////////////////////////
 
 

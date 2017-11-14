@@ -8,5 +8,5 @@ import com.coho.moki.data.remote.ConversationResponseData;
 
 public interface ConversationService {
 
-    public void loadConversationDetail(String token, String partnerId, String productId, int index, int count, ResponseListener<ConversationResponseData> listener);
+    public void loadConversationDetail(String token, String partnerId, String productId, int count, int limit, ResponseListener<ConversationResponseData> listener);
 }

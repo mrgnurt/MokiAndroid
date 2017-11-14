@@ -29,6 +29,7 @@ import com.coho.moki.service.ConversationServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.StringUtil;
 import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
@@ -102,6 +103,8 @@ public class ProductChatActivity extends BaseActivity {
 
     private String mProductId;
 
+    private String mProductAvatar;
+
     private String mMyId;
 
     private String mMyAvatar;
@@ -141,11 +144,14 @@ public class ProductChatActivity extends BaseActivity {
         mSellerId = data.getString("seller_id");
         mSellerAvatar = data.getString("seller_avatar");
         isOwnerProduct = data.getBoolean("is_owner_product");
+        mProductId = data.getString("product_id");
+        mProductAvatar = data.getString("product_avatar");
     }
 
     @Override
     public void initView() {
         btnNavRight.setBackgroundResource(R.drawable.ic_icon_message);
+        LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
 
         if (isOwnerProduct) {
             llTransaction.setVisibility(View.GONE);
@@ -180,22 +186,6 @@ public class ProductChatActivity extends BaseActivity {
         loadHistoryConversations();
     }
 
-    private void initFakeData() {
-        imgProduct.setImageResource(R.drawable.hm01);
-        txtName.setText("Gấu bông chất lượng cao");
-        txtPrice.setText("100,000 VNĐ");
-        txtHeader.setText("Shop ABC");
-
-
-
-        mToken = AccountUntil.getUserToken();
-        Log.d("user_token", mToken);
-
-//        mToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNWEwNzc4ZmVlZDAxOWMwZTkzZWNkYmI4IiwidXNlcm5hbWUiOiJKb2R5IFplbWxhayIsInBob25lTnVtYmVyIjoiMDE2NzIwMTgyNDAiLCJyb2xlIjoxLCJ1cmwiOiJodHRwOi8vcmhlYS5iaXoiLCJhdmF0YXIiOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vdWlmYWNlcy9mYWNlcy90d2l0dGVyL3RvZGRyZXcvMTI4LmpwZyJ9LCJleHBpcmVkQXQiOiIyMDE3LTExLTE1VDA5OjU1OjMwLjc4MVoifQ.FcnGxmlehCCDwtGnLp6OZiMkPmllyYCKIxTM_0IyrJE";
-        mPartnerId = "5a077900ed019c0e93ecdbd6";
-        mProductId = "5a077903ed019c0e93ecdc1a";
-    }
-
     public void loadMyInfo() {
         mToken = AccountUntil.getUserToken();
         mMyId = AccountUntil.getAccountId();
@@ -204,18 +194,21 @@ public class ProductChatActivity extends BaseActivity {
 
     public void loadHistoryConversations() {
 
+        DialogUtil.showProgress(ProductChatActivity.this);
         conversationService.loadConversationDetail(mToken, mPartnerId, mProductId, limitPerLoad, currIndex, new ResponseListener<ConversationResponseData>() {
             @Override
             public void onSuccess(ConversationResponseData dataResponse) {
                 List<Conversation> chats = dataResponse.getConversation();
                 ProductCons product = dataResponse.getProduct();
-
                 populateConversation(chats, product);
+                DialogUtil.hideProgress();
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                Log.d("failure_get_cons_detail", errorMessage);
+                DialogUtil.hideProgress();
+                DialogUtil.showPopup(ProductChatActivity.this, errorMessage);
+                Log.d(LOG_TAG, errorMessage);
             }
         });
     }
@@ -227,8 +220,6 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         this.mProductCons = product;
-        LoadImageUtils.loadImageFromUrl(product.getImage(), imgProduct, null);
-        Log.d("tuton", product.getImage());
         txtName.setText(product.getName());
         String price = product.getPrice() + "";
         String priceFormated = Utils.formatPrice(price);
@@ -394,7 +385,7 @@ public class ProductChatActivity extends BaseActivity {
             receiveItem.setSendAt(sendAt);
             receiveItem.setServerMsgId(messageId);
 
-            Log.d("receiveMessage", message);
+            Log.d(LOG_TAG, message);
 
             productChatAdapter.addItem(receiveItem);
         } catch (JSONException e) {
