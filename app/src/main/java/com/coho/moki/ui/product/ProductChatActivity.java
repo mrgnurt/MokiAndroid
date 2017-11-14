@@ -228,6 +228,7 @@ public class ProductChatActivity extends BaseActivity {
 
         this.mProductCons = product;
         LoadImageUtils.loadImageFromUrl(product.getImage(), imgProduct, null);
+        Log.d("tuton", product.getImage());
         txtName.setText(product.getName());
         String price = product.getPrice() + "";
         String priceFormated = Utils.formatPrice(price);

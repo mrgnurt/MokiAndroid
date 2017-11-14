@@ -21,6 +21,7 @@ public class ConversationServiceImpl implements ConversationService {
     public void loadConversationDetail(String token, String partnerId, String productId, int index, int count, final ResponseListener<ConversationResponseData> listener) {
 
         Map<String, String> consParam = new HashMap<>();
+        consParam.put("token", token);
         consParam.put("partnerId", partnerId);
         consParam.put("productId", productId);
         consParam.put("index", index + "");
