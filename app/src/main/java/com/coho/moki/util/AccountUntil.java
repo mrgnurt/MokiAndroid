@@ -49,19 +49,10 @@ public class AccountUntil {
     }
 
     public synchronized static void removeInfoAccount() {
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                SharedPrefUtils.removeKey(AppConstant.MY_ID);
-                SharedPrefUtils.removeKey(AppConstant.MY_USERNAME);
-                SharedPrefUtils.removeKey(AppConstant.MY_AVATAR_URL);
-                SharedPrefUtils.removeKey(AppConstant.MY_TOKEN);
-                return null;
-            }
-        }.execute();
-
+        SharedPrefUtils.removeKey(AppConstant.MY_ID);
+        SharedPrefUtils.removeKey(AppConstant.MY_USERNAME);
+        SharedPrefUtils.removeKey(AppConstant.MY_AVATAR_URL);
+        SharedPrefUtils.removeKey(AppConstant.MY_TOKEN);
     }
 
     public synchronized static void passTutorialScreen() {

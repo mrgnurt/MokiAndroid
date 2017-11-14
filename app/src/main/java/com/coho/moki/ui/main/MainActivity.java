@@ -1,10 +1,14 @@
 package com.coho.moki.ui.main;
 
 import android.animation.Animator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +36,7 @@ import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -278,4 +283,47 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setDuration(500);
         }
     }
+
+    BroadcastReceiver receiver;
+    public void registerLocalBroadcast() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                try {
+
+                    Log.d("onReceiveFirebase", "vao day");
+                    String title= intent.getStringExtra("title");
+                    String content= intent.getStringExtra("content");
+                    int type = intent.getIntExtra("type", 2);
+
+                    showPopup();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        registerLocalBroadcast();
+    }
+
+    public void showPopup() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("onReceiveFirebase", "run");
+                DialogUtil.showPopup(MainActivity.this, "Có ai đó đã đăng nhập vào tài khoản bạn");
+            }
+        });
+    }
+
+
+
 }
