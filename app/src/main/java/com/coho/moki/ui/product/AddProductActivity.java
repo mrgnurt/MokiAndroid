@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
@@ -184,8 +185,8 @@ public class AddProductActivity extends BaseActivity {
         img2.setVisibility(View.VISIBLE);
         initHeader();
         initListenerChooseImage();
-        initListenerForEditText();
-        initListenerForButton();
+        initFocusListenerForEditText();
+        initClickListener();
     }
 
     private void initListenerChooseImage() {
@@ -386,7 +387,7 @@ public class AddProductActivity extends BaseActivity {
         }
     }
 
-    private void initListenerForEditText() {
+    private void initFocusListenerForEditText() {
         View.OnFocusChangeListener listener = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -409,7 +410,7 @@ public class AddProductActivity extends BaseActivity {
         edtBuyPrice.setOnFocusChangeListener(listener);
     }
 
-    private void initListenerForButton() {
+    private void initClickListener() {
         topKeyboardLayout.setVisibility(View.GONE);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override()
@@ -436,12 +437,18 @@ public class AddProductActivity extends BaseActivity {
                         Utils.hideSoftKeyboard(AddProductActivity.this);
                         topKeyboardLayout.setVisibility(View.GONE);
                         break;
+                    case R.id.edtCategory:
+                        Intent intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
+                        // need chagne to startActivityForResult got get result;
+                        startActivity(intent);
+
                 }
             }
         };
         btnNext.setOnClickListener(listener);
         btnPrev.setOnClickListener(listener);
         btnDone.setOnClickListener(listener);
+        edtCategory.setOnClickListener(listener);
     }
 
 }
