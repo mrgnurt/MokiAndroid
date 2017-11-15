@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
