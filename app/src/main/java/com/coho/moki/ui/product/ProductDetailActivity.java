@@ -19,6 +19,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IntegerRes;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -141,6 +142,20 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private String productId;
     private String token;
 
+    private String mProductAvatar;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mSellerName;
+
+    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
+
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -169,7 +184,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
         token = AccountUntil.getUserToken();
 
-
+        if (AccountUntil.getAccountId() == null) {
+            btnBuy.setClickable(false);
+        }
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
 //        mActionBar.setDisplayShowHomeEnabled(false);
@@ -345,8 +362,25 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (AccountUntil.getAccountId().equals(mSellerId)) {
+                    Log.d("i_am_seller", "La seller coi sp chinh no");
+                    return;
+                }
+
                 Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
+                Bundle data = new Bundle();
+                data.putString("partner_id", mPartnerId);
+                data.putString("partner_avatar", mPartnerAvatar);
+                data.putString("seller_name", mSellerName);
+                data.putString("seller_id", mSellerId);
+                data.putString("seller_avatar", mSellerAvatar);
+                data.putString("product_id", productId);
+                data.putBoolean("is_owner_product", false);
+                data.putString("product_avatar", mProductAvatar);
+
+                intent.putExtra("package", data);
                 startActivity(intent);
             }
         });
@@ -390,7 +424,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
                 intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(ProductDetailActivity.this);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 
@@ -450,6 +484,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             isLiked = true;
         }
         ProductDetailResponse.Seller seller = response.getSeller();
+
+        ///////////////////////////////////////////////////
+        mPartnerId = seller.getId();
+        mPartnerAvatar = seller.getAvatar();
+        mSellerId = seller.getId();
+        mSellerAvatar = seller.getAvatar();
+        mSellerName = seller.getName();
+        mProductAvatar = response.getImage().get(0).getUrl();
+
+        /////////////////////////////////////////////////
+
+
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
         txtScore.setText(": " + response.getSeller().getScore());
@@ -484,13 +530,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             salePrice.setVisibility(View.INVISIBLE);
         }
         Integer canEdit = response.getCanEdit();
-        if (canEdit == 0) {
+        if (seller.getId().equals(AccountUntil.getAccountId())) {
             btnBuy.setText(R.string.edit);
             btnBuy.setVisibility(View.VISIBLE);
             btnBuy.setBackgroundResource(R.color.green_status);
         } else if (response.getIsBlocked() == 1) {
             btnBuy.setVisibility(View.GONE);
+        } else {
+            btnBuy.setText("Mua");
+            btnBuy.setVisibility(View.VISIBLE);
+            btnBuy.setBackgroundResource(R.color.red_dark);
         }
+
         if (response.getComment() == 0) {
             listComment.setVisibility(View.GONE);
             btnViewComment.setText(R.string.the_first_comment);

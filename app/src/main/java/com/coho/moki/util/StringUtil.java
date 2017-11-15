@@ -54,11 +54,7 @@ public class StringUtil {
     }
 
     public static boolean checkStringValid(String data) {
-        if (data != null && !data.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return data != null && !data.isEmpty();
     }
 
     public static boolean checkStringNull(String data) {
