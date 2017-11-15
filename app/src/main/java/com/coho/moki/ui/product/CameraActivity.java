@@ -292,9 +292,24 @@ public class CameraActivity extends BaseActivity {
                     /* 1) Create a new Intent */
                         Log.d(TAG, "uri = " + uri.getPath());
                         if (uri != null) {
-                            intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
-                            intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
-                            startActivity(intent);
+//                            intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
+//                            intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+//                            startActivity(intent);
+
+
+                            if (imgPos == 1) {
+                                intent = new Intent(CameraActivity.this, AddProductActivity.class);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 1);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                intent = new Intent();
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            }
 
 //                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
 //                                .setData(uri) // Set in onActivityResult()

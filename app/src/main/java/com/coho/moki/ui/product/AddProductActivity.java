@@ -186,15 +186,26 @@ public class AddProductActivity extends BaseActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.img1:
+                        if (uriList.size() >= 1) {
 
+                        }
                         break;
                     case R.id.img2:
+                        if (uriList.size() >= 2) {
+                            // show dialog
+                        }
                         openCamera(2);
                         break;
                     case R.id.img3:
+                        if (uriList.size() >= 3) {
+
+                        }
                         openCamera(3);
                         break;
                     case R.id.img4:
+                        if (uriList.size() == 4) {
+
+                        }
                         openCamera(4);
                         break;
                 }
@@ -240,13 +251,11 @@ public class AddProductActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Intent intent;
             Uri uri;
             switch (requestCode) {
                 case REQUEST_CAMERA:
-                    intent = getIntent();
-                    imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
-                    uri = intent.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
+                    imgPos = data.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+                    uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
                     uriList.add(uri);
                     int len = uriList.size();
                     Log.d(TAG, "uri lis size = " + len);
