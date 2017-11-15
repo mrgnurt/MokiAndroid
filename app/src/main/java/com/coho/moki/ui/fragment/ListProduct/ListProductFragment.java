@@ -113,6 +113,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             public void onClick(String productId) {
                 Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
                 intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                DialogUtil.showProgress(getActivity());
                 startActivity(intent);
             }
         });

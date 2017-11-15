@@ -5,6 +5,7 @@ import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.BaseApp;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImageAdapter;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
@@ -13,9 +14,12 @@ import com.coho.moki.ui.base.BaseActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntegerRes;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -34,7 +38,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.user.UserInfoActivity;
+import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
@@ -135,6 +142,20 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private String productId;
     private String token;
 
+    private String mProductAvatar;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mSellerName;
+
+    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
+
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -159,9 +180,13 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         BaseApp.getActivityComponent().inject(this);
         mProductDetailPresenter.onAttach(this);
         loadViewForCode();
-        token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc0xvZ2luIjp0cnVlLCJ1c2VyIjp7ImlkIjoiNTllOTZhODhmZTAzODgzMGVmYzE1MzgxIiwidXNlcm5hbWUiOiJBcmVseSBCZWF0dHkiLCJwaG9uZU51bWJlciI6IjUwNi45NzUuMzA4NCIsInJvbGUiOjEsInVybCI6Imh0dHBzOi8vb3Jpb24uY29tIn19.5ExdMHvowsh_hSmDTTsicUBV5xaICczbiFKMa0MF2eI";
-        productId = "59e96abbfe038830efc1a1f0";
+        Intent intent = getIntent();
+        productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
+        token = AccountUntil.getUserToken();
 
+        if (AccountUntil.getAccountId() == null) {
+            btnBuy.setClickable(false);
+        }
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
 //        mActionBar.setDisplayShowHomeEnabled(false);
@@ -178,9 +203,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @Override
     public void initData() {
-//        initFakeData();
-        mProductDetailPresenter.getProductDetailRemote(token, productId);
-        mProductDetailPresenter.getProductCommentRemote(productId);
     }
 
     private void initFakeData() {
@@ -340,8 +362,25 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (AccountUntil.getAccountId().equals(mSellerId)) {
+                    Log.d("i_am_seller", "La seller coi sp chinh no");
+                    return;
+                }
+
                 Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
+                Bundle data = new Bundle();
+                data.putString("partner_id", mPartnerId);
+                data.putString("partner_avatar", mPartnerAvatar);
+                data.putString("seller_name", mSellerName);
+                data.putString("seller_id", mSellerId);
+                data.putString("seller_avatar", mSellerAvatar);
+                data.putString("product_id", productId);
+                data.putBoolean("is_owner_product", false);
+                data.putString("product_avatar", mProductAvatar);
+
+                intent.putExtra("package", data);
                 startActivity(intent);
             }
         });
@@ -382,7 +421,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnViewComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProductDetailActivity.this, ProductCommentActivity.class));
+                Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                DialogUtil.showProgress(ProductDetailActivity.this);
+                startActivity(intent);
             }
         });
 
@@ -390,13 +432,21 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         imgLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProductDetailPresenter.likeProductRemote(token, productId);
+                DialogUtil.showProgress(ProductDetailActivity.this);
+                if (token == null) {
+                    ProductDetailActivity.this.finish();
+                    Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    mProductDetailPresenter.likeProductRemote(token, productId);
+                }
             }
         });
     }
 
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
+        DialogUtil.showProgress(this);
         startActivity(intent);
     }
 
@@ -434,6 +484,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             isLiked = true;
         }
         ProductDetailResponse.Seller seller = response.getSeller();
+
+        ///////////////////////////////////////////////////
+        mPartnerId = seller.getId();
+        mPartnerAvatar = seller.getAvatar();
+        mSellerId = seller.getId();
+        mSellerAvatar = seller.getAvatar();
+        mSellerName = seller.getName();
+        mProductAvatar = response.getImage().get(0).getUrl();
+
+        /////////////////////////////////////////////////
+
+
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
         txtScore.setText(": " + response.getSeller().getScore());
@@ -468,13 +530,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             salePrice.setVisibility(View.INVISIBLE);
         }
         Integer canEdit = response.getCanEdit();
-        if (canEdit == 0) {
+        if (seller.getId().equals(AccountUntil.getAccountId())) {
             btnBuy.setText(R.string.edit);
             btnBuy.setVisibility(View.VISIBLE);
             btnBuy.setBackgroundResource(R.color.green_status);
         } else if (response.getIsBlocked() == 1) {
             btnBuy.setVisibility(View.GONE);
+        } else {
+            btnBuy.setText("Mua");
+            btnBuy.setVisibility(View.VISIBLE);
+            btnBuy.setBackgroundResource(R.color.red_dark);
         }
+
         if (response.getComment() == 0) {
             listComment.setVisibility(View.GONE);
             btnViewComment.setText(R.string.the_first_comment);
@@ -656,7 +723,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void setLikeComment(LikeResponseData likeResponseData) {
+    public void setLikeProduct(LikeResponseData likeResponseData) {
         if (isLiked == false) {
             imgLike.setImageResource(R.drawable.icon_like_on);
             isLiked = true;
@@ -665,5 +732,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             isLiked = false;
         }
         txtLike.setText(likeResponseData.getLike().toString());
+    }
+
+    @Override
+    public void onResume() {
+        mProductDetailPresenter.getProductDetailRemote(token, productId);
+        mProductDetailPresenter.getProductCommentRemote(productId);
+        super.onResume();
     }
 }

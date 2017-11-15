@@ -82,17 +82,17 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             mTxtSalePercent.setText(product.getPricePercent() + "");
         }
 
-//        LoadImageUtils.loadImageFromUrl("https://static.toiimg.com/photo/59387711.cms", mFirstImage, new OnLoadImageListener() {
-//            @Override
-//            public void onSuccess() {
-//                mFrameProgress.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onError() {
-//
-//            }
-//        });
+        LoadImageUtils.loadImageFromUrl(product.getImageUrls().get(0), mFirstImage, new OnLoadImageListener() {
+            @Override
+            public void onSuccess() {
+                mFrameProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
 
         mFrameProgress.setVisibility(View.GONE);
     }

@@ -1,6 +1,8 @@
 package com.coho.moki.ui.fragment;
 
 import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.coho.moki.BaseApp;
@@ -34,7 +36,7 @@ import butterknife.BindView;
 public class MessageFragment extends BaseFragment {
 
     @BindView(R.id.notiListView)
-    PullAndLoadListView mNotiListView;
+    ListView mNotiListView;
 
     CONSService mConsService;
     ListConversationResponceData listConversationResponceData;
@@ -91,6 +93,13 @@ public class MessageFragment extends BaseFragment {
 
         NotificationAdapter adapter = new NotificationAdapter(getActivity(), R.layout.notification_item, chats);
         mNotiListView.setAdapter(adapter);
+
+        mNotiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
 
     }
 

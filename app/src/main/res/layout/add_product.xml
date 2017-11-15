@@ -32,26 +32,36 @@
                     android:paddingRight="10.0dip"
                     android:paddingTop="20.0dip">
 
-                    <FrameLayout
+                    <!--<FrameLayout-->
+                        <!--android:layout_width="0.0dip"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginRight="10.0dip"-->
+                        <!--android:layout_weight="1.0">-->
+
+                        <!--<com.coho.moki.ui.custom.SquareImageView-->
+                            <!--android:id="@+id/img1"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:scaleType="centerCrop" />-->
+
+                        <!--<com.coho.moki.ui.custom.SquareImageView-->
+                            <!--android:id="@+id/imgPlayVideoIcon"-->
+                            <!--android:layout_width="@dimen/actionbar_height"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:src="@drawable/play_video_icon"-->
+                            <!--android:visibility="gone" />-->
+                    <!--</FrameLayout>-->
+
+                    <com.coho.moki.ui.custom.SquareImageView
+                        android:id="@+id/img1"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10.0dip"
-                        android:layout_weight="1.0">
-
-                        <com.coho.moki.ui.custom.SquareImageView
-                            android:id="@+id/img1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerCrop" />
-
-                        <com.coho.moki.ui.custom.SquareImageView
-                            android:id="@+id/imgPlayVideoIcon"
-                            android:layout_width="@dimen/actionbar_height"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/play_video_icon"
-                            android:visibility="gone" />
-                    </FrameLayout>
+                        android:layout_weight="1.0"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_camera_trigger"
+                        android:visibility="visible" />
 
                     <com.coho.moki.ui.custom.SquareImageView
                         android:id="@+id/img2"
