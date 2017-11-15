@@ -7,7 +7,6 @@ package com.coho.moki.data.constant;
 public class AppConstant {
 
     //tag api request
-
     public static final String BASEURL_TAG = "http://192.168.43.47:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
