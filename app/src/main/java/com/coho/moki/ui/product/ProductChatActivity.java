@@ -155,10 +155,10 @@ public class ProductChatActivity extends BaseActivity {
 
         if (isOwnerProduct) {
             llTransaction.setVisibility(View.GONE);
-            messInstruct.setVisibility(View.GONE);
+            displayInstruction(View.GONE);
         } else {
             llTransaction.setVisibility(View.VISIBLE);
-            messInstruct.setVisibility(View.VISIBLE);
+            displayInstruction(View.VISIBLE);
         }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -183,7 +183,12 @@ public class ProductChatActivity extends BaseActivity {
         currIndex = 0;
         limitPerLoad = 20;
         loadMyInfo();
-        loadHistoryConversations();
+
+        if (Utils.checkInternetAvailable()) {
+            loadHistoryConversations();
+        } else {
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
+        }
     }
 
     public void loadMyInfo() {
@@ -219,16 +224,20 @@ public class ProductChatActivity extends BaseActivity {
             return;
         }
 
-        this.mProductCons = product;
-        txtName.setText(product.getName());
-        String price = product.getPrice() + "";
-        String priceFormated = Utils.formatPrice(price);
-        txtPrice.setText(priceFormated);
-        txtHeader.setText(mSellerName);
+        if (this.mProductCons == null) {
+            this.mProductCons = product;
+            txtName.setText(product.getName());
+            String price = product.getPrice() + "";
+            String priceFormated = Utils.formatPrice(price);
+            txtPrice.setText(priceFormated);
+            txtHeader.setText(mSellerName);
+        }
 
         if (historyChats == null || historyChats.size() < 1) {
             return;
         }
+
+        displayInstruction(View.GONE);
 
         List<ProductChatItem> addItems = new ArrayList<>();
         for (Conversation historyLine : historyChats) {
@@ -248,7 +257,7 @@ public class ProductChatActivity extends BaseActivity {
             addItems.add(addItem);
         }
 
-        productChatAdapter.addItems(addItems);
+        productChatAdapter.addItemsToFirst(addItems);
     }
 
     public void initSocket() {
@@ -324,7 +333,7 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         if (!Utils.checkInternetAvailable()) {
-            Utils.toastShort(BaseApp.getContext(), AppConstant.NO_INTERNET);
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
             return;
         }
 
@@ -430,6 +439,10 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         return updateParam;
+    }
+
+    public void displayInstruction(int visibility) {
+        messInstruct.setVisibility(visibility);
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {

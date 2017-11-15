@@ -56,7 +56,16 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
         this.notifyItemInserted(getItemCount() - 1);
     }
 
-    public void addItems(List<ProductChatItem> addItems) {
+    public void addItemsToFirst(List<ProductChatItem> addItems) {
+        if (addItems == null || addItems.size() < 1) {
+            return;
+        }
+
+        chatList.addAll(0, addItems);
+        this.notifyItemRangeInserted(0, addItems.size());
+    }
+
+    public void addItemsToLast(List<ProductChatItem> addItems) {
         if (addItems == null || addItems.size() < 1) {
             return;
         }

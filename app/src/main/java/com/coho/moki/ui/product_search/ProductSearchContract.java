@@ -15,6 +15,14 @@ public interface ProductSearchContract {
 
     interface View {
         void showProducts(List<Product> products);
+
+        void showLoadProgress();
+
+        void hideLoadProgress();
+
+        void showPopup(String message);
+
+        void setSearchHeader(String text);
     }
 
     interface Presenter extends BasePresenter<ProductSearchContract.View> {

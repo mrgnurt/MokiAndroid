@@ -19,7 +19,9 @@
             android:orientation="vertical"
             android:paddingLeft="20.0dip"
             android:paddingRight="20.0dip"
-            android:paddingTop="15.0dip">
+            android:paddingTop="15.0dip"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
 
             <com.coho.moki.ui.custom.AspectRatioImageView
                 android:id="@+id/icon"
