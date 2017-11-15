@@ -6,22 +6,35 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.adapter.customadapter.FollowedAdapter;
+import com.coho.moki.ui.base.BaseFragment;
+
+import butterknife.BindView;
 
 /**
  * Created by Khanh Nguyen on 10/16/2017.
  */
 
-public class UserFollowingFragment extends Fragment{
+public class UserFollowingFragment extends BaseFragment{
+
+    @BindView(R.id.list_view_user_follow)
+    ListView mListViewUserFollow;
 
     public UserFollowingFragment() {}
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_following_fragment, container, false);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.user_follow;
     }
 
+    @Override
+    protected void initView() {
+
+        FollowedAdapter adapter = new FollowedAdapter(BaseApp.getContext(), R.layout.follow_user_item);
+        mListViewUserFollow.setAdapter(adapter);
+    }
 }
