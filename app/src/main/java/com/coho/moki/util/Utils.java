@@ -10,12 +10,15 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -30,6 +33,7 @@ import android.widget.Toast;
 
 import com.coho.moki.BaseApp;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -41,6 +45,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+    private Utils() {
+    }
+
+    public static final String TAG = "Utils";
 
     private static HashMap<String, WeakReference<Toast>> toasts = new HashMap<>();
 
@@ -293,15 +302,14 @@ public class Utils {
         long diffDays = diffHours / 24;
         long diffYears = diffDays / 365;
         if (diffSeconds < 60) {
-             res.append(current);
+            res.append(current);
         } else if (diffMinutes < 60) {
             res.append(diffMinutes).append(minuteAgo);
         } else if (diffHours < 24) {
             res.append(diffHours).append(hourAgo);
         } else if (diffDays == 1) {
             res.append(yesterday);
-        }
-        else if (diffDays < 365){
+        } else if (diffDays < 365) {
             if (diffDays < 2) {
 
             }
@@ -341,6 +349,7 @@ public class Utils {
 
     /**
      * Get the TextView height before the TextView will render
+     *
      * @param textView the TextView to measure
      * @return the height of the textView
      */
@@ -351,7 +360,7 @@ public class Utils {
 
         int deviceWidth;
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             Point size = new Point();
             display.getSize(size);
             deviceWidth = size.x;
@@ -374,6 +383,17 @@ public class Utils {
                     .append(arr[i].substring(1)).append(" ");
         }
         return sb.toString().trim();
+    }
+
+    public static Bitmap getThumbnailImage(Uri uri) {
+        Bitmap thumbBitmap = null;
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(BaseApp.getContext().getContentResolver(), uri);
+            thumbBitmap = ThumbnailUtils.extractThumbnail(bitmap, 120, 120);
+        } catch (IOException ex) {
+            Log.d(TAG, "error thumbnail bitmap: " + ex.getMessage());
+        }
+        return thumbBitmap;
     }
 
 }

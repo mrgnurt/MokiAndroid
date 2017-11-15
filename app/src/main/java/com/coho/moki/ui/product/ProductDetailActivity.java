@@ -434,8 +434,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 dialog.dismiss();
             }
         };
-        dialog.findViewById(R.id.viewTop).setOnClickListener(closeListener);
-        dialog.findViewById(R.id.btnCancel).setOnClickListener(closeListener);
+        View viewTop = dialog.findViewById(R.id.viewTop);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        viewTop.setOnClickListener(closeListener);
+        btnCancel.setOnClickListener(closeListener);
         dialog.show();
     }
 

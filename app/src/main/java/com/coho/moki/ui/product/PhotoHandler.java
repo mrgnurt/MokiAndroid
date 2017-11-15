@@ -17,7 +17,7 @@ import com.coho.moki.callback.OnTakePhotoListener;
 
 public class PhotoHandler implements PictureCallback {
 
-    private static final String T = "PhotoHandler";
+    private static final String TAG = "PhotoHandler";
 
     private final Context context;
     private OnTakePhotoListener listener;
@@ -35,7 +35,7 @@ public class PhotoHandler implements PictureCallback {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm_ss");
         String date = dateFormat.format(new Date());
         String photoFile = "Picture_" + date + ".jpg";
 
@@ -48,10 +48,10 @@ public class PhotoHandler implements PictureCallback {
             fos.write(data);
             fos.close();
             Uri uri = Uri.fromFile(pictureFile);
-            Log.d(T, "save success, url: " + filename);
+            Log.d(TAG, "save success, url: " + filename);
             listener.onSuccess(uri);
         } catch (Exception error) {
-            Log.d(T, "error save image");
+            Log.d(TAG, "error save image");
         }
     }
 

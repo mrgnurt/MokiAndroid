@@ -50,7 +50,7 @@ public class CameraActivity extends BaseActivity {
     private static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
     private static final int REQ_CODE_GALLERY_PICKER = 20;
     private static final int REQUEST_MEDIA = 100;
-    private static final int CAMERA_REQUEST = 1888; // field
+    private static final int REQUEST_CAMERA = 1888; // field
 
     @BindView(R.id.preview)
     FrameLayout preview;
@@ -134,7 +134,7 @@ public class CameraActivity extends BaseActivity {
 
         // get data from AddProductActivity
         Intent intent = getIntent();
-        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 1);
+        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
 
     }
 
@@ -266,23 +266,23 @@ public class CameraActivity extends BaseActivity {
             Uri uri;
             Intent intent;
             switch (requestCode) {
-                case CAMERA_REQUEST:
-                    Log.d(TAG, "camera capture ok");
-                    Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
-                    uri = saveImage(picture);
+                case REQUEST_CAMERA:
+//                    Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
+//                    uri = saveImage(picture);
+                    uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
                     Log.d(TAG, "uri img = " + uri);
-                    if (imgPos == 1) {
+                    if (imgPos == 0) {
                         intent = new Intent(CameraActivity.this, AddProductActivity.class);
                         intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
                         startActivity(intent);
-                        finish();
                     } else {
                         intent = new Intent();
                         intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
                         intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
-                        setResult(Activity.RESULT_OK);
-                        finish();
+                        setResult(Activity.RESULT_OK, intent);
                     }
+                    finish();
                     break;
                 case REQUEST_MEDIA:
                     List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
@@ -292,25 +292,19 @@ public class CameraActivity extends BaseActivity {
                     /* 1) Create a new Intent */
                         Log.d(TAG, "uri = " + uri.getPath());
                         if (uri != null) {
-//                            intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
-//                            intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
-//                            startActivity(intent);
-
-
-                            if (imgPos == 1) {
+                            if (imgPos == 0) {
                                 intent = new Intent(CameraActivity.this, AddProductActivity.class);
                                 intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
-                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 1);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
                                 startActivity(intent);
-                                finish();
                             } else {
                                 intent = new Intent();
                                 intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
                                 intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
                                 setResult(Activity.RESULT_OK, intent);
-                                finish();
                             }
-
+                            // finish camera activity
+                            finish();
 //                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
 //                                .setData(uri) // Set in onActivityResult()
 //                                .build();
@@ -344,13 +338,15 @@ public class CameraActivity extends BaseActivity {
     public void onClickCapturePhoto() {
 //        takePicture();
 
+        Log.d(TAG, "click take pictrue");
         if (mCamera != null) {
             mCamera.takePicture(null, null, new PhotoHandler(this, new OnTakePhotoListener() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
-                    intent.putExtra("image", uri);
-                    startActivity(intent);
+                    Log.d(TAG, "take picture success");
+                    Intent intent = new Intent();
+                    intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                    onActivityResult(REQUEST_CAMERA, Activity.RESULT_OK, intent);
                 }
             }));
         }
@@ -359,7 +355,7 @@ public class CameraActivity extends BaseActivity {
 
     private void takePicture() { //you can call this every 5 seconds using a timer or whenever you want
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        startActivityForResult(cameraIntent, REQUEST_CAMERA);
     }
 
     private Uri saveImage(Bitmap finalBitmap) {

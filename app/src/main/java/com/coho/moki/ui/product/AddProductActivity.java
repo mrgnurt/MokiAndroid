@@ -1,10 +1,14 @@
 package com.coho.moki.ui.product;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,6 +22,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
+import com.polites.android.GestureImageView;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -172,7 +177,8 @@ public class AddProductActivity extends BaseActivity {
         uriList.add(uri);
         Log.d(TAG, "uri = " + uri.getPath());
         Log.d(TAG, "imgPos = " + imgPos);
-        img1.setImageURI(uri);
+//        img1.setImageURI(uri);
+        img1.setImageBitmap(Utils.getThumbnailImage(uri));
         img1.setVisibility(View.VISIBLE);
         img2.setVisibility(View.VISIBLE);
         initHeader();
@@ -187,26 +193,32 @@ public class AddProductActivity extends BaseActivity {
                 switch (v.getId()) {
                     case R.id.img1:
                         if (uriList.size() >= 1) {
-
+                            openDialog(0);
+                        } else {
+                            openCamera(0);
                         }
                         break;
                     case R.id.img2:
                         if (uriList.size() >= 2) {
-                            // show dialog
+                            openDialog(1);
+                        } else {
+                            openCamera(1);
                         }
-                        openCamera(2);
                         break;
                     case R.id.img3:
                         if (uriList.size() >= 3) {
-
+                            openDialog(2);
+                        } else {
+                            openCamera(2);
                         }
-                        openCamera(3);
                         break;
                     case R.id.img4:
+                        Log.d(TAG, "img4 click, list size - " + uriList.size());
                         if (uriList.size() == 4) {
-
+                            openDialog(3);
+                        } else {
+                            openCamera(3);
                         }
-                        openCamera(4);
                         break;
                 }
             }
@@ -248,6 +260,86 @@ public class AddProductActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
+    private void openDialog(final int imgPos) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(true);
+//        dialog.setCancelable(false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_product_image);
+        Button btnEdit = dialog.findViewById(R.id.btnEdit);
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        ImageView imgGesture = dialog.findViewById(R.id.imgGesture);
+        imgGesture.setImageURI(uriList.get(imgPos));
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCamera(imgPos);
+                dialog.dismiss();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uriList.remove(imgPos);
+                updateUriListAfterRemove();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void updateUriListAfterRemove() {
+        int currentSize = uriList.size();
+        switch (currentSize) {
+            case 0:
+                img1.setImageResource(R.drawable.img_camera_trigger);
+                img2.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                img1.setImageBitmap(Utils.getThumbnailImage(uriList.get(0)));
+                img2.setImageResource(R.drawable.img_camera_trigger);
+                img3.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                img1.setImageBitmap(Utils.getThumbnailImage(uriList.get(0)));
+                img2.setImageBitmap(Utils.getThumbnailImage(uriList.get(1)));
+                img3.setImageResource(R.drawable.img_camera_trigger);
+                img4.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                img1.setImageBitmap(Utils.getThumbnailImage(uriList.get(0)));
+                img2.setImageBitmap(Utils.getThumbnailImage(uriList.get(1)));
+                img3.setImageBitmap(Utils.getThumbnailImage(uriList.get(2)));
+                img4.setImageResource(R.drawable.img_camera_trigger);
+                break;
+        }
+    }
+
+    private void openAlertDialog(final int imgPos) {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View view = factory.inflate(R.layout.dialog_product_image, null);
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setView(view);
+        Button btnEdit = dialog.findViewById(R.id.btnEdit);
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        ImageView imgGesture = dialog.findViewById(R.id.imgGesture);
+        imgGesture.setImageURI(uriList.get(imgPos));
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        dialog.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
@@ -256,20 +348,57 @@ public class AddProductActivity extends BaseActivity {
                 case REQUEST_CAMERA:
                     imgPos = data.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
                     uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
-                    uriList.add(uri);
-                    int len = uriList.size();
-                    Log.d(TAG, "uri lis size = " + len);
-                    if (len == 2) {
-                        img2.setImageURI(uri);
-                        img3.setVisibility(View.VISIBLE);
-                    } else if (len == 3) {
-                        img3.setImageURI(uri);
-                        img4.setVisibility(View.VISIBLE);
-                    } else if (len == 4) {
-                        img4.setImageURI(uri);
+                    int currentSize = uriList.size();
+                    if (currentSize >= imgPos + 1) {
+                        uriList.set(imgPos, uri);
+                    } else {
+                        uriList.add(uri);
+                        currentSize = uriList.size();
                     }
+
+                    switch (imgPos) {
+                        case 0:
+                            img1.setImageBitmap(Utils.getThumbnailImage(uri));
+                            if (currentSize == imgPos + 1) {
+                                img2.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 1:
+                            img2.setImageBitmap(Utils.getThumbnailImage(uri));
+                            if (currentSize == imgPos + 1) {
+                                img3.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 2:
+                            img3.setImageBitmap(Utils.getThumbnailImage(uri));
+                            if (currentSize == imgPos + 1) {
+                                img4.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 3:
+                            img4.setImageBitmap(Utils.getThumbnailImage(uri));
+
+                    }
+
+
+//                    uriList.add(uri);
+//                    int len = uriList.size();
+//                    Log.d(TAG, "uri list size = " + len);
+//                    if (len == 2) {
+////                        img2.setImageURI(uri);
+//                        img2.setImageBitmap(Utils.getThumbnailImage(uri));
+//                        img3.setVisibility(View.VISIBLE);
+//                    } else if (len == 3) {
+////                        img3.setImageURI(uri);
+//                        img3.setImageBitmap(Utils.getThumbnailImage(uri));
+//                        img4.setVisibility(View.VISIBLE);
+//                    } else if (len == 4) {
+////                        img4.setImageURI(uri);
+//                        img4.setImageBitmap(Utils.getThumbnailImage(uri));
+//                    }
                     break;
             }
         }
     }
+
 }
