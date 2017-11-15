@@ -14,9 +14,11 @@ import com.coho.moki.ui.base.BaseActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntegerRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -184,9 +186,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @Override
     public void initData() {
-//        initFakeData();
-        mProductDetailPresenter.getProductDetailRemote(token, productId);
-        mProductDetailPresenter.getProductCommentRemote(productId);
     }
 
     private void initFakeData() {
@@ -389,9 +388,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
-                intent.putExtra("productId", productId);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(ProductDetailActivity.this);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -685,14 +684,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    protected void onDestroy() {
-        Log.d("abc", "Xong");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-
+    public void onResume() {
+        mProductDetailPresenter.getProductDetailRemote(token, productId);
+        mProductDetailPresenter.getProductCommentRemote(productId);
         super.onResume();
     }
 }
