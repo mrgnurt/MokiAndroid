@@ -83,7 +83,6 @@
             android:name=".ui.product.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
 
         <activity
@@ -98,6 +97,11 @@
 
         <activity
             android:name=".ui.product.ProductCategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.ProductStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

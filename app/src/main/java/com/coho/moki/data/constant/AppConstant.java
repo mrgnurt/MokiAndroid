@@ -51,5 +51,10 @@ public class AppConstant {
     public static final String ADD_PRODUCT_IMG = "IMAGE";
     public static final String ADD_PRODUCT_IMG_POS = "IMG_POS";
 
+    // for product status
+    public static final String PRODUCT_STATUS = "PRODUCT_STATUS";
+    public static final String PRODUCT_STATUS_KEY = "PRODUCT_STATUS_KEY";
+    public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
+
 
 }

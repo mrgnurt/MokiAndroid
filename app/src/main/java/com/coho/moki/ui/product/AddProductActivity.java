@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,9 @@ import butterknife.OnClick;
 public class AddProductActivity extends BaseActivity {
 
     private final String TAG = "AddProductActivity";
+    private static final int REQUEST_PRODUCT_STATUS = 1;
+    private static final int REQUEST_PRODUCT_CATEGORY = 2;
+    private static final int REQUEST_CAMERA = 1001;
 
     @BindView(R.id.img1)
     ImageView img1;
@@ -164,7 +168,6 @@ public class AddProductActivity extends BaseActivity {
 
     private int imgPos;
     private List<Uri> uriList = new ArrayList<>();
-    private static final int REQUEST_CAMERA = 1001;
 
     @Override
     public int setContentViewId() {
@@ -187,6 +190,7 @@ public class AddProductActivity extends BaseActivity {
         initListenerChooseImage();
         initFocusListenerForEditText();
         initClickListener();
+        topKeyboardLayout.setVisibility(View.GONE);
     }
 
     private void initListenerChooseImage() {
@@ -347,44 +351,60 @@ public class AddProductActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Uri uri;
             switch (requestCode) {
                 case REQUEST_CAMERA:
-                    imgPos = data.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
-                    uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
-                    int currentSize = uriList.size();
-                    if (currentSize >= imgPos + 1) {
-                        uriList.set(imgPos, uri);
-                    } else {
-                        uriList.add(uri);
-                        currentSize = uriList.size();
-                    }
-
-                    switch (imgPos) {
-                        case 0:
-                            img1.setImageBitmap(Utils.getThumbnailImage(uri));
-                            if (currentSize == imgPos + 1) {
-                                img2.setVisibility(View.VISIBLE);
-                            }
-                            break;
-                        case 1:
-                            img2.setImageBitmap(Utils.getThumbnailImage(uri));
-                            if (currentSize == imgPos + 1) {
-                                img3.setVisibility(View.VISIBLE);
-                            }
-                            break;
-                        case 2:
-                            img3.setImageBitmap(Utils.getThumbnailImage(uri));
-                            if (currentSize == imgPos + 1) {
-                                img4.setVisibility(View.VISIBLE);
-                            }
-                            break;
-                        case 3:
-                            img4.setImageBitmap(Utils.getThumbnailImage(uri));
-                    }
+                    setResultFromCamera(data);
+                    break;
+                case REQUEST_PRODUCT_STATUS:
+                    setResultFromProductStatus(data);
+                    break;
+                case REQUEST_PRODUCT_CATEGORY:
+                    // TODO: set result from ProductCategoryActivity
                     break;
             }
         }
+    }
+
+    private void setResultFromCamera(Intent data) {
+        imgPos = data.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+        Uri uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
+        int currentSize = uriList.size();
+        if (currentSize >= imgPos + 1) {
+            uriList.set(imgPos, uri);
+        } else {
+            uriList.add(uri);
+            currentSize = uriList.size();
+        }
+        switch (imgPos) {
+            case 0:
+                img1.setImageBitmap(Utils.getThumbnailImage(uri));
+                if (currentSize == imgPos + 1) {
+                    img2.setVisibility(View.VISIBLE);
+                }
+                break;
+            case 1:
+                img2.setImageBitmap(Utils.getThumbnailImage(uri));
+                if (currentSize == imgPos + 1) {
+                    img3.setVisibility(View.VISIBLE);
+                }
+                break;
+            case 2:
+                img3.setImageBitmap(Utils.getThumbnailImage(uri));
+                if (currentSize == imgPos + 1) {
+                    img4.setVisibility(View.VISIBLE);
+                }
+                break;
+            case 3:
+                img4.setImageBitmap(Utils.getThumbnailImage(uri));
+                break;
+        }
+    }
+
+    private void setResultFromProductStatus(Intent data) {
+        Bundle bundle = data.getBundleExtra(AppConstant.PRODUCT_STATUS);
+        String status = bundle.getString(AppConstant.PRODUCT_STATUS_VALUE);
+        edtStatus.setText(status);
+        edtStatus.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
     }
 
     private void initFocusListenerForEditText() {
@@ -411,10 +431,10 @@ public class AddProductActivity extends BaseActivity {
     }
 
     private void initClickListener() {
-        topKeyboardLayout.setVisibility(View.GONE);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override()
             public void onClick(View v) {
+                Intent intent;
                 switch (v.getId()) {
                     case R.id.nextBtn:
                         if (editFocusPosition == 1) {
@@ -438,9 +458,14 @@ public class AddProductActivity extends BaseActivity {
                         topKeyboardLayout.setVisibility(View.GONE);
                         break;
                     case R.id.edtCategory:
-                        Intent intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
-                        // need chagne to startActivityForResult got get result;
+                        intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
+                        // TODO: need change to startActivityForResult to get result
                         startActivity(intent);
+                        break;
+                    case R.id.edtStatus:
+                        intent = new Intent(BaseApp.getContext(), ProductStatusActivity.class);
+                        startActivityForResult(intent, REQUEST_PRODUCT_STATUS);
+                        break;
 
                 }
             }
@@ -449,6 +474,7 @@ public class AddProductActivity extends BaseActivity {
         btnPrev.setOnClickListener(listener);
         btnDone.setOnClickListener(listener);
         edtCategory.setOnClickListener(listener);
+        edtStatus.setOnClickListener(listener);
     }
 
 }

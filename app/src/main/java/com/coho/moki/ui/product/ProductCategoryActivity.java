@@ -3,6 +3,7 @@ package com.coho.moki.ui.product;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
@@ -10,9 +11,12 @@ import com.coho.moki.adapter.product.ProductCategoryAdapter;
 import com.coho.moki.data.remote.ProductCategoryResponse;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
+import com.costum.android.widget.PullAndLoadListView;
 import com.costum.android.widget.PullToRefreshListView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +28,7 @@ import butterknife.OnClick;
 public class ProductCategoryActivity extends BaseActivity {
 
     @BindView(R.id.listView)
-    PullToRefreshListView listView;
+    PullAndLoadListView listView;
 
     @BindView(R.id.btnNavLeft)
     ImageButton btnBack;
@@ -35,7 +39,7 @@ public class ProductCategoryActivity extends BaseActivity {
     @BindView(R.id.txtHeader)
     TextView txtHeader;
 
-    LinkedList<ProductCategoryResponse> mCategoryList;
+    List<ProductCategoryResponse> mCategoryList;
     ProductCategoryAdapter mCategoryAdapter;
 
     @Override
@@ -63,10 +67,10 @@ public class ProductCategoryActivity extends BaseActivity {
     }
 
     private void fakeData() {
-        mCategoryList = new LinkedList<>();
-        mCategoryList.add(null);
-        mCategoryList.add(null);
-        mCategoryList.add(null);
+        mCategoryList = new ArrayList<>();
+        for (int i = 0; i < 15; ++i) {
+            mCategoryList.add(null);
+        }
         mCategoryAdapter = new ProductCategoryAdapter(this, R.layout.product_category_item, mCategoryList);
         listView.setAdapter(mCategoryAdapter);
     }
