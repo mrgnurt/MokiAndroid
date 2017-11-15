@@ -159,10 +159,11 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.doneBtn)
     TextView btnDone;
 
+    private int editFocusPosition;
+
     private int imgPos;
     private List<Uri> uriList = new ArrayList<>();
     private static final int REQUEST_CAMERA = 1001;
-//    private List<ImageView> imgViewList;
 
     @Override
     public int setContentViewId() {
@@ -183,6 +184,8 @@ public class AddProductActivity extends BaseActivity {
         img2.setVisibility(View.VISIBLE);
         initHeader();
         initListenerChooseImage();
+        initListenerForEditText();
+        initListenerForButton();
     }
 
     private void initListenerChooseImage() {
@@ -377,28 +380,68 @@ public class AddProductActivity extends BaseActivity {
                             break;
                         case 3:
                             img4.setImageBitmap(Utils.getThumbnailImage(uri));
-
                     }
-
-
-//                    uriList.add(uri);
-//                    int len = uriList.size();
-//                    Log.d(TAG, "uri list size = " + len);
-//                    if (len == 2) {
-////                        img2.setImageURI(uri);
-//                        img2.setImageBitmap(Utils.getThumbnailImage(uri));
-//                        img3.setVisibility(View.VISIBLE);
-//                    } else if (len == 3) {
-////                        img3.setImageURI(uri);
-//                        img3.setImageBitmap(Utils.getThumbnailImage(uri));
-//                        img4.setVisibility(View.VISIBLE);
-//                    } else if (len == 4) {
-////                        img4.setImageURI(uri);
-//                        img4.setImageBitmap(Utils.getThumbnailImage(uri));
-//                    }
                     break;
             }
         }
+    }
+
+    private void initListenerForEditText() {
+        View.OnFocusChangeListener listener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                switch (v.getId()) {
+                    case R.id.edtName:
+                        editFocusPosition = 1;
+                        break;
+                    case R.id.edtDescription:
+                        editFocusPosition = 2;
+                        break;
+                    case R.id.edtBuyPrice:
+                        editFocusPosition = 3;
+                        break;
+                }
+                topKeyboardLayout.setVisibility(View.VISIBLE);
+            }
+        };
+        edtName.setOnFocusChangeListener(listener);
+        edtDescription.setOnFocusChangeListener(listener);
+        edtBuyPrice.setOnFocusChangeListener(listener);
+    }
+
+    private void initListenerForButton() {
+        topKeyboardLayout.setVisibility(View.GONE);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override()
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.nextBtn:
+                        if (editFocusPosition == 1) {
+                            edtDescription.requestFocus();
+                        } else if (editFocusPosition == 2) {
+                            edtBuyPrice.requestFocus();
+                        }
+                        break;
+                    case R.id.preBtn:
+                        if (editFocusPosition == 3) {
+                            edtDescription.requestFocus();
+                        } else if (editFocusPosition == 2) {
+                            edtName.requestFocus();
+                        }
+                        break;
+                    case R.id.doneBtn:
+                        edtName.clearFocus();
+                        edtDescription.clearFocus();
+                        edtBuyPrice.clearFocus();
+                        Utils.hideSoftKeyboard(AddProductActivity.this);
+                        topKeyboardLayout.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        };
+        btnNext.setOnClickListener(listener);
+        btnPrev.setOnClickListener(listener);
+        btnDone.setOnClickListener(listener);
     }
 
 }
