@@ -1,9 +1,12 @@
 package com.coho.moki.ui.product;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -14,11 +17,17 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 //import com.adobe.creativesdk.aviary.AdobeImageIntent;
+import com.coho.moki.BaseApp;
+import com.coho.moki.callback.ITakePhotoListener;
 import com.coho.moki.ui.base.BaseActivity;
 
 import com.coho.moki.R;
 import com.coho.moki.ui.custom.CameraView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +48,7 @@ public class CameraActivity extends BaseActivity {
     private static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
     private static final int REQ_CODE_GALLERY_PICKER = 20;
     private static final int REQUEST_MEDIA = 100;
+    private static final int CAMERA_REQUEST = 1888; // field
 
     @BindView(R.id.preview)
     FrameLayout preview;
@@ -198,9 +208,15 @@ public class CameraActivity extends BaseActivity {
             mCameraView.getHolder().removeCallback(mCameraView);
             mCameraView.destroyDrawingCache();
             preview.removeView(mCameraView);
-            //mCamera.stopPreview();
-            //mCamera.release();
+//            //mCamera.stopPreview();
+//            //mCamera.release();
             mCamera = null;
+
+//            mCamera.stopPreview();
+//            mCamera.setPreviewCallback(null);
+//            mCamera.release();
+//            mCamera = null;
+
         }
     }
 
@@ -237,14 +253,29 @@ public class CameraActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_MEDIA) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Log.d(TAG, "camera capture ok");
+            Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
+            Uri uri = saveImage(picture);
+            Log.d(TAG, "uri img = " + uri);
+            Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
+            intent.putExtra("image", uri);
+            startActivity(intent);
+
+//            imageView.setImageBitmap(picture); //for example I put bmp in an ImageView
+        } else if (requestCode == REQUEST_MEDIA) {
             if (resultCode == RESULT_OK) {
                 List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
                 if (mediaSelectedList != null && !mediaSelectedList.isEmpty()) {
                     MediaItem item = mediaSelectedList.get(0);
                     Uri uri = item.getUriOrigin();
                     /* 1) Create a new Intent */
+                    Log.d(TAG, "uri = " + uri.getPath());
                     if (uri != null) {
+                        Intent intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
+                        intent.putExtra("image", uri);
+                        startActivity(intent);
+
 //                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
 //                                .setData(uri) // Set in onActivityResult()
 //                                .build();
@@ -259,9 +290,63 @@ public class CameraActivity extends BaseActivity {
         }
     }
 
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         destroyCamera();
     }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        destroyCamera();
+//
+//    }
+
+    @OnClick(R.id.imgCapturePhoto)
+    public void onClickCapturePhoto() {
+//        takePicture();
+
+        if (mCamera != null) {
+            mCamera.takePicture(null, null, new PhotoHandler(this, new ITakePhotoListener() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
+                    intent.putExtra("image", uri);
+                    startActivity(intent);
+                }
+            }));
+        }
+
+
+    }
+
+    private void takePicture() { //you can call this every 5 seconds using a timer or whenever you want
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+    }
+
+    private Uri saveImage(Bitmap finalBitmap) {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root);
+        myDir.mkdirs();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh-mm-ss");
+        String date = dateFormat.format(new Date());
+        String fname = "Image-" + date + ".jpg";
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            return Uri.fromFile(file);
+//            return file.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

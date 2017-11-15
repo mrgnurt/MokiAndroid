@@ -253,7 +253,6 @@ public class Utils {
     }
 
     public static boolean checkInternetAvailable() {
-
         ConnectivityManager cm = (ConnectivityManager) BaseApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
 

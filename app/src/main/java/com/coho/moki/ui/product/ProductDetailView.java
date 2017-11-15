@@ -17,5 +17,5 @@ public interface ProductDetailView {
 
     public void setProductComment(List<ProductCommentResponse> productCommentResponse);
 
-    public void setLikeComment(LikeResponseData likeResponseData);
+    public void setLikeProduct(LikeResponseData likeResponseData);
 }

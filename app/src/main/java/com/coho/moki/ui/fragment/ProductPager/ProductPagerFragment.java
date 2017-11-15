@@ -1,6 +1,8 @@
 package com.coho.moki.ui.fragment.ProductPager;
 
 import android.animation.Animator;
+import android.content.Intent;
+import android.graphics.Camera;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -14,6 +16,7 @@ import com.coho.moki.adapter.customadapter.CategoryPagerAdapter;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.ui.product.CameraActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +81,14 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         showBannerSlider();
         mPresenter.callServiceGetCampaigns();
 //        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
+
+        mBtnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CameraActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -133,4 +144,5 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
             ((MainActivity)getActivity()).setVisibleTopBar(visible, mBtnCamera);
         }
     }
+
 }

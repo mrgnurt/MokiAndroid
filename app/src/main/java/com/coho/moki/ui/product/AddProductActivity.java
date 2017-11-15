@@ -1,5 +1,7 @@
 package com.coho.moki.ui.product;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,8 @@ import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import java.net.URI;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -29,8 +33,8 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.img1)
     ImageView img1;
 
-    @BindView(R.id.imgPlayVideoIcon)
-    ImageView imgPlayVideoIcon;
+//    @BindView(R.id.imgPlayVideoIcon)
+//    ImageView imgPlayVideoIcon;
 
     @BindView(R.id.img2)
     ImageView img2;
@@ -146,6 +150,8 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.doneBtn)
     TextView btnDone;
 
+    String uri1;
+
     @Override
     public int setContentViewId() {
         return R.layout.add_product;
@@ -153,7 +159,12 @@ public class AddProductActivity extends BaseActivity {
 
     @Override
     public void initView() {
-       initHeader();
+        Intent intent = getIntent();
+        Uri uri = intent.getParcelableExtra("image");
+        Log.d(TAG, uri.getPath());
+        img1.setImageURI(uri);
+        img1.setVisibility(View.VISIBLE);
+        initHeader();
     }
 
     private void initHeader() {
