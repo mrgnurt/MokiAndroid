@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -18,8 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 //import com.adobe.creativesdk.aviary.AdobeImageIntent;
-import com.coho.moki.BaseApp;
 import com.coho.moki.callback.OnTakePhotoListener;
+import com.coho.moki.callback.PhotoHandler;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 

@@ -51,6 +51,7 @@ public class ProductCategoryActivity extends BaseActivity {
 
     List<ProductCategoryResponse> mCategoryList;
     ProductCategoryAdapter mCategoryAdapter;
+    String categoryName;
 
     @Override
     public int setContentViewId() {
@@ -75,19 +76,19 @@ public class ProductCategoryActivity extends BaseActivity {
         txtHeader.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(AppConstant.CATEGORY);
-        if (bundle != null) {
+        if (bundle != null) { // bundle != null iff subcategory
             String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
-            String categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
+            categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
             txtHeader.setText(Utils.toTitleCase(categoryName));
             ProductCategoryResponse response = new ProductCategoryResponse();
             response.setHasChild(0);
-            response.setName(getResources().getString(R.string.all));
+            response.setName(getResources().getString(R.string.all)); // this is parent category
             response.setId(categoryId);
             mCategoryList.add(response);
             // TODO: call api to get list child category with categoryId
-        } else {
+        } else { // main category
             txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
-            // TODO: call api to get list category
+            // TODO: call api to get list category (if parentId = null => show in main category)
         }
         // TODO: remove fakeData() when call api
         fakeData();
@@ -138,24 +139,31 @@ public class ProductCategoryActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             // TODO: Handling when click "Tất cả" in child category
+
             Log.d(TAG, "click on item: " + position);
-            ProductCategoryResponse response = mCategoryList.get(position);
+            ProductCategoryResponse response = mCategoryList.get(position - 1);
             if (response != null) {
                 Integer hasChild = response.getHasChild();
                 if (hasChild != null) {
                     Intent intent;
                     Bundle bundle = new Bundle();
                     bundle.putString(AppConstant.CATEGORY_ID, response.getId());
-                    bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
                     switch (hasChild) {
                         case 0:
                             intent = new Intent();
+                            String name = response.getName();
+                            if (name.equals(getResources().getString(R.string.all))) {
+                                bundle.putString(AppConstant.CATEGORY_NAME, categoryName);
+                            } else {
+                                bundle.putString(AppConstant.CATEGORY_NAME, name);
+                            }
                             intent.putExtra(AppConstant.CATEGORY, bundle);
                             setResult(Activity.RESULT_OK, intent);
                             finish();
                             break;
                         case 1:
                             intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
+                            bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
                             intent.putExtra(AppConstant.CATEGORY, bundle);
                             startActivityForResult(intent, REQUEST_CHILD_CATEGORY);
                             break;

@@ -40,9 +40,10 @@ public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse
 
     /**
      * Return a view: view item in ListView
-     * @param position position in the product list
+     *
+     * @param position    position in the product list
      * @param convertView is new view inflate from xml layout, or scrapview in case reuse
-     * @param parent parent view, in this case is ListView
+     * @param parent      parent view, in this case is ListView
      * @return
      */
     @NonNull
@@ -62,18 +63,23 @@ public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse
 
     private void bindItem(ViewHolder viewHolder, int position) {
         ProductCategoryResponse response = mProductCategoryList.get(position);
-        viewHolder.txtName.setText(response.getName());
+        String name = response.getName();
+        if (name != null) {
+            viewHolder.txtName.setText(name);
+        }
         // check: if has sub category then set imgNext is visible else gone
-        if (response.getHasChild() == 1) {
-            if (position == 14) {
-                Log.d(TAG, "position = " + position);
+        Integer hasChild = response.getHasChild();
+        if (hasChild != null) {
+            switch (hasChild) {
+                case 0:
+                    viewHolder.imgNext.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    // this is actual magic, because using view holder pattern, the previous imgNext (in scrapview) can gone
+                    viewHolder.imgNext.setVisibility(View.VISIBLE);
+                    LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
+                    break;
             }
-            Log.d(TAG, position + " has child");
-            viewHolder.imgNext.setImageResource(R.drawable.icon_nextarrow_normal);
-//            LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
-        } else {
-            Log.d(TAG, position + " has not child");
-            viewHolder.imgNext.setVisibility(View.GONE);
         }
     }
 

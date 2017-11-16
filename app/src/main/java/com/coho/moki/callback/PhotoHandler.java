@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.callback;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,8 +12,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.coho.moki.callback.OnTakePhotoListener;
 
 public class PhotoHandler implements PictureCallback {
 
