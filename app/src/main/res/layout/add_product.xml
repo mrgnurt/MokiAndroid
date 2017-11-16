@@ -682,7 +682,7 @@
                             android:textColor="@android:color/black" />
 
                         <EditText
-                            android:id="@+id/edtBuyPlace"
+                            android:id="@+id/edtSellAddress"
                             android:layout_width="0.0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.0"

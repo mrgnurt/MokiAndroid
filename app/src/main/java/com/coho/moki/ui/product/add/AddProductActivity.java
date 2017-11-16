@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,7 +129,7 @@ public class AddProductActivity extends BaseActivity {
     @BindView(R.id.titleAddress)
     TextView titleAddress;
 
-    @BindView(R.id.edtBuyPlace)
+    @BindView(R.id.edtSellAddress)
     EditText edtSellAddress;
 
     @BindView(R.id.bottomContainer)
@@ -446,6 +448,29 @@ public class AddProductActivity extends BaseActivity {
         edtBuyPrice.setOnFocusChangeListener(listener);
     }
 
+    private void initTextChangeListener() {
+        edtBuyPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    String ss = s.toString();
+                    Integer price = Integer.parseInt(ss);
+                    edtBuyPrice.setText(Utils.formatPrice(String.valueOf(price * 1000)));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void initClickListener() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override()
@@ -475,14 +500,16 @@ public class AddProductActivity extends BaseActivity {
                         break;
                     case R.id.edtCategory:
                         intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
-                        // TODO: need change to startActivityForResult to get result
                         startActivityForResult(intent, REQUEST_PRODUCT_CATEGORY);
                         break;
                     case R.id.edtStatus:
                         intent = new Intent(BaseApp.getContext(), ProductStatusActivity.class);
                         startActivityForResult(intent, REQUEST_PRODUCT_STATUS);
                         break;
-
+                    case R.id.edtSellAddress:
+                        intent = new Intent(BaseApp.getContext(), ProductSellAddressActivity.class);
+                        startActivityForResult(intent, REQUEST_SELL_ADDRESS);
+                        break;
                 }
             }
         };
@@ -491,6 +518,7 @@ public class AddProductActivity extends BaseActivity {
         btnDone.setOnClickListener(listener);
         edtCategory.setOnClickListener(listener);
         edtStatus.setOnClickListener(listener);
+        edtSellAddress.setOnClickListener(listener);
     }
 
 }

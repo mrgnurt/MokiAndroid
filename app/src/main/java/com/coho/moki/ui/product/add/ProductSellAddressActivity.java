@@ -31,6 +31,10 @@ import butterknife.OnClick;
 
 public class ProductSellAddressActivity extends BaseActivity {
 
+    private static final String TAG = "ProductSellAddress";
+    private static final int REQUEST_ADD_NEW_ADDRESS = 1;
+    private static final int REQUEST_EDIT_ADDRESS = 2;
+
     @BindView(R.id.listView)
     ListView listView;
 
@@ -128,6 +132,7 @@ public class ProductSellAddressActivity extends BaseActivity {
     @OnClick(R.id.txtFinish)
     public void onClickButtonFinish() {
         Intent intent = new Intent(this, AddNewAddressActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_NEW_ADDRESS);
     }
 
     @OnClick(R.id.btnNavLeft)
