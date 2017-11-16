@@ -16,39 +16,39 @@ import com.github.siyamed.shapeimageview.CircularImageView;
  * Created by son on 15/11/2017.
  */
 
-public class FollowedAdapter extends ArrayAdapter {
+public class FollowingAdapter extends ArrayAdapter {
 
     LayoutInflater mLayoutInflater;
 
 
-    public FollowedAdapter(@NonNull Context context, int resource) {
+    public FollowingAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         mLayoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 10;
     }
 
     // gan lai view cua tung item
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        FollowedAdapter.ViewHolder viewHolder;
+        FollowingAdapter.ViewHolder viewHolder;
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.follow_user_item, parent, false);
-            viewHolder = new FollowedAdapter.ViewHolder(convertView);
+            viewHolder = new FollowingAdapter.ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (FollowedAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (FollowingAdapter.ViewHolder) convertView.getTag();
         }
         bindItem(viewHolder, position);
         return convertView;
     }
 
-    private void bindItem(FollowedAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.txtName.setText("Followed User");
+    private void bindItem(FollowingAdapter.ViewHolder viewHolder, int position) {
+        viewHolder.txtName.setText("User Following");
 
     }
 
