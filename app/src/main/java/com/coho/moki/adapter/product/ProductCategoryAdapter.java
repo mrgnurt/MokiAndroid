@@ -57,11 +57,17 @@ public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse
         return convertView;
     }
 
+
+
     private void bindItem(ViewHolder viewHolder, int position) {
-        ProductCategoryResponse comment = mProductCommentList.get(position);
-        viewHolder.txtName.setText("Category name");
+        ProductCategoryResponse response = mProductCommentList.get(position);
+        viewHolder.txtName.setText(response.getName());
         // check: if has sub category then set imgNext is visible else gone
-        LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
+        if (response.getHasChild() == 1) {
+            LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
+        } else {
+            viewHolder.imgNext.setVisibility(View.GONE);
+        }
     }
 
     // using ViewHolder pattern to optimize performance of ListView

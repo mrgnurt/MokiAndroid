@@ -56,5 +56,10 @@ public class AppConstant {
     public static final String PRODUCT_STATUS_KEY = "PRODUCT_STATUS_KEY";
     public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
 
+    // for category
+    public static final String CATEGORY = "CATEGORY";
+    public static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String CATEGORY_NAME = "CATEGORY_NAME";
+
 
 }

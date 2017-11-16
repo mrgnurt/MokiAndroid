@@ -460,7 +460,7 @@ public class AddProductActivity extends BaseActivity {
                     case R.id.edtCategory:
                         intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
                         // TODO: need change to startActivityForResult to get result
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_PRODUCT_CATEGORY);
                         break;
                     case R.id.edtStatus:
                         intent = new Intent(BaseApp.getContext(), ProductStatusActivity.class);

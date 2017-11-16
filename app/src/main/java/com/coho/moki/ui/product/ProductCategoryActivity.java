@@ -1,13 +1,19 @@
 package com.coho.moki.ui.product;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductCategoryAdapter;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.ProductCategoryResponse;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
@@ -26,6 +32,9 @@ import butterknife.OnClick;
  */
 
 public class ProductCategoryActivity extends BaseActivity {
+
+    private final String TAG = "ProductCategoryActivity";
+    private final int REQUEST_CHILD_CATEGORY = 111;
 
     @BindView(R.id.listView)
     PullAndLoadListView listView;
@@ -51,25 +60,42 @@ public class ProductCategoryActivity extends BaseActivity {
     public void initView() {
         btnNavRight.setVisibility(View.GONE);
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-
             public void onRefresh() {
                 // Do work to refresh the list here.
                 new ProductCategoryActivity.PullToRefreshDataTask().execute();
             }
         });
+        listView.setOnItemClickListener(new OnClickItemListCategory());
     }
 
     @Override
     public void initData() {
-        txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
         txtHeader.setVisibility(View.VISIBLE);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra(AppConstant.CATEGORY);
+        if (bundle != null) {
+            String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
+            String categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
+            txtHeader.setText(Utils.toTitleCase(categoryName));
+            // TODO: call api to get list child category with categoryId
+        } else {
+            txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
+        }
+        // TODO: remove fakeData() when call api
         fakeData();
     }
 
     private void fakeData() {
         mCategoryList = new ArrayList<>();
         for (int i = 0; i < 15; ++i) {
-            mCategoryList.add(null);
+            ProductCategoryResponse response = new ProductCategoryResponse();
+            response.setName("Category name");
+            if (i % 2 == 0) {
+                response.setHasChild(1); // has child
+            } else {
+                response.setHasChild(0); // has not child
+            }
+            mCategoryList.add(response);
         }
         mCategoryAdapter = new ProductCategoryAdapter(this, R.layout.product_category_item, mCategoryList);
         listView.setAdapter(mCategoryAdapter);
@@ -77,6 +103,58 @@ public class ProductCategoryActivity extends BaseActivity {
 
     @OnClick(R.id.btnNavLeft)
     public void onClickButtonBack() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CHILD_CATEGORY:
+                    setResult(Activity.RESULT_OK, data);
+                    break;
+            }
+        }
+    }
+
+    private class OnClickItemListCategory implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            // TODO: Handling when click "Tất cả" in child category
+
+            ProductCategoryResponse response = mCategoryList.get(position);
+            if (response != null) {
+                Integer hasChild = response.getHasChild();
+                if (hasChild != null) {
+                    Intent intent;
+                    Bundle bundle = new Bundle();
+                    switch (hasChild) {
+                        case 0:
+                            intent = new Intent();
+                            bundle.putString(AppConstant.CATEGORY_ID, response.getId());
+                            bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
+                            intent.putExtra(AppConstant.CATEGORY, bundle);
+                            setResult(Activity.RESULT_OK, intent);
+                            break;
+                        case 1:
+                            intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
+                            bundle.putString(AppConstant.CATEGORY_ID, response.getId());
+                            intent.putExtra(AppConstant.CATEGORY, bundle);
+                            startActivityForResult(intent, REQUEST_CHILD_CATEGORY);
+                            break;
+                    }
+                }
+            }
+        }
 
     }
 
