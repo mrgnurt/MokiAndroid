@@ -54,6 +54,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
             public void onSuccess(GetListProductResponceData dataResponse) {
                 DialogUtil.hideProgress();
                 convertDataResponsetoProducts(dataResponse.getProducts());
+                mView.showProductsTimeLine(dataResponse.getProducts());
             }
 
             @Override

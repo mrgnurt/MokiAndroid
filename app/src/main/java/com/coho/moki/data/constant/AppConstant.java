@@ -7,7 +7,7 @@ package com.coho.moki.data.constant;
 public class AppConstant {
 
     //tag api request
-    public static final String BASEURL_TAG = "http://192.168.43.47:3000";
+    public static final String BASEURL_TAG = "http://172.20.10.9:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -60,5 +60,8 @@ public class AppConstant {
     public static final String UNAUTHENTICATED = "Để thực hiện chức năng bạn cần phải đăng nhập";
 
     public static final String CALL_ERR = "Có lỗi xảy ra, làm ơn hãy thử lại";
+
+    public static final int GRID_VIEW_PRODUCT = 0;
+    public static final int TIMELINE_VIEW_PRODUCT = 1;
 
 }

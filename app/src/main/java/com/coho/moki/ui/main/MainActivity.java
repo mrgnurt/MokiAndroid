@@ -61,6 +61,8 @@ public class MainActivity extends BaseActivity implements MainView{
     private NewsPagerFragment mNewsPagerFragment;
     private int mCurrentMenuIndex = AppConstant.Home_MENU_INDEX;
 
+    public int mViewType = AppConstant.GRID_VIEW_PRODUCT;
+
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
 
@@ -80,7 +82,7 @@ public class MainActivity extends BaseActivity implements MainView{
     View mLLMessageCount;
 
     @BindView(R.id.btnSwitch)
-    ImageButton mBtnSwitch;
+    public ImageButton mBtnSwitch;
 
     @BindView(R.id.btnMenu)
     ImageButton mBtnMenu;
@@ -132,6 +134,19 @@ public class MainActivity extends BaseActivity implements MainView{
     @OnClick(R.id.layout_message)
     public void onClickLayoutMessage(){
         mLayoutMessage.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.btnSwitch)
+    public void onClickBtnSwitch(){
+
+        if (mViewType == AppConstant.GRID_VIEW_PRODUCT){
+            mViewType = AppConstant.TIMELINE_VIEW_PRODUCT;
+        }
+        else {
+            mViewType = AppConstant.GRID_VIEW_PRODUCT;
+        }
+
+        productPagerFragment.changeListProductLayout();
     }
 
     SlidingMenu mSlidingMenu;

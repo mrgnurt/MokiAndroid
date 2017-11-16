@@ -68,7 +68,6 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     public void populate(Product product){
         mProductId = product.getProductId();
 
-        mFirstImage.setImageResource(R.drawable.no_image);
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
         mTxtComment.setText(product.getNumComment() + "");
@@ -82,7 +81,7 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             mTxtSalePercent.setText(product.getPricePercent() + "");
         }
 
-        LoadImageUtils.loadImageFromUrl(product.getImageUrls().get(0), mFirstImage, new OnLoadImageListener() {
+        LoadImageUtils.loadImageFromUrl(product.getImageUrls().get(0), R.drawable.no_image, mFirstImage, new OnLoadImageListener() {
             @Override
             public void onSuccess() {
                 mFrameProgress.setVisibility(View.GONE);

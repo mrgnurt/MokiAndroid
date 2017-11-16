@@ -32,6 +32,7 @@ public final class LoadImageUtils {
     public static void loadImageFromUrl(String url, int placeholder, final ImageView imgView, final OnLoadImageListener listener) {
         Picasso.with(BaseApp.getContext())
                 .load(url)
+                .fit()
                 .placeholder(placeholder)
                 .into(imgView, listener);
     }

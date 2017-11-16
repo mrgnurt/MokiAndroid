@@ -4,6 +4,7 @@ import com.coho.moki.adapter.customadapter.ListProductAdapter;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.ProductSmallResponceData;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BasePresenter;
 
@@ -19,6 +20,8 @@ public interface ListProductContract {
     public interface View{
 
         void showProducts(List<Product> products);
+
+        void showProductsTimeLine(List<ProductSmallResponceData> products);
 
         void getProducts();
 

@@ -9,6 +9,12 @@ public class SellerResponceData {
     private String userName;
     private String avatar;
 
+    public SellerResponceData(String id, String userName, String avatar) {
+        this.id = id;
+        this.userName = userName;
+        this.avatar = avatar;
+    }
+
     public String getId() {
         return id;
     }

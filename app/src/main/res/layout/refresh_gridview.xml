@@ -8,6 +8,16 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:text="kdskdkskd"/>-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/ava_1"/>-->
+
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
@@ -39,17 +49,19 @@
             <!--android:layout_width="fill_parent"-->
             <!--android:layout_height="fill_parent">-->
 
-            <!--<se.emilsjolander.stickylistheaders.StickyListHeadersListView-->
-                <!--android:id="@+id/layout_timeline"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:animationCache="false"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:horizontalSpacing="@dimen/common_padding_small"-->
-                <!--android:numColumns="1"-->
-                <!--android:scrollingCache="false"-->
-                <!--android:smoothScrollbar="true"-->
-                <!--android:verticalSpacing="@dimen/common_padding_small" />-->
+            <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+                android:id="@+id/layout_timeline"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:animationCache="false"
+                android:background="@android:color/transparent"
+                android:horizontalSpacing="@dimen/common_padding_small"
+                android:numColumns="1"
+                android:scrollingCache="false"
+                android:smoothScrollbar="true"
+                android:verticalSpacing="@dimen/common_padding_small" />
+
+
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->
     </ViewFlipper>
 </RelativeLayout>
