@@ -1,9 +1,7 @@
 package com.coho.moki.ui.fragment.ProductPager;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,7 +11,6 @@ import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.main.MainActivity;
-import com.coho.moki.ui.product.CameraActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -396,4 +396,8 @@ public class Utils {
         return thumbBitmap;
     }
 
+    public static String getResourceString(int resId) {
+        return BaseApp.getContext().getResources().getString(resId);
+    }
+
 }

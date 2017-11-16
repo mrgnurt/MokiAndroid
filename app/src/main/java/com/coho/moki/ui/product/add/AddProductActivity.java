@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.product.add;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,9 +24,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
-import com.polites.android.GestureImageView;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 

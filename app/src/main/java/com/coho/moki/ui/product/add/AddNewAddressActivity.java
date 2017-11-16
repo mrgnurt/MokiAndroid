@@ -1,8 +1,7 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.product.add;
 
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.coho.moki.R;
@@ -15,13 +14,10 @@ import butterknife.OnClick;
  * Created by Khanh Nguyen on 11/16/2017.
  */
 
-public class ProductSellAddressActivity extends BaseActivity {
+public class AddNewAddressActivity extends BaseActivity {
 
-    @BindView(R.id.listView)
-    ListView listView;
-
-    @BindView(R.id.txtFinish)
-    TextView txtFinish;
+    @BindView(R.id.txtHeader)
+    TextView txtHeader;
 
     @BindView(R.id.btnNavLeft)
     ImageButton btnBack;
@@ -29,19 +25,14 @@ public class ProductSellAddressActivity extends BaseActivity {
     @BindView(R.id.btnNavRight)
     ImageButton btnNavRight;
 
-    @BindView(R.id.txtHeader)
-    TextView txtHeader;
-
     @Override
     public int setContentViewId() {
-        return R.layout.address_choose;
+        return R.layout.new_address_choose;
     }
 
     @Override
     public void initView() {
         btnNavRight.setVisibility(View.INVISIBLE);
-        // TODO: set text for txtHeader
-
     }
 
     @Override
@@ -49,14 +40,15 @@ public class ProductSellAddressActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.btnNavLeft)
-    public void onClickButtonBack() {
-        onBackPressed();
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
+
+    @OnClick(R.id.btnNavLeft)
+    public void onClickButtonBack() {
+        onBackPressed();
+    }
+
 }

@@ -121,6 +121,8 @@ dependencies {
     compile 'cn.pedant.sweetalert:library:1.3'
 
     compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
+    compile 'com.github.omadahealth:swipy:1.2.3@aar'
+    compile 'se.emilsjolander:stickylistheaders:2.7.0'
 
     compile project(':SlidingMenu')
     compile project(':pulltorefresh-and-loadmore')

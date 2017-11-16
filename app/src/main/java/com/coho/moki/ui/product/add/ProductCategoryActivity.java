@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.product.add;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
@@ -22,7 +21,6 @@ import com.costum.android.widget.PullAndLoadListView;
 import com.costum.android.widget.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,7 +74,7 @@ public class ProductCategoryActivity extends BaseActivity {
         txtHeader.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(AppConstant.CATEGORY);
-        if (bundle != null) { // bundle != null iff subcategory
+        if (bundle != null) { // bundle != null iff in subcategory
             String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
             categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
             txtHeader.setText(Utils.toTitleCase(categoryName));

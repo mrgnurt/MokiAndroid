@@ -75,7 +75,7 @@ public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse
                     viewHolder.imgNext.setVisibility(View.GONE);
                     break;
                 case 1:
-                    // this is actual magic, because using view holder pattern, the previous imgNext (in scrapview) can gone
+                    // this is actual magic, because using view holder pattern, the previous imgNext (in scrapview) can be gone
                     viewHolder.imgNext.setVisibility(View.VISIBLE);
                     LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
                     break;

@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.product.add;
 
 import android.app.Activity;
 import android.content.Intent;

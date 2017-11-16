@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coho.moki.R;
+import com.coho.moki.callback.MyOnClickListener;
 import com.coho.moki.data.remote.ProductSellAddressResponse;
+import com.coho.moki.util.Utils;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class ProductSellAddressAdapter extends ArrayAdapter<ProductSellAddressRe
 
     LayoutInflater mLayoutInflater;
     List<ProductSellAddressResponse> mProductSellAddressList;
+    MyOnClickListener listener;
 
     public ProductSellAddressAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ProductSellAddressResponse> objects) {
         super(context, resource, objects);
@@ -59,7 +62,29 @@ public class ProductSellAddressAdapter extends ArrayAdapter<ProductSellAddressRe
 
     private void bindItem(ViewHolder viewHolder, int position) {
         ProductSellAddressResponse response = mProductSellAddressList.get(position);
-        // TODO: bind data at here
+        // TODO: bind data at here, remove fakeData when call api
+        fakeData(viewHolder, position);
+    }
+
+    private void fakeData(ViewHolder viewHolder, int position) {
+        viewHolder.txtHamlet.setText("Số 10");
+        viewHolder.txtWard.setText("Phường Bách Khoa");
+        viewHolder.txtDistrict.setText("Quận Hai Bà Trưng");
+        viewHolder.txtCity.setText("TP. Hà Nội");
+        if (position == 1) {
+            viewHolder.btnTick.setBackgroundResource(R.drawable.tick_box_icon);
+            viewHolder.txtDefault.setText(Utils.getResourceString(R.string._default));
+        }
+        viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick();
+            }
+        });
+    }
+
+    public void setOnClickEditAddressListener(MyOnClickListener listener) {
+        this.listener = listener;
     }
 
     // using ViewHolder pattern to optimize performance of ListView
