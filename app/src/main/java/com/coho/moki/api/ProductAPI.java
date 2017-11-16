@@ -2,8 +2,11 @@ package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.UserProductResponseData;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,4 +20,7 @@ import retrofit2.http.QueryMap;
 public interface ProductAPI {
     @POST("/products")
     Call<BaseResponse<GetListProductResponceData>> callGetListProduct(@Body Map<String, Object> tag);
+
+    @POST("/products/user-listing")
+    Call<BaseResponse<ArrayList<UserProductResponseData>>> callGetUserProduct(@Body Map<String, Object> tag);
 }

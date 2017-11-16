@@ -12,18 +12,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class UserInfoFragmentAdapter extends FragmentPagerAdapter {
 
     private Context context;
+    private String userId;
 
     public UserInfoFragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
     }
 
+    public UserInfoFragmentAdapter(Context context, FragmentManager fm, String id) {
+        super(fm);
+        userId = id;
+        this.context = context;
+    }
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment =  new UserProductFragment();
+                fragment =  new UserProductFragment(userId);
                 break;
             case 1:
                 fragment = new UserFollowingFragment();

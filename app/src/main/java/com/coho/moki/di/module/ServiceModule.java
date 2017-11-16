@@ -8,6 +8,8 @@ import com.coho.moki.service.SizeService;
 import com.coho.moki.service.SizeServiceImpl;
 import com.coho.moki.service.ProductDetailService;
 import com.coho.moki.service.ProductDetailServiceImpl;
+import com.coho.moki.service.UserService;
+import com.coho.moki.service.UserServiceImpl;
 
 import javax.inject.Singleton;
 
@@ -41,4 +43,8 @@ public class ServiceModule {
         return productDetailService;
     }
 
+    @Provides
+    UserService provideUserService (UserServiceImpl userInfoService) {
+        return userInfoService;
+    }
 }

@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://10.10.186.216:3000";
+    public static final String BASEURL_TAG = "http://10.10.44.24:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -23,6 +23,7 @@ public class AppConstant {
 
     public static final String TOKEN = "token";
     public static final String ID = "id";
+    public static final String USERID_TAG = "userId";
 
     public static final String PRODUCT_ID = "productId";
     public static final String COMMENT = "comment";

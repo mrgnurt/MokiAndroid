@@ -3,10 +3,10 @@ package com.coho.moki.data.model;
 import java.util.List;
 
 /**
- * Created by trung on 27/09/2017.
+ * Created by nguyenthanhtung on 15/11/2017.
  */
 
-public class Product {
+public class UserProduct {
 
     private String productId;
 
@@ -18,7 +18,9 @@ public class Product {
 
     private int pricePercent;
 
-    private List<Brand> brand;
+    private int isLiked;
+
+    private int banned;
 
     private String description;
 
@@ -26,23 +28,7 @@ public class Product {
 
     private int numComment;
 
-    private int isLiked;
-
-    private int banned;
-
-    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, List<Brand> brands, String description, int numLike, int numComment) {
-        this.productId = productId;
-        this.name = name;
-        this.imageUrls = imageUrls;
-        this.price = price;
-        this.pricePercent = pricePercent;
-        this.brand = brands;
-        this.description = description;
-        this.numLike = numLike;
-        this.numComment = numComment;
-    }
-
-    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, int isLiked, int banned, String description, int numLike, int numComment) {
+    public UserProduct(String productId, String name, List<String> imageUrls, int price, int pricePercent, int isLiked, int banned, String description, int numLike, int numComment) {
         this.productId = productId;
         this.name = name;
         this.imageUrls = imageUrls;
@@ -54,6 +40,7 @@ public class Product {
         this.numLike = numLike;
         this.numComment = numComment;
     }
+
     public String getProductId() {
         return productId;
     }
@@ -68,6 +55,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public int getPrice() {
@@ -86,12 +81,20 @@ public class Product {
         this.pricePercent = pricePercent;
     }
 
-    public List<Brand> getBrand() {
-        return brand;
+    public int getIsLiked() {
+        return isLiked;
     }
 
-    public void setBrand(List<Brand> brand) {
-        this.brand = brand;
+    public void setIsLiked(int isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public int getBanned() {
+        return banned;
+    }
+
+    public void setBanned(int banned) {
+        this.banned = banned;
     }
 
     public String getDescription() {
@@ -116,29 +119,5 @@ public class Product {
 
     public void setNumComment(int numComment) {
         this.numComment = numComment;
-    }
-
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
-    public int getIsLiked() {
-        return isLiked;
-    }
-
-    public void setIsLiked(int isLiked) {
-        this.isLiked = isLiked;
-    }
-
-    public int getBanned() {
-        return banned;
-    }
-
-    public void setBanned(int banned) {
-        this.banned = banned;
     }
 }
