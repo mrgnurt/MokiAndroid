@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -70,6 +71,7 @@ public class ProductCategoryActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mCategoryList = new ArrayList<>();
         txtHeader.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(AppConstant.CATEGORY);
@@ -77,19 +79,24 @@ public class ProductCategoryActivity extends BaseActivity {
             String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
             String categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
             txtHeader.setText(Utils.toTitleCase(categoryName));
+            ProductCategoryResponse response = new ProductCategoryResponse();
+            response.setHasChild(0);
+            response.setName(getResources().getString(R.string.all));
+            response.setId(categoryId);
+            mCategoryList.add(response);
             // TODO: call api to get list child category with categoryId
         } else {
             txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
+            // TODO: call api to get list category
         }
         // TODO: remove fakeData() when call api
         fakeData();
     }
 
     private void fakeData() {
-        mCategoryList = new ArrayList<>();
         for (int i = 0; i < 15; ++i) {
             ProductCategoryResponse response = new ProductCategoryResponse();
-            response.setName("Category name");
+            response.setName("Category name " + i);
             if (i % 2 == 0) {
                 response.setHasChild(1); // has child
             } else {
@@ -119,6 +126,7 @@ public class ProductCategoryActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_CHILD_CATEGORY:
                     setResult(Activity.RESULT_OK, data);
+                    finish();
                     break;
             }
         }
@@ -130,24 +138,24 @@ public class ProductCategoryActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             // TODO: Handling when click "Tất cả" in child category
-
+            Log.d(TAG, "click on item: " + position);
             ProductCategoryResponse response = mCategoryList.get(position);
             if (response != null) {
                 Integer hasChild = response.getHasChild();
                 if (hasChild != null) {
                     Intent intent;
                     Bundle bundle = new Bundle();
+                    bundle.putString(AppConstant.CATEGORY_ID, response.getId());
+                    bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
                     switch (hasChild) {
                         case 0:
                             intent = new Intent();
-                            bundle.putString(AppConstant.CATEGORY_ID, response.getId());
-                            bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
                             intent.putExtra(AppConstant.CATEGORY, bundle);
                             setResult(Activity.RESULT_OK, intent);
+                            finish();
                             break;
                         case 1:
                             intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
-                            bundle.putString(AppConstant.CATEGORY_ID, response.getId());
                             intent.putExtra(AppConstant.CATEGORY, bundle);
                             startActivityForResult(intent, REQUEST_CHILD_CATEGORY);
                             break;

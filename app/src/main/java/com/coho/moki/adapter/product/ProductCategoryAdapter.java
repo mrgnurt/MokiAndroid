@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,15 +25,17 @@ import java.util.List;
 
 public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse> {
 
+    // TODO: fix icon sometime not show in ListView
+
     private static final String TAG = "ProductCategoryAdapter";
 
     LayoutInflater mLayoutInflater;
-    List<ProductCategoryResponse> mProductCommentList;
+    List<ProductCategoryResponse> mProductCategoryList;
 
     public ProductCategoryAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ProductCategoryResponse> objects) {
         super(context, resource, objects);
         mLayoutInflater = LayoutInflater.from(context);
-        this.mProductCommentList = objects;
+        this.mProductCategoryList = objects;
     }
 
     /**
@@ -57,15 +60,19 @@ public class ProductCategoryAdapter extends ArrayAdapter<ProductCategoryResponse
         return convertView;
     }
 
-
-
     private void bindItem(ViewHolder viewHolder, int position) {
-        ProductCategoryResponse response = mProductCommentList.get(position);
+        ProductCategoryResponse response = mProductCategoryList.get(position);
         viewHolder.txtName.setText(response.getName());
         // check: if has sub category then set imgNext is visible else gone
         if (response.getHasChild() == 1) {
-            LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
+            if (position == 14) {
+                Log.d(TAG, "position = " + position);
+            }
+            Log.d(TAG, position + " has child");
+            viewHolder.imgNext.setImageResource(R.drawable.icon_nextarrow_normal);
+//            LoadImageUtils.loadImageFromDrawable(R.drawable.icon_nextarrow_normal, viewHolder.imgNext);
         } else {
+            Log.d(TAG, position + " has not child");
             viewHolder.imgNext.setVisibility(View.GONE);
         }
     }

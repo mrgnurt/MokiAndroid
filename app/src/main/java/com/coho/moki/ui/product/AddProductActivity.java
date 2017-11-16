@@ -42,6 +42,7 @@ public class AddProductActivity extends BaseActivity {
     private final String TAG = "AddProductActivity";
     private static final int REQUEST_PRODUCT_STATUS = 1;
     private static final int REQUEST_PRODUCT_CATEGORY = 2;
+    private static final int REQUEST_SELL_ADDRESS = 3;
     private static final int REQUEST_CAMERA = 1001;
 
     @BindView(R.id.img1)
@@ -129,7 +130,7 @@ public class AddProductActivity extends BaseActivity {
     TextView titleAddress;
 
     @BindView(R.id.edtBuyPlace)
-    EditText edtBuyPlace;
+    EditText edtSellAddress;
 
     @BindView(R.id.bottomContainer)
     LinearLayout bottomContainer;
@@ -360,6 +361,11 @@ public class AddProductActivity extends BaseActivity {
                     break;
                 case REQUEST_PRODUCT_CATEGORY:
                     // TODO: set result from ProductCategoryActivity
+                    setResultFromProductCategory(data);
+                    break;
+                case REQUEST_SELL_ADDRESS:
+                    // TODO: set result from ProductSellAddressActivity
+                    setResultFromProductSellAddress(data);
                     break;
             }
         }
@@ -405,6 +411,18 @@ public class AddProductActivity extends BaseActivity {
         String status = bundle.getString(AppConstant.PRODUCT_STATUS_VALUE);
         edtStatus.setText(status);
         edtStatus.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
+    }
+
+    private void setResultFromProductCategory(Intent data) {
+        Bundle bundle = data.getBundleExtra(AppConstant.CATEGORY);
+        String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
+        String categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
+        edtCategory.setText(categoryName);
+        edtCategory.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
+    }
+
+    private void setResultFromProductSellAddress(Intent data) {
+
     }
 
     private void initFocusListenerForEditText() {

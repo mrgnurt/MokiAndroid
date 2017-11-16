@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/cellLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5.0dip">
+
+        <Button
+            android:id="@+id/btnTick"
+            android:layout_width="25.0dip"
+            android:layout_height="25.0dip"
+            android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtHamlet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:padding="2.0dip"
+                android:textColor="@android:color/black"
+                android:textSize="15.0sp" />
+
+            <TextView
+                android:id="@+id/txtWard"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:padding="2.0dip"
+                android:textColor="@color/gray_dark" />
+
+            <TextView
+                android:id="@+id/txtDistrict"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:padding="2.0dip"
+                android:textColor="@color/gray_dark" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:padding="2.0dip"
+                android:textColor="@color/gray_dark" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="110.0dip"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:id="@+id/txtDefault"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="false"
+                android:gravity="right"
+                android:padding="@dimen/common_padding_small"
+                android:textColor="@color/gray_dark" />
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="@dimen/navi_bar_height"
+                android:layout_height="@dimen/navi_bar_height"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_more"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:minHeight="0.0dip"
+                android:minWidth="0.0dip" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/divider" />
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/white"
+    android:gravity="right"
+    android:orientation="vertical">
+
+    <include layout="@layout/nav_bar_custom" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" />
+
+    <TextView
+        android:id="@+id/txtFinish"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_padding_small"
+        android:layout_marginLeft="@dimen/common_padding_extra_large"
+        android:layout_marginRight="@dimen/common_padding_extra_large"
+        android:layout_marginTop="@dimen/common_padding_small"
+        android:background="@drawable/layout_red_bg_corner"
+        android:gravity="center"
+        android:padding="8.0dip"
+        android:text="@string/add_new_address"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/white" />
+</LinearLayout>
