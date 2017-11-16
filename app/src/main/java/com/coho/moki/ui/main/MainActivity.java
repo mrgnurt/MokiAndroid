@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
@@ -32,6 +33,7 @@ import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
@@ -96,6 +98,12 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.main_layout_container)
     FrameLayout mMainLayoutContainer;
 
+    @BindView(R.id.layout_message)
+    RelativeLayout mLayoutMessage;
+
+    @BindView(R.id.message_fragment)
+    FrameLayout mLayoutMessageFragment;
+
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
         mSlidingMenu.toggle();
@@ -105,6 +113,26 @@ public class MainActivity extends BaseActivity implements MainView{
     public void onClickButtonSearch(){
         Intent intent = new Intent(BaseApp.getContext(), MainSearchActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btnChat)
+    public void onClickButtonChat(){
+//        if (AccountUntil.getUserToken() == null) {
+//            Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//        else {
+            mLayoutMessage.setVisibility(View.VISIBLE);
+            MessageFragment fragment = new MessageFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.message_fragment, fragment, "jf").commit();
+//        }
+    }
+
+    @OnClick(R.id.layout_message)
+    public void onClickLayoutMessage(){
+        mLayoutMessage.setVisibility(View.GONE);
     }
 
     SlidingMenu mSlidingMenu;
@@ -300,7 +328,6 @@ public class MainActivity extends BaseActivity implements MainView{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
@@ -324,6 +351,14 @@ public class MainActivity extends BaseActivity implements MainView{
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (mLayoutMessage.getVisibility() == View.VISIBLE){
+            mLayoutMessage.setVisibility(View.GONE);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 
 }
