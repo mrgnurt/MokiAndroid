@@ -23,6 +23,7 @@ import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.UserInfoResponseData;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
@@ -314,14 +315,19 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isFollowed) {
-                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_UNFOLLOW);
-                    isFollowed = false;
-                    btnFollow.setImageResource(R.drawable.bg_unfollow);
+                if (AccountUntil.getUserToken() != null) {
+                    if (isFollowed) {
+                        DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_UNFOLLOW);
+                        isFollowed = false;
+                        btnFollow.setImageResource(R.drawable.bg_unfollow);
+                    } else {
+                        DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_FOLLOW + txtHeader.getText().toString());
+                        isFollowed = true;
+                        btnFollow.setImageResource(R.drawable.bg_follow);
+                    }
                 } else {
-                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_FOLLOW + txtHeader.getText().toString());
-                    isFollowed = true;
-                    btnFollow.setImageResource(R.drawable.bg_follow);
+                    Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         });
