@@ -41,7 +41,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "co activity");
         }
 
-        // chat message
         if (code == AppConstant.CHAT_PUSH_CODE) {
             Log.d(TAG, "chat push notification");
             String messageId = payload.get(AppConstant.MESSAGE_ID_CHAT_TAG);
@@ -57,7 +56,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             extraData.putString(AppConstant.PARTNER_USERNAME_CHAT_TAG, partnerUsername);
             extraData.putString(AppConstant.PARTNER_AVATAR_CHAT_TAG, partnerAvatar);
 
-            showNotification(partnerUsername, message, extraData);
+            showNotification(code, partnerUsername, message, extraData);
             return;
         }
 
@@ -72,7 +71,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    public void showNotification(String title, String content, Bundle extraData) {
+    public void showNotification(int code, String title, String content, Bundle extraData) {
 
         Context context = BaseApp.getContext();
         Intent intent = new Intent(context, ProductChatActivity.class);
@@ -85,8 +84,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setContentIntent(pendingIntent);
         builder.setContentTitle(title);
         builder.setContentText(content);
+
+//        if (code == AppConstant.CHAT_PUSH_CODE) {
+//            builder.setSound(Uri.parse("android.resource://"
+//                    + context.getPackageName() + "/" + R.raw.new_message));
+//        } else if (code == AppConstant.LOGOUT_PUSH_CODE) {
+//            builder.setSound(Uri.parse("android.resource://"
+//                    + context.getPackageName() + "/" + R.raw.other_device_login));
+//        }
         builder.setAutoCancel(true);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_app_name));
+//        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_app_name));
         builder.setSmallIcon(R.drawable.icon_app_name);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(
                 NOTIFICATION_SERVICE);
