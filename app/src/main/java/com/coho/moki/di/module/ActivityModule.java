@@ -31,6 +31,8 @@ import com.coho.moki.ui.product.CommentPresenter;
 import com.coho.moki.ui.product.CommentPresenterImpl;
 import com.coho.moki.ui.splash.SplashPresenter;
 import com.coho.moki.ui.splash.SplashPresenterImpl;
+import com.coho.moki.ui.user.UserPresenter;
+import com.coho.moki.ui.user.UserPresenterImpl;
 
 import javax.inject.Singleton;
 
@@ -84,5 +86,11 @@ public class ActivityModule {
     @Provides
     CommentPresenter provideCommentPresenter(CommentPresenterImpl commentPresenter) {
         return commentPresenter;
+    }
+
+    @Singleton
+    @Provides
+    UserPresenter provideUserPresenter(UserPresenterImpl userPresenter) {
+        return userPresenter;
     }
 }

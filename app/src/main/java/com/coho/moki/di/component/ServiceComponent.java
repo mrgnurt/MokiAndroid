@@ -7,6 +7,7 @@ import com.coho.moki.service.LoginServiceImpl;
 import com.coho.moki.service.SearchService;
 import com.coho.moki.service.SizeService;
 import com.coho.moki.service.ProductDetailService;
+import com.coho.moki.service.UserService;
 import com.coho.moki.ui.login.LoginPresenterImpl;
 
 import javax.inject.Singleton;
@@ -27,5 +28,7 @@ public interface ServiceComponent {
     SizeService getSizeService();
 
     ProductDetailService getProductDetailService();
+
+    UserService getUserService();
 
 }

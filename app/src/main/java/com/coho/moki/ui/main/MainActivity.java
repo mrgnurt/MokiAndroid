@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
@@ -412,7 +413,6 @@ public class MainActivity extends BaseActivity implements MainView{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));

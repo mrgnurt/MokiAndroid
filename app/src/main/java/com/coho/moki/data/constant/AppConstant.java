@@ -7,6 +7,7 @@ package com.coho.moki.data.constant;
 public class AppConstant {
 
     //tag api request
+
     public static final String BASEURL_TAG = "http://10.10.127.248:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
@@ -22,6 +23,7 @@ public class AppConstant {
 
     public static final String TOKEN = "token";
     public static final String ID = "id";
+    public static final String USERID_TAG = "userId";
 
     public static final String PRODUCT_ID = "productId";
     public static final String COMMENT = "comment";
@@ -38,6 +40,7 @@ public class AppConstant {
     public static final int Home_MENU_INDEX = 0;
     public static final int COUNT_PRODUCTS_GET = 8;
     public static final int COUNT_SEARCH_PRODUCT = 6;
+    public static final int COUNT_USER_FOLLOW_GET = 5;
     public static final int REQUEST_CODE_SIZE = 1;
     public static final int RESULT_CODE_SIZE = 2;
     public static final String IS_PASS_TUTORIALSCREEN = "IS_PASS_TUTORIALSCREEN";
@@ -46,6 +49,9 @@ public class AppConstant {
     public static final String MY_AVATAR_URL = "MY_AVATAR_URL";
     public static final String MY_TOKEN = "MY_TOKEN";
     public static final String ANDROID_TYPE = "1";
+    public static final String FOLLOWING = "following";
+    public static final String FOLLOWED = "followed";
+
     public static final String MESSAGE = "MESSAGE";
     public static final String DEVICE_TOKEN = "device_token";
 
@@ -107,5 +113,9 @@ public class AppConstant {
     public static final String PACKAGE_TAG = "package";
 
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+
+    public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
+
+    public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
 
 }

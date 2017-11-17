@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_padding_medium"
+        android:layout_marginRight="@dimen/common_padding_medium"
+        android:layout_marginTop="@dimen/common_padding_small"
+        android:background="@drawable/layout_white_bg_gray_corner"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="39dp"
+            android:layout_margin="@dimen/common_padding_medium"
+            android:scaleType="centerCrop"
+            android:src="@drawable/unknown_user"
+            app:siBorderColor="@color/gray_status"
+            app:siBorderWidth="2.0dip" />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/common_padding_medium"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:paddingLeft="15.0dip"
+            android:singleLine="true"
+            android:text="abc"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/red_dark" />
+
+        <Button
+            android:id="@+id/btnAction"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/common_padding_medium"
+            android:background="@drawable/add"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+</LinearLayout>
