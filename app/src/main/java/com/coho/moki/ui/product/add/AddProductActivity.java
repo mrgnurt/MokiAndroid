@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -13,9 +14,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,7 +39,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import kankan.wheel.widget.adapters.WheelViewAdapter;
 
 /**
  * Created by Khanh Nguyen on 11/8/2017.
@@ -200,6 +206,7 @@ public class AddProductActivity extends BaseActivity {
         initFocusListenerForEditText();
         initClickListener();
         initTextChangeListener();
+        initListenerForSwitchButton();
         switchAutoAccept.setChecked(true);
         topKeyboardLayout.setVisibility(View.GONE);
     }
@@ -530,7 +537,7 @@ public class AddProductActivity extends BaseActivity {
 
                         break;
                     case R.id.edtDimension:
-
+                        showDimensionDialog();
                         break;
                     case R.id.edtWeight:
                         showWeightDialog();
@@ -546,6 +553,100 @@ public class AddProductActivity extends BaseActivity {
         edtStatus.setOnClickListener(listener);
         edtSellAddress.setOnClickListener(listener);
         edtWeight.setOnClickListener(listener);
+        edtDimension.setOnClickListener(listener);
+    }
+
+    private void initListenerForSwitchButton() {
+        CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switch (buttonView.getId()) {
+                    case R.id.switch_product_type: // free
+                        if (isChecked) {
+                            llWeight.setVisibility(View.VISIBLE);
+                            llDimension.setVisibility(View.VISIBLE);
+                            // TODO: hide service fee and total money
+                        } else {
+                            llWeight.setVisibility(View.GONE);
+                            llDimension.setVisibility(View.GONE);
+                            // TODO: show service fee and total money
+                        }
+                        break;
+                    case R.id.switch_auto_accept: // fast sell
+
+                        break;
+                    case R.id.switch_allow_offer: // allow bargain
+
+                        break;
+                }
+            }
+        };
+        switchProductType.setOnCheckedChangeListener(listener);
+        switchAutoAccept.setOnCheckedChangeListener(listener);
+        switchAllowOffer.setOnCheckedChangeListener(listener);
+    }
+
+    private void showDimensionDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dimension_dialog);
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setWindowAnimations(R.style.DialogAnimation);
+        // bind view
+        Button btnExit = dialog.findViewById(R.id.btnExit);
+        final TextView txtSelectedDimension = dialog.findViewById(R.id.selectedDimension);
+        Button btnChoose = dialog.findViewById(R.id.btnChoose);
+        final WheelView lengthWheel = dialog.findViewById(R.id.lengthWheel);
+        final WheelView widthWheel = dialog.findViewById(R.id.widthWheel);
+        final WheelView heightWheel = dialog.findViewById(R.id.heightWheel);
+        View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()) {
+                    case R.id.btnExit:
+                    case R.id.btnChoose:
+                        edtDimension.setText(txtSelectedDimension.getText());
+                        dialog.dismiss();
+                }
+            }
+        };
+        btnExit.setOnClickListener(clickListener);
+        btnChoose.setOnClickListener(clickListener);
+        final List<String> dataList = createDimensionList();
+        lengthWheel.setVisibleItems(5);
+        widthWheel.setVisibleItems(5);
+        heightWheel.setVisibleItems(5);
+        String[] data = new String[dataList.size()];
+        ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<>(this, dataList.toArray(data));
+        lengthWheel.setCurrentItem(1);
+        lengthWheel.setViewAdapter(adapter);
+        widthWheel.setCurrentItem(1);
+        widthWheel.setViewAdapter(adapter);
+        heightWheel.setCurrentItem(1);
+        adapter.setTextSize(14);
+        heightWheel.setViewAdapter(adapter);
+        txtSelectedDimension.setText("1cm dài x 1cm rộng x 1cm cao");
+        OnWheelScrollListener scrollListener = new OnWheelScrollListener() {
+            @Override
+            public void onScrollingStarted(WheelView wheel) {
+
+            }
+
+            @Override
+            public void onScrollingFinished(WheelView wheel) {
+                txtSelectedDimension.setText(dataList.get(lengthWheel.getCurrentItem()) + " dài x " +
+                        dataList.get(widthWheel.getCurrentItem()) + " rộng x " +
+                        dataList.get(heightWheel.getCurrentItem()) + " cao"
+                );
+            }
+        };
+        lengthWheel.addScrollingListener(scrollListener);
+        widthWheel.addScrollingListener(scrollListener);
+        heightWheel.addScrollingListener(scrollListener);
+        dialog.show();
     }
 
     private void showWeightDialog() {
@@ -560,16 +661,23 @@ public class AddProductActivity extends BaseActivity {
         // bind view
         Button btnExit = dialog.findViewById(R.id.btnExit);
         Button btnChoose = dialog.findViewById(R.id.btnChoose);
-        WheelView wheelView = dialog.findViewById(R.id.weightWheel);
+        final WheelView wheelView = dialog.findViewById(R.id.weightWheel);
+        final List<String> weightList = createWeightList();
+        wheelView.setVisibleItems(5);
+        String[] weightArr = new String[weightList.size()];
+        ArrayWheelAdapter<String> weightAdapter = new ArrayWheelAdapter<>(this, weightList.toArray(weightArr));
+        wheelView.setCurrentItem(1);
+        weightAdapter.setTextSize(14);
+        wheelView.setViewAdapter(weightAdapter);
+
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.btnExit:
-
-                        break;
                     case R.id.btnChoose:
-
+                        edtWeight.setText(weightList.get(wheelView.getCurrentItem()));
+                        dialog.dismiss();
                         break;
                 }
             }
@@ -577,6 +685,24 @@ public class AddProductActivity extends BaseActivity {
         btnExit.setOnClickListener(clickListener);
         btnChoose.setOnClickListener(clickListener);
         dialog.show();
+    }
+
+    private List<String> createWeightList() {
+        List<String> weightList = new ArrayList<>();
+        for (int i = 0; i < 40; ++i) {
+            String medium = Utils.formatWeight(String.valueOf(i + 0.5));
+            weightList.add("Trên " + i + "kg đến " + medium + "kg");
+            weightList.add("Trên " + medium + "kg đến " + (i+1) + "kg");
+        }
+        return weightList;
+    }
+
+    private List<String> createDimensionList() {
+        List<String> dimensionList = new ArrayList<>();
+        for (int i = 1; i <= 200; ++i) {
+            dimensionList.add(i + "cm");
+        }
+        return dimensionList;
     }
 
 }
