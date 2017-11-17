@@ -1,6 +1,7 @@
 package com.coho.moki.ui.fragment.ListProduct;
 
 import android.util.Log;
+import android.view.View;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.data.constant.AppConstant;
@@ -11,7 +12,10 @@ import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.BrandResponceData;
 import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.ImageResponseData;
+import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductSmallResponceData;
+import com.coho.moki.service.ProductDetailService;
+import com.coho.moki.service.ProductDetailServiceImpl;
 import com.coho.moki.service.ProductService;
 import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
@@ -31,6 +35,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
     ListProductContract.View mView;
     ProductService mProductService;
+    ProductDetailService mProductDetailService;
 
     ArrayList<Product> mProducts;
     Category mCategory;
@@ -38,6 +43,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
     public ListProductPresenter(){
         mProductService = new ProductServiceImpl();
+        mProductDetailService = new ProductDetailServiceImpl();
     }
 
     @Override
@@ -136,5 +142,22 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     @Override
     public void setCategory(Category category) {
         mCategory = category;
+    }
+
+    @Override
+    public void likeProductRemote(String token, String productId) {
+        mProductDetailService.likeProductRemote(token, productId, new ResponseListener<LikeResponseData>() {
+            @Override
+            public void onSuccess(LikeResponseData dataResponse) {
+                mView.setViewLikeTimeLine(dataResponse.getLike());
+                DialogUtil.hideProgress();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
+                Utils.toastShort(BaseApp.getContext(), errorMessage);
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.coho.moki.ui.fragment.ListProduct;
 
+import android.view.View;
+
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.data.model.Product;
@@ -28,6 +30,8 @@ public interface ListProductContract {
         void invisibleLoadMore();
 
         void invisibleRefresh();
+
+        void setViewLikeTimeLine(int numLike);
     }
 
     public interface Presenter extends BasePresenter<View>{
@@ -43,5 +47,7 @@ public interface ListProductContract {
         void callGetLoadMoreProducts();
 
         void setCategory(Category category);
+
+        void likeProductRemote(String token, String productId);
     }
 }

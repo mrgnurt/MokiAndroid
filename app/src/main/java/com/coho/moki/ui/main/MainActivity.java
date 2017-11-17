@@ -141,9 +141,11 @@ public class MainActivity extends BaseActivity implements MainView{
 
         if (mViewType == AppConstant.GRID_VIEW_PRODUCT){
             mViewType = AppConstant.TIMELINE_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_grid);
         }
         else {
             mViewType = AppConstant.GRID_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_timeline);
         }
 
         productPagerFragment.changeListProductLayout();

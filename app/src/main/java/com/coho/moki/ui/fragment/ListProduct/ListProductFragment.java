@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
 
@@ -13,6 +14,8 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
 import com.coho.moki.adapter.customadapter.ListProductTimelineAdapter;
+import com.coho.moki.callback.OnClickCommentListener;
+import com.coho.moki.callback.OnClickLikeListener;
 import com.coho.moki.callback.OnClickProductItemListenner;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.Brand;
@@ -24,13 +27,19 @@ import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.ImageResponseData;
 import com.coho.moki.data.remote.ProductSmallResponceData;
 import com.coho.moki.data.remote.SellerResponceData;
+import com.coho.moki.service.ProductDetailServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
+import com.coho.moki.ui.product.ProductDetailPresenter;
+import com.coho.moki.ui.product.ProductDetailPresenterImpl;
+import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
+import com.coho.moki.util.StringUtil;
 import com.coho.moki.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -69,6 +78,10 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     ListProductTimelineAdapter mListProductTimelineAdapter;
 
     ListProductContract.Presenter mPresenter;
+
+    Button btnLikeTimeLine;
+    boolean mIsLikeTimeLine = false;
+    ProductSmallResponceData mProductSmallResponceData;
 
     public static ListProductFragment newInstance(Category category){
         ListProductFragment listProductFragment = new ListProductFragment();
@@ -126,10 +139,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mListProductAdapter.addListener(new OnClickProductItemListenner() {
             @Override
             public void onClick(String productId) {
-                Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
-                intent.putExtra(AppConstant.PRODUCT_ID, productId);
-                DialogUtil.showProgress(getActivity());
-                startActivity(intent);
+                startActivityProductDetail(productId);
             }
         });
     }
@@ -137,26 +147,90 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     public void initTimeLineView(){
 
         List<ProductSmallResponceData> product = new ArrayList<ProductSmallResponceData>();
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "8 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung1", null)));
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "7 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung2", null)));
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "6 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung3", null)));
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "5 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung4", null)));
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "4 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung5", null)));
-//        product.add(new ProductSmallResponceData("", "khan tam", null, 20000, 0, null, "Chat mem xin", "3 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung6", null)));
+
+//        List<String> image1 = new ArrayList<String>();
+//        image1.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//
+//        List<String> image2 = new ArrayList<String>();
+//        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//
+//        List<String> image3 = new ArrayList<String>();
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//
+//        product.add(new ProductSmallResponceData("", "khan tam1", image3, 20000, 0, null, "Chat mem xin", "8 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam2", image2, 20000, 0, null, "Chat mem xin", "7 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung2", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam3", image2, 20000, 0, null, "Chat mem xin", "6 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung3", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam4", image3, 20000, 0, null, "Chat mem xin", "5 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung4", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam5", image1, 20000, 0, null, "Chat mem xin", "4 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung5", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam6", image1, 20000, 0, null, "Chat mem xin", "3 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung6", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
 
         mListProductTimelineAdapter = new ListProductTimelineAdapter(BaseApp.getContext(), product);
         mLayoutTimeLine.setAdapter(mListProductTimelineAdapter);
 
+        mListProductTimelineAdapter.setmOnClickProductItemListenner(new OnClickProductItemListenner() {
+            @Override
+            public void onClick(String productId) {
+                startActivityProductDetail(productId);
+            }
+        });
 
-//        mListProductAdapter.addListener(new OnClickProductItemListenner() {
-//            @Override
-//            public void onClick(String productId) {
-//                Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
-//                intent.putExtra(AppConstant.PRODUCT_ID, productId);
-//                DialogUtil.showProgress(getActivity());
-//                startActivity(intent);
-//            }
-//        });
+        mListProductTimelineAdapter.setmOnClickLikeListener(new OnClickLikeListener() {
+            @Override
+            public void onClick(ProductSmallResponceData product, View view, boolean isLike) {
+                String token = AccountUntil.getUserToken();
+
+                if (token != null){
+                    mProductSmallResponceData = product;
+                    btnLikeTimeLine = (Button) view;
+                    mIsLikeTimeLine = isLike;
+                    DialogUtil.showProgress(getActivity());
+                    mPresenter.likeProductRemote(token, product.getId());
+                }
+            }
+        });
+
+        mListProductTimelineAdapter.setmOnClickCommentListener(new OnClickCommentListener() {
+            @Override
+            public void onClick(String productId) {
+                Intent intent = new Intent(BaseApp.getContext(), ProductCommentActivity.class);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                DialogUtil.showProgress(getActivity());
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setViewLikeTimeLine(int numLike){
+        if (mIsLikeTimeLine){
+            btnLikeTimeLine.setBackgroundResource(R.drawable.icon_time_line_like_on);
+            btnLikeTimeLine.setText(numLike + "");
+
+            if (mProductSmallResponceData != null){
+                mProductSmallResponceData.setLike(numLike);
+                mProductSmallResponceData.setIsLiked(1);
+            }
+        }
+        else{
+            btnLikeTimeLine.setBackgroundResource(R.drawable.icon_time_line_like_off);
+            btnLikeTimeLine.setText(numLike + "");
+
+
+            if (mProductSmallResponceData != null){
+                mProductSmallResponceData.setLike(numLike);
+                mProductSmallResponceData.setIsLiked(0);
+            }
+        }
+    }
+
+    private void startActivityProductDetail(String productId){
+        Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
+        intent.putExtra(AppConstant.PRODUCT_ID, productId);
+        DialogUtil.showProgress(getActivity());
+        startActivity(intent);
     }
 
     RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener(){

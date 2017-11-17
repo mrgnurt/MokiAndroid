@@ -3,84 +3,84 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="3.0">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/firstImg"
-                android:layout_width="fill_parent"
+                android:id="@+id/first2Img"
+                android:layout_width="wrap_content"
                 android:layout_height="300dp"
+                android:layout_marginRight="1.0px"
+                android:layout_weight="1.0"
                 android:scaleType="centerCrop" />
 
-            <!--<ImageView-->
-                <!--android:id="@+id/imgPlayVideoIcon"-->
-                <!--android:layout_width="100.0dip"-->
-                <!--android:layout_height="68.0dip"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:scaleType="fitXY"-->
-                <!--android:src="@drawable/play_video_icon"-->
-                <!--android:visibility="invisible" />-->
+            <ImageView
+                android:id="@+id/second2Img"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginLeft="1.0px"
+                android:layout_weight="1.0"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/frameProgress"
+        <FrameLayout
+            android:id="@+id/frameProgress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/darker_gray">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="30.0dip"
+                android:layout_height="30.0dip"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/sale_off_view_container"
+            android:layout_width="@dimen/sale_view_width"
+            android:layout_height="@dimen/sale_view_height"
+            android:layout_gravity="right"
+            android:layout_marginRight="10.0dip">
+
+            <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@android:color/darker_gray">
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="30.0dip"
-                    android:layout_height="30.0dip"
-                    android:layout_gravity="center" />
-            </FrameLayout>
-
-            <RelativeLayout
-                android:id="@+id/sale_off_view_container"
-                android:layout_width="@dimen/sale_view_width"
-                android:layout_height="@dimen/sale_view_height"
-                android:layout_gravity="right"
-                android:layout_marginRight="10.0dip">
-
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/icon_sale_bg" />
-
-                <TextView
-                    android:id="@+id/salePercent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="100%"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/sale_text_size" />
-            </RelativeLayout>
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_sale_bg" />
 
             <TextView
-                android:id="@+id/tv_distance"
-                android:layout_width="@dimen/_55sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_gravity="bottom|center|right"
-                android:layout_marginBottom="1.0dip"
-                android:background="@color/red_dark"
+                android:id="@+id/salePercent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
                 android:gravity="center"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="100%"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-        </FrameLayout>
-    </LinearLayout>
+                android:textSize="@dimen/sale_text_size" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="bottom|center|right"
+            android:layout_marginBottom="1.0dip"
+            android:background="@color/red_dark"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

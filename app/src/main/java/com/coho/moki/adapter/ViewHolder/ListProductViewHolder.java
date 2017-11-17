@@ -71,7 +71,7 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
         mTxtComment.setText(product.getNumComment() + "");
-        mTxtPrice.setText(product.getNumComment() + " K");
+        mTxtPrice.setText(product.getPrice() + "");
         mFrameProgress.setVisibility(View.VISIBLE);
 
         if (product.getPricePercent() == 0){
@@ -93,7 +93,6 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        mFrameProgress.setVisibility(View.GONE);
     }
 
     public void setListener(OnClickProductItemListenner listener){

@@ -16,11 +16,11 @@ public class PageIndicator extends View {
     private Paint dotPaint;
     private Paint highLightDotPaint;
     private Pager pager;
-    private OnPageChangeListener scrollListener = new C28501();
+    private OnPageChangeListener scrollListener = new ScrollListener();
     public int current;
 
-    class C28501 implements OnPageChangeListener {
-        C28501() {
+    class ScrollListener implements OnPageChangeListener {
+        ScrollListener() {
         }
 
         public void onPageChange(Pager scroller) {

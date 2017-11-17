@@ -24,7 +24,6 @@ public final class LoadImageUtils {
         Picasso picasso;
         picasso = Picasso.with(BaseApp.getContext());
         picasso.load(url)
-                .fit()
                 .placeholder(R.drawable.no_image)
                 .into(imgView, listener);
     }

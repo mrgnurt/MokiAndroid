@@ -67,10 +67,10 @@ public class TutorialFragment2 extends BaseFragment {
 
     Animation animation;
 
-    class C28585 implements Animator.AnimatorListener {
+    class ZoomListenner implements Animator.AnimatorListener {
 
-        class C28571 implements Runnable {
-            C28571() {
+        class ResetRunnable implements Runnable {
+            ResetRunnable() {
             }
 
             public void run() {
@@ -80,7 +80,7 @@ public class TutorialFragment2 extends BaseFragment {
             }
         }
 
-        C28585() {
+        ZoomListenner() {
         }
 
         public void onAnimationStart(Animator animator) {
@@ -90,11 +90,11 @@ public class TutorialFragment2 extends BaseFragment {
 //            if (!(TutorialFragment2.this.currentZoomingIconIndex == 0 && TutorialFragment2.this.stopZoomReverse) && (TutorialFragment2.this.currentZoomingIconIndex != 4 || TutorialFragment2.this.stopZoomReverse)) {
 //                TutorialFragment2.this.zoomIcon();
 //            } else {
-//                new Handler().postDelayed(new TutorialFragment2.C28585.C28571(), 1000);
+//                new Handler().postDelayed(new TutorialFragment2.ZoomListenner.ResetRunnable(), 1000);
 //            }
 
             if ((TutorialFragment2.this.currentZoomingIconIndex == 0 && upZoom) || (TutorialFragment2.this.currentZoomingIconIndex == 4 && !upZoom) ){
-                new Handler().postDelayed(new TutorialFragment2.C28585.C28571(), 1000);
+                new Handler().postDelayed(new TutorialFragment2.ZoomListenner.ResetRunnable(), 1000);
 
             }
             else {
@@ -223,62 +223,12 @@ public class TutorialFragment2 extends BaseFragment {
                     break;
             }
         }
-
-
-
-//        if (!this.stopZoomReverse) {
-//            switch (this.currentZoomingIconIndex) {
-//                case 0:
-//                    this.zoomingIcon = this.ava1;
-//                    this.stopZoomReverse = true;
-//                    break;
-//                case 1:
-//                    this.zoomingIcon = this.ava2;
-//                    this.currentZoomingIconIndex--;
-//                    break;
-//                case 2:
-//                    this.zoomingIcon = this.ava3;
-//                    this.currentZoomingIconIndex--;
-//                    break;
-//                case 3:
-//                    this.zoomingIcon = this.ava4;
-//                    this.currentZoomingIconIndex--;
-//                    break;
-//                case 4:
-//                    this.zoomingIcon = this.ava5;
-//                    this.currentZoomingIconIndex--;
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//        switch (this.currentZoomingIconIndex) {
-//            case 0:
-//                this.zoomingIcon = this.ava1;
-//                this.currentZoomingIconIndex++;
-//                break;
-//            case 1:
-//                this.zoomingIcon = this.ava2;
-//                this.currentZoomingIconIndex++;
-//                break;
-//            case 2:
-//                this.zoomingIcon = this.ava3;
-//                this.currentZoomingIconIndex++;
-//                break;
-//            case 3:
-//                this.zoomingIcon = this.ava4;
-//                this.currentZoomingIconIndex++;
-//                break;
-//            case 4:
-//                this.zoomingIcon = this.ava5;
-//                this.stopZoomReverse = false;
-//                break;
-//        }
+        
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(this.zoomingIcon, new PropertyValuesHolder[]{PropertyValuesHolder.ofFloat("scaleX", new float[]{1.0f, 1.5f}), PropertyValuesHolder.ofFloat("scaleY", new float[]{1.0f, 1.5f})});
         objectAnimator.setDuration(250);
         objectAnimator.setRepeatCount(1);
         objectAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        objectAnimator.addListener(new TutorialFragment2.C28585());
+        objectAnimator.addListener(new TutorialFragment2.ZoomListenner());
         objectAnimator.start();
     }
 }
