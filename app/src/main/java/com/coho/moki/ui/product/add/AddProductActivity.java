@@ -39,6 +39,9 @@ import butterknife.OnClick;
 
 public class AddProductActivity extends BaseActivity {
 
+    // TODO: add event when click on edtSize, edtBrand, edtWeight
+    // TODO: fix edtPrice on text change
+
     private final String TAG = "AddProductActivity";
     private static final int REQUEST_PRODUCT_STATUS = 1;
     private static final int REQUEST_PRODUCT_CATEGORY = 2;
