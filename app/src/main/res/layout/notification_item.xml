@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="left"
-                android:minLines="2"
+                android:minLines="1"
                 android:textAppearance="@android:style/TextAppearance.Small"
                 android:textColor="@color/secondary_text" />
 

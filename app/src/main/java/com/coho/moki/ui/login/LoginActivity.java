@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @OnClick(R.id.btnCancel)
     public void onClickCancelButton(){
+        Utils.hideSoftKeyboard(this);
         openMainActivity();
     }
 
@@ -67,6 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         mLoginPresenter.onAttach(this);
         txtForgotPass.setPaintFlags(txtForgotPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtForgotPass.setText(R.string.forgot_pass);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -86,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             Utils.toastShort(LoginActivity.this, R.string.password_empty);
         }
         else{
+            Utils.hideSoftKeyboard(this);
             if (Utils.checkInternetAvailable()){
                 DialogUtil.showProgress(this);
                 mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
@@ -101,5 +105,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void openMainActivity() {
         Intent intent = new Intent(BaseApp.getContext(), MainActivity.class);
         startActivity(intent);
+        finishActivity();
+    }
+
+    public void finishActivity() {
+        LoginActivity.this.finish();
     }
 }

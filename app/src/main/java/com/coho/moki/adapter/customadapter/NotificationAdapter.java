@@ -17,6 +17,7 @@ import com.coho.moki.data.remote.ChatConsersation;
 import com.coho.moki.data.remote.ListConversationResponceData;
 import com.coho.moki.util.network.LoadImageUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,8 +32,12 @@ public class NotificationAdapter extends ArrayAdapter<ChatConsersation> {
     public NotificationAdapter(@NonNull Context context, @LayoutRes int resource, List<ChatConsersation> chats) {
         super(context, resource);
         mLayoutInflater = LayoutInflater.from(context);
-        this.mChats = chats;
-        Log.d("conversation", "size" + mChats.size());
+
+        if (chats != null && chats.size() > 0) {
+            this.mChats = chats;
+        } else {
+            this.mChats = new ArrayList<>();
+        }
     }
 
     @Override
@@ -56,10 +61,9 @@ public class NotificationAdapter extends ArrayAdapter<ChatConsersation> {
     }
 
     private void bindItem(ViewHolder viewHolder, int position) {
-//        Log.d("conversation", position + "");
         ChatConsersation chat = mChats.get(position);
-//        LoadImageUtils.loadImageFromUrl(chat.product.image, R.drawable.unknown_user, viewHolder.imgAvatar, null);
-        viewHolder.txtTitle.setText(chat.partner.userName);
+        LoadImageUtils.loadImageFromUrl(chat.product.image, R.drawable.unknown_user, viewHolder.imgAvatar, null);
+        viewHolder.txtTitle.setText(chat.partner.username);
         viewHolder.txtMessContent.setText(chat.lastMessage.message);
         viewHolder.txtDate.setText(chat.lastMessage.created);
     }
@@ -78,4 +82,16 @@ public class NotificationAdapter extends ArrayAdapter<ChatConsersation> {
         }
 
     }
+
+    public void addItemsToLast(List<ChatConsersation> addItems) {
+        if (addItems != null && addItems.size() > 0) {
+            mChats.addAll(addItems);
+            notifyDataSetChanged();
+        }
+    }
+
+    public List<ChatConsersation> getChats() {
+        return mChats;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.coho.moki.service;
 
 import com.coho.moki.data.remote.ConversationResponseData;
+import com.coho.moki.data.remote.ListConversationResponceData;
 
 /**
  * Created by tonquangtu on 14/11/2017.
@@ -8,5 +9,7 @@ import com.coho.moki.data.remote.ConversationResponseData;
 
 public interface ConversationService {
 
-    public void loadConversationDetail(String token, String partnerId, String productId, int count, int limit, ResponseListener<ConversationResponseData> listener);
+    void loadConversationDetail(String token, String partnerId, String productId, int count, int limit, ResponseListener<ConversationResponseData> listener);
+
+    void loadConversations(String token, int index, int count, ResponseListener<ListConversationResponceData> listener);
 }
