@@ -3,6 +3,7 @@ package com.coho.moki.adapter.customadapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.coho.moki.R;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.UserFollowResponseData;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
@@ -25,10 +28,11 @@ public class FollowedAdapter extends ArrayAdapter {
 
     LayoutInflater mLayoutInflater;
     ArrayList<UserFollowResponseData> userFollowedList = null;
-
+    Context context = null;
 
     public FollowedAdapter(@NonNull Context context, int resource, ArrayList<UserFollowResponseData> userFolloweds) {
         super(context, resource);
+        this.context = context;
         userFollowedList = userFolloweds;
         mLayoutInflater = LayoutInflater.from(context);
     }
@@ -54,8 +58,8 @@ public class FollowedAdapter extends ArrayAdapter {
         return convertView;
     }
 
-    private void bindItem(FollowedAdapter.ViewHolder viewHolder, int position) {
-        UserFollowResponseData userFollowResponseData = userFollowedList.get(position);
+    private void bindItem(final FollowedAdapter.ViewHolder viewHolder, int position) {
+        final UserFollowResponseData userFollowResponseData = userFollowedList.get(position);
         viewHolder.txtName.setText(userFollowResponseData.getUsername());
         LoadImageUtils.loadImageFromUrl(userFollowResponseData.getAvatar(), R.drawable.unknown_user, viewHolder.circularImageView, null);
         if (userFollowResponseData.getFollowed() == 1) {
@@ -63,6 +67,21 @@ public class FollowedAdapter extends ArrayAdapter {
         } else {
             viewHolder.btnAction.setBackgroundResource(R.drawable.add);
         }
+
+        viewHolder.btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userFollowResponseData.getFollowed() == 1) {
+                    DialogUtil.showPopupSuccess(context, AppConstant.POPUP_UNFOLLOW);
+                    userFollowResponseData.setFollowed(0);
+                    viewHolder.btnAction.setBackgroundResource(R.drawable.add);
+                } else {
+                    DialogUtil.showPopupSuccess(context, AppConstant.POPUP_FOLLOW + viewHolder.txtName.getText().toString());
+                    userFollowResponseData.setFollowed(1);
+                    viewHolder.btnAction.setBackgroundResource(R.drawable.delete);
+                }
+            }
+        });
     }
 
     private static class ViewHolder {

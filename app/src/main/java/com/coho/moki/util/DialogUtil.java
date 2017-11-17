@@ -115,7 +115,7 @@ public class DialogUtil {
     }
 
     public static void showPopupSuccess(Context context, String content){
-        showPopUp(context, SweetAlertDialog.ERROR_TYPE, content, context.getString(R.string.alert_title), context.getString(R.string.close), null, null, null);
+        showPopUp(context, SweetAlertDialog.SUCCESS_TYPE, content, context.getString(R.string.alert_title), context.getString(R.string.close), null, null, null);
     }
 
     public static void showPopupClick(Context context, String message, OnClickListener onOk, OnClickListener onCancel) {

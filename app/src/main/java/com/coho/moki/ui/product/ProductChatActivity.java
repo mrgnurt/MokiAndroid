@@ -148,6 +148,8 @@ public class ProductChatActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         extractDataFromIntent(intent);
+        initView();
+        initData();
         Log.d("tuton", "on new Intent");
     }
 
@@ -196,6 +198,7 @@ public class ProductChatActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mProductCons = null;
         conversationService = new ConversationServiceImpl();
         currIndex = 0;
         limitPerLoad = 20;

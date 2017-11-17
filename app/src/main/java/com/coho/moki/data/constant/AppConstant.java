@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://10.10.186.216:3000";
+    public static final String BASEURL_TAG = "http://10.10.127.248:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -54,6 +54,19 @@ public class AppConstant {
 
     public static final String MESSAGE = "MESSAGE";
     public static final String DEVICE_TOKEN = "device_token";
+
+    public static final String ADD_PRODUCT_IMG = "IMAGE";
+    public static final String ADD_PRODUCT_IMG_POS = "IMG_POS";
+
+    // for product status
+    public static final String PRODUCT_STATUS = "PRODUCT_STATUS";
+    public static final String PRODUCT_STATUS_KEY = "PRODUCT_STATUS_KEY";
+    public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
+
+    // for category
+    public static final String CATEGORY = "CATEGORY";
+    public static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String CATEGORY_NAME = "CATEGORY_NAME";
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";

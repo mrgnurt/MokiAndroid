@@ -66,7 +66,7 @@ public class UserFollowingFragment extends BaseFragment{
                     @Override
                     public void onSuccess(ArrayList<UserFollowResponseData> dataResponse) {
                         userFollowingList = dataResponse;
-                        FollowingAdapter adapter = new FollowingAdapter(BaseApp.getContext(), R.layout.follow_user_item, userFollowingList);
+                        FollowingAdapter adapter = new FollowingAdapter(getActivity(), R.layout.follow_user_item, userFollowingList);
                         mListViewUserFollowing.setAdapter(adapter);
                         mListViewUserFollowing.setDivider(null);
                     }
@@ -75,7 +75,7 @@ public class UserFollowingFragment extends BaseFragment{
                     public void onFailure(String errorMessage) {
                         userFollowingList = new ArrayList<UserFollowResponseData>();
                         Utils.toastShort(BaseApp.getContext(), errorMessage);
-                        FollowingAdapter adapter = new FollowingAdapter(BaseApp.getContext(), R.layout.follow_user_item, userFollowingList);
+                        FollowingAdapter adapter = new FollowingAdapter(getActivity(), R.layout.follow_user_item, userFollowingList);
                         mListViewUserFollowing.setAdapter(adapter);
                         mListViewUserFollowing.setDivider(null);
                     }

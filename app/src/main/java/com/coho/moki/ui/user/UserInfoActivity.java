@@ -314,16 +314,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUtil.showProgress(UserInfoActivity.this);
                 if (isFollowed) {
                     DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_UNFOLLOW);
                     isFollowed = false;
                     btnFollow.setImageResource(R.drawable.bg_unfollow);
-                    DialogUtil.hideProgress();
                 } else {
+                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_FOLLOW + txtHeader.getText().toString());
                     isFollowed = true;
                     btnFollow.setImageResource(R.drawable.bg_follow);
-                    DialogUtil.hideProgress();
                 }
             }
         });
