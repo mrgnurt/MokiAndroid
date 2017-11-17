@@ -19,6 +19,7 @@
             android:paddingRight="@dimen/navi_bar_height"
             android:maxLines="1"
             android:textColor="@color/red_dark"
+            android:text="Tìm kiếm"
             android:textSize="@dimen/common_text_size_medium" />
 
         <ImageButton

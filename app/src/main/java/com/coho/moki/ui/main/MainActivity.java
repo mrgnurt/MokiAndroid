@@ -33,6 +33,7 @@ import android.widget.TimePicker;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.adapter.customadapter.NotificationAdapter;
 import com.coho.moki.adapter.customadapter.SideMenuAdapter;
 import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
@@ -41,6 +42,7 @@ import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
@@ -71,6 +73,8 @@ public class MainActivity extends BaseActivity implements MainView{
     private NewsPagerFragment mNewsPagerFragment;
     private int mCurrentMenuIndex = AppConstant.Home_MENU_INDEX;
 
+    public int mViewType = AppConstant.GRID_VIEW_PRODUCT;
+
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
 
@@ -90,7 +94,7 @@ public class MainActivity extends BaseActivity implements MainView{
     View mLLMessageCount;
 
     @BindView(R.id.btnSwitch)
-    ImageButton mBtnSwitch;
+    public ImageButton mBtnSwitch;
 
     @BindView(R.id.btnMenu)
     ImageButton mBtnMenu;
@@ -110,10 +114,17 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.layout_message)
     RelativeLayout mLayoutMessage;
 
+    @BindView(R.id.layout_notification)
+    RelativeLayout mLayoutNotification;
+
     @BindView(R.id.message_fragment)
     FrameLayout mLayoutMessageFragment;
 
+    @BindView(R.id.notification_fragment)
+    FrameLayout mLayoutNotificationFragment;
+
     MessageFragment mMsgFragment;
+    NotificationFragment mNotificationFragment;
 
     static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
 
@@ -135,9 +146,34 @@ public class MainActivity extends BaseActivity implements MainView{
         showMessageFragment();
     }
 
+    @OnClick(R.id.btnAlert)
+    public void onClickButtonAlert(){
+        showNotificationFragment();
+    }
+
     @OnClick(R.id.layout_message)
     public void onClickLayoutMessage(){
         hideMessageFragment();
+    }
+
+    @OnClick(R.id.layout_notification)
+    public void onClickLayoutNotification(){
+        hideNotificationFragment();
+    }
+
+    @OnClick(R.id.btnSwitch)
+    public void onClickBtnSwitch(){
+
+        if (mViewType == AppConstant.GRID_VIEW_PRODUCT){
+            mViewType = AppConstant.TIMELINE_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_grid);
+        }
+        else {
+            mViewType = AppConstant.GRID_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_timeline);
+        }
+
+        productPagerFragment.changeListProductLayout();
     }
 
     SlidingMenu mSlidingMenu;
@@ -151,6 +187,7 @@ public class MainActivity extends BaseActivity implements MainView{
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
         addMessageFragment();
+        addNotificationFragment();
         productPagerFragment.setSellListener(new OnClickSellListener() {
             @Override
             public void onClick() {
@@ -243,11 +280,27 @@ public class MainActivity extends BaseActivity implements MainView{
 
     public void hideMessageFragment() {
         mLayoutMessage.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     }
 
     public void showMessageFragment() {
         mLayoutMessage.setVisibility(View.VISIBLE);
         mMsgFragment.loadConversations();
+    }
+
+    public void addNotificationFragment() {
+        mNotificationFragment = new NotificationFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.notification_fragment, mNotificationFragment, AppConstant.NOTIFICATION_FRAGMENT_TAG).commit();
+    }
+
+    public void hideNotificationFragment() {
+        mLayoutNotification.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    }
+
+    public void showNotificationFragment() {
+        mLayoutNotification.setVisibility(View.VISIBLE);
     }
 
 
