@@ -14,9 +14,11 @@ import com.coho.moki.ui.base.BaseActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntegerRes;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
@@ -146,9 +148,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     private String mPartnerAvatar;
 
-    private String mSellerName;
+    private String mPartnerUsername;
 
-    private String mSellerAvatar;
+//    private String mSellerName;
+//
+//    private String mSellerAvatar;
 
     private String mSellerId;
 
@@ -201,9 +205,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @Override
     public void initData() {
-//        initFakeData();
-        mProductDetailPresenter.getProductDetailRemote(token, productId);
-        mProductDetailPresenter.getProductCommentRemote(productId);
     }
 
     private void initFakeData() {
@@ -365,23 +366,20 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             public void onClick(View v) {
 
                 if (AccountUntil.getAccountId().equals(mSellerId)) {
-                    Log.d("i_am_seller", "La seller coi sp chinh no");
+                    Log.d(TAG, "La seller coi sp chinh no");
                     return;
                 }
 
                 Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
                 Bundle data = new Bundle();
-                data.putString("partner_id", mPartnerId);
-                data.putString("partner_avatar", mPartnerAvatar);
-                data.putString("seller_name", mSellerName);
-                data.putString("seller_id", mSellerId);
-                data.putString("seller_avatar", mSellerAvatar);
-                data.putString("product_id", productId);
-                data.putBoolean("is_owner_product", false);
-                data.putString("product_avatar", mProductAvatar);
+                data.putString(AppConstant.PRODUCT_ID_CHAT_TAG, productId);
+                data.putString(AppConstant.PRODUCT_AVATAR_CHAT_TAG, mProductAvatar);
+                data.putString(AppConstant.PARTNER_ID_CHAT_TAG, mPartnerId);
+                data.putString(AppConstant.PARTNER_USERNAME_CHAT_TAG, mPartnerUsername);
+                data.putString(AppConstant.PARTNER_AVATAR_CHAT_TAG, mPartnerAvatar);
 
-                intent.putExtra("package", data);
+                intent.putExtra(AppConstant.PACKAGE_TAG, data);
                 startActivity(intent);
             }
         });
@@ -423,7 +421,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
-                intent.putExtra("productId", productId);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(ProductDetailActivity.this);
                 startActivity(intent);
             }
@@ -447,6 +445,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
+        DialogUtil.showProgress(this);
         startActivity(intent);
     }
 
@@ -488,9 +487,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         ///////////////////////////////////////////////////
         mPartnerId = seller.getId();
         mPartnerAvatar = seller.getAvatar();
+        mPartnerUsername = seller.getName();
         mSellerId = seller.getId();
-        mSellerAvatar = seller.getAvatar();
-        mSellerName = seller.getName();
+//        mSellerAvatar = seller.getAvatar();
+//        mSellerName = seller.getName();
         mProductAvatar = response.getImage().get(0).getUrl();
 
         /////////////////////////////////////////////////
@@ -722,6 +722,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         onBackPressed();
     }
 
+    @Override
     public void setLikeProduct(LikeResponseData likeResponseData) {
         if (isLiked == false) {
             imgLike.setImageResource(R.drawable.icon_like_on);
@@ -734,14 +735,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    protected void onDestroy() {
-        Log.d("abc", "Xong");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-
+    public void onResume() {
+        mProductDetailPresenter.getProductDetailRemote(token, productId);
+        mProductDetailPresenter.getProductCommentRemote(productId);
         super.onResume();
     }
 }

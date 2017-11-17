@@ -1,13 +1,13 @@
 package com.coho.moki.ui.product;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
@@ -38,6 +38,7 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
     private String productId;
     private String token;
     private String lastId;
+    private Integer numberComment;
 
     @Inject
     CommentPresenter mCommentPresenter;
@@ -145,8 +146,9 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
     @Override
     public void setProductComment(List<ProductCommentResponse> commentList) {
         if (commentList != null && commentList.size() > 0) {
+            numberComment = commentList.size();
             Collections.reverse(commentList);
-            lastId = commentList.get(commentList.size() - 1).getId();
+            lastId = commentList.get(numberComment - 1).getId();
             ProductCommentAdapter commentAdapter = new ProductCommentAdapter(
                     this, R.layout.product_comment_item, commentList);
             listView.setAdapter(commentAdapter);

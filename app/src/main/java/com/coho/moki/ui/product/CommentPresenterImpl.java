@@ -51,7 +51,6 @@ public class CommentPresenterImpl implements CommentPresenter {
 
     @Override
     public void getProductCommentRemote(String productId) {
-        Log.d("fuck 2", productId);
         mProductDetailService.getProductCommentRemote(productId, new ResponseListener<List<ProductCommentResponse>>() {
             @Override
             public void onSuccess(List<ProductCommentResponse> dataResponse) {

@@ -32,6 +32,7 @@ import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
@@ -96,6 +97,16 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.main_layout_container)
     FrameLayout mMainLayoutContainer;
 
+    @BindView(R.id.layout_message)
+    RelativeLayout mLayoutMessage;
+
+    @BindView(R.id.message_fragment)
+    FrameLayout mLayoutMessageFragment;
+
+    MessageFragment mMsgFragment;
+
+    static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
+
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
         mSlidingMenu.toggle();
@@ -105,6 +116,16 @@ public class MainActivity extends BaseActivity implements MainView{
     public void onClickButtonSearch(){
         Intent intent = new Intent(BaseApp.getContext(), MainSearchActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btnChat)
+    public void onClickButtonChat(){
+        showMessageFragment();
+    }
+
+    @OnClick(R.id.layout_message)
+    public void onClickLayoutMessage(){
+        hideMessageFragment();
     }
 
     SlidingMenu mSlidingMenu;
@@ -117,7 +138,7 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
-        mNewsPagerFragment = new NewsPagerFragment();
+        addMessageFragment();
         initSlidingMenu();
         onMenuHomeSelect();
     }
@@ -188,6 +209,22 @@ public class MainActivity extends BaseActivity implements MainView{
         fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
+    public void addMessageFragment() {
+        mMsgFragment = new MessageFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.message_fragment, mMsgFragment, MESSAGE_FRAGMENT_TAG).commit();
+    }
+
+    public void hideMessageFragment() {
+        mLayoutMessage.setVisibility(View.GONE);
+    }
+
+    public void showMessageFragment() {
+        mLayoutMessage.setVisibility(View.VISIBLE);
+        mMsgFragment.loadConversations();
+    }
+
+
     private void showTopButton() {
         this.mBtnSearch.setVisibility(View.VISIBLE);
         this.mLLNotiCount.setVisibility(View.VISIBLE);
@@ -205,8 +242,6 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void setViewItemMenuSelect(int index){
-
-
         switch (index) {
             case 9:
                 AccountUntil.removeInfoAccount();
@@ -306,7 +341,6 @@ public class MainActivity extends BaseActivity implements MainView{
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -324,6 +358,13 @@ public class MainActivity extends BaseActivity implements MainView{
         });
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        if (mLayoutMessage.getVisibility() == View.VISIBLE){
+            mLayoutMessage.setVisibility(View.GONE);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 }

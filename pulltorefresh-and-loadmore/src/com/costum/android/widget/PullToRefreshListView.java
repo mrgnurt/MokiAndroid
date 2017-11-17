@@ -82,7 +82,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 	}
 
 	public PullToRefreshListView(Context context, AttributeSet attrs,
-			int defStyle) {
+                                 int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
 	}
@@ -148,7 +148,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 	/**
 	 * Set the listener that will receive notifications every time the list
 	 * scrolls.
-	 * 
+	 *
 	 * @param l
 	 *            The scroll listener.
 	 */
@@ -159,7 +159,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	/**
 	 * Register a callback to be invoked when this list should be refreshed.
-	 * 
+	 *
 	 * @param onRefreshListener
 	 *            The callback to run.
 	 */
@@ -169,7 +169,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	/**
 	 * Set a text to represent when the list was last updated.
-	 * 
+	 *
 	 * @param lastUpdated
 	 *            Last updated at.
 	 */
@@ -371,7 +371,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	/**
 	 * Resets the list to a normal state after a refresh.
-	 * 
+	 *
 	 * @param lastUpdated
 	 *            Last updated at.
 	 */

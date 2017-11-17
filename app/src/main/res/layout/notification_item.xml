@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_padding_small">
+
+        <FrameLayout
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginRight="@dimen/common_padding_small">
+
+            <com.coho.moki.ui.custom.SquareImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/unknown_user" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/common_padding_small">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:minLines="1"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/secondary_text" />
+
+            <TextView
+                android:id="@+id/txtMessContent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/secondary_text"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtMessContent"
+                android:layout_marginBottom="@dimen/common_padding_small"
+                android:layout_marginTop="@dimen/common_padding_small"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/clock_size"
+                    android:layout_height="@dimen/clock_size"
+                    android:layout_marginTop="2.5dip"
+                    android:src="@drawable/icon_clock" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_padding_small"
+                    android:gravity="center_vertical"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/gray_status"
+                    android:textSize="@dimen/common_text_size_small" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
