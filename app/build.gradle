@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 /* 1) Apply the Gradle Retrolambda Plugin */
 //apply plugin: 'me.tatarka.retrolambda'
 
@@ -125,6 +124,7 @@ dependencies {
     compile project(':pulltorefresh-and-loadmore')
     compile project(':mediapicker')
     testCompile 'junit:junit:4.12'
+    compile project(':wheel')
 }
 
 //task findDuplicates {

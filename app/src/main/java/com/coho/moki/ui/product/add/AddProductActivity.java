@@ -36,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kankan.wheel.widget.WheelView;
 
 /**
  * Created by Khanh Nguyen on 11/8/2017.
@@ -557,7 +558,24 @@ public class AddProductActivity extends BaseActivity {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setWindowAnimations(R.style.DialogAnimation);
         // bind view
+        Button btnExit = dialog.findViewById(R.id.btnExit);
+        Button btnChoose = dialog.findViewById(R.id.btnChoose);
+        WheelView wheelView = dialog.findViewById(R.id.weightWheel);
+        View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btnExit:
 
+                        break;
+                    case R.id.btnChoose:
+
+                        break;
+                }
+            }
+        };
+        btnExit.setOnClickListener(clickListener);
+        btnChoose.setOnClickListener(clickListener);
         dialog.show();
     }
 
