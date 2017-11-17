@@ -47,8 +47,12 @@
         <!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
             <!--android:id="@+id/swipe_container"-->
             <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent">-->
+        <!--android:layout_height="fill_parent">-->
 
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <se.emilsjolander.stickylistheaders.StickyListHeadersListView
                 android:id="@+id/layout_timeline"
                 android:layout_width="fill_parent"
@@ -60,6 +64,7 @@
                 android:scrollingCache="false"
                 android:smoothScrollbar="true"
                 android:verticalSpacing="@dimen/common_padding_small" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->

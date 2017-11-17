@@ -78,6 +78,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
                     @Override
                     public void onSuccess(GetListProductResponceData dataResponse) {
                         convertDataResponsetoProducts(dataResponse.getProducts());
+                        mView.showProductsTimeLine(dataResponse.getProducts());
                         mLastId = dataResponse.getLastId();
                         mView.invisibleLoadMore();
                     }

@@ -69,6 +69,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mRefreshLayout;
 
+//    @BindView(R.id.refresh_layout_timeline)
+//    SmartRefreshLayout mRefreshLayoutTimeLine;
+
     @BindView(R.id.view_flipper)
     ViewFlipper mViewFlipper;
 
@@ -274,6 +277,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                 mPresenter.callGetLoadMoreProducts();
             }
         });
+
     }
 
     public void getProducts(){

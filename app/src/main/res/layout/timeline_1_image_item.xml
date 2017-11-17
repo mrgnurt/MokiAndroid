@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/firstImg"
                 android:layout_width="fill_parent"
-                android:layout_height="300dp"
+                android:layout_height="320dp"
                 android:scaleType="centerCrop" />
 
             <!--<ImageView-->
