@@ -2,6 +2,7 @@ package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.ConversationResponseData;
+import com.coho.moki.data.remote.ListConversationResponceData;
 
 import java.util.Map;
 
@@ -17,4 +18,7 @@ public interface ConversationAPI {
 
     @POST("conversations/detail")
     Call<BaseResponse<ConversationResponseData>> getConversationDetail(@Body Map<String, String> tag);
+
+    @POST("conversations")
+    Call<BaseResponse<ListConversationResponceData>> loadConversations(@Body Map<String, String> tag);
 }

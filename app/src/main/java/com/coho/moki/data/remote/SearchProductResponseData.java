@@ -71,4 +71,12 @@ public class SearchProductResponseData {
     public void setIsLiked(int isLiked) {
         this.isLiked = isLiked;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

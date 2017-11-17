@@ -7,12 +7,12 @@ package com.coho.moki.data.remote;
 public class PartnerChat {
 
     public String id;
-    public String userName;
+    public String username;
     public String avatar;
 
-    public PartnerChat(String id, String userName, String avatar) {
+    public PartnerChat(String id, String username, String avatar) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.avatar = avatar;
     }
 }

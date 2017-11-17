@@ -39,13 +39,10 @@ public class AccountUntil {
     public static void saveInfoAccount(final User user) {
 
         Log.d("trung", "token" + user.getToken());
-
-
         SharedPrefUtils.putString(AppConstant.MY_ID, user.getUserId());
         SharedPrefUtils.putString(AppConstant.MY_USERNAME, user.getUsername());
         SharedPrefUtils.putString(AppConstant.MY_AVATAR_URL, user.getAvatarUrl());
         SharedPrefUtils.putString(AppConstant.MY_TOKEN, user.getToken());
-
     }
 
     public synchronized static void removeInfoAccount() {
@@ -61,7 +58,14 @@ public class AccountUntil {
     }
 
     public static void saveDeviceId(final String deviceId) {
-
         SharedPrefUtils.putString(AppConstant.DEVICE_ID_TAG_HEADER, deviceId);
+    }
+
+    public static void saveDeviceToken(String deviceToken) {
+        SharedPrefUtils.putString(AppConstant.DEVICE_TOKEN, deviceToken);
+    }
+
+    public static String getDeviceToken() {
+        return SharedPrefUtils.getString(AppConstant.DEVICE_TOKEN, null);
     }
 }

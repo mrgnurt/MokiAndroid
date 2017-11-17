@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
@@ -119,6 +121,8 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         getProducts();
         mProductPagerFragment= (ProductPagerFragment) getFragmentManager().findFragmentByTag("home");
         mRVProductList.addOnScrollListener(onScrollListener);
+        mLayoutTimeLine.setOnScrollListener(onScrollListenerTimeLine);
+
     }
 
     @Override
@@ -251,12 +255,50 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             }
 
             int offsetScroll = recyclerView.computeVerticalScrollOffset();
-            Log.d("trung", "offset " + offsetScroll);
+//            Log.d("trung", "offset " + offsetScroll);
             if (offsetScroll < 3){
                 mProductPagerFragment.setVisibleScrollableLayout(true);
             }
             else{
                 mProductPagerFragment.setVisibleScrollableLayout(false);
+            }
+        }
+    };
+
+    AbsListView.OnScrollListener onScrollListenerTimeLine = new AbsListView.OnScrollListener() {
+
+        int mLastFirstVisibleItem = 0;
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+//            Log.d("trung", firstVisibleItem + "  " + visibleItemCount + "  " + totalItemCount + " " + mLayoutTimeLine.getHeight());
+
+            if (totalItemCount > 0){
+                if (firstVisibleItem == 0 && visibleItemCount == 1){
+                    mProductPagerFragment.setVisibleScrollableLayout(true);
+                }
+                else {
+                    mProductPagerFragment.setVisibleScrollableLayout(false);
+                }
+
+
+                if (mLastFirstVisibleItem < firstVisibleItem){
+                    mProductPagerFragment.setVisibleButtonCamera(false);
+                }
+                else if (mLastFirstVisibleItem == firstVisibleItem){
+
+                }
+                else {
+                    mProductPagerFragment.setVisibleButtonCamera(true);
+                }
+
+                mLastFirstVisibleItem = firstVisibleItem;
             }
         }
     };
@@ -314,10 +356,17 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     }
 
     public void changeViewMode() {
-
         if (mViewFlipper != null){
+            refreshView();
             AnimationFactory.flipTransition(this.mViewFlipper, AnimationFactory.FlipDirection.LEFT_RIGHT);
         }
 
+    }
+
+    public void refreshView(){
+        mProductPagerFragment.setVisibleScrollableLayout(true);
+        mProductPagerFragment.mScrollableLayout.scrollTo(0, 0);
+        mRVProductList.getLayoutManager().scrollToPosition(0);
+        mLayoutTimeLine.setSelection(0);
     }
 }

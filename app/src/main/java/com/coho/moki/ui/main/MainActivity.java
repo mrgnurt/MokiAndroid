@@ -1,13 +1,18 @@
 package com.coho.moki.ui.main;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,15 +32,19 @@ import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.adapter.customadapter.NotificationAdapter;
 import com.coho.moki.adapter.customadapter.SideMenuAdapter;
+import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
+import com.coho.moki.ui.product.add.CameraActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -52,6 +61,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements MainView{
+
+    private static final String TAG = "MainActivity";
 
     @Inject
     MainPresenter mMainPresenter;
@@ -102,13 +113,26 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.layout_message)
     RelativeLayout mLayoutMessage;
 
+    @BindView(R.id.layout_notification)
+    RelativeLayout mLayoutNotification;
+
     @BindView(R.id.message_fragment)
     FrameLayout mLayoutMessageFragment;
+
+    @BindView(R.id.notification_fragment)
+    FrameLayout mLayoutNotificationFragment;
+
+    MessageFragment mMsgFragment;
+    NotificationFragment mNotificationFragment;
+
+    static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
 
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
         mSlidingMenu.toggle();
     }
+
+    private static final int PERMISSIONS_REQUEST_CAMERA = 1001;
 
     @OnClick(R.id.btnSearch)
     public void onClickButtonSearch(){
@@ -118,22 +142,22 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @OnClick(R.id.btnChat)
     public void onClickButtonChat(){
-//        if (AccountUntil.getUserToken() == null) {
-//            Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        else {
-            mLayoutMessage.setVisibility(View.VISIBLE);
-            MessageFragment fragment = new MessageFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.message_fragment, fragment, AppConstant.MESSAGE).commit();
-//        }
+        showMessageFragment();
+    }
+
+    @OnClick(R.id.btnAlert)
+    public void onClickButtonAlert(){
+        showNotificationFragment();
     }
 
     @OnClick(R.id.layout_message)
     public void onClickLayoutMessage(){
-        mLayoutMessage.setVisibility(View.GONE);
+        hideMessageFragment();
+    }
+
+    @OnClick(R.id.layout_notification)
+    public void onClickLayoutNotification(){
+        hideNotificationFragment();
     }
 
     @OnClick(R.id.btnSwitch)
@@ -161,7 +185,22 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
-        mNewsPagerFragment = new NewsPagerFragment();
+        addMessageFragment();
+        addNotificationFragment();
+        productPagerFragment.setSellListener(new OnClickSellListener() {
+            @Override
+            public void onClick() {
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                } else {
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.CAMERA},
+                            PERMISSIONS_REQUEST_CAMERA);
+                }
+
+            }
+        });
         initSlidingMenu();
         onMenuHomeSelect();
     }
@@ -232,6 +271,38 @@ public class MainActivity extends BaseActivity implements MainView{
         fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
+    public void addMessageFragment() {
+        mMsgFragment = new MessageFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.message_fragment, mMsgFragment, MESSAGE_FRAGMENT_TAG).commit();
+    }
+
+    public void hideMessageFragment() {
+        mLayoutMessage.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    }
+
+    public void showMessageFragment() {
+        mLayoutMessage.setVisibility(View.VISIBLE);
+        mMsgFragment.loadConversations();
+    }
+
+    public void addNotificationFragment() {
+        mNotificationFragment = new NotificationFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.notification_fragment, mNotificationFragment, AppConstant.NOTIFICATION_FRAGMENT_TAG).commit();
+    }
+
+    public void hideNotificationFragment() {
+        mLayoutNotification.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    }
+
+    public void showNotificationFragment() {
+        mLayoutNotification.setVisibility(View.VISIBLE);
+    }
+
+
     private void showTopButton() {
         this.mBtnSearch.setVisibility(View.VISIBLE);
         this.mLLNotiCount.setVisibility(View.VISIBLE);
@@ -249,8 +320,6 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void setViewItemMenuSelect(int index){
-
-
         switch (index) {
             case 9:
                 AccountUntil.removeInfoAccount();
@@ -264,7 +333,7 @@ public class MainActivity extends BaseActivity implements MainView{
         }
     }
 
-    private void closeSlidingMenu(int index){
+    private void closeSlidingMenu(int index) {
         mSlidingMenu.toggle();
         View v = mRVSideMenu.getLayoutManager().findViewByPosition(mCurrentMenuIndex);
         TextView textView = (TextView) v.findViewById(R.id.item_title);
@@ -272,7 +341,7 @@ public class MainActivity extends BaseActivity implements MainView{
         mCurrentMenuIndex = index;
     }
 
-    public void setVisibleTopBar(boolean visible, final View btnCamera){
+    public void setVisibleTopBar(boolean visible, final View btnCamera) {
 
         if (visible) {
             mMainLayoutContainer.animate()
@@ -290,8 +359,7 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setDuration(500);
 
 
-        }
-        else {
+        } else {
             mMainLayoutContainer.animate()
                     .translationY(-mTopBar.getHeight())
                     .setInterpolator(new LinearInterpolator())
@@ -350,7 +418,6 @@ public class MainActivity extends BaseActivity implements MainView{
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -377,4 +444,29 @@ public class MainActivity extends BaseActivity implements MainView{
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult");
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CAMERA:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
+
+    public void openCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
+    }
+
 }

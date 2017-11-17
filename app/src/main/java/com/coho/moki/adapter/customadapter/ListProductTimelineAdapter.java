@@ -144,12 +144,12 @@ public class ListProductTimelineAdapter extends BaseAdapter implements StickyLis
 
     private void bindItem(final ViewHolder viewHolder, int position) {
         ProductSmallResponceData product = mProducts.get(position);
-        Log.d("trung", " " + position);
+//        Log.d("trung", " " + position);
         int countImage = product.getImage().size();
 
         switch (countImage){
             case 1:
-                Log.d("trung", product.getImage().get(0) + " 1 " + position);
+//                Log.d("trung", product.getImage().get(0) + " 1 " + position);
                 LoadImageUtils.loadImageFromUrl(product.getImage().get(0), R.drawable.no_image, viewHolder.firstImg, new OnLoadImageListener() {
                     @Override
                     public void onSuccess() {

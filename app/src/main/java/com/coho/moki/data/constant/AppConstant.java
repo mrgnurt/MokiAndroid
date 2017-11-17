@@ -47,6 +47,20 @@ public class AppConstant {
     public static final String MY_TOKEN = "MY_TOKEN";
     public static final String ANDROID_TYPE = "1";
     public static final String MESSAGE = "MESSAGE";
+    public static final String DEVICE_TOKEN = "device_token";
+
+    public static final String ADD_PRODUCT_IMG = "IMAGE";
+    public static final String ADD_PRODUCT_IMG_POS = "IMG_POS";
+
+    // for product status
+    public static final String PRODUCT_STATUS = "PRODUCT_STATUS";
+    public static final String PRODUCT_STATUS_KEY = "PRODUCT_STATUS_KEY";
+    public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
+
+    // for category
+    public static final String CATEGORY = "CATEGORY";
+    public static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String CATEGORY_NAME = "CATEGORY_NAME";
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";
@@ -63,5 +77,35 @@ public class AppConstant {
 
     public static final int GRID_VIEW_PRODUCT = 0;
     public static final int TIMELINE_VIEW_PRODUCT = 1;
+
+    public static final int CHAT_PUSH_CODE = 2;
+
+    public static final int LOGOUT_PUSH_CODE = 1;
+
+    public static final String APP_NAME = "MOKI";
+
+    public static final String LOGOUT_PUSH_CONTENT = "Có ai đó đã đăng nhập vào tài khoản của bạn trên 1 thiết bị khác";
+
+    public static final String MESSAGE_CHAT_TAG = "message";
+
+    public static final String PRODUCT_ID_CHAT_TAG = "productId";
+
+    public static final String PRODUCT_AVATAR_CHAT_TAG = "productAvatar";
+
+    public static final String PARTNER_ID_CHAT_TAG = "partnerId";
+
+    public static final String PARTNER_AVATAR_CHAT_TAG = "partnerAvatar";
+
+    public static final String PARTNER_USERNAME_CHAT_TAG = "partnerUsername";
+
+    public static final String MESSAGE_ID_CHAT_TAG = "messageId";
+
+    public static final String CODE_CHAT_TAG = "code";
+
+    public static final String SENT_AT = "sentAt";
+
+    public static final String PACKAGE_TAG = "package";
+
+    public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
 
 }

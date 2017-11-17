@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:background="@drawable/btn_delete" />
+
+        <TextView
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:text="@string/edit_video_or_image"
+            android:textColor="@color/red_dark" />
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:background="@drawable/edit_image" />
+    </LinearLayout>
+
+    <com.polites.android.GestureImageView
+        android:id="@+id/imgGesture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+</LinearLayout>

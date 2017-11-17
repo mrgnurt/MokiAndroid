@@ -1,4 +1,4 @@
-package com.coho.moki.ui.product;
+package com.coho.moki.ui.product.add;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,8 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 //import com.adobe.creativesdk.aviary.AdobeImageIntent;
-import com.coho.moki.BaseApp;
-import com.coho.moki.callback.ITakePhotoListener;
+import com.coho.moki.callback.OnTakePhotoListener;
+import com.coho.moki.callback.PhotoHandler;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 
 import com.coho.moki.R;
@@ -48,7 +49,7 @@ public class CameraActivity extends BaseActivity {
     private static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
     private static final int REQ_CODE_GALLERY_PICKER = 20;
     private static final int REQUEST_MEDIA = 100;
-    private static final int CAMERA_REQUEST = 1888; // field
+    private static final int REQUEST_CAMERA = 1888; // field
 
     @BindView(R.id.preview)
     FrameLayout preview;
@@ -97,6 +98,8 @@ public class CameraActivity extends BaseActivity {
     private boolean isSupportFlash;
     private boolean isCameraFront;
 
+    private Integer imgPos;
+
     @Override
     public int setContentViewId() {
         return R.layout.camera_activity;
@@ -127,6 +130,11 @@ public class CameraActivity extends BaseActivity {
             btnSwitch.setVisibility(View.VISIBLE);
             isCameraFront = false;
         }
+
+        // get data from AddProductActivity
+        Intent intent = getIntent();
+        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+
     }
 
     @Override
@@ -253,40 +261,61 @@ public class CameraActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Log.d(TAG, "camera capture ok");
-            Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
-            Uri uri = saveImage(picture);
-            Log.d(TAG, "uri img = " + uri);
-            Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
-            intent.putExtra("image", uri);
-            startActivity(intent);
-
-//            imageView.setImageBitmap(picture); //for example I put bmp in an ImageView
-        } else if (requestCode == REQUEST_MEDIA) {
-            if (resultCode == RESULT_OK) {
-                List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
-                if (mediaSelectedList != null && !mediaSelectedList.isEmpty()) {
-                    MediaItem item = mediaSelectedList.get(0);
-                    Uri uri = item.getUriOrigin();
-                    /* 1) Create a new Intent */
-                    Log.d(TAG, "uri = " + uri.getPath());
-                    if (uri != null) {
-                        Intent intent = new Intent(BaseApp.getContext(), AddProductActivity.class);
-                        intent.putExtra("image", uri);
+        if (resultCode == Activity.RESULT_OK) {
+            Uri uri;
+            Intent intent;
+            switch (requestCode) {
+                case REQUEST_CAMERA:
+//                    Bitmap picture = (Bitmap) data.getExtras().get("data");//this is your bitmap image and now you can do whatever you want with this
+//                    uri = saveImage(picture);
+                    uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
+                    Log.d(TAG, "uri img = " + uri);
+                    if (imgPos == 0) {
+                        intent = new Intent(CameraActivity.this, AddProductActivity.class);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
                         startActivity(intent);
-
+                    } else {
+                        intent = new Intent();
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                        intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
+                        setResult(Activity.RESULT_OK, intent);
+                    }
+                    finish();
+                    break;
+                case REQUEST_MEDIA:
+                    List<MediaItem> mediaSelectedList = MediaPickerActivity.getMediaItemSelected(data);
+                    if (mediaSelectedList != null && !mediaSelectedList.isEmpty()) {
+                        MediaItem item = mediaSelectedList.get(0);
+                        uri = item.getUriOrigin();
+                    /* 1) Create a new Intent */
+                        Log.d(TAG, "uri = " + uri.getPath());
+                        if (uri != null) {
+                            if (imgPos == 0) {
+                                intent = new Intent(CameraActivity.this, AddProductActivity.class);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+                                startActivity(intent);
+                            } else {
+                                intent = new Intent();
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                                intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, imgPos);
+                                setResult(Activity.RESULT_OK, intent);
+                            }
+                            // finish camera activity
+                            finish();
 //                        Intent imageEditorIntent = new AdobeImageIntent.Builder(CameraActivity.this)
 //                                .setData(uri) // Set in onActivityResult()
 //                                .build();
 ////                        /* 2) Start the Image Editor with request code 1 */
 //                        startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
+                        }
                     }
+                    break;
+                case REQ_CODE_CSDK_IMAGE_EDITOR:
 
-                }
+                    break;
             }
-        } else if (requestCode == REQ_CODE_CSDK_IMAGE_EDITOR) {
-
         }
     }
 
@@ -297,34 +326,35 @@ public class CameraActivity extends BaseActivity {
         destroyCamera();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        destroyCamera();
-//
-//    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        destroyCamera();
+//        finish();
+    }
 
     @OnClick(R.id.imgCapturePhoto)
     public void onClickCapturePhoto() {
 //        takePicture();
 
+        Log.d(TAG, "click take pictrue");
         if (mCamera != null) {
-            mCamera.takePicture(null, null, new PhotoHandler(this, new ITakePhotoListener() {
+            mCamera.takePicture(null, null, new PhotoHandler(this, new OnTakePhotoListener() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Intent intent = new Intent(CameraActivity.this, AddProductActivity.class);
-                    intent.putExtra("image", uri);
-                    startActivity(intent);
+                    Log.d(TAG, "take picture success");
+                    Intent intent = new Intent();
+                    intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
+                    onActivityResult(REQUEST_CAMERA, Activity.RESULT_OK, intent);
                 }
             }));
         }
-
 
     }
 
     private void takePicture() { //you can call this every 5 seconds using a timer or whenever you want
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        startActivityForResult(cameraIntent, REQUEST_CAMERA);
     }
 
     private Uri saveImage(Bitmap finalBitmap) {
