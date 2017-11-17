@@ -1,6 +1,9 @@
 package com.coho.moki.ui.user;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.coho.moki.BaseApp;
@@ -13,6 +16,7 @@ import com.coho.moki.service.UserService;
 import com.coho.moki.service.UserServiceImpl;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
@@ -46,6 +50,13 @@ public class UserFollowingFragment extends BaseFragment{
         Integer index = 0;
         Integer count = AppConstant.COUNT_USER_FOLLOW_GET;
         getUserFollowing(token, userId, index, count);
+        mListViewUserFollowing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String userId = userFollowingList.get(i).getId();
+                clickUserInfo(userId, 0, 0);
+            }
+        });
     }
 
     public void getUserFollowing(String token, String userId, Integer index, Integer count) {
@@ -69,5 +80,14 @@ public class UserFollowingFragment extends BaseFragment{
                         mListViewUserFollowing.setDivider(null);
                     }
         });
+    }
+
+    private void clickUserInfo(String userId, Integer numProduct, Integer score) {
+        Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+        DialogUtil.showProgress(getActivity());
+        intent.putExtra("userId", userId);
+        intent.putExtra("numProduct", numProduct);
+        intent.putExtra("score", score);
+        startActivity(intent);
     }
 }

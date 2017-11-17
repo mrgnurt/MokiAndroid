@@ -109,9 +109,13 @@ public class ProductChatActivity extends BaseActivity {
 
     private String mMyAvatar;
 
+    private String mMyUsername;
+
     private String mPartnerId;
 
     private String mPartnerAvatar;
+
+    private String mPartnerUsername;
 
     private String mSellerName;
 
@@ -137,29 +141,42 @@ public class ProductChatActivity extends BaseActivity {
 
     @Override
     public void handleIntent(Intent intent) {
-        Bundle data = intent.getBundleExtra("package");
-        mPartnerId = data.getString("partner_id");
-        mPartnerAvatar = data.getString("partner_avatar");
-        mSellerName = data.getString("seller_name");
-        mSellerId = data.getString("seller_id");
-        mSellerAvatar = data.getString("seller_avatar");
-        isOwnerProduct = data.getBoolean("is_owner_product");
-        mProductId = data.getString("product_id");
-        mProductAvatar = data.getString("product_avatar");
+        extractDataFromIntent(intent);
+        Log.d("tuton", "handle intent");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        extractDataFromIntent(intent);
+        Log.d("tuton", "on new Intent");
+    }
+
+    public void extractDataFromIntent(Intent intent) {
+        Bundle data = intent.getBundleExtra(AppConstant.PACKAGE_TAG);
+        if (data != null) {
+            mProductId = data.getString(AppConstant.PRODUCT_ID_CHAT_TAG);
+            mProductAvatar = data.getString(AppConstant.PRODUCT_AVATAR_CHAT_TAG);
+            mPartnerId = data.getString(AppConstant.PARTNER_ID_CHAT_TAG);
+            mPartnerUsername = data.getString(AppConstant.PARTNER_USERNAME_CHAT_TAG);
+            mPartnerAvatar = data.getString(AppConstant.PARTNER_AVATAR_CHAT_TAG);
+        } else {
+            mProductId = intent.getStringExtra(AppConstant.PRODUCT_ID_CHAT_TAG);
+            mProductAvatar = intent.getStringExtra(AppConstant.PRODUCT_AVATAR_CHAT_TAG);
+            mPartnerId = intent.getStringExtra(AppConstant.PARTNER_ID_CHAT_TAG);
+            mPartnerUsername = intent.getStringExtra(AppConstant.PARTNER_USERNAME_CHAT_TAG);
+            mPartnerAvatar = intent.getStringExtra(AppConstant.PARTNER_AVATAR_CHAT_TAG);
+        }
     }
 
     @Override
     public void initView() {
         btnNavRight.setBackgroundResource(R.drawable.ic_icon_message);
-        LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
-
-        if (isOwnerProduct) {
-            llTransaction.setVisibility(View.GONE);
-            messInstruct.setVisibility(View.GONE);
-        } else {
-            llTransaction.setVisibility(View.VISIBLE);
-            messInstruct.setVisibility(View.VISIBLE);
+        if (mProductAvatar != null) {
+            LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
         }
+
+        llTransaction.setVisibility(View.GONE);
+        displayInstruction(View.GONE);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMessage.setLayoutManager(mLayoutManager);
@@ -183,13 +200,19 @@ public class ProductChatActivity extends BaseActivity {
         currIndex = 0;
         limitPerLoad = 20;
         loadMyInfo();
-        loadHistoryConversations();
+
+        if (Utils.checkInternetAvailable()) {
+            loadHistoryConversations();
+        } else {
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
+        }
     }
 
     public void loadMyInfo() {
         mToken = AccountUntil.getUserToken();
         mMyId = AccountUntil.getAccountId();
         mMyAvatar = AccountUntil.getAvatarUrl();
+        mMyUsername = AccountUntil.getUsername();
     }
 
     public void loadHistoryConversations() {
@@ -219,16 +242,40 @@ public class ProductChatActivity extends BaseActivity {
             return;
         }
 
-        this.mProductCons = product;
-        txtName.setText(product.getName());
-        String price = product.getPrice() + "";
-        String priceFormated = Utils.formatPrice(price);
-        txtPrice.setText(priceFormated);
-        txtHeader.setText(mSellerName);
+        if (this.mProductCons == null) {
+            this.mProductCons = product;
+            if (mMyId.equals(product.getSellerId())) {
+                mSellerId = mMyId;
+                mSellerAvatar = mMyAvatar;
+                mSellerName = mMyUsername;
+                isOwnerProduct = true;
+            } else {
+                isOwnerProduct = false;
+                mSellerId = mPartnerId;
+                mSellerName = mPartnerUsername;
+                mSellerAvatar = mProductAvatar;
+
+                llTransaction.setVisibility(View.VISIBLE);
+                displayInstruction(View.VISIBLE);
+            }
+
+            if (mProductAvatar == null) {
+                mProductAvatar = product.getImage();
+                LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
+            }
+
+            txtName.setText(product.getName());
+            String price = product.getPrice() + "";
+            String priceFormated = Utils.formatPrice(price);
+            txtPrice.setText(priceFormated);
+            txtHeader.setText(mSellerName);
+        }
 
         if (historyChats == null || historyChats.size() < 1) {
             return;
         }
+
+        displayInstruction(View.GONE);
 
         List<ProductChatItem> addItems = new ArrayList<>();
         for (Conversation historyLine : historyChats) {
@@ -238,7 +285,8 @@ public class ProductChatActivity extends BaseActivity {
 
             int role = ProductChatItem.SENDER;
             String avatar = mMyAvatar;
-            if (mProductId.equals(historyLine.getSender().getId())) {
+
+            if (!mMyId.equals(historyLine.getSender().getId())) {
                 role = ProductChatItem.RECEIVER;
                 avatar = mPartnerAvatar;
             }
@@ -248,7 +296,7 @@ public class ProductChatActivity extends BaseActivity {
             addItems.add(addItem);
         }
 
-        productChatAdapter.addItems(addItems);
+        productChatAdapter.addItemsToFirst(addItems);
     }
 
     public void initSocket() {
@@ -283,6 +331,7 @@ public class ProductChatActivity extends BaseActivity {
 
     public void destroySocket() {
        if (mSocket != null) {
+           Log.d("tuton", "disconnection socket");
            mSocket.disconnect();
            mSocket.off(Socket.EVENT_CONNECT, onConnect);
            mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
@@ -293,6 +342,7 @@ public class ProductChatActivity extends BaseActivity {
            mSocket.off(AppConstant.SOCKET_MESSAGE, onNewMessage);
            mSocket.off(AppConstant.SOCKET_UPDATE_MSG_STATUS, onUpdateMsgStatus);
 
+           mSocket.close();
            mSocket = null;
        }
     }
@@ -311,6 +361,7 @@ public class ProductChatActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
+        Log.d("tuton", "onStop");
         destroySocket();
         super.onStop();
     }
@@ -324,7 +375,7 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         if (!Utils.checkInternetAvailable()) {
-            Utils.toastShort(BaseApp.getContext(), AppConstant.NO_INTERNET);
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
             return;
         }
 
@@ -368,13 +419,15 @@ public class ProductChatActivity extends BaseActivity {
     public ProductChatItem getReceivedMessage(JSONObject receiveMsgObj) {
         ProductChatItem receiveItem = null;
         try {
+
             JSONObject sender = receiveMsgObj.getJSONObject("sender");
             JSONObject messageObj = receiveMsgObj.getJSONObject("message");
 
             String avatar = sender.getString("avatar");
             String message = messageObj.getString("content");
             String messageId = messageObj.getString("id");
-            String sendAtString = sender.getString("sendAt");
+            String sendAtString = messageObj.getString("sentAt");
+
             Date sendAt = new Date();
             int role = ProductChatItem.RECEIVER;
 
@@ -385,9 +438,8 @@ public class ProductChatActivity extends BaseActivity {
             receiveItem.setSendAt(sendAt);
             receiveItem.setServerMsgId(messageId);
 
-            Log.d(LOG_TAG, message);
+            Log.d("tuton", message);
 
-            productChatAdapter.addItem(receiveItem);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -430,6 +482,10 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         return updateParam;
+    }
+
+    public void displayInstruction(int visibility) {
+        messInstruct.setVisibility(visibility);
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {

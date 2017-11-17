@@ -143,4 +143,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 //
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 //    }
+
 }

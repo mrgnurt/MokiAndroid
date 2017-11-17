@@ -2,14 +2,18 @@ package com.coho.moki.service;
 
 import android.util.Log;
 
+import com.coho.moki.api.CONSAPI;
 import com.coho.moki.api.ConversationAPI;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.ConversationResponseData;
+import com.coho.moki.data.remote.ListConversationResponceData;
+import com.coho.moki.data.remote.SearchProductResponseData;
 import com.squareup.picasso.Downloader;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -69,5 +73,53 @@ public class ConversationServiceImpl implements ConversationService {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void loadConversations(String token, int index, int count, final ResponseListener<ListConversationResponceData> listener) {
+        Map<String, String> data = new HashMap<>();
+
+        data.put(AppConstant.TOKEN_TAG, token);
+        data.put(AppConstant.INDEX_TAG, index + "");
+        data.put(AppConstant.COUNT_TAG, count + "");
+
+        ConversationAPI consAPI = ServiceGenerator.createService(ConversationAPI.class);
+        Call<BaseResponse<ListConversationResponceData>> call =  consAPI.loadConversations(data);
+
+        call.enqueue(new Callback<BaseResponse<ListConversationResponceData>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<ListConversationResponceData>> call, Response<BaseResponse<ListConversationResponceData>> response) {
+                BaseResponse<ListConversationResponceData> bodyResponse = response.body();
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
+                }
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
+                }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(bodyResponse.getData());
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<ListConversationResponceData>> call, Throwable t) {
+                listener.onFailure(AppConstant.CALL_ERR);
+                t.printStackTrace();
+            }
+        });
+
+
     }
 }

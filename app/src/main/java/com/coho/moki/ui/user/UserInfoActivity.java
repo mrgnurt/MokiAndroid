@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.UserInfoResponseData;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.AccountUntil;
@@ -315,6 +316,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             public void onClick(View view) {
                 DialogUtil.showProgress(UserInfoActivity.this);
                 if (isFollowed) {
+                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_UNFOLLOW);
                     isFollowed = false;
                     btnFollow.setImageResource(R.drawable.bg_unfollow);
                     DialogUtil.hideProgress();
@@ -334,12 +336,15 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             switch (v.getId()) {
                 case R.id.tab1:
                     position = 0;
+                    btnCamera.setVisibility(View.VISIBLE);
                     break;
                 case R.id.tab2:
                     position = 1;
+                    btnCamera.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.tab3:
                     position = 2;
+                    btnCamera.setVisibility(View.INVISIBLE);
                     break;
             }
             if (position != -1) {

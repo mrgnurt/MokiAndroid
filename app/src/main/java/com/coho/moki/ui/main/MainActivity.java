@@ -104,6 +104,10 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.message_fragment)
     FrameLayout mLayoutMessageFragment;
 
+    MessageFragment mMsgFragment;
+
+    static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
+
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
         mSlidingMenu.toggle();
@@ -117,22 +121,12 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @OnClick(R.id.btnChat)
     public void onClickButtonChat(){
-//        if (AccountUntil.getUserToken() == null) {
-//            Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        else {
-            mLayoutMessage.setVisibility(View.VISIBLE);
-            MessageFragment fragment = new MessageFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.message_fragment, fragment, "jf").commit();
-//        }
+        showMessageFragment();
     }
 
     @OnClick(R.id.layout_message)
     public void onClickLayoutMessage(){
-        mLayoutMessage.setVisibility(View.GONE);
+        hideMessageFragment();
     }
 
     SlidingMenu mSlidingMenu;
@@ -145,7 +139,7 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
-        mNewsPagerFragment = new NewsPagerFragment();
+        addMessageFragment();
         initSlidingMenu();
         onMenuHomeSelect();
     }
@@ -216,6 +210,22 @@ public class MainActivity extends BaseActivity implements MainView{
         fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
+    public void addMessageFragment() {
+        mMsgFragment = new MessageFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.message_fragment, mMsgFragment, MESSAGE_FRAGMENT_TAG).commit();
+    }
+
+    public void hideMessageFragment() {
+        mLayoutMessage.setVisibility(View.GONE);
+    }
+
+    public void showMessageFragment() {
+        mLayoutMessage.setVisibility(View.VISIBLE);
+        mMsgFragment.loadConversations();
+    }
+
+
     private void showTopButton() {
         this.mBtnSearch.setVisibility(View.VISIBLE);
         this.mLLNotiCount.setVisibility(View.VISIBLE);
@@ -233,8 +243,6 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void setViewItemMenuSelect(int index){
-
-
         switch (index) {
             case 9:
                 AccountUntil.removeInfoAccount();
@@ -333,7 +341,6 @@ public class MainActivity extends BaseActivity implements MainView{
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -360,5 +367,4 @@ public class MainActivity extends BaseActivity implements MainView{
             super.onBackPressed();
         }
     }
-
 }

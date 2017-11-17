@@ -9,6 +9,7 @@ import com.coho.moki.data.remote.SearchProductResponseData;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.service.SearchService;
 import com.coho.moki.ui.main_search.MainSearchContract;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
@@ -42,18 +43,23 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
 
     @Override
     public void callSearchProduct() {
+        mView.setSearchHeader(mKeyword);
+        mView.showLoadProgress();
         mSearchService.searchProduct(null, mKeyword, null, null, mSizeId, null, null, null, mIndex, AppConstant.COUNT_SEARCH_PRODUCT,
                 new ResponseListener<List<SearchProductResponseData>>() {
                     @Override
-                    public void onSuccess(List<SearchProductResponseData> dataResponse) {
-                        Log.d("abc", "ks");
-                        convertDataResponseToProduct(dataResponse);
-
+                    public void onSuccess(List<SearchProductResponseData> searchResults) {
+                        Log.d("search", "successful");
+                        mView.hideLoadProgress();
+                        convertSearchResultsToProduct(searchResults);
                     }
 
                     @Override
                     public void onFailure(String errorMessage) {
-                        Utils.toastShort(BaseApp.getContext(), errorMessage);
+                        Log.d("search", "fail");
+                        mView.hideLoadProgress();
+                        mView.showPopup(errorMessage);
+//                        Utils.toastShort(BaseApp.getContext(), errorMessage);
                     }
                 });
     }
@@ -74,15 +80,19 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
         return mProducts;
     }
 
-    private void convertDataResponseToProduct(List<SearchProductResponseData> dataResponse){
+    private void convertSearchResultsToProduct(List<SearchProductResponseData> searchResults){
 
         ArrayList<Product> products = new ArrayList<Product>();
+        for(SearchProductResponseData item : searchResults){
+            List<String> productImages = new ArrayList<>();
+            if (item.getImage() != null) {
+                productImages.add(item.getImage());
+            }
 
-        for(SearchProductResponseData item : dataResponse){
             Product product = new Product(
                     item.getId(),
                     item.getName(),
-                    null,
+                    productImages,
                     item.getPrice(),
                     item.getPricePercent(),
                     null,

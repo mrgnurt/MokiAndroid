@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://10.10.44.24:3000";
+    public static final String BASEURL_TAG = "http://10.10.186.216:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -52,6 +52,8 @@ public class AppConstant {
     public static final String FOLLOWING = "following";
     public static final String FOLLOWED = "followed";
 
+    public static final String MESSAGE = "MESSAGE";
+    public static final String DEVICE_TOKEN = "device_token";
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";
@@ -65,5 +67,37 @@ public class AppConstant {
     public static final String UNAUTHENTICATED = "Để thực hiện chức năng bạn cần phải đăng nhập";
 
     public static final String CALL_ERR = "Có lỗi xảy ra, làm ơn hãy thử lại";
+
+    public static final int CHAT_PUSH_CODE = 2;
+
+    public static final int LOGOUT_PUSH_CODE = 1;
+
+    public static final String APP_NAME = "MOKI";
+
+    public static final String LOGOUT_PUSH_CONTENT = "Có ai đó đã đăng nhập vào tài khoản của bạn trên 1 thiết bị khác";
+
+    public static final String MESSAGE_CHAT_TAG = "message";
+
+    public static final String PRODUCT_ID_CHAT_TAG = "productId";
+
+    public static final String PRODUCT_AVATAR_CHAT_TAG = "productAvatar";
+
+    public static final String PARTNER_ID_CHAT_TAG = "partnerId";
+
+    public static final String PARTNER_AVATAR_CHAT_TAG = "partnerAvatar";
+
+    public static final String PARTNER_USERNAME_CHAT_TAG = "partnerUsername";
+
+    public static final String MESSAGE_ID_CHAT_TAG = "messageId";
+
+    public static final String CODE_CHAT_TAG = "code";
+
+    public static final String SENT_AT = "sentAt";
+
+    public static final String PACKAGE_TAG = "package";
+
+    public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
+
+    public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
 
 }
