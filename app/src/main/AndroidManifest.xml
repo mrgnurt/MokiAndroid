@@ -43,7 +43,7 @@
         </activity>
 
         <activity
-            android:name=".ui.product.CameraActivity"
+            android:name=".ui.product.add.CameraActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!--<activity-->
@@ -57,7 +57,7 @@
         <!--</activity>-->
 
         <activity
-            android:name=".ui.product.AddProductActivity"
+            android:name=".ui.product.add.AddProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -91,7 +91,6 @@
             android:name=".ui.product.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
 
         <activity
@@ -101,6 +100,31 @@
 
         <activity
             android:name=".ui.product.ProductCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.add.ProductCategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.add.ProductStatusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.add.ProductSellAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.add.AddNewAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.product.add.SearchAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
