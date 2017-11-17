@@ -6,6 +6,7 @@ import com.coho.moki.api.SearchAPI;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.ConversationResponseData;
 import com.coho.moki.data.remote.SearchProductResponseData;
 
 import java.util.HashMap;
@@ -47,21 +48,34 @@ public class SearchServiceImpl implements SearchService {
         call.enqueue(new Callback<BaseResponse<List<SearchProductResponseData>>>() {
             @Override
             public void onResponse(Call<BaseResponse<List<SearchProductResponseData>>> call, Response<BaseResponse<List<SearchProductResponseData>>> response) {
-                Log.d("search", "responce");
-                if (response.body().getCode() == ResponseCode.OK.code){
-                    Log.d("search", response.body().getMessage());
-                    listener.onSuccess(response.body().getData());
+                BaseResponse<List<SearchProductResponseData>> bodyResponse = response.body();
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
                 }
-                else {
-                    Log.d("search", response.body().getMessage());
-                    listener.onFailure(response.body().getMessage());
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
                 }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(bodyResponse.getData());
             }
 
             @Override
             public void onFailure(Call<BaseResponse<List<SearchProductResponseData>>> call, Throwable t) {
-                Log.d("search", t.getMessage());
-                listener.onFailure(t.getMessage());
+                listener.onFailure(AppConstant.CALL_ERR);
+                t.printStackTrace();
             }
         });
     }

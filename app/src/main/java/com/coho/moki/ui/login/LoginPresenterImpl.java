@@ -75,16 +75,10 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     private void setDeviceToken(){
 
-        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-
-        if (deviceToken == null){
-            deviceToken = FirebaseInstanceId.getInstance().getToken();
-        }
-        Log.d("token1234", AccountUntil.getUserToken());
+        String deviceToken = getDeviceToken();
         mLoginService.setDeviceToken(AccountUntil.getUserToken(), deviceToken, new ResponseListener<String>() {
             @Override
             public void onSuccess(String dataResponse) {
-
             }
 
             @Override
@@ -92,5 +86,19 @@ public class LoginPresenterImpl implements LoginPresenter {
                 Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });
+    }
+
+    public String getDeviceToken() {
+        String deviceToken = AccountUntil.getDeviceToken();
+        if (deviceToken == null) {
+            deviceToken = FirebaseInstanceId.getInstance().getToken();
+            if (deviceToken == null){
+                deviceToken = FirebaseInstanceId.getInstance().getToken();
+            }
+
+            AccountUntil.saveDeviceToken(deviceToken);
+        }
+
+        return deviceToken;
     }
 }

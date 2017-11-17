@@ -14,9 +14,12 @@ import com.coho.moki.ui.base.BaseActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntegerRes;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -139,6 +142,22 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private String productId;
     private String token;
 
+    private String mProductAvatar;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mPartnerUsername;
+
+//    private String mSellerName;
+//
+//    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
+
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -167,7 +186,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
         token = AccountUntil.getUserToken();
 
-
+        if (AccountUntil.getAccountId() == null) {
+            btnBuy.setClickable(false);
+        }
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
 //        mActionBar.setDisplayShowHomeEnabled(false);
@@ -184,9 +205,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @Override
     public void initData() {
-//        initFakeData();
-        mProductDetailPresenter.getProductDetailRemote(token, productId);
-        mProductDetailPresenter.getProductCommentRemote(productId);
     }
 
     private void initFakeData() {
@@ -346,8 +364,22 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (AccountUntil.getAccountId().equals(mSellerId)) {
+                    Log.d(TAG, "La seller coi sp chinh no");
+                    return;
+                }
+
                 Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
                 // put data before switch activity
+                Bundle data = new Bundle();
+                data.putString(AppConstant.PRODUCT_ID_CHAT_TAG, productId);
+                data.putString(AppConstant.PRODUCT_AVATAR_CHAT_TAG, mProductAvatar);
+                data.putString(AppConstant.PARTNER_ID_CHAT_TAG, mPartnerId);
+                data.putString(AppConstant.PARTNER_USERNAME_CHAT_TAG, mPartnerUsername);
+                data.putString(AppConstant.PARTNER_AVATAR_CHAT_TAG, mPartnerAvatar);
+
+                intent.putExtra(AppConstant.PACKAGE_TAG, data);
                 startActivity(intent);
             }
         });
@@ -389,7 +421,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity.class);
-                intent.putExtra("productId", productId);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(ProductDetailActivity.this);
                 startActivity(intent);
             }
@@ -453,6 +485,19 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             isLiked = true;
         }
         ProductDetailResponse.Seller seller = response.getSeller();
+
+        ///////////////////////////////////////////////////
+        mPartnerId = seller.getId();
+        mPartnerAvatar = seller.getAvatar();
+        mPartnerUsername = seller.getName();
+        mSellerId = seller.getId();
+//        mSellerAvatar = seller.getAvatar();
+//        mSellerName = seller.getName();
+        mProductAvatar = response.getImage().get(0).getUrl();
+
+        /////////////////////////////////////////////////
+
+
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
         txtScore.setText(": " + response.getSeller().getScore());
@@ -487,13 +532,18 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             salePrice.setVisibility(View.INVISIBLE);
         }
         Integer canEdit = response.getCanEdit();
-        if (canEdit == 0) {
+        if (seller.getId().equals(AccountUntil.getAccountId())) {
             btnBuy.setText(R.string.edit);
             btnBuy.setVisibility(View.VISIBLE);
             btnBuy.setBackgroundResource(R.color.green_status);
         } else if (response.getIsBlocked() == 1) {
             btnBuy.setVisibility(View.GONE);
+        } else {
+            btnBuy.setText("Mua");
+            btnBuy.setVisibility(View.VISIBLE);
+            btnBuy.setBackgroundResource(R.color.red_dark);
         }
+
         if (response.getComment() == 0) {
             listComment.setVisibility(View.GONE);
             btnViewComment.setText(R.string.the_first_comment);
@@ -687,14 +737,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    protected void onDestroy() {
-        Log.d("abc", "Xong");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-
+    public void onResume() {
+        mProductDetailPresenter.getProductDetailRemote(token, productId);
+        mProductDetailPresenter.getProductCommentRemote(productId);
         super.onResume();
     }
 

@@ -2,22 +2,31 @@ package com.coho.moki.ui.main;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,11 +38,16 @@ import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
 import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 
@@ -44,7 +58,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView{
 
     private static final String TAG = "MainActivity";
 
@@ -59,10 +73,10 @@ public class MainActivity extends BaseActivity implements MainView {
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
 
-    //    @BindView(R.id.user_name)
+//    @BindView(R.id.user_name)
     TextView mTxtUserName;
 
-    //    @BindView(R.id.side_menu_list)
+//    @BindView(R.id.side_menu_list)
     RecyclerView mRVSideMenu;
 
     @BindView(R.id.btnSearch)
@@ -92,17 +106,37 @@ public class MainActivity extends BaseActivity implements MainView {
     @BindView(R.id.main_layout_container)
     FrameLayout mMainLayoutContainer;
 
+    @BindView(R.id.layout_message)
+    RelativeLayout mLayoutMessage;
+
+    @BindView(R.id.message_fragment)
+    FrameLayout mLayoutMessageFragment;
+
+    MessageFragment mMsgFragment;
+
+    static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
+
     @OnClick(R.id.btnMenu)
-    public void onClickButtonMenu() {
+    public void onClickButtonMenu(){
         mSlidingMenu.toggle();
     }
 
     private static final int PERMISSIONS_REQUEST_CAMERA = 1001;
 
     @OnClick(R.id.btnSearch)
-    public void onClickButtonSearch() {
+    public void onClickButtonSearch(){
         Intent intent = new Intent(BaseApp.getContext(), MainSearchActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btnChat)
+    public void onClickButtonChat(){
+        showMessageFragment();
+    }
+
+    @OnClick(R.id.layout_message)
+    public void onClickLayoutMessage(){
+        hideMessageFragment();
     }
 
     SlidingMenu mSlidingMenu;
@@ -115,6 +149,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
+        addMessageFragment();
         productPagerFragment.setSellListener(new OnClickSellListener() {
             @Override
             public void onClick() {
@@ -129,7 +164,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
             }
         });
-        mNewsPagerFragment = new NewsPagerFragment();
         initSlidingMenu();
         onMenuHomeSelect();
     }
@@ -139,7 +173,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     }
 
-    public void initSlidingMenu() {
+    public void initSlidingMenu(){
         mSlidingMenu = new SlidingMenu(this);
         mSlidingMenu.setBehindOffset(240);
         mSlidingMenu.setMenu(R.layout.side_menu);
@@ -148,14 +182,14 @@ public class MainActivity extends BaseActivity implements MainView {
         initMenu();
     }
 
-    private void showUserName() {
+    private void showUserName(){
         mTxtUserName.setText(AccountUntil.getUsername());
     }
 
-    private void initMenu() {
+    private void initMenu(){
 
         mTxtUserName = (TextView) findViewById(R.id.user_name);
-        if (AccountUntil.getAccountId() != null) {
+        if (AccountUntil.getAccountId() != null){
             showUserName();
         }
 
@@ -177,7 +211,7 @@ public class MainActivity extends BaseActivity implements MainView {
         });
     }
 
-    public void onMenuHomeSelect() {
+    public void onMenuHomeSelect(){
         showTopButton();
         showFragment(productPagerFragment, "home");
     }
@@ -200,6 +234,22 @@ public class MainActivity extends BaseActivity implements MainView {
         fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
+    public void addMessageFragment() {
+        mMsgFragment = new MessageFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.message_fragment, mMsgFragment, MESSAGE_FRAGMENT_TAG).commit();
+    }
+
+    public void hideMessageFragment() {
+        mLayoutMessage.setVisibility(View.GONE);
+    }
+
+    public void showMessageFragment() {
+        mLayoutMessage.setVisibility(View.VISIBLE);
+        mMsgFragment.loadConversations();
+    }
+
+
     private void showTopButton() {
         this.mBtnSearch.setVisibility(View.VISIBLE);
         this.mLLNotiCount.setVisibility(View.VISIBLE);
@@ -209,16 +259,14 @@ public class MainActivity extends BaseActivity implements MainView {
         this.mIconAppName.setVisibility(View.VISIBLE);
     }
 
-    private void hideTopButton() {
+    private void hideTopButton(){
         this.mBtnSearch.setVisibility(View.GONE);
         this.mLLNotiCount.setVisibility(View.GONE);
         this.mLLMessageCount.setVisibility(View.GONE);
         this.mBtnSwitch.setVisibility(View.GONE);
     }
 
-    private void setViewItemMenuSelect(int index) {
-
-
+    private void setViewItemMenuSelect(int index){
         switch (index) {
             case 9:
                 AccountUntil.removeInfoAccount();
@@ -292,6 +340,55 @@ public class MainActivity extends BaseActivity implements MainView {
                     .translationY(btnCamera.getHeight())
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
+        }
+    }
+
+    BroadcastReceiver receiver;
+    public void registerLocalBroadcast() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                try {
+
+                    Log.d("onReceiveFirebase", "vao day");
+                    String title= intent.getStringExtra("title");
+                    String content= intent.getStringExtra("content");
+                    int type = intent.getIntExtra("type", 2);
+
+                    showPopup();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        registerLocalBroadcast();
+    }
+
+    public void showPopup() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("onReceiveFirebase", "run");
+                DialogUtil.showPopup(MainActivity.this, "Có ai đó đã đăng nhập vào tài khoản bạn");
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mLayoutMessage.getVisibility() == View.VISIBLE){
+            mLayoutMessage.setVisibility(View.GONE);
+        }
+        else {
+            super.onBackPressed();
         }
     }
 

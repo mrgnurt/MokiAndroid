@@ -1,6 +1,7 @@
 package com.coho.moki.ui.product;
 
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +18,23 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductChatAdapter;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.model.ProductChatItem;
+import com.coho.moki.data.remote.Conversation;
+import com.coho.moki.data.remote.ConversationResponseData;
+import com.coho.moki.data.remote.ProductCons;
+import com.coho.moki.service.ConversationService;
+import com.coho.moki.service.ConversationServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.StringUtil;
+import com.coho.moki.util.Utils;
+import com.coho.moki.util.network.LoadImageUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.client.IO;
@@ -31,6 +43,7 @@ import io.socket.emitter.Emitter;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,16 +90,49 @@ public class ProductChatActivity extends BaseActivity {
     EditText editTextMessage;
 
     List<ProductChatItem> chatItemList;
+
     ProductChatAdapter productChatAdapter;
 
-//    private static final String CHAT_SERVER_URL = "http://chat.socket.io";
-    private static final String NEW_MESSAGE = "receiveNewMessage";
+    ConversationService conversationService;
 
     private boolean isConnected = true;
-    String mUsername = "username";
-    String message = "message to server";
 
     private Socket mSocket;
+
+    private String mToken;
+
+    private String mProductId;
+
+    private String mProductAvatar;
+
+    private String mMyId;
+
+    private String mMyAvatar;
+
+    private String mMyUsername;
+
+    private String mPartnerId;
+
+    private String mPartnerAvatar;
+
+    private String mPartnerUsername;
+
+    private String mSellerName;
+
+    private String mSellerAvatar;
+
+    private String mSellerId;
+
+    private boolean isOwnerProduct;
+
+    private String mSendToken;
+
+    private int currIndex;
+
+    private int limitPerLoad;
+
+    private ProductCons mProductCons;
+
 
     @Override
     public int setContentViewId() {
@@ -94,45 +140,166 @@ public class ProductChatActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() {
-
+    public void handleIntent(Intent intent) {
+        extractDataFromIntent(intent);
+        Log.d("tuton", "handle intent");
     }
 
     @Override
-    public void initData() {
-        initFakeData();
-        initSocket();
+    protected void onNewIntent(Intent intent) {
+        extractDataFromIntent(intent);
+        initView();
+        initData();
+        Log.d("tuton", "on new Intent");
     }
 
-    private void initFakeData() {
-        imgProduct.setImageResource(R.drawable.hm01);
-        txtName.setText("Gấu bông chất lượng cao");
-        txtPrice.setText("100,000 VNĐ");
+    public void extractDataFromIntent(Intent intent) {
+        Bundle data = intent.getBundleExtra(AppConstant.PACKAGE_TAG);
+        if (data != null) {
+            mProductId = data.getString(AppConstant.PRODUCT_ID_CHAT_TAG);
+            mProductAvatar = data.getString(AppConstant.PRODUCT_AVATAR_CHAT_TAG);
+            mPartnerId = data.getString(AppConstant.PARTNER_ID_CHAT_TAG);
+            mPartnerUsername = data.getString(AppConstant.PARTNER_USERNAME_CHAT_TAG);
+            mPartnerAvatar = data.getString(AppConstant.PARTNER_AVATAR_CHAT_TAG);
+        } else {
+            mProductId = intent.getStringExtra(AppConstant.PRODUCT_ID_CHAT_TAG);
+            mProductAvatar = intent.getStringExtra(AppConstant.PRODUCT_AVATAR_CHAT_TAG);
+            mPartnerId = intent.getStringExtra(AppConstant.PARTNER_ID_CHAT_TAG);
+            mPartnerUsername = intent.getStringExtra(AppConstant.PARTNER_USERNAME_CHAT_TAG);
+            mPartnerAvatar = intent.getStringExtra(AppConstant.PARTNER_AVATAR_CHAT_TAG);
+        }
+    }
+
+    @Override
+    public void initView() {
         btnNavRight.setBackgroundResource(R.drawable.ic_icon_message);
-        txtHeader.setText("Shop ABC");
-        llTransaction.setVisibility(View.VISIBLE);
-        messInstruct.setVisibility(View.GONE);
+        if (mProductAvatar != null) {
+            LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
+        }
+
+        llTransaction.setVisibility(View.GONE);
+        displayInstruction(View.GONE);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMessage.setLayoutManager(mLayoutManager);
         rvMessage.setItemAnimator(new DefaultItemAnimator());
 
         chatItemList = new ArrayList<>();
-        chatItemList.add(null);
-        chatItemList.add(null);
-        chatItemList.add(null);
         productChatAdapter = new ProductChatAdapter(chatItemList);
         rvMessage.setAdapter(productChatAdapter);
 
         btnSent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatItemList.add(null);
-                productChatAdapter.notifyDataSetChanged();
-                attemptSend();
+                sendMessage();
             }
         });
+    }
 
+    @Override
+    public void initData() {
+        mProductCons = null;
+        conversationService = new ConversationServiceImpl();
+        currIndex = 0;
+        limitPerLoad = 20;
+        loadMyInfo();
+
+        if (Utils.checkInternetAvailable()) {
+            loadHistoryConversations();
+        } else {
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
+        }
+    }
+
+    public void loadMyInfo() {
+        mToken = AccountUntil.getUserToken();
+        mMyId = AccountUntil.getAccountId();
+        mMyAvatar = AccountUntil.getAvatarUrl();
+        mMyUsername = AccountUntil.getUsername();
+    }
+
+    public void loadHistoryConversations() {
+
+        DialogUtil.showProgress(ProductChatActivity.this);
+        conversationService.loadConversationDetail(mToken, mPartnerId, mProductId, limitPerLoad, currIndex, new ResponseListener<ConversationResponseData>() {
+            @Override
+            public void onSuccess(ConversationResponseData dataResponse) {
+                List<Conversation> chats = dataResponse.getConversation();
+                ProductCons product = dataResponse.getProduct();
+                populateConversation(chats, product);
+                DialogUtil.hideProgress();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
+                DialogUtil.showPopup(ProductChatActivity.this, errorMessage);
+                Log.d(LOG_TAG, errorMessage);
+            }
+        });
+    }
+
+    public void populateConversation(List<Conversation> historyChats, ProductCons product) {
+
+        if (product == null) {
+            return;
+        }
+
+        if (this.mProductCons == null) {
+            this.mProductCons = product;
+            if (mMyId.equals(product.getSellerId())) {
+                mSellerId = mMyId;
+                mSellerAvatar = mMyAvatar;
+                mSellerName = mMyUsername;
+                isOwnerProduct = true;
+            } else {
+                isOwnerProduct = false;
+                mSellerId = mPartnerId;
+                mSellerName = mPartnerUsername;
+                mSellerAvatar = mProductAvatar;
+
+                llTransaction.setVisibility(View.VISIBLE);
+                displayInstruction(View.VISIBLE);
+            }
+
+            if (mProductAvatar == null) {
+                mProductAvatar = product.getImage();
+                LoadImageUtils.loadImageFromUrl(mProductAvatar, imgProduct, null);
+            }
+
+            txtName.setText(product.getName());
+            String price = product.getPrice() + "";
+            String priceFormated = Utils.formatPrice(price);
+            txtPrice.setText(priceFormated);
+            txtHeader.setText(mSellerName);
+        }
+
+        if (historyChats == null || historyChats.size() < 1) {
+            return;
+        }
+
+        displayInstruction(View.GONE);
+
+        List<ProductChatItem> addItems = new ArrayList<>();
+        for (Conversation historyLine : historyChats) {
+            ProductChatItem addItem = new ProductChatItem();
+            addItem.setMessage(historyLine.getMessage());
+            addItem.setSendAt(new Date());
+
+            int role = ProductChatItem.SENDER;
+            String avatar = mMyAvatar;
+
+            if (!mMyId.equals(historyLine.getSender().getId())) {
+                role = ProductChatItem.RECEIVER;
+                avatar = mPartnerAvatar;
+            }
+            addItem.setRole(role);
+            addItem.setAvatar(avatar);
+
+            addItems.add(addItem);
+        }
+
+        productChatAdapter.addItemsToFirst(addItems);
     }
 
     public void initSocket() {
@@ -145,7 +312,10 @@ public class ProductChatActivity extends BaseActivity {
                 mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
                 mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
                 mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-                mSocket.on(NEW_MESSAGE, onNewMessage);
+
+                mSocket.on(AppConstant.SOCKET_JOIN_ROOM_RESPONSE, onJoinRoomResponse);
+                mSocket.on(AppConstant.SOCKET_MESSAGE, onNewMessage);
+                mSocket.on(AppConstant.SOCKET_UPDATE_MSG_STATUS, onUpdateMsgStatus);
                 mSocket.connect();
             }
         } catch (URISyntaxException e) {
@@ -153,43 +323,231 @@ public class ProductChatActivity extends BaseActivity {
         }
     }
 
+    public void reconnect() {
+        if (mSocket == null) {
+            initSocket();
+        } else if (!mSocket.connected()) {
+            destroySocket();
+            initSocket();
+        }
+    }
+
     public void destroySocket() {
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off(NEW_MESSAGE, onNewMessage);
+       if (mSocket != null) {
+           Log.d("tuton", "disconnection socket");
+           mSocket.disconnect();
+           mSocket.off(Socket.EVENT_CONNECT, onConnect);
+           mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+           mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+           mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+
+           mSocket.off(AppConstant.SOCKET_JOIN_ROOM_RESPONSE, onJoinRoomResponse);
+           mSocket.off(AppConstant.SOCKET_MESSAGE, onNewMessage);
+           mSocket.off(AppConstant.SOCKET_UPDATE_MSG_STATUS, onUpdateMsgStatus);
+
+           mSocket.close();
+           mSocket = null;
+       }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reconnect();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         destroySocket();
+        super.onDestroy();
     }
 
-    private void attemptSend() {
-        if (null == mUsername || !mSocket.connected()) return;
+    @Override
+    protected void onStop() {
+        Log.d("tuton", "onStop");
+        destroySocket();
+        super.onStop();
+    }
 
-        // set empty text for textview
-        // add text message to recycler view
+    private void sendMessage() {
+        String input = editTextMessage.getText().toString().trim();
+        editTextMessage.setText("");
 
-        // perform the sending message attempt.
-        mSocket.emit("new message", message);
+        if (!StringUtil.checkStringValid(input)) {
+            return;
+        }
+
+        if (!Utils.checkInternetAvailable()) {
+            DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
+            return;
+        }
+
+        ProductChatItem addItem = getMyProductChatItem(input);
+        productChatAdapter.addItem(addItem);
+        doSend(input);
+    }
+
+    private void doSend(String message) {
+        if (mSocket == null && !mSocket.connected()) return;
+
+        JSONObject sendParam = getSendParam(message);
+        if (sendParam == null) {
+            return;
+        }
+
+        mSocket.emit(AppConstant.SOCKET_MESSAGE, sendParam);
+    }
+
+    public void receiveMessage(JSONObject receiveMsgObj) {
+        final ProductChatItem receiveItem = getReceivedMessage(receiveMsgObj);
+        updateMsgStatus(receiveItem.getServerMsgId());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                productChatAdapter.addItem(receiveItem);
+            }
+        });
+    }
+
+    public void updateMsgStatus(String messageId) {
+       JSONObject updateParam = getUpdateMsgStatusParam(messageId);
+       if (updateParam == null) {
+           return;
+       }
+
+       mSocket.emit(AppConstant.SOCKET_UPDATE_MSG_STATUS, updateParam);
+    }
+
+    public ProductChatItem getReceivedMessage(JSONObject receiveMsgObj) {
+        ProductChatItem receiveItem = null;
+        try {
+
+            JSONObject sender = receiveMsgObj.getJSONObject("sender");
+            JSONObject messageObj = receiveMsgObj.getJSONObject("message");
+
+            String avatar = sender.getString("avatar");
+            String message = messageObj.getString("content");
+            String messageId = messageObj.getString("id");
+            String sendAtString = messageObj.getString("sentAt");
+
+            Date sendAt = new Date();
+            int role = ProductChatItem.RECEIVER;
+
+            receiveItem = new ProductChatItem();
+            receiveItem.setMessage(message);
+            receiveItem.setAvatar(avatar);
+            receiveItem.setRole(role);
+            receiveItem.setSendAt(sendAt);
+            receiveItem.setServerMsgId(messageId);
+
+            Log.d("tuton", message);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return receiveItem;
+    }
+
+    public ProductChatItem getMyProductChatItem(String message) {
+        String avatar = AccountUntil.getAvatarUrl();
+        Date sendAt = new Date();
+        int role = ProductChatItem.SENDER;
+        return new ProductChatItem(role, message, avatar, sendAt);
+    }
+
+    public JSONObject getSendParam(String message) {
+        JSONObject sendParam = null;
+
+        try {
+            if (mSendToken != null) {
+                sendParam = new JSONObject();
+                sendParam.put("message", message);
+                sendParam.put("sendToken", mSendToken);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+       return sendParam;
+    }
+
+    public JSONObject getUpdateMsgStatusParam(String messageId) {
+        JSONObject updateParam = null;
+        try {
+            if (mSendToken != null) {
+                updateParam = new JSONObject();
+                updateParam.put("sendToken", mSendToken);
+                updateParam.put("messageId", messageId);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return updateParam;
+    }
+
+    public void displayInstruction(int visibility) {
+        messInstruct.setVisibility(visibility);
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+            isConnected = true;
+            JSONObject joinRoomParam = new JSONObject();
+            try {
+                joinRoomParam.put("token", mToken);
+                joinRoomParam.put("receiverId", mPartnerId);
+                joinRoomParam.put("productId", mProductId);
+
+                mSocket.emit(AppConstant.SOCKET_JOIN_ROOM_REQUEST, joinRoomParam);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private Emitter.Listener onJoinRoomResponse = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject response = (JSONObject) args[0];
+            try {
+                int code = response.getInt("code");
+                if (code == ResponseCode.OK.code) {
+                    JSONObject data = response.getJSONObject("data");
+                    mSendToken = data.getString("sendToken");
+                    Log.d("code", code + "");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            JSONObject response = (JSONObject) args[0];
+            receiveMessage(response);
+
+        }
+    };
+
+    private Emitter.Listener onUpdateMsgStatus = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+
+        }
+    };
+
+    private Emitter.Listener onConnectError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(!isConnected) {
-                        Log.i(LOG_TAG, "Socket Connected!");
-                        if(null != mUsername)
-                            mSocket.emit("add user", mUsername);
-                        isConnected = true;
-                    }
+                    Log.i(LOG_TAG, "socket error connect");
                 }
             });
         }
@@ -207,31 +565,4 @@ public class ProductChatActivity extends BaseActivity {
             });
         }
     };
-
-    private Emitter.Listener onConnectError = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(LOG_TAG, "socket error connect");
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    Log.i(LOG_TAG, "receive new message");
-                    Log.i(LOG_TAG, "data receive" + data.toString());
-                }
-            });
-        }
-    };
-
 }
