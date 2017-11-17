@@ -3,7 +3,6 @@ package com.coho.moki.ui.product.add;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -73,15 +72,12 @@ public class ProductCategoryActivity extends BaseActivity {
         mCategoryList = new ArrayList<>();
         txtHeader.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra(AppConstant.CATEGORY);
-        if (bundle != null) { // bundle != null iff in subcategory
-            String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
-            categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
+        ProductCategoryResponse response = intent.getParcelableExtra(AppConstant.CATEGORY);
+        if (response != null) { // response != null iff in subcategory
+            categoryName = response.getName();
             txtHeader.setText(Utils.toTitleCase(categoryName));
-            ProductCategoryResponse response = new ProductCategoryResponse();
             response.setHasChild(0);
             response.setName(getResources().getString(R.string.all)); // this is parent category
-            response.setId(categoryId);
             mCategoryList.add(response);
             // TODO: call api to get list child category with categoryId
         } else { // main category
@@ -144,25 +140,19 @@ public class ProductCategoryActivity extends BaseActivity {
                 Integer hasChild = response.getHasChild();
                 if (hasChild != null) {
                     Intent intent;
-                    Bundle bundle = new Bundle();
-                    bundle.putString(AppConstant.CATEGORY_ID, response.getId());
                     switch (hasChild) {
                         case 0:
                             intent = new Intent();
-                            String name = response.getName();
-                            if (name.equals(getResources().getString(R.string.all))) {
-                                bundle.putString(AppConstant.CATEGORY_NAME, categoryName);
-                            } else {
-                                bundle.putString(AppConstant.CATEGORY_NAME, name);
+                            if (response.getName().equals(getResources().getString(R.string.all))) {
+                                response.setName(categoryName);
                             }
-                            intent.putExtra(AppConstant.CATEGORY, bundle);
+                            intent.putExtra(AppConstant.CATEGORY, response);
                             setResult(Activity.RESULT_OK, intent);
                             finish();
                             break;
                         case 1:
                             intent = new Intent(BaseApp.getContext(), ProductCategoryActivity.class);
-                            bundle.putString(AppConstant.CATEGORY_NAME, response.getName());
-                            intent.putExtra(AppConstant.CATEGORY, bundle);
+                            intent.putExtra(AppConstant.CATEGORY, response);
                             startActivityForResult(intent, REQUEST_CHILD_CATEGORY);
                             break;
                     }

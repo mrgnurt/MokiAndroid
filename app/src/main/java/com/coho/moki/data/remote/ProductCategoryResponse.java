@@ -16,11 +16,11 @@ public class ProductCategoryResponse implements Parcelable {
 
     private String id;
     private String name;
-    private Integer hasBrand;
-    private Integer hasName;
+    private int hasBrand;
+    private int hasName;
     private String parentId;
-    private Integer hasChild;
-    private Integer hasSize;
+    private int hasChild;
+    private int hasSize;
     private String createdAt;
     private List<Size> sizes;
     private List<Brand> brands;
@@ -68,22 +68,6 @@ public class ProductCategoryResponse implements Parcelable {
         this.name = name;
     }
 
-    public Integer getHasBrand() {
-        return hasBrand;
-    }
-
-    public void setHasBrand(Integer hasBrand) {
-        this.hasBrand = hasBrand;
-    }
-
-    public Integer getHasName() {
-        return hasName;
-    }
-
-    public void setHasName(Integer hasName) {
-        this.hasName = hasName;
-    }
-
     public String getParentId() {
         return parentId;
     }
@@ -92,28 +76,44 @@ public class ProductCategoryResponse implements Parcelable {
         this.parentId = parentId;
     }
 
-    public Integer getHasChild() {
-        return hasChild;
-    }
-
-    public void setHasChild(Integer hasChild) {
-        this.hasChild = hasChild;
-    }
-
-    public Integer getHasSize() {
-        return hasSize;
-    }
-
-    public void setHasSize(Integer hasSize) {
-        this.hasSize = hasSize;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getHasBrand() {
+        return hasBrand;
+    }
+
+    public void setHasBrand(int hasBrand) {
+        this.hasBrand = hasBrand;
+    }
+
+    public int getHasName() {
+        return hasName;
+    }
+
+    public void setHasName(int hasName) {
+        this.hasName = hasName;
+    }
+
+    public int getHasChild() {
+        return hasChild;
+    }
+
+    public void setHasChild(int hasChild) {
+        this.hasChild = hasChild;
+    }
+
+    public int getHasSize() {
+        return hasSize;
+    }
+
+    public void setHasSize(int hasSize) {
+        this.hasSize = hasSize;
     }
 
     public List<Size> getSizes() {

@@ -329,6 +329,15 @@ public class Utils {
         return res.append(" VNĐ").toString();
     }
 
+    public static String formatPrice2(String price) {
+        StringBuilder res = new StringBuilder();
+        String pattern = "#,#";
+        DecimalFormat df = new DecimalFormat(pattern);
+        df.setGroupingSize(3);
+        res.append(df.format(Double.parseDouble(price)));
+        return res.toString();
+    }
+
     public static Bitmap getBitmapFromResource(Context context, int resId) {
         return BitmapFactory.decodeResource(context.getResources(), resId);
     }

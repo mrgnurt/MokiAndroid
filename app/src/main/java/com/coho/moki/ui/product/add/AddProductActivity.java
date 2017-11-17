@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.remote.ProductCategoryResponse;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -194,6 +195,8 @@ public class AddProductActivity extends BaseActivity {
         initListenerChooseImage();
         initFocusListenerForEditText();
         initClickListener();
+        initTextChangeListener();
+        switchAutoAccept.setChecked(true);
         topKeyboardLayout.setVisibility(View.GONE);
     }
 
@@ -417,11 +420,10 @@ public class AddProductActivity extends BaseActivity {
     }
 
     private void setResultFromProductCategory(Intent data) {
-        Bundle bundle = data.getBundleExtra(AppConstant.CATEGORY);
-        String categoryId = bundle.getString(AppConstant.CATEGORY_ID);
-        String categoryName = bundle.getString(AppConstant.CATEGORY_NAME);
-        edtCategory.setText(categoryName);
+        ProductCategoryResponse response = data.getParcelableExtra(AppConstant.CATEGORY);
+        edtCategory.setText(response.getName());
         edtCategory.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
+        // TODO: show dimension, weight, brand if have
     }
 
     private void setResultFromProductSellAddress(Intent data) {
@@ -463,7 +465,9 @@ public class AddProductActivity extends BaseActivity {
                 if (s.length() > 0) {
                     String ss = s.toString();
                     Integer price = Integer.parseInt(ss);
-                    edtBuyPrice.setText(Utils.formatPrice(String.valueOf(price * 1000)));
+//                    String priceStr = Utils.formatPrice2(String.valueOf(price * 1000));
+//                    edtBuyPrice.setText(price.toString());
+                    txtTotal.setText(price.toString());
                 }
             }
 
