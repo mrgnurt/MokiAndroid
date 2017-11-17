@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -424,6 +427,8 @@ public class AddProductActivity extends BaseActivity {
         edtCategory.setText(response.getName());
         edtCategory.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
         // TODO: show dimension, weight, brand if have
+        // if have weight
+        llWeight.setVisibility(View.VISIBLE);
     }
 
     private void setResultFromProductSellAddress(Intent data) {
@@ -517,6 +522,19 @@ public class AddProductActivity extends BaseActivity {
                         intent = new Intent(BaseApp.getContext(), ProductSellAddressActivity.class);
                         startActivityForResult(intent, REQUEST_SELL_ADDRESS);
                         break;
+                    case R.id.edtBrand:
+
+                        break;
+                    case R.id.edtSize:
+
+                        break;
+                    case R.id.edtDimension:
+
+                        break;
+                    case R.id.edtWeight:
+                        showWeightDialog();
+                        break;
+
                 }
             }
         };
@@ -526,6 +544,21 @@ public class AddProductActivity extends BaseActivity {
         edtCategory.setOnClickListener(listener);
         edtStatus.setOnClickListener(listener);
         edtSellAddress.setOnClickListener(listener);
+        edtWeight.setOnClickListener(listener);
+    }
+
+    private void showWeightDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.weight_dialog);
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setWindowAnimations(R.style.DialogAnimation);
+        // bind view
+
+        dialog.show();
     }
 
 }
