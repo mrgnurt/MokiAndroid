@@ -14,6 +14,7 @@ import com.coho.moki.data.model.Product;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.main_search.MainSearchContract;
 import com.coho.moki.ui.product.ProductDetailActivity;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -87,8 +88,10 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
 
         mListProductAdapter.addListener(new OnClickProductItemListenner() {
             @Override
-            public void onClick() {
-                startActivity(new Intent(BaseApp.getContext(), ProductDetailActivity.class));
+            public void onClick(String productId) {
+                Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                startActivity(intent);
             }
         });
     }
@@ -128,4 +131,24 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
     public void showProducts(List<Product> products) {
         mListProductAdapter.insertLastItem(products);
     }
+
+    public void setSearchHeader(String text) {
+        mTxtHeader.setText(text);
+    }
+
+    @Override
+    public void showLoadProgress() {
+        DialogUtil.showProgress(this);
+    }
+
+    @Override
+    public void hideLoadProgress() {
+        DialogUtil.hideProgress();
+    }
+
+    @Override
+    public void showPopup(String message) {
+        DialogUtil.showPopup(this, message);
+    }
+
 }

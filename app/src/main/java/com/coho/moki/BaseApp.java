@@ -1,5 +1,6 @@
 package com.coho.moki;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -36,6 +37,12 @@ public class BaseApp extends Application {
     private static SharedPrefUtils mSharedPreferences;
     private static ActivityComponent mActivityComponent;
     private static ServiceComponent mServiceComponent;
+    private static final String CREATIVE_SDK_CLIENT_ID = "62ffae7f28144497a030e4d6174a45e0";
+    private static final String CREATIVE_SDK_CLIENT_SECRET = "0984b9ca-02ce-4e99-97bb-460f9c0f7ac5";
+    private static final String CREATIVE_SDK_REDIRECT_URI = "ams+174b205f307527e0bc9eafe52ed8442e928b4763://adobeid/62ffae7f28144497a030e4d6174a45e0";
+    private static final String[] CREATIVE_SDK_SCOPES = {"email", "profile", "address"};
+
+    public static Activity currActivity;
 
     @Override
     public void onCreate() {
@@ -56,6 +63,9 @@ public class BaseApp extends Application {
                 .build();
 
         setDefaultRefreshLayout();
+
+
+
     }
 
     private void setDefaultRefreshLayout(){
@@ -96,4 +106,7 @@ public class BaseApp extends Application {
     public static Context getContext(){
         return mContext;
     }
+
+
+
 }

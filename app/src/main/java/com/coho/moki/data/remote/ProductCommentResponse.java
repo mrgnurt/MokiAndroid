@@ -43,7 +43,7 @@ public class ProductCommentResponse {
         this.poster = poster;
     }
 
-    public class Poster {
+    public static class Poster {
         private String id;
         private String name;
         private String avatar;

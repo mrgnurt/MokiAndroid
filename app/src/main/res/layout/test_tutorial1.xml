@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/tutorial_background_white">
+
+        <com.coho.moki.ui.start_tutorial.MotionImage
+            android:id="@+id/firstImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/product_icon3" />
+
+        <com.coho.moki.ui.start_tutorial.MotionImage
+            android:id="@+id/secondImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/product_icon2" />
+
+        <com.coho.moki.ui.start_tutorial.MotionImage
+            android:id="@+id/thirdImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/product_icon5" />
+
+        <com.coho.moki.ui.start_tutorial.MotionImage
+            android:id="@+id/deviceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/tutorial_devicebg2" />
+    </FrameLayout>
+
+    <com.coho.moki.ui.start_tutorial.Pager
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.5"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.coho.moki.ui.start_tutorial.MotionTextView
+                android:id="@+id/second_page_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="115.0dip"
+                android:layout_marginLeft="@dimen/common_padding_small"
+                android:layout_marginRight="@dimen/common_padding_small"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="aaaa"
+                android:textColor="@android:color/black"
+                android:textSize="18.0dip"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!--<com.coho.moki.ui.start_tutorial.PageIndicator-->
+            <!--android:id="@+id/indicator"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="25.0dip"-->
+            <!--android:layout_gravity="center" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/skip_button"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="40.0dip"-->
+            <!--android:layout_marginBottom="@dimen/common_padding_medium"-->
+            <!--android:layout_marginLeft="50.0dip"-->
+            <!--android:layout_marginRight="50.0dip"-->
+            <!--android:background="@drawable/background_red_dark"-->
+            <!--android:text="Bỏ qua"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="15.0dip" />-->
+    </LinearLayout>
+</RelativeLayout>

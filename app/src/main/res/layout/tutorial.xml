@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <com.coho.moki.ui.start_tutorial.PageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="25.0dip"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/skip_button"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginBottom="@dimen/common_padding_medium"
+            android:layout_marginLeft="50.0dip"
+            android:layout_marginRight="50.0dip"
+            android:background="@drawable/background_red_dark"
+            android:text="Bỏ qua"
+            android:textColor="@android:color/white"
+            android:textSize="15.0dip" />
+    </LinearLayout>
+</RelativeLayout>

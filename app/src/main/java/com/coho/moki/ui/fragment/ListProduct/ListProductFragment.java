@@ -24,7 +24,9 @@ import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
+import com.coho.moki.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -108,8 +110,11 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 
         mListProductAdapter.addListener(new OnClickProductItemListenner() {
             @Override
-            public void onClick() {
-                startActivity(new Intent(BaseApp.getContext(), ProductDetailActivity.class));
+            public void onClick(String productId) {
+                Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
+                intent.putExtra(AppConstant.PRODUCT_ID, productId);
+                DialogUtil.showProgress(getActivity());
+                startActivity(intent);
             }
         });
     }
@@ -158,8 +163,14 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
     }
 
     public void getProducts(){
+        if (Utils.checkInternetAvailable()){
+            DialogUtil.showProgress(getActivity());
+            mPresenter.callGetProducts();
+        }
+        else {
+            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
 
-        mPresenter.callGetProducts();
     }
 
     public void showProducts(List<Product> products){

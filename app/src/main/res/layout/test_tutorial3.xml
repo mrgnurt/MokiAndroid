@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.coho.moki.ui.start_tutorial.InfiniteScrollImage
+            android:id="@+id/list_product2"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/ensureImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ensurance_icon" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.5"
+        android:layout_marginTop="110dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/second_page_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="45.0dip"
+                android:layout_marginLeft="@dimen/common_padding_small"
+                android:layout_marginRight="@dimen/common_padding_small"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="Đảm bảo thanh toán.
+Giảm thiểu rủi ro lừa đảo."
+                android:textColor="@android:color/black"
+                android:textSize="18.0dip"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

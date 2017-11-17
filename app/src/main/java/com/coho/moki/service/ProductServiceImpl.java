@@ -39,22 +39,22 @@ public class ProductServiceImpl implements ProductService {
         call.enqueue(new Callback<BaseResponse<GetListProductResponceData>>() {
             @Override
             public void onResponse(Call<BaseResponse<GetListProductResponceData>> call, Response<BaseResponse<GetListProductResponceData>> response) {
-                Log.d("trung", "responce");
+
                 int code = response.body().getCode();
                 if (code == ResponseCode.OK.code){
-                    Log.d("trung", response.body().getMessage());
+
                     listener.onSuccess(response.body().getData());
                 }
                 else{
-                    Log.d("trung", response.body().getMessage());
-                    listener.onFailure(response.body().getMessage());
+
+                    listener.onFailure(response.body().getMessage() + " get list product");
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<GetListProductResponceData>> call, Throwable t) {
-                listener.onFailure(t.getMessage());
-                Log.d("trung", t.getMessage());
+                listener.onFailure(t.getMessage() + " get list product");
+
             }
         });
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="5.0">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="3.2">
+
+        <com.coho.moki.ui.start_tutorial.InfiniteScrollImage
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY" />
+
+        <com.coho.moki.ui.start_tutorial.ImageViewFrame
+            android:id="@+id/ensureImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ensurance_icon" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.8"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fouth_page_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="120.0dip"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:layout_marginRight="@dimen/common_padding_small"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="aaaa"
+            android:textColor="@android:color/black"
+            android:textSize="18.0dip"
+            android:textStyle="bold" />
+    </FrameLayout>
+</LinearLayout>

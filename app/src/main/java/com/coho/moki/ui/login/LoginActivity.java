@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +16,10 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import javax.inject.Inject;
 
@@ -50,6 +54,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @OnClick(R.id.btnCancel)
     public void onClickCancelButton(){
+        Utils.hideSoftKeyboard(this);
         openMainActivity();
     }
 
@@ -64,6 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         mLoginPresenter.onAttach(this);
         txtForgotPass.setPaintFlags(txtForgotPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtForgotPass.setText(R.string.forgot_pass);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -83,7 +89,15 @@ public class LoginActivity extends BaseActivity implements LoginView {
             Utils.toastShort(LoginActivity.this, R.string.password_empty);
         }
         else{
-            mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
+            Utils.hideSoftKeyboard(this);
+            if (Utils.checkInternetAvailable()){
+                DialogUtil.showProgress(this);
+                mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
+            }
+            else {
+                DialogUtil.showPopupError(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+            }
+
         }
     }
 
@@ -91,5 +105,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void openMainActivity() {
         Intent intent = new Intent(BaseApp.getContext(), MainActivity.class);
         startActivity(intent);
+        finishActivity();
+    }
+
+    public void finishActivity() {
+        LoginActivity.this.finish();
     }
 }

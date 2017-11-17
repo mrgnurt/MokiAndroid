@@ -8,25 +8,32 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coho.moki.BaseApp;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -38,6 +45,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+    private Utils() {
+    }
+
+    public static final String TAG = "Utils";
 
     private static HashMap<String, WeakReference<Toast>> toasts = new HashMap<>();
 
@@ -245,12 +257,13 @@ public class Utils {
                 ActivityCompat.requestPermissions(activity, new String[]{idPermission}, requestPermissionCode);
                 Log.e("tuton", "k show");
             }
+        } else {
+
         }
         return isPermission;
     }
 
     public static boolean checkInternetAvailable() {
-
         ConnectivityManager cm = (ConnectivityManager) BaseApp.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
 
@@ -270,6 +283,8 @@ public class Utils {
         StringBuilder res = new StringBuilder();
         String minuteAgo = " phút trước";
         String hourAgo = " giờ trước";
+        String current = "vừa xong";
+        String yesterday = "hôm qua";
         String dayAgo = " ngày trước";
         String yearAgo = " năm trước";
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -279,19 +294,24 @@ public class Utils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long diff = new Date().getTime() - date.getTime(); // return diff in microseconds
-        long diffSeconds = diff / 1000;
+        long diffMilliSecond = new Date().getTime() - date.getTime(); // return diff in milliseconds
+        long diffSeconds = diffMilliSecond / 1000;
         long diffMinutes = diffSeconds / 60;
         long diffHours = diffMinutes / 60;
         long diffDays = diffHours / 24;
-        long diffYears = diffDays /365;
+        long diffYears = diffDays / 365;
         if (diffSeconds < 60) {
-             res.append("vừa xong");
+            res.append(current);
         } else if (diffMinutes < 60) {
             res.append(diffMinutes).append(minuteAgo);
         } else if (diffHours < 24) {
             res.append(diffHours).append(hourAgo);
-        } else if (diffDays < 365){
+        } else if (diffDays == 1) {
+            res.append(yesterday);
+        } else if (diffDays < 365) {
+            if (diffDays < 2) {
+
+            }
             res.append(diffDays).append(dayAgo);
         } else {
             res.append(diffYears).append(yearAgo);
@@ -301,11 +321,20 @@ public class Utils {
 
     public static String formatPrice(String price) {
         StringBuilder res = new StringBuilder();
-        String pattern = "#,###";
+        String pattern = "#,#";
         DecimalFormat df = new DecimalFormat(pattern);
         df.setGroupingSize(3);
         res.append(df.format(Double.parseDouble(price)));
         return res.append(" VNĐ").toString();
+    }
+
+    public static String formatPrice2(String price) {
+        StringBuilder res = new StringBuilder();
+        String pattern = "#,#";
+        DecimalFormat df = new DecimalFormat(pattern);
+        df.setGroupingSize(3);
+        res.append(df.format(Double.parseDouble(price)));
+        return res.toString();
     }
 
     public static Bitmap getBitmapFromResource(Context context, int resId) {
@@ -324,6 +353,59 @@ public class Utils {
         // RECREATE THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
         return resizedBitmap;
+    }
+
+    /**
+     * Get the TextView height before the TextView will render
+     *
+     * @param textView the TextView to measure
+     * @return the height of the textView
+     */
+    public static int getTextViewHeight(TextView textView) {
+        WindowManager wm =
+                (WindowManager) textView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int deviceWidth;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            deviceWidth = size.x;
+        } else {
+            deviceWidth = display.getWidth();
+        }
+
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        textView.measure(widthMeasureSpec, heightMeasureSpec);
+        return textView.getMeasuredHeight();
+    }
+
+    public static String toTitleCase(String givenString) {
+        String[] arr = givenString.split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    public static Bitmap getThumbnailImage(Uri uri) {
+        Bitmap thumbBitmap = null;
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(BaseApp.getContext().getContentResolver(), uri);
+            thumbBitmap = ThumbnailUtils.extractThumbnail(bitmap, 120, 120);
+        } catch (IOException ex) {
+            Log.d(TAG, "error thumbnail bitmap: " + ex.getMessage());
+        }
+        return thumbBitmap;
+    }
+
+    public static String getResourceString(int resId) {
+        return BaseApp.getContext().getResources().getString(resId);
     }
 
 }
