@@ -165,95 +165,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     }
 
-    private void initFakeView() {
-        btnFollow.setVisibility(View.VISIBLE);
-        txtHeader.setText("Jake Wharton");
-        txtHeader.setVisibility(View.VISIBLE);
-        String htmlProduct = "<p><big><b>5</b></big><br />Sản phẩm</p>";
-        txtProduct.setText(Html.fromHtml(htmlProduct));
-        String htmlScore = "<p><big><b>10</b></big><br />Điểm</p>";
-        txtScore.setText(Html.fromHtml(htmlScore));
-        txtHappy.setText("1");
-        txtNormal.setText("2");
-        txtSad.setText("3");
-
-        btnCollapse.setVisibility(View.VISIBLE);
-
-        SpannableString content = new SpannableString(getResources().getString(R.string.view_all_rating));
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        txtViewAllRating.setText(content);
-
-        UserInfoFragmentAdapter userInfoFragmentAdapter = new UserInfoFragmentAdapter(this, getSupportFragmentManager(), userId);
-        viewPager.setAdapter(userInfoFragmentAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setTabsStatus(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        TabsClickListener tabsClickListener = new TabsClickListener();
-        tab1.setOnClickListener(tabsClickListener);
-        tab2.setOnClickListener(tabsClickListener);
-        tab3.setOnClickListener(tabsClickListener);
-
-        txtViewAllRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserInfoActivity.this, UserRateActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        StringBuilder status = new StringBuilder("Gấu bông chất lượng cao Hà Nội - ");
-
-        for (int i = 0; i < 3; ++i) {
-            status.append(status);
-        }
-
-        txtStatus.setText(status.toString());
-
-        txtStatus.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int[] locations = new int[2];
-                btnCollapse.getLocationInWindow(locations);
-                scrollableLayout.setMaxScrollY(locations[1] - 60);
-                if (firstSetShowHideButton) {
-                    showHideMoreButton();
-                    firstSetShowHideButton = false;
-                }
-            }
-        });
-
-        btnCollapse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isCollapse) {
-                    btnCollapse.setText(getResources().getString(R.string.view_more));
-                    txtStatus.setMaxLines(STATUS_MIN);
-                    isCollapse = false;
-                } else {
-                    btnCollapse.setText(getResources().getString(R.string.collapse));
-                    txtStatus.setMaxLines(STATUS_MAX);
-                    isCollapse = true;
-                }
-            }
-        });
-
-    }
-
     private void showHideMoreButton() {
         int lines = txtStatus.getLineCount();
         Log.d(TAG, "line count: " + lines);
@@ -298,10 +209,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         }
     }
 
-    private void initFakeData() {
-
-    }
-
     @Override
     public void setUserInfo(UserInfoResponseData userInfoResponseData) {
         btnFollow.setVisibility(View.VISIBLE);
@@ -338,7 +245,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         txtViewAllRating.setText(content);
 
-        UserInfoFragmentAdapter userInfoFragmentAdapter = new UserInfoFragmentAdapter(this, getSupportFragmentManager());
+        UserInfoFragmentAdapter userInfoFragmentAdapter = new UserInfoFragmentAdapter(this, getSupportFragmentManager(), userId);
         viewPager.setAdapter(userInfoFragmentAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
