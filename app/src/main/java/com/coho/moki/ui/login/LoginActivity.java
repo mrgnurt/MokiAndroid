@@ -1,7 +1,11 @@
 package com.coho.moki.ui.login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.util.DialogUtil;
@@ -64,6 +69,16 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
+    public void handleIntent(Intent intent) {
+        int loginType = intent.getIntExtra(AppConstant.LOGIN_TYPE_TAG, 1);
+        Log.d("tuton", "login type: " + loginType);
+        if (loginType == AppConstant.OTHER_PEOPLE_LOGIN) {
+            showPopup(AppConstant.LOGOUT_PUSH_CONTENT);
+        }
+    }
+
+
+    @Override
     public void initView() {
         BaseApp.getActivityComponent().inject(this);
         mLoginPresenter.onAttach(this);
@@ -111,4 +126,32 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void finishActivity() {
         LoginActivity.this.finish();
     }
+
+    public void showPopup(String content) {
+        DialogUtil.showPopup(LoginActivity.this, content);
+    }
+
+//    BroadcastReceiver receiver;
+//    public void registerLocalBroadcast() {
+//        receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                try {
+//                    String title= intent.getStringExtra(AppConstant.TITLE_PUSH_TAG);
+//                    String content= intent.getStringExtra(AppConstant.CONTENT_PUSH_TAG);
+//                    showPopup(title, content);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
+//    }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        registerLocalBroadcast();
+//    }
+
 }

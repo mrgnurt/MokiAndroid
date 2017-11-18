@@ -117,10 +117,17 @@ public class AppConstant {
 
     public static final String PACKAGE_TAG = "package";
 
+    public static final String TITLE_PUSH_TAG = "title";
+
+    public static final String CONTENT_PUSH_TAG = "content";
+
+    public static final int OTHER_PEOPLE_LOGIN = 2;
+
+    public static final String LOGIN_TYPE_TAG = "type";
+
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
 
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 
     public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
-
 }

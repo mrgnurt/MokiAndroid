@@ -44,17 +44,8 @@
 
         <activity
             android:name=".ui.product.add.CameraActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <!--<activity-->
-        <!--android:name=".ui.product.ProductChatActivity"-->
-        <!--android:theme="@style/AppTheme.NoActionBar">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.product.add.AddProductActivity"
@@ -151,27 +142,38 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/LoginTheme" />
+            android:launchMode="singleTop"
+            android:theme="@style/LoginTheme" >
+            <intent-filter>
+                <action android:name="LoginActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ui.main_search.MainSearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.product_search.ProductSearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.size.SizeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.brand_search.SearchBrandActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.start_tutorial.StartTutorialActivity2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <receiver
             android:name=".pushnotification.NotificationReceiver"
