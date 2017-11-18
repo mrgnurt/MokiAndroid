@@ -21,4 +21,7 @@ public interface ConversationAPI {
 
     @POST("conversations")
     Call<BaseResponse<ListConversationResponceData>> loadConversations(@Body Map<String, String> tag);
+
+    @POST("conversations/set-read-messages")
+    Call<BaseResponse> setReadMessage(@Body Map<String, String> tag);
 }

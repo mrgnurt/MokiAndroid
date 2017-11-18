@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.IntentFilter;
@@ -455,7 +456,23 @@ public class MainActivity extends BaseActivity implements MainView{
             mLayoutMessage.setVisibility(View.GONE);
         }
         else {
-            super.onBackPressed();
+
+            String appExitText = AppConstant.APP_EXIT_TEXT;
+            String appExitTitle = AppConstant.WARNING_TEXT;
+            String conFirmText = AppConstant.CONFIRM_TEXT;
+            String cancelText = AppConstant.CANCEL_TEXT;
+
+            DialogUtil.showPopUpWarning(this, appExitText, appExitTitle, conFirmText, cancelText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    MainActivity.this.finish();
+                }
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
         }
     }
 

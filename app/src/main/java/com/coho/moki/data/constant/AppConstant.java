@@ -144,6 +144,14 @@ public class AppConstant {
 
     public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
 
+    public static final String CANCEL_TEXT = "Hủy";
+
+    public static final String CONFIRM_TEXT = "Đồng ý";
+
+    public static final String WARNING_TEXT = "Thông báo";
+
+    public static final String APP_EXIT_TEXT = "Bạn có muốn thoát khỏi ứng dụng ?";
+
     public static final String SEARCH_NOT_FOUND = "not";
 
     public static final int RESULT_CODE_SHIPFORM = 1;
