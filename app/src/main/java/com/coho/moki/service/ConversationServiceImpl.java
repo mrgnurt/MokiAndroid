@@ -119,7 +119,51 @@ public class ConversationServiceImpl implements ConversationService {
                 t.printStackTrace();
             }
         });
+    }
 
+    @Override
+    public void setReadMessage(String token, String partnerId, String productId, final ResponseListener listener) {
+        Map<String, String> data = new HashMap<>();
 
+        data.put(AppConstant.TOKEN_TAG, token);
+        data.put(AppConstant.PARTNER_ID_CHAT_TAG, partnerId);
+        data.put(AppConstant.PRODUCT_ID_CHAT_TAG, productId);
+
+        ConversationAPI consAPI = ServiceGenerator.createService(ConversationAPI.class);
+        Call<BaseResponse> call =  consAPI.setReadMessage(data);
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                BaseResponse bodyResponse = response.body();
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
+                }
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
+                }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(bodyResponse.getData());
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                listener.onFailure(AppConstant.CALL_ERR);
+                t.printStackTrace();
+            }
+        });
     }
 }

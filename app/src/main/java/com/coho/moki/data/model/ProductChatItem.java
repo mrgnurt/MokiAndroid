@@ -17,6 +17,8 @@ public class ProductChatItem {
 
     private String serverMsgId;
 
+    private String messageOwner;
+
     public static int SENDER = 1;
 
     public static int RECEIVER = 2;
@@ -27,13 +29,15 @@ public class ProductChatItem {
         avatar = null;
         serverMsgId = null;
         sendAt = new Date();
+        messageOwner = null;
     }
 
-    public ProductChatItem(int role, String message, String avatar, Date sendAt) {
+    public ProductChatItem(int role, String message, String avatar, Date sendAt, String messageOwner) {
         this.role = role;
         this.message = message;
         this.avatar = avatar;
         this.sendAt = sendAt;
+        this.messageOwner = messageOwner;
     }
 
     public int getRole() {
@@ -78,5 +82,13 @@ public class ProductChatItem {
 
     public void setServerMsgId(String serverMsgId) {
         this.serverMsgId = serverMsgId;
+    }
+
+    public String getMessageOwner() {
+        return messageOwner;
+    }
+
+    public void setMessageOwner(String messageOwner) {
+        this.messageOwner = messageOwner;
     }
 }

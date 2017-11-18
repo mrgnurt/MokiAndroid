@@ -31,17 +31,14 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void initView() {
-        Log.d("pass", AccountUntil.isPassTutorialScreen() + "");
         if (AccountUntil.isPassTutorialScreen()){
-
-//            AccountUntil.removeInfoAccount();
             BaseApp.getActivityComponent().inject(this);
             mSplashPresenter.onAttach(this);
             mSplashPresenter.checkUserLogin();
-        }
-        else {
+        } else {
             Intent intent = new Intent(BaseApp.getContext(), StartTutorialActivity2.class);
             startActivity(intent);
+            this.finish();
         }
     }
 

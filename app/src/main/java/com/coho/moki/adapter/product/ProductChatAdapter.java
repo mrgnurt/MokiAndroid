@@ -25,6 +25,7 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
 
     public List<ProductChatItem> chatList;
 
+    ItemClickListener listener;
 
     public ProductChatAdapter(List<ProductChatItem> productChatItemList) {
         this.chatList = productChatItemList;
@@ -33,7 +34,9 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
     @Override
     public ProductChatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
-        return new ViewHolder(v);
+        ViewHolder holder = new ViewHolder(v);
+        holder.setListener(listener);
+        return holder;
     }
 
     @Override
@@ -86,6 +89,8 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
         String unKnownMessage = "Unknown message";
         int unKnownAvatarId = R.drawable.unknown_user;
 
+        ItemClickListener listener;
+
         public ViewHolder(View itemView) {
             super(itemView);
             txtCreated = itemView.findViewById(R.id.txtCreated);
@@ -93,6 +98,24 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
             imgRight = itemView.findViewById(R.id.imgRight);
             txtMessage = itemView.findViewById(R.id.txtMessage);
             messageLayout = itemView.findViewById(R.id.llMessage);
+
+            imgLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null) {
+                        listener.onClick(getLayoutPosition());
+                    }
+                }
+            });
+
+            imgRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null) {
+                        listener.onClick(getLayoutPosition());
+                    }
+                }
+            });
         }
 
         public void populate(ProductChatItem item) {
@@ -117,6 +140,25 @@ public class ProductChatAdapter extends RecyclerView.Adapter<ProductChatAdapter.
             }
         }
 
+        public void setListener(ItemClickListener listener) {
+            this.listener = listener;
+        }
+
+    }
+
+    public ProductChatItem getItem(int position) {
+        if (position < 0 || position > getItemCount() - 1) {
+            return null;
+        }
+        return chatList.get(position);
+    }
+
+    public void setListener(ItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface ItemClickListener {
+        public void onClick(int position);
     }
 
 }
