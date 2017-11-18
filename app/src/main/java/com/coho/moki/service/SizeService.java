@@ -1,6 +1,5 @@
 package com.coho.moki.service;
 
-import com.coho.moki.data.remote.GetListCampaignResponseData;
 import com.coho.moki.data.remote.SizeResponseData;
 
 import java.util.List;

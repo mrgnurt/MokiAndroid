@@ -29,9 +29,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.adapter.customadapter.NotificationAdapter;
 import com.coho.moki.adapter.customadapter.SideMenuAdapter;
 import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
@@ -39,7 +41,15 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.MessageFragment;
+import com.coho.moki.ui.fragment.NewsPager.BuyFragment;
+import com.coho.moki.ui.fragment.NewsPager.CharityFragment;
+import com.coho.moki.ui.fragment.NewsPager.InviteFragment;
+import com.coho.moki.ui.fragment.NewsPager.MyLikeFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.ui.fragment.NewsPager.SellFragment;
+import com.coho.moki.ui.fragment.NewsPager.SettingsFragment;
+import com.coho.moki.ui.fragment.NewsPager.SupportFragment;
+import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
@@ -68,7 +78,17 @@ public class MainActivity extends BaseActivity implements MainView{
     private Fragment currentDisplayFragment;
     private ProductPagerFragment productPagerFragment;
     private NewsPagerFragment mNewsPagerFragment;
+    private SettingsFragment mSettingsFragment;
+    private SupportFragment mSupportFragment;
+    private InviteFragment mInviteFragment;
+    private SellFragment mSellFragment;
+    private BuyFragment mBuyFragment;
+    private CharityFragment mCharityFragment;
+    private MyLikeFragment mMyLikeFragment;
+
     private int mCurrentMenuIndex = AppConstant.Home_MENU_INDEX;
+
+    public int mViewType = AppConstant.GRID_VIEW_PRODUCT;
 
 //    @BindView(R.id.imgAvatar)
 //    CircularImageView mImgAvatar;
@@ -89,7 +109,7 @@ public class MainActivity extends BaseActivity implements MainView{
     View mLLMessageCount;
 
     @BindView(R.id.btnSwitch)
-    ImageButton mBtnSwitch;
+    public ImageButton mBtnSwitch;
 
     @BindView(R.id.btnMenu)
     ImageButton mBtnMenu;
@@ -109,10 +129,17 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.layout_message)
     RelativeLayout mLayoutMessage;
 
+    @BindView(R.id.layout_notification)
+    RelativeLayout mLayoutNotification;
+
     @BindView(R.id.message_fragment)
     FrameLayout mLayoutMessageFragment;
 
+    @BindView(R.id.notification_fragment)
+    FrameLayout mLayoutNotificationFragment;
+
     MessageFragment mMsgFragment;
+    NotificationFragment mNotificationFragment;
 
     static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
 
@@ -134,9 +161,34 @@ public class MainActivity extends BaseActivity implements MainView{
         showMessageFragment();
     }
 
+    @OnClick(R.id.btnAlert)
+    public void onClickButtonAlert(){
+        showNotificationFragment();
+    }
+
     @OnClick(R.id.layout_message)
     public void onClickLayoutMessage(){
         hideMessageFragment();
+    }
+
+    @OnClick(R.id.layout_notification)
+    public void onClickLayoutNotification(){
+        hideNotificationFragment();
+    }
+
+    @OnClick(R.id.btnSwitch)
+    public void onClickBtnSwitch(){
+
+        if (mViewType == AppConstant.GRID_VIEW_PRODUCT){
+            mViewType = AppConstant.TIMELINE_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_grid);
+        }
+        else {
+            mViewType = AppConstant.GRID_VIEW_PRODUCT;
+            mBtnSwitch.setImageResource(R.drawable.icon_timeline);
+        }
+
+        productPagerFragment.changeListProductLayout();
     }
 
     SlidingMenu mSlidingMenu;
@@ -149,7 +201,15 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
+        this.mSettingsFragment = new SettingsFragment();
+        this.mInviteFragment = new InviteFragment();
+        this.mSupportFragment = new SupportFragment();
+        this.mSellFragment = new SellFragment();
+        this.mBuyFragment = new BuyFragment();
+        this.mCharityFragment = new CharityFragment();
+        this.mMyLikeFragment = new MyLikeFragment();
         addMessageFragment();
+        addNotificationFragment();
         productPagerFragment.setSellListener(new OnClickSellListener() {
             @Override
             public void onClick() {
@@ -217,21 +277,23 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void showFragment(Fragment showFragment, String tag) {
-//        if (showFragment != this.currentDisplayFragment) {
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
-//                ft.add(R.id.main_content, showFragment, tag).addToBackStack(null);
-//            } else {
-//                ft.show(showFragment);
-//            }
-//            if (this.currentDisplayFragment != null) {
-//                ft.hide(this.currentDisplayFragment);
-//            }
-//            ft.commit();
-//            this.currentDisplayFragment = showFragment;
-//        }
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
+        if (showFragment != this.currentDisplayFragment) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
+                ft.add(R.id.main_content, showFragment, tag).addToBackStack(null);
+            } else {
+                ft.show(showFragment);
+            }
+            if (this.currentDisplayFragment != null) {
+                ft.hide(this.currentDisplayFragment);
+            }
+            ft.commit();
+            this.currentDisplayFragment = showFragment;
+        }
+
+
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
     public void addMessageFragment() {
@@ -247,6 +309,21 @@ public class MainActivity extends BaseActivity implements MainView{
     public void showMessageFragment() {
         mLayoutMessage.setVisibility(View.VISIBLE);
         mMsgFragment.loadConversations();
+    }
+
+    public void addNotificationFragment() {
+        mNotificationFragment = new NotificationFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.notification_fragment, mNotificationFragment, AppConstant.NOTIFICATION_FRAGMENT_TAG).commit();
+    }
+
+    public void hideNotificationFragment() {
+        mLayoutNotification.setVisibility(View.GONE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    }
+
+    public void showNotificationFragment() {
+        mLayoutNotification.setVisibility(View.VISIBLE);
     }
 
 
@@ -268,6 +345,30 @@ public class MainActivity extends BaseActivity implements MainView{
 
     private void setViewItemMenuSelect(int index){
         switch (index) {
+            case 0:
+                showFragment(productPagerFragment, "home");
+                break;
+            case 2:
+                showFragment(mMyLikeFragment, AppConstant.MYLIKE_FRAGMENT_TAG);
+                break;
+            case 3:
+                showFragment(mSellFragment, AppConstant.SELL_FRAGMENT_TAG);
+                break;
+            case 4:
+                showFragment(mBuyFragment, AppConstant.BUY_FRAGMENT_TAG);
+                break;
+            case 5:
+                showFragment(mCharityFragment, AppConstant.CHARITY_FRAGMENT_TAG);
+                break;
+            case 6:
+                showFragment(mSettingsFragment, AppConstant.SETTINGS_FRAGMENT_TAG);
+                break;
+            case 7:
+                showFragment(mSupportFragment, AppConstant.SUPPORT_FRAGMENT_TAG);
+                break;
+            case 8:
+                showFragment(mInviteFragment, AppConstant.INVITE_FRAGMENT_TAG);
+                break;
             case 9:
                 AccountUntil.removeInfoAccount();
                 Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
@@ -278,6 +379,11 @@ public class MainActivity extends BaseActivity implements MainView{
                 closeSlidingMenu(index);
                 break;
         }
+
+        if (index >= 0 && index <= 8){
+            closeSlidingMenu(index);
+        }
+
     }
 
     private void closeSlidingMenu(int index) {
@@ -341,45 +447,6 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
         }
-    }
-
-    BroadcastReceiver receiver;
-    public void registerLocalBroadcast() {
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                try {
-
-                    Log.d("onReceiveFirebase", "vao day");
-                    String title= intent.getStringExtra("title");
-                    String content= intent.getStringExtra("content");
-                    int type = intent.getIntExtra("type", 2);
-
-                    showPopup();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        registerLocalBroadcast();
-    }
-
-    public void showPopup() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("onReceiveFirebase", "run");
-                DialogUtil.showPopup(MainActivity.this, "Có ai đó đã đăng nhập vào tài khoản bạn");
-            }
-        });
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
+import com.coho.moki.data.remote.UserInfoResponseData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,13 +102,28 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
             @Override
             public void onResponse(Call<BaseResponse<LikeResponseData>> call, Response<BaseResponse<LikeResponseData>> response) {
-                int code = response.body().getCode();
-                if (code == ResponseCode.OK.code){
-                    listener.onSuccess(response.body().getData());
+                BaseResponse<LikeResponseData> bodyResponse = response.body();
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
                 }
-                else{
-                    listener.onFailure(response.body().getMessage());
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
                 }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(response.body().getData());
             }
 
             @Override
@@ -130,13 +146,28 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
             @Override
             public void onResponse(Call<BaseResponse<List<ProductCommentResponse>>> call, Response<BaseResponse<List<ProductCommentResponse>>> response) {
-                int code = response.body().getCode();
-                if (code == ResponseCode.OK.code){
-                    listener.onSuccess(response.body().getData());
+                BaseResponse<List<ProductCommentResponse>> bodyResponse = response.body();
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
                 }
-                else{
-                    listener.onFailure(response.body().getMessage());
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
                 }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(response.body().getData());
             }
 
             @Override

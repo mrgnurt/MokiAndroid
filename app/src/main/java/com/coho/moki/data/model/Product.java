@@ -26,6 +26,10 @@ public class Product {
 
     private int numComment;
 
+    private int isLiked;
+
+    private int banned;
+
     public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, List<Brand> brands, String description, int numLike, int numComment) {
         this.productId = productId;
         this.name = name;
@@ -38,6 +42,18 @@ public class Product {
         this.numComment = numComment;
     }
 
+    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, int isLiked, int banned, String description, int numLike, int numComment) {
+        this.productId = productId;
+        this.name = name;
+        this.imageUrls = imageUrls;
+        this.price = price;
+        this.pricePercent = pricePercent;
+        this.isLiked = isLiked;
+        this.banned = banned;
+        this.description = description;
+        this.numLike = numLike;
+        this.numComment = numComment;
+    }
     public String getProductId() {
         return productId;
     }
@@ -108,5 +124,21 @@ public class Product {
 
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public int getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(int isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public int getBanned() {
+        return banned;
+    }
+
+    public void setBanned(int banned) {
+        this.banned = banned;
     }
 }

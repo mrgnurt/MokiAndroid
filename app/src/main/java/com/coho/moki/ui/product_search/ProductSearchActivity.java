@@ -119,7 +119,9 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
         super.handleIntent(intent);
         String keyword = intent.getStringExtra(AppConstant.KEYWORD_TAG);
         String sizeId = intent.getStringExtra(AppConstant.PRODUCT_SIZE_ID_TAG);
-        mPresenter.initParamSearch(keyword, sizeId);
+        String brandId = intent.getStringExtra(AppConstant.PRODUCT_BRAND_ID_TAG);
+
+        mPresenter.initParamSearch(keyword, sizeId, brandId);
 
     }
 

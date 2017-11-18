@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://10.10.186.216:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.39:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -20,9 +20,11 @@ public class AppConstant {
     public static final String COUNT_TAG = "count";
     public static final String KEYWORD_TAG = "keyword";
     public static final String PRODUCT_SIZE_ID_TAG = "productSizeId";
+    public static final String PRODUCT_BRAND_ID_TAG = "brandId";
 
     public static final String TOKEN = "token";
     public static final String ID = "id";
+    public static final String USERID_TAG = "userId";
 
     public static final String PRODUCT_ID = "productId";
     public static final String COMMENT = "comment";
@@ -36,17 +38,25 @@ public class AppConstant {
     //tag app
     public static final String CATEGORY_TAG = "CATEGORY";
     public static final String SIZE_TAG = "SIZE";
+    public static final String BRAND_TAG_NAME = "BRAND_NAME";
+    public static final String BRAND_TAG_ID = "BRAND_ID";
     public static final int Home_MENU_INDEX = 0;
     public static final int COUNT_PRODUCTS_GET = 8;
     public static final int COUNT_SEARCH_PRODUCT = 6;
+    public static final int COUNT_USER_FOLLOW_GET = 5;
     public static final int REQUEST_CODE_SIZE = 1;
     public static final int RESULT_CODE_SIZE = 2;
+    public static final int REQUEST_CODE_BRAND = 3;
+    public static final int RESULT_CODE_BRAND = 4;
     public static final String IS_PASS_TUTORIALSCREEN = "IS_PASS_TUTORIALSCREEN";
     public static final String MY_ID = "MY_ID";
     public static final String MY_USERNAME = "MY_USERNAME";
     public static final String MY_AVATAR_URL = "MY_AVATAR_URL";
     public static final String MY_TOKEN = "MY_TOKEN";
     public static final String ANDROID_TYPE = "1";
+    public static final String FOLLOWING = "following";
+    public static final String FOLLOWED = "followed";
+
     public static final String MESSAGE = "MESSAGE";
     public static final String DEVICE_TOKEN = "device_token";
 
@@ -62,6 +72,7 @@ public class AppConstant {
     public static final String CATEGORY = "CATEGORY";
     public static final String CATEGORY_ID = "CATEGORY_ID";
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
+    public static final String PARENTID_TAG = "parentId";
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";
@@ -75,6 +86,9 @@ public class AppConstant {
     public static final String UNAUTHENTICATED = "Để thực hiện chức năng bạn cần phải đăng nhập";
 
     public static final String CALL_ERR = "Có lỗi xảy ra, làm ơn hãy thử lại";
+
+    public static final int GRID_VIEW_PRODUCT = 0;
+    public static final int TIMELINE_VIEW_PRODUCT = 1;
 
     public static final int CHAT_PUSH_CODE = 2;
 
@@ -104,4 +118,24 @@ public class AppConstant {
 
     public static final String PACKAGE_TAG = "package";
 
+    public static final String TITLE_PUSH_TAG = "title";
+
+    public static final String CONTENT_PUSH_TAG = "content";
+
+    public static final int OTHER_PEOPLE_LOGIN = 2;
+
+    public static final String LOGIN_TYPE_TAG = "type";
+
+    public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+    public static final String SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
+    public static final String INVITE_FRAGMENT_TAG = "INVITE_FRAGMENT";
+    public static final String SUPPORT_FRAGMENT_TAG = "SUPPORT_FRAGMENT";
+    public static final String SELL_FRAGMENT_TAG = "SELL_FRAGMENT";
+    public static final String BUY_FRAGMENT_TAG = "BUY_FRAGMENT";
+    public static final String CHARITY_FRAGMENT_TAG = "CHARITY_FRAGMENT";
+    public static final String MYLIKE_FRAGMENT_TAG = "MYLIKE_FRAGMENT";
+
+    public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
+
+    public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
 }
