@@ -531,10 +531,10 @@ public class AddProductActivity extends BaseActivity {
                         startActivityForResult(intent, REQUEST_SELL_ADDRESS);
                         break;
                     case R.id.edtBrand:
-
+                        // TODO: goto brand activity
                         break;
                     case R.id.edtSize:
-
+                        // TODO: goto size activity
                         break;
                     case R.id.edtDimension:
                         showDimensionDialog();
@@ -542,7 +542,9 @@ public class AddProductActivity extends BaseActivity {
                     case R.id.edtWeight:
                         showWeightDialog();
                         break;
-
+                    case R.id.btnAddProduct:
+                        // TODO: call api to add product
+                        break;
                 }
             }
         };
@@ -554,6 +556,9 @@ public class AddProductActivity extends BaseActivity {
         edtSellAddress.setOnClickListener(listener);
         edtWeight.setOnClickListener(listener);
         edtDimension.setOnClickListener(listener);
+        edtBrand.setOnClickListener(listener);
+        edtDimension.setOnClickListener(listener);
+        btnAddProduct.setOnClickListener(listener);
     }
 
     private void initListenerForSwitchButton() {
