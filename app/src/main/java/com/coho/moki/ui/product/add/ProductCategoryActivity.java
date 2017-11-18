@@ -38,7 +38,6 @@ public class ProductCategoryActivity extends BaseActivity {
 
     private final String TAG = "ProductCategoryActivity";
     private final int REQUEST_CHILD_CATEGORY = 111;
-    private String categoryId = null;
 
     @BindView(R.id.listView)
     PullAndLoadListView listView;
@@ -68,7 +67,7 @@ public class ProductCategoryActivity extends BaseActivity {
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             public void onRefresh() {
                 // Do work to refresh the list here.
-                new ProductCategoryActivity.PullToRefreshDataTask().execute();
+//                new ProductCategoryActivity.PullToRefreshDataTask().execute();
             }
         });
         listView.setOnItemClickListener(new OnClickItemListCategory());
@@ -87,7 +86,7 @@ public class ProductCategoryActivity extends BaseActivity {
             response.setHasChild(0);
             response.setName(getResources().getString(R.string.all)); // this is parent category
             mCategoryList.add(response);
-            getCategoryList(categoryId);
+            getCategoryList(response.getId());
         } else { // main category
             txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
             getCategoryList("");
@@ -141,7 +140,6 @@ public class ProductCategoryActivity extends BaseActivity {
             // TODO: Handling when click "Tất cả" in child category
             Log.d(TAG, "click on item: " + position);
             ProductCategoryResponse response = mCategoryList.get(position - 1);
-            categoryId = response.getId();
             if (response != null) {
                 Integer hasChild = response.getHasChild();
                 if (hasChild != null) {
@@ -210,11 +208,15 @@ public class ProductCategoryActivity extends BaseActivity {
         }
     }
 
-    public void getCategoryList(String categoryId) {
+    public void getCategoryList(final String categoryId) {
         categoryService.getCategoryList(categoryId, new ResponseListener<List<ProductCategoryResponse>>() {
             @Override
             public void onSuccess(List<ProductCategoryResponse> dataResponse) {
-                mCategoryList = dataResponse;
+                if (categoryId == "") {
+                    mCategoryList = dataResponse.subList(1, dataResponse.size() - 1);
+                } else {
+                    mCategoryList = dataResponse;
+                }
                 mCategoryAdapter = new ProductCategoryAdapter(ProductCategoryActivity.this, R.layout.product_category_item, mCategoryList);
                 listView.setAdapter(mCategoryAdapter);
             }

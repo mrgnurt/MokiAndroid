@@ -428,6 +428,18 @@ public class AddProductActivity extends BaseActivity {
         edtCategory.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
         // TODO: show dimension, weight, brand if have
         // if have weight
+        if (response.getHasBrand() == 1) {
+            llBrand.setVisibility(View.VISIBLE);
+        } else {
+            llBrand.setVisibility(View.INVISIBLE);
+        }
+
+        if (response.getHasSize() == 1) {
+            llSize.setVisibility(View.VISIBLE);
+        } else {
+            llSize.setVisibility(View.INVISIBLE);
+        }
+
         llWeight.setVisibility(View.VISIBLE);
     }
 

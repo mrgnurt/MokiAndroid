@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.coho.moki.R;
 import com.coho.moki.data.remote.ProductCategoryResponse;
-import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.util.network.LoadImageUtils;
 
 import java.util.List;
