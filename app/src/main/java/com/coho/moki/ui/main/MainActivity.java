@@ -319,45 +319,6 @@ public class MainActivity extends BaseActivity implements MainView{
         }
     }
 
-    BroadcastReceiver receiver;
-    public void registerLocalBroadcast() {
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                try {
-
-                    Log.d("onReceiveFirebase", "vao day");
-                    String title= intent.getStringExtra("title");
-                    String content= intent.getStringExtra("content");
-                    int type = intent.getIntExtra("type", 2);
-
-                    showPopup();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.coho.moki.push"));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        registerLocalBroadcast();
-    }
-
-    public void showPopup() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("onReceiveFirebase", "run");
-                DialogUtil.showPopup(MainActivity.this, "Có ai đó đã đăng nhập vào tài khoản bạn");
-            }
-        });
-    }
-
     @Override
     public void onBackPressed() {
         if (mLayoutMessage.getVisibility() == View.VISIBLE){
