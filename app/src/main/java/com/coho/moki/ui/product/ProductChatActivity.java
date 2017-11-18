@@ -21,6 +21,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.model.ProductChatItem;
+import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.Conversation;
 import com.coho.moki.data.remote.ConversationResponseData;
 import com.coho.moki.data.remote.ProductCons;
@@ -28,6 +29,7 @@ import com.coho.moki.service.ConversationService;
 import com.coho.moki.service.ConversationServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.user.UserInfoActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.StringUtil;
@@ -37,6 +39,7 @@ import com.coho.moki.util.network.LoadImageUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.OnClick;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -93,6 +96,8 @@ public class ProductChatActivity extends BaseActivity {
 
     ProductChatAdapter productChatAdapter;
 
+    RecyclerView.LayoutManager mRvLayoutManager;
+
     ConversationService conversationService;
 
     private boolean isConnected = true;
@@ -132,6 +137,8 @@ public class ProductChatActivity extends BaseActivity {
     private int limitPerLoad;
 
     private ProductCons mProductCons;
+
+    private boolean isSetReadMessage = false;
 
 
     @Override
@@ -180,18 +187,44 @@ public class ProductChatActivity extends BaseActivity {
         llTransaction.setVisibility(View.GONE);
         displayInstruction(View.GONE);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rvMessage.setLayoutManager(mLayoutManager);
+        mRvLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rvMessage.setLayoutManager(mRvLayoutManager);
         rvMessage.setItemAnimator(new DefaultItemAnimator());
 
         chatItemList = new ArrayList<>();
         productChatAdapter = new ProductChatAdapter(chatItemList);
         rvMessage.setAdapter(productChatAdapter);
 
+        productChatAdapter.setListener(new ProductChatAdapter.ItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                ProductChatItem item = productChatAdapter.getItem(position);
+                Log.d("tuton", "item:" + item.getMessageOwner());
+                if (item != null) {
+                    Intent userIntent = new Intent(ProductChatActivity.this, UserInfoActivity.class);
+                    userIntent.putExtra("userId", item.getMessageOwner());
+                    ProductChatActivity.this.startActivity(userIntent);
+                }
+            }
+        });
+
         btnSent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();
+            }
+        });
+
+        editTextMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("tuton", "edit clicked");
+                int chatListSize = productChatAdapter.getItemCount();
+                if (chatListSize > 0) {
+                    Log.d("tuton", "chatListSize: " + chatListSize);
+                    mRvLayoutManager.scrollToPosition(chatListSize - 1);
+
+                }
             }
         });
     }
@@ -209,6 +242,11 @@ public class ProductChatActivity extends BaseActivity {
         } else {
             DialogUtil.showPopup(ProductChatActivity.this, AppConstant.NO_INTERNET);
         }
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void btnNavLeftOnClick() {
+        this.finish();
     }
 
     public void loadMyInfo() {
@@ -295,11 +333,27 @@ public class ProductChatActivity extends BaseActivity {
             }
             addItem.setRole(role);
             addItem.setAvatar(avatar);
+            addItem.setMessageOwner(historyLine.getSender().getId());
 
             addItems.add(addItem);
         }
 
+        int preItemCount = productChatAdapter.getItemCount();
         productChatAdapter.addItemsToFirst(addItems);
+
+        if (preItemCount == 0 && addItems.size() > 0) {
+            conversationService.setReadMessage(mToken, mPartnerId, mProductId, new ResponseListener<BaseResponse>() {
+                @Override
+                public void onSuccess(BaseResponse dataResponse) {
+                    Log.d("tuton", "set read message successful");
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Log.d("tuton", "set read message failure");
+                }
+            });
+        }
     }
 
     public void initSocket() {
@@ -427,6 +481,7 @@ public class ProductChatActivity extends BaseActivity {
             JSONObject messageObj = receiveMsgObj.getJSONObject("message");
 
             String avatar = sender.getString("avatar");
+            String senderId = sender.getString("id");
             String message = messageObj.getString("content");
             String messageId = messageObj.getString("id");
             String sendAtString = messageObj.getString("sentAt");
@@ -440,6 +495,7 @@ public class ProductChatActivity extends BaseActivity {
             receiveItem.setRole(role);
             receiveItem.setSendAt(sendAt);
             receiveItem.setServerMsgId(messageId);
+            receiveItem.setMessageOwner(senderId);
 
             Log.d("tuton", message);
 
@@ -454,7 +510,7 @@ public class ProductChatActivity extends BaseActivity {
         String avatar = AccountUntil.getAvatarUrl();
         Date sendAt = new Date();
         int role = ProductChatItem.SENDER;
-        return new ProductChatItem(role, message, avatar, sendAt);
+        return new ProductChatItem(role, message, avatar, sendAt, mMyId);
     }
 
     public JSONObject getSendParam(String message) {

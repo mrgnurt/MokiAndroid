@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.1.39:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.37:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -138,4 +138,12 @@ public class AppConstant {
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 
     public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
+
+    public static final String CANCEL_TEXT = "Hủy";
+
+    public static final String CONFIRM_TEXT = "Đồng ý";
+
+    public static final String WARNING_TEXT = "Thông báo";
+
+    public static final String APP_EXIT_TEXT = "Bạn có muốn thoát khỏi ứng dụng ?";
 }
