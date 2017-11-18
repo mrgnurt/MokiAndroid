@@ -77,7 +77,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         }
     }
 
-
     @Override
     public void initView() {
         BaseApp.getActivityComponent().inject(this);
@@ -112,7 +111,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
             else {
                 DialogUtil.showPopupError(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
             }
-
         }
     }
 
