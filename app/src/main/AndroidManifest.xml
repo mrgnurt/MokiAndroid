@@ -166,6 +166,10 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name=".ui.brand_search.SearchBrandActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name=".ui.start_tutorial.StartTutorialActivity2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

@@ -20,22 +20,6 @@ import butterknife.BindView;
 
 public class TutorialFragment3 extends BaseFragment {
 
-//    @BindView(R.id.list_product2)
-//    ImageView imageView;
-//
-//    private Handler handler = new Handler();
-//    Runnable runnable = new C28491();
-//
-//    class C28491 implements Runnable {
-//        C28491() {
-//        }
-//
-//        public void run() {
-//            TutorialFragment3.this.imageView.invalidate();
-//            TutorialFragment3.this.handler.postDelayed(TutorialFragment3.this.runnable, 1);
-//        }
-//    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.test_tutorial3;

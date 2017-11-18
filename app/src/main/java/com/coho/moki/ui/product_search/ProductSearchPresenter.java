@@ -28,6 +28,7 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
     int mIndex = 0;
     String mKeyword = null;
     String mSizeId = null;
+    String mBrandId = null;
     ArrayList<Product> mProducts;
 
 
@@ -45,7 +46,7 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
     public void callSearchProduct() {
         mView.setSearchHeader(mKeyword);
         mView.showLoadProgress();
-        mSearchService.searchProduct(null, mKeyword, null, null, mSizeId, null, null, null, mIndex, AppConstant.COUNT_SEARCH_PRODUCT,
+        mSearchService.searchProduct(null, mKeyword, null, mBrandId, mSizeId, null, null, null, mIndex, AppConstant.COUNT_SEARCH_PRODUCT,
                 new ResponseListener<List<SearchProductResponseData>>() {
                     @Override
                     public void onSuccess(List<SearchProductResponseData> searchResults) {
@@ -70,9 +71,10 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
     }
 
     @Override
-    public void initParamSearch(String keyword, String sizeId) {
+    public void initParamSearch(String keyword, String sizeId, String brandId) {
         mKeyword = keyword;
         mSizeId = sizeId;
+        mBrandId = brandId;
     }
 
     @Override

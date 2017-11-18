@@ -18,11 +18,19 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.remote.UserInfoResponseData;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
+import com.coho.moki.util.network.LoadImageUtils;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.github.siyamed.shapeimageview.CircularImageView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,6 +48,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     private final int STATUS_MIN = 2;
     private final int STATUS_MAX = 60;
     private boolean firstSetShowHideButton = true;
+    private String userId;
+    private Integer numProduct;
+    private Integer score;
+    private boolean isFollowed = false;
+
+    @Inject
+    UserPresenter mUserPresenter;
 
     @BindView(R.id.bottomsheet)
     BottomSheetLayout bottomSheet;
@@ -136,101 +151,18 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     @Override
     public void initView() {
-        initFakeView();
-        initFakeData();
+        BaseApp.getActivityComponent().inject(this);
+        mUserPresenter.onAttach(this);
+        String token = AccountUntil.getUserToken();
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("userId");
+        numProduct = intent.getIntExtra("numProduct", 0);
+        score = intent.getIntExtra("score", 0);
+        mUserPresenter.getUserInfoRemote(token, userId);
     }
 
     @Override
     public void initData() {
-
-    }
-
-    private void initFakeView() {
-        btnFollow.setVisibility(View.VISIBLE);
-        txtHeader.setText("Jake Wharton");
-        txtHeader.setVisibility(View.VISIBLE);
-        String htmlProduct = "<p><big><b>5</b></big><br />Sản phẩm</p>";
-        txtProduct.setText(Html.fromHtml(htmlProduct));
-        String htmlScore = "<p><big><b>10</b></big><br />Điểm</p>";
-        txtScore.setText(Html.fromHtml(htmlScore));
-        txtHappy.setText("1");
-        txtNormal.setText("2");
-        txtSad.setText("3");
-
-        btnCollapse.setVisibility(View.VISIBLE);
-
-        SpannableString content = new SpannableString(getResources().getString(R.string.view_all_rating));
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        txtViewAllRating.setText(content);
-
-        UserInfoFragmentAdapter userInfoFragmentAdapter = new UserInfoFragmentAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(userInfoFragmentAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setTabsStatus(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        TabsClickListener tabsClickListener = new TabsClickListener();
-        tab1.setOnClickListener(tabsClickListener);
-        tab2.setOnClickListener(tabsClickListener);
-        tab3.setOnClickListener(tabsClickListener);
-
-        txtViewAllRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserInfoActivity.this, UserRateActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        StringBuilder status = new StringBuilder("Gấu bông chất lượng cao Hà Nội - ");
-
-        for (int i = 0; i < 3; ++i) {
-            status.append(status);
-        }
-
-        txtStatus.setText(status.toString());
-
-        txtStatus.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int[] locations = new int[2];
-                btnCollapse.getLocationInWindow(locations);
-                scrollableLayout.setMaxScrollY(locations[1] - 60);
-                if (firstSetShowHideButton) {
-                    showHideMoreButton();
-                    firstSetShowHideButton = false;
-                }
-            }
-        });
-
-        btnCollapse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isCollapse) {
-                    btnCollapse.setText(getResources().getString(R.string.view_more));
-                    txtStatus.setMaxLines(STATUS_MIN);
-                    isCollapse = false;
-                } else {
-                    btnCollapse.setText(getResources().getString(R.string.collapse));
-                    txtStatus.setMaxLines(STATUS_MAX);
-                    isCollapse = true;
-                }
-            }
-        });
 
     }
 
@@ -278,8 +210,121 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         }
     }
 
-    private void initFakeData() {
+    @Override
+    public void setUserInfo(UserInfoResponseData userInfoResponseData) {
+        btnFollow.setVisibility(View.VISIBLE);
+        txtHeader.setText(userInfoResponseData.getUsername());
+        if (userInfoResponseData.getStatus() == "1") {
+            imgState.setImageResource(R.drawable.icon_online);
+            txtUserState.setText("Online");
+        } else {
+            imgState.setImageResource(R.drawable.icon_offline);
+            txtUserState.setText("Offline");
+        }
 
+        txtHeader.setVisibility(View.VISIBLE);
+        LoadImageUtils.loadImageFromUrl(userInfoResponseData.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
+        String htmlProduct = "<p><big><b>" + numProduct + "</b></big><br />Sản phẩm</p>";
+        txtProduct.setText(Html.fromHtml(htmlProduct));
+        String htmlScore = "<p><big><b>" + score + "</b></big><br />Điểm</p>";
+        txtScore.setText(Html.fromHtml(htmlScore));
+        txtHappy.setText("0");
+        txtNormal.setText("0");
+        txtSad.setText("0");
+
+        if (userInfoResponseData.getFollowed() == 1) {
+            isFollowed = true;
+            btnFollow.setImageResource(R.drawable.bg_follow);
+        } else {
+            isFollowed = false;
+            btnFollow.setImageResource(R.drawable.bg_unfollow);
+        }
+
+        btnCollapse.setVisibility(View.VISIBLE);
+
+        SpannableString content = new SpannableString(getResources().getString(R.string.view_all_rating));
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        txtViewAllRating.setText(content);
+
+        UserInfoFragmentAdapter userInfoFragmentAdapter = new UserInfoFragmentAdapter(this, getSupportFragmentManager(), userId);
+        viewPager.setAdapter(userInfoFragmentAdapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTabsStatus(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        TabsClickListener tabsClickListener = new TabsClickListener();
+        tab1.setOnClickListener(tabsClickListener);
+        tab2.setOnClickListener(tabsClickListener);
+        tab3.setOnClickListener(tabsClickListener);
+
+        txtViewAllRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInfoActivity.this, UserRateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        StringBuilder status = new StringBuilder("Chưa có thông tin ");
+
+        txtStatus.setText(status.toString());
+
+        txtStatus.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int[] locations = new int[2];
+                btnCollapse.getLocationInWindow(locations);
+                scrollableLayout.setMaxScrollY(locations[1] - 60);
+                if (firstSetShowHideButton) {
+                    showHideMoreButton();
+                    firstSetShowHideButton = false;
+                }
+            }
+        });
+
+        btnCollapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isCollapse) {
+                    btnCollapse.setText(getResources().getString(R.string.view_more));
+                    txtStatus.setMaxLines(STATUS_MIN);
+                    isCollapse = false;
+                } else {
+                    btnCollapse.setText(getResources().getString(R.string.collapse));
+                    txtStatus.setMaxLines(STATUS_MAX);
+                    isCollapse = true;
+                }
+            }
+        });
+
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFollowed) {
+                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_UNFOLLOW);
+                    isFollowed = false;
+                    btnFollow.setImageResource(R.drawable.bg_unfollow);
+                } else {
+                    DialogUtil.showPopupSuccess(UserInfoActivity.this, AppConstant.POPUP_FOLLOW + txtHeader.getText().toString());
+                    isFollowed = true;
+                    btnFollow.setImageResource(R.drawable.bg_follow);
+                }
+            }
+        });
     }
 
     private class TabsClickListener implements View.OnClickListener {
@@ -289,12 +334,15 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             switch (v.getId()) {
                 case R.id.tab1:
                     position = 0;
+                    btnCamera.setVisibility(View.VISIBLE);
                     break;
                 case R.id.tab2:
                     position = 1;
+                    btnCamera.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.tab3:
                     position = 2;
+                    btnCamera.setVisibility(View.INVISIBLE);
                     break;
             }
             if (position != -1) {

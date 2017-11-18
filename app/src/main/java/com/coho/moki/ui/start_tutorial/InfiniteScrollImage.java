@@ -17,10 +17,10 @@ public class InfiniteScrollImage extends AppCompatImageView {
     static int delta = 0;
     private Handler handler = new Handler();
     private Bitmap myBitmap;
-    private Runnable runnable = new C28491();
+    private Runnable runnable = new ScrollRunnable();
 
-    class C28491 implements Runnable {
-        C28491() {
+    class ScrollRunnable implements Runnable {
+        ScrollRunnable() {
         }
 
         public void run() {

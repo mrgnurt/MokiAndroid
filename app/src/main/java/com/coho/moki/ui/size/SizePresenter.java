@@ -60,6 +60,7 @@ public class SizePresenter implements SizeContract.Presenter {
 
     private void convertDataResponseToProduct(List<SizeResponseData> dataResponse){
 
+        mSizes.add(new Size(null, "Tất cả"));
 
         for(SizeResponseData item : dataResponse){
             Size size = new Size(item.getId(), item.getSizeName());

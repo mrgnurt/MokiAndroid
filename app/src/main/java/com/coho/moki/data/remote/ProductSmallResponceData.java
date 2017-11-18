@@ -23,6 +23,25 @@ public class ProductSmallResponceData {
     private int banned;
     private SellerResponceData seller;
 
+
+    public ProductSmallResponceData(String id, String name, List<String> image, int price, int pricePercent, List<BrandResponceData> brand, String described, String created, int like, int comment, int isLiked, int isBlocked, int canEdit, int banned, SellerResponceData seller) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.pricePercent = pricePercent;
+        this.brand = brand;
+        this.described = described;
+        this.created = created;
+        this.like = like;
+        this.comment = comment;
+        this.isLiked = isLiked;
+        this.isBlocked = isBlocked;
+        this.canEdit = canEdit;
+        this.banned = banned;
+        this.seller = seller;
+    }
+
     public String getId() {
         return id;
     }

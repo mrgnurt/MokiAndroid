@@ -7,7 +7,9 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.UserProductResponseData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -56,6 +58,40 @@ public class ProductServiceImpl implements ProductService {
                 listener.onFailure(t.getMessage() + " get list product");
 
             }
+        });
+    }
+
+    @Override
+    public void getProductOfUser(String token, int index, int count, String userId, String keyword, String categoryId, final ResponseListener<ArrayList<UserProductResponseData>> listener) {
+        Map<String, Object> data = new HashMap<>();
+        data.put(AppConstant.TOKEN_TAG, token);
+        data.put(AppConstant.INDEX, index);
+        data.put(AppConstant.COUNT_TAG, count);
+        data.put(AppConstant.USERID_TAG, userId);
+        data.put(AppConstant.KEYWORD_TAG, keyword);
+        data.put(AppConstant.CATEGORY_TAG, categoryId);
+
+        ProductAPI service = ServiceGenerator.createService(ProductAPI.class);
+        Call<BaseResponse<ArrayList<UserProductResponseData>>> call =  service.callGetUserProduct(data);
+        call.enqueue(new Callback<BaseResponse<ArrayList<UserProductResponseData>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<ArrayList<UserProductResponseData>>> call, Response<BaseResponse<ArrayList<UserProductResponseData>>> response) {
+                int code = response.body().getCode();
+                if (code == ResponseCode.OK.code){
+
+                    listener.onSuccess(response.body().getData());
+                }
+                else{
+
+                    listener.onFailure(response.body().getMessage() + " get list product");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<ArrayList<UserProductResponseData>>> call, Throwable t) {
+                listener.onFailure(t.getMessage() + " get list product");
+            }
+
         });
     }
 }

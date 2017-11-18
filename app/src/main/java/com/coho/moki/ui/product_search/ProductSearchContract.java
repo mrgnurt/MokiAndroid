@@ -30,7 +30,7 @@ public interface ProductSearchContract {
 
         void initProducts();
 
-        void initParamSearch(String keyword, String sizeId);
+        void initParamSearch(String keyword, String sizeId, String brandId);
 
         ArrayList<Product> getProduts();
 

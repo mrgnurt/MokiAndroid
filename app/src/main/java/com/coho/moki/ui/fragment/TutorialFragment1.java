@@ -90,58 +90,48 @@ public class TutorialFragment1 extends BaseFragment {
     CircularImageViewFrame zoomingIcon = null;
     private ArrayList<ImageView> zoomingListImg = new ArrayList();
 
-//    class C28511 implements View.OnClickListener {
-//        C28511() {
+//    class C28522 implements View.OnTouchListener {
+//        C28522() {
 //        }
 //
-//        public void onClick(View v) {
-//            Auth.setStartUpIntroTutCheck(StartUpTutorialActivity.this, AppEventsConstants.EVENT_PARAM_VALUE_YES);
-//            StartUpTutorialActivity.this.startActivityFromRight(new Intent(StartUpTutorialActivity.this, RegisterActivity.class));
+//        public boolean onTouch(View v, MotionEvent event) {
+//            return true;
 //        }
 //    }
-
-    class C28522 implements View.OnTouchListener {
-        C28522() {
-        }
-
-        public boolean onTouch(View v, MotionEvent event) {
-            return true;
-        }
-    }
-
-    class C28564 implements Runnable {
-
-        class C28551 extends TimerTask {
-
-            class C28541 implements Runnable {
-                C28541() {
-                }
-
-                public void run() {
-                    if (TutorialFragment1.this.scroller.getScrollX() < 700) {
-                        TutorialFragment1.this.scroller.smoothScrollBy(10, 0);
-                    } else if (TutorialFragment1.this.timer != null) {
-                        TutorialFragment1.this.timer.cancel();
-                        TutorialFragment1.this.timer = null;
-                    }
-                }
-            }
-
-            C28551() {
-            }
-
-            public void run() {
-                getActivity().runOnUiThread(new TutorialFragment1.C28564.C28551.C28541());
-            }
-        }
-
-        C28564() {
-        }
-
-        public void run() {
-            TutorialFragment1.this.timer.schedule(new TutorialFragment1.C28564.C28551(), 0, 10);
-        }
-    }
+//
+//    class C28564 implements Runnable {
+//
+//        class C28551 extends TimerTask {
+//
+//            class C28541 implements Runnable {
+//                C28541() {
+//                }
+//
+//                public void run() {
+//                    if (TutorialFragment1.this.scroller.getScrollX() < 700) {
+//                        TutorialFragment1.this.scroller.smoothScrollBy(10, 0);
+//                    } else if (TutorialFragment1.this.timer != null) {
+//                        TutorialFragment1.this.timer.cancel();
+//                        TutorialFragment1.this.timer = null;
+//                    }
+//                }
+//            }
+//
+//            C28551() {
+//            }
+//
+//            public void run() {
+//                getActivity().runOnUiThread(new TutorialFragment1.C28564.C28551.C28541());
+//            }
+//        }
+//
+//        C28564() {
+//        }
+//
+//        public void run() {
+//            TutorialFragment1.this.timer.schedule(new TutorialFragment1.C28564.C28551(), 0, 10);
+//        }
+//    }
 
     @Override
     protected int getLayoutId() {

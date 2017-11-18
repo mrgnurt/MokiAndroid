@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="5.0dip">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/seller_avatar"
+            android:layout_width="@dimen/user_avatar_size_small_1"
+            android:layout_height="@dimen/user_avatar_size_small_1"
+            android:layout_marginLeft="@dimen/common_padding_small"
+            android:scaleType="centerCrop"
+            android:src="@drawable/unknown_user"
+            app:siBorderColor="@android:color/darker_gray"
+            app:siBorderWidth="1.0dip" />
+
+        <TextView
+            android:id="@+id/posted_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/common_padding_medium"
+            android:lines="1"
+            android:text="18 giờ trước"
+            android:textColor="@color/gray_dark"
+            android:textSize="12.0sp" />
+
+        <ImageView
+            android:id="@+id/icon_clock"
+            android:layout_width="@dimen/clock_size"
+            android:layout_height="@dimen/clock_size"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/common_padding_small"
+            android:layout_toLeftOf="@id/posted_time"
+            android:contentDescription="@string/imgdesc"
+            android:src="@drawable/icon_clock" />
+
+        <TextView
+            android:id="@+id/seller_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/icon_clock"
+            android:layout_toRightOf="@id/seller_avatar"
+            android:maxLines="1"
+            android:padding="@dimen/common_padding_small"
+            android:text="Seller Name"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/common_text_size_medium" />
+    </RelativeLayout>
+</RelativeLayout>
