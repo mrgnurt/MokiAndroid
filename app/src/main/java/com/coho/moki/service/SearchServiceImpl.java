@@ -39,6 +39,9 @@ public class SearchServiceImpl implements SearchService {
         if (productSizeId != null){
             data.put(AppConstant.PRODUCT_SIZE_ID_TAG, productSizeId);
         }
+        if (brandId != null){
+            data.put(AppConstant.PRODUCT_BRAND_ID_TAG, brandId);
+        }
 
         data.put(AppConstant.INDEX_TAG, index);
         data.put(AppConstant.COUNT_TAG, count);

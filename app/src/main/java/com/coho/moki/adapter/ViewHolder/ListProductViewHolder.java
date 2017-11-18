@@ -68,11 +68,10 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     public void populate(Product product){
         mProductId = product.getProductId();
 
-        mFirstImage.setImageResource(R.drawable.no_image);
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
         mTxtComment.setText(product.getNumComment() + "");
-        mTxtPrice.setText(product.getNumComment() + " K");
+        mTxtPrice.setText(product.getPrice() + "");
         mFrameProgress.setVisibility(View.VISIBLE);
 
         if (product.getPricePercent() == 0){
@@ -87,7 +86,7 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             firstImageUrl = product.getImageUrls().get(0);
         }
 
-        LoadImageUtils.loadImageFromUrl(firstImageUrl, mFirstImage, new OnLoadImageListener() {
+        LoadImageUtils.loadImageFromUrl(firstImageUrl, R.drawable.no_image, mFirstImage, new OnLoadImageListener() {
             @Override
             public void onSuccess() {
                 mFrameProgress.setVisibility(View.GONE);
@@ -99,7 +98,6 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        mFrameProgress.setVisibility(View.GONE);
     }
 
     public void setListener(OnClickProductItemListenner listener){

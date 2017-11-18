@@ -158,6 +158,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     private boolean isOwnerProduct;
 
+    private Integer mNumProduct;
+
+    private Integer mScore;
+
 
     @BindView(R.id.txtHeader)
     TextView txtHeader;
@@ -446,6 +450,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private void clickUserInfo() {
         Intent intent = new Intent(this, UserInfoActivity.class);
         DialogUtil.showProgress(this);
+        intent.putExtra("userId", mSellerId);
+        intent.putExtra("numProduct", mNumProduct);
+        intent.putExtra("score", mScore);
         startActivity(intent);
     }
 
@@ -466,8 +473,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                 dialog.dismiss();
             }
         };
-        dialog.findViewById(R.id.viewTop).setOnClickListener(closeListener);
-        dialog.findViewById(R.id.btnCancel).setOnClickListener(closeListener);
+        View viewTop = dialog.findViewById(R.id.viewTop);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        viewTop.setOnClickListener(closeListener);
+        btnCancel.setOnClickListener(closeListener);
         dialog.show();
     }
 
@@ -498,8 +507,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
         txtName.setText(seller.getName());
         LoadImageUtils.loadImageFromUrl(seller.getAvatar(), R.drawable.unknown_user, imgAvatar, null);
-        txtScore.setText(": " + response.getSeller().getScore());
-        txtProduct.setText(": " + response.getSeller().getListing());
+        mSellerId = seller.getId();
+        mScore = response.getSeller().getScore();
+        mNumProduct = response.getSeller().getListing();
+        txtScore.setText(": " + mScore);
+        txtProduct.setText(": " + mNumProduct);
         txtExpandable.setVisibility(View.VISIBLE);
 
         dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao" +
@@ -740,4 +752,5 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         mProductDetailPresenter.getProductCommentRemote(productId);
         super.onResume();
     }
+
 }

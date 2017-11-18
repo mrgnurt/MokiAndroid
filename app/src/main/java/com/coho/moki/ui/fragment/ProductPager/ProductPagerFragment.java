@@ -1,22 +1,19 @@
 package com.coho.moki.ui.fragment.ProductPager;
 
-import android.animation.Animator;
-import android.content.Intent;
-import android.graphics.Camera;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.CategoryPagerAdapter;
+import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.ui.base.BaseFragment;
+import com.coho.moki.ui.fragment.ListProduct.ListProductFragment;
 import com.coho.moki.ui.main.MainActivity;
-import com.coho.moki.ui.product.CameraActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,8 @@ import ss.com.bannerslider.views.BannerSlider;
 
 public class ProductPagerFragment extends BaseFragment implements ProductPagerContract.View {
 
+    private  static final String TAG = "ProductPagerFragment";
+
     @BindView(R.id.tl_categories)
     TabLayout mTLCategories;
 
@@ -41,7 +40,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     ViewPager mVPContent;
 
     @BindView(R.id.scrollable_layout)
-    ScrollableLayout mScrollableLayout;
+    public ScrollableLayout mScrollableLayout;
 
     @BindView(R.id.campaign_view_container)
     View mCampaignViewContainer;
@@ -53,6 +52,8 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     Button mBtnCamera;
 
     ProductPagerContract.Presenter mPresenter;
+    private OnClickSellListener mOnClickSellListener;
+    CategoryPagerAdapter mCategoryPagerAdapter;
 
     List<Banner> banners = new ArrayList<Banner>();
     List<Category> categories = new ArrayList<Category>();
@@ -81,13 +82,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         showBannerSlider();
         mPresenter.callServiceGetCampaigns();
 //        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
-
-        mBtnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CameraActivity.class));
-            }
-        });
+        initClickSellListener();
 
     }
 
@@ -107,8 +102,8 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         categories.add(new Category("", "Bé vệ sinh"));
         categories.add(new Category("", "Bé khỏe - an toàn"));
         categories.add(new Category("", "Bé đi ra ngoài"));
-        CategoryPagerAdapter adapter = new CategoryPagerAdapter(getFragmentManager(), categories);
-        mVPContent.setAdapter(adapter);
+        mCategoryPagerAdapter = new CategoryPagerAdapter(getFragmentManager(), categories);
+        mVPContent.setAdapter(mCategoryPagerAdapter);
         mTLCategories.setupWithViewPager(mVPContent);
     }
 
@@ -143,6 +138,31 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         else {
             ((MainActivity)getActivity()).setVisibleTopBar(visible, mBtnCamera);
         }
+    }
+
+    public void changeListProductLayout(){
+
+        if (mVPContent.getAdapter() != null && mVPContent.getAdapter().getCount() != 0){
+            for (int i = 0; i < mVPContent.getAdapter().getCount(); i++){
+                ListProductFragment fragment = (ListProductFragment) mCategoryPagerAdapter.getRegisteredFragment(i);
+                if (fragment != null){
+                    fragment.changeViewMode();
+                }
+            }
+        }
+    }
+
+    public void setSellListener(OnClickSellListener listener) {
+        this.mOnClickSellListener = listener;
+    }
+
+    private void initClickSellListener() {
+        mBtnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnClickSellListener.onClick();
+            }
+        });
     }
 
 }

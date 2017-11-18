@@ -5,6 +5,7 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.BrandResponceData;
+import com.coho.moki.data.remote.SearchProductResponseData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import retrofit2.http.QueryMap;
 
 public class BrandServiceImpl implements BrandService {
     @Override
-    public void getListBrand(String categoryId, ResponseListener<List<BrandResponceData>> listener) {
+    public void getListBrand(String categoryId, final ResponseListener<List<BrandResponceData>> listener) {
 
         Map<String, Object> data = new HashMap<String, Object>();
         if (categoryId != null){
@@ -33,18 +34,34 @@ public class BrandServiceImpl implements BrandService {
         call.enqueue(new Callback<BaseResponse<List<BrandResponceData>>>() {
             @Override
             public void onResponse(Call<BaseResponse<List<BrandResponceData>>> call, Response<BaseResponse<List<BrandResponceData>>> response) {
-                int code = response.body().getCode();
-                if (code == ResponseCode.OK.code){
-//                    listener.onSuccess(response.body().getData());
+
+                BaseResponse<List<BrandResponceData>> bodyResponse = response.body();
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
                 }
-                else{
-//                    listener.onFailure(response.body().getMessage());
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
                 }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(bodyResponse.getData());
             }
 
             @Override
             public void onFailure(Call<BaseResponse<List<BrandResponceData>>> call, Throwable t) {
-//                listener.onFailure(t.getMessage());
+                listener.onFailure(t.getMessage());
             }
         });
     }

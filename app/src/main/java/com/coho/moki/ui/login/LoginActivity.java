@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void handleIntent(Intent intent) {
         int loginType = intent.getIntExtra(AppConstant.LOGIN_TYPE_TAG, 1);
+        Log.d("tuton", "login type: " + loginType);
         if (loginType == AppConstant.OTHER_PEOPLE_LOGIN) {
             showPopup(AppConstant.LOGOUT_PUSH_CONTENT);
         }

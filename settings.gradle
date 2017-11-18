@@ -1,1 +1,2 @@
 include ':SlidingMenu', ':app', ':pulltorefresh-and-loadmore', ':mediapicker'
+include ':wheel'

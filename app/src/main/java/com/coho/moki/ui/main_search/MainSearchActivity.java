@@ -16,6 +16,7 @@ import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.model.Size;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.brand_search.SearchBrandActivity;
 import com.coho.moki.ui.product_search.ProductSearchActivity;
 import com.coho.moki.ui.size.SizeActivity;
 
@@ -31,7 +32,10 @@ import butterknife.OnClick;
 public class MainSearchActivity extends BaseActivity implements MainSearchContract.View {
 
     String mKeyword;
-    String mSizeId;
+    String mSizeId = null;
+    String mBrandId = null;
+
+    boolean checkSearch = false;
 
     @Inject
     MainSearchContract.Presenter mPresenter;
@@ -42,17 +46,31 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
     @BindView(R.id.txtSize)
     TextView mTxtSize;
 
+    @BindView(R.id.txtBrand)
+    TextView mTxtBrand;
+
+    @BindView(R.id.btn_search)
+    Button mBtnSearch;
+
     @OnClick(R.id.layout_size)
     public void clickChooseSize(){
         startActivityForResult(new Intent(BaseApp.getContext(), SizeActivity.class), AppConstant.REQUEST_CODE_SIZE);
     }
 
+    @OnClick(R.id.layout_brand)
+    public void clickChooseBrand(){
+        startActivityForResult(new Intent(BaseApp.getContext(), SearchBrandActivity.class), AppConstant.REQUEST_CODE_BRAND);
+    }
+
     @OnClick(R.id.btn_search)
     public void onClickButtonSearch(){
-        mKeyword = mEdtKeyword.getText().toString();
-//        mPresenter.callSearchProduct(keyword);
 
-        openProductSearchActivity(mKeyword, mSizeId);
+        if (checkSearch){
+            mKeyword = mEdtKeyword.getText().toString();
+
+            openProductSearchActivity(mKeyword, mSizeId, mBrandId);
+        }
+
 
     }
 
@@ -78,8 +96,19 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
             @Override
             public void afterTextChanged(Editable editable) {
 
+                checkSearch();
             }
         });
+    }
+
+    public void enableSearch(){
+        checkSearch = true;
+        mBtnSearch.setBackgroundResource(R.drawable.background_enable_button);
+    }
+
+    public void disableSearch(){
+        checkSearch = false;
+        mBtnSearch.setBackgroundResource(R.drawable.background_disable_button);
     }
 
     @Override
@@ -88,10 +117,11 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
     }
 
     @Override
-    public void openProductSearchActivity(String keyword, String sizeId) {
+    public void openProductSearchActivity(String keyword, String sizeId, String brandId) {
         Intent intent = new Intent(BaseApp.getContext(), ProductSearchActivity.class);
         intent.putExtra(AppConstant.KEYWORD_TAG, keyword);
         intent.putExtra(AppConstant.PRODUCT_SIZE_ID_TAG, sizeId);
+        intent.putExtra(AppConstant.PRODUCT_BRAND_ID_TAG, brandId);
         startActivity(intent);
     }
 
@@ -102,10 +132,27 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
         if (requestCode == AppConstant.REQUEST_CODE_SIZE){
             if (resultCode == AppConstant.RESULT_CODE_SIZE){
                 Size size = data.getParcelableExtra(AppConstant.SIZE_TAG);
-                Log.d("sizeactivity", size.getSizeName());
                 mSizeId = size.getSizeId();
                 mTxtSize.setText(size.getSizeName());
+                checkSearch();
             }
+        }
+        else if (requestCode == AppConstant.REQUEST_CODE_BRAND){
+            if (resultCode == AppConstant.RESULT_CODE_BRAND){
+                mBrandId = data.getStringExtra(AppConstant.BRAND_TAG_ID);
+                mTxtBrand.setText(data.getStringExtra(AppConstant.BRAND_TAG_NAME));
+                checkSearch();
+            }
+        }
+    }
+
+    private void checkSearch(){
+
+        if (mEdtKeyword.getText().length() == 0 && mSizeId == null && mBrandId == null){
+            disableSearch();
+        }
+        else {
+            enableSearch();
         }
     }
 
