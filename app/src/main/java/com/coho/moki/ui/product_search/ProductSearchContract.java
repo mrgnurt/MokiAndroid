@@ -23,6 +23,8 @@ public interface ProductSearchContract {
         void showPopup(String message);
 
         void setSearchHeader(String text);
+
+        void showSearchNotFound();
     }
 
     interface Presenter extends BasePresenter<ProductSearchContract.View> {

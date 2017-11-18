@@ -68,7 +68,12 @@ public class SearchServiceImpl implements SearchService {
                 }
 
                 if (bodyResponse.getCode() != ResponseCode.OK.code) {
-                    listener.onFailure(bodyResponse.getMessage());
+                    if (bodyResponse.getCode() == ResponseCode.SEARCH_NOT_FOUND.code){
+                        listener.onFailure(AppConstant.SEARCH_NOT_FOUND);
+                    }
+                    else {
+                        listener.onFailure(bodyResponse.getMessage());
+                    }
                     return;
                 }
 

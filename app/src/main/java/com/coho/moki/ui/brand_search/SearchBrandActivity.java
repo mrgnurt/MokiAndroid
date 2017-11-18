@@ -3,7 +3,6 @@ package com.coho.moki.ui.brand_search;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import com.coho.moki.service.BrandService;
 import com.coho.moki.service.BrandServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class SearchBrandActivity extends BaseActivity {
 
     @Override
     public int setContentViewId() {
-        return R.layout.search_brand;
+        return R.layout.sticklist;
     }
 
     @Override
@@ -102,10 +102,12 @@ public class SearchBrandActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
+        DialogUtil.showProgress(this);
         brandService.getListBrand(mCategory, new ResponseListener<List<BrandResponceData>>() {
             @Override
             public void onSuccess(List<BrandResponceData> dataResponse) {
-                Log.d("trungsize", dataResponse.size() + "");
+                DialogUtil.hideProgress();
                 brandResponceDatas.addAll(dataResponse);
                 Collections.sort(brandResponceDatas);
 
@@ -116,6 +118,7 @@ public class SearchBrandActivity extends BaseActivity {
 
             @Override
             public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
                 Utils.toastShort(SearchBrandActivity.this, errorMessage);
             }
         });

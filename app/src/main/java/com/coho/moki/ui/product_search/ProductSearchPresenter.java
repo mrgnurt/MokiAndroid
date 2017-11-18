@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.SearchProductResponseData;
 import com.coho.moki.service.ResponseListener;
@@ -59,7 +60,13 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
                     public void onFailure(String errorMessage) {
                         Log.d("search", "fail");
                         mView.hideLoadProgress();
-                        mView.showPopup(errorMessage);
+
+                        if (errorMessage.equals(AppConstant.SEARCH_NOT_FOUND)){
+                            mView.showSearchNotFound();
+                        }
+                        else {
+                            mView.showPopup(errorMessage);
+                        }
 //                        Utils.toastShort(BaseApp.getContext(), errorMessage);
                     }
                 });

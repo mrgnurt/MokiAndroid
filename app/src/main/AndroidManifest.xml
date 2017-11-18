@@ -112,7 +112,8 @@
         <activity
             android:name=".ui.product.add.AddNewAddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
 
         <activity
             android:name=".ui.product.add.SearchAddressActivity"
@@ -172,6 +173,11 @@
 
         <activity
             android:name=".ui.start_tutorial.StartTutorialActivity2"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".ui.ship_from.ShipFromActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

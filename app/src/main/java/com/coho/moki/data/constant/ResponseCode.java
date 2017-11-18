@@ -10,7 +10,9 @@ public enum ResponseCode {
     SPAM(9991, "Spam"),
     PRODUCT_NOT_EXIT(9992, "Product is not existed."),
     CODE_VERIFY_INCORRECT(9993, "Code verify is incorrect."),
-    NO_DATA_OR_END_LIST_DATA(9994, "No Data or end of list data.");
+    NO_DATA_OR_END_LIST_DATA(9994, "No Data or end of list data."),
+    SEARCH_NOT_FOUND(1019, "Not found items in system");
+
 
     public int code;
 

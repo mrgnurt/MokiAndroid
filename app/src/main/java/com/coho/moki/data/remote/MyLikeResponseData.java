@@ -1,5 +1,7 @@
 package com.coho.moki.data.remote;
 
+import java.util.List;
+
 /**
  * Created by trung on 18/11/2017.
  */
@@ -9,9 +11,9 @@ public class MyLikeResponseData {
     private String id;
     private String name;
     private int price;
-    private String image;
+    private List<String> image;
 
-    public MyLikeResponseData(String id, String name, int price, String image) {
+    public MyLikeResponseData(String id, String name, int price, List<String> image) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -42,11 +44,11 @@ public class MyLikeResponseData {
         this.price = price;
     }
 
-    public String getImage() {
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 }

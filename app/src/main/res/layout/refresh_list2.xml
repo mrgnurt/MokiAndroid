@@ -6,6 +6,7 @@
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
@@ -13,5 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include
+        android:id="@+id/emptyLayout"
+        android:visibility="gone"
+        layout="@layout/empty_layout"/>
 
 </LinearLayout>

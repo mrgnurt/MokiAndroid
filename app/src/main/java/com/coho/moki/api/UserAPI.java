@@ -1,10 +1,12 @@
 package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.ShipFromResponseData;
 import com.coho.moki.data.remote.UserFollowResponseData;
 import com.coho.moki.data.remote.UserInfoResponseData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -24,4 +26,7 @@ public interface UserAPI {
 
     @POST("/users/followed")
     Call<BaseResponse<ArrayList<UserFollowResponseData>>> getUserFollowed(@Body Map<String, Object> data);
+
+    @POST("/users/get-ship-from")
+    Call<BaseResponse<List<ShipFromResponseData>>> callGetListShipFrom(@Body Map<String, Object> tag);
 }

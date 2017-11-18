@@ -53,4 +53,9 @@
 
         </android.support.v7.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include
+        android:id="@+id/search_no_result"
+        layout="@layout/search_no_result"
+        android:visibility="gone"/>
 </LinearLayout>

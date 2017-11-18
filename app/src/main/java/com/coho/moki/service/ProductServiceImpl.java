@@ -7,10 +7,12 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -93,5 +95,52 @@ public class ProductServiceImpl implements ProductService {
             }
 
         });
+    }
+
+    @Override
+    public void getMyLikeProduct(String token, int index, int count, final ResponseListener<List<MyLikeResponseData>> listener) {
+
+        Map<String, Object> data = new HashMap<>();
+        data.put(AppConstant.TOKEN, token);
+        data.put(AppConstant.INDEX_TAG, index);
+        data.put(AppConstant.COUNT_TAG, count);
+
+        ProductAPI service = ServiceGenerator.createService(ProductAPI.class);
+        Call<BaseResponse<List<MyLikeResponseData>>> call = service.callGetMyLikeProduct(data);
+        call.enqueue(new Callback<BaseResponse<List<MyLikeResponseData>>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<List<MyLikeResponseData>>> call, Response<BaseResponse<List<MyLikeResponseData>>> response) {
+                BaseResponse<List<MyLikeResponseData>> bodyResponse = response.body();
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
+                }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(response.body().getData());
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<List<MyLikeResponseData>>> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
+
+
+
     }
 }

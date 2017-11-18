@@ -3,6 +3,8 @@ package com.coho.moki.ui.product_search;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
@@ -27,6 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by trung on 07/11/2017.
@@ -47,6 +50,19 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
 
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+
+    @BindView(R.id.search_no_result)
+    RelativeLayout mSearchNoResult;
+
+    @OnClick(R.id.txtAdvandedSearch)
+    public void clickTxtAdvandedSearch(){
+        this.finish();
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void clickButtonBack(){
+        this.finish();
+    }
 
     @Override
     public int setContentViewId() {
@@ -121,8 +137,25 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
         String sizeId = intent.getStringExtra(AppConstant.PRODUCT_SIZE_ID_TAG);
         String brandId = intent.getStringExtra(AppConstant.PRODUCT_BRAND_ID_TAG);
 
+        setHeaderText(keyword, sizeId, brandId);
+
         mPresenter.initParamSearch(keyword, sizeId, brandId);
 
+    }
+
+    public void setHeaderText(String keyword, String sizeId, String brandId){
+        String header = "";
+        if (keyword != null){
+            header = header + keyword + ",";
+        }
+        if(sizeId != null){
+            header = header + sizeId + ",";
+        }
+        if (brandId != null) {
+            header = header + brandId + ",";
+        }
+
+        mTxtHeader.setText(header);
     }
 
     private void callSearchProduct(){
@@ -136,6 +169,12 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
 
     public void setSearchHeader(String text) {
         mTxtHeader.setText(text);
+    }
+
+    @Override
+    public void showSearchNotFound() {
+        mRefreshLayout.setVisibility(View.GONE);
+        mSearchNoResult.setVisibility(View.VISIBLE);
     }
 
     @Override

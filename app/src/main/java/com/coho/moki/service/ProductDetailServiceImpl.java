@@ -2,11 +2,13 @@ package com.coho.moki.service;
 
 import android.util.Log;
 
+import com.coho.moki.api.ProductAPI;
 import com.coho.moki.api.ProductDetailAPI;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.LikeResponseData;
+import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 import com.coho.moki.data.remote.UserInfoResponseData;
@@ -176,4 +178,5 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             }
         });
     }
+
 }

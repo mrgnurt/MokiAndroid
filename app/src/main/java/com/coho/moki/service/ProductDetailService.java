@@ -1,6 +1,7 @@
 package com.coho.moki.service;
 
 import com.coho.moki.data.remote.LikeResponseData;
+import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
 import com.coho.moki.data.remote.ProductDetailResponse;
 

@@ -67,9 +67,9 @@ public class ListMyLikeAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        LoadImageUtils.loadImageFromUrl(myLikeResponseDataList.get(i).getImage(), R.drawable.no_image, viewHolder.imgProduct, null);
+        LoadImageUtils.loadImageFromUrl(myLikeResponseDataList.get(i).getImage().get(0), R.drawable.no_image, viewHolder.imgProduct, null);
         viewHolder.txtNameProduct.setText(myLikeResponseDataList.get(i).getName());
-        viewHolder.txtPrice.setText(myLikeResponseDataList.get(i).getPrice() + "");
+        viewHolder.txtPrice.setText(myLikeResponseDataList.get(i).getPrice() + " VND");
 
         return view;
     }

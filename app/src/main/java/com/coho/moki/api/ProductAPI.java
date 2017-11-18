@@ -2,9 +2,11 @@ package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
+import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,4 +25,7 @@ public interface ProductAPI {
 
     @POST("/products/user-listing")
     Call<BaseResponse<ArrayList<UserProductResponseData>>> callGetUserProduct(@Body Map<String, Object> tag);
+
+    @POST("/products/my-like")
+    Call<BaseResponse<List<MyLikeResponseData>>> callGetMyLikeProduct(@Body Map<String, Object> tag);
 }

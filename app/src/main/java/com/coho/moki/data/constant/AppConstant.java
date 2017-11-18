@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.1.39:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.37:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -21,6 +21,9 @@ public class AppConstant {
     public static final String KEYWORD_TAG = "keyword";
     public static final String PRODUCT_SIZE_ID_TAG = "productSizeId";
     public static final String PRODUCT_BRAND_ID_TAG = "brandId";
+    public static final String LEVEL_TAG = "level";
+    public static final String PARENT_ID_TAG = "parentId";
+
 
     public static final String TOKEN = "token";
     public static final String ID = "id";
@@ -40,6 +43,8 @@ public class AppConstant {
     public static final String SIZE_TAG = "SIZE";
     public static final String BRAND_TAG_NAME = "BRAND_NAME";
     public static final String BRAND_TAG_ID = "BRAND_ID";
+    public static final String SHIPFROM_TAG_NAME = "SHIPFROM_NAME";
+    public static final String SHIPFROM_TAG_ID = "SHIPFROM_ID";
     public static final int Home_MENU_INDEX = 0;
     public static final int COUNT_PRODUCTS_GET = 8;
     public static final int COUNT_SEARCH_PRODUCT = 6;
@@ -138,4 +143,8 @@ public class AppConstant {
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 
     public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
+
+    public static final String SEARCH_NOT_FOUND = "not";
+
+    public static final int RESULT_CODE_SHIPFORM = 1;
 }
