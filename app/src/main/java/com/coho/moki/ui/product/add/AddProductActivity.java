@@ -31,6 +31,7 @@ import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.ProductCategoryResponse;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.brand_search.SearchBrandActivity;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
 
@@ -532,6 +533,8 @@ public class AddProductActivity extends BaseActivity {
                         break;
                     case R.id.edtBrand:
                         // TODO: goto brand activity
+//                        intent = new Intent(BaseApp.getContext(), SearchBrandActivity.class);
+
                         break;
                     case R.id.edtSize:
                         // TODO: goto size activity
