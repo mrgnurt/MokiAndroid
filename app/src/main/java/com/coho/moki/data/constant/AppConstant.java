@@ -118,6 +118,13 @@ public class AppConstant {
     public static final String PACKAGE_TAG = "package";
 
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+    public static final String SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
+    public static final String INVITE_FRAGMENT_TAG = "INVITE_FRAGMENT";
+    public static final String SUPPORT_FRAGMENT_TAG = "SUPPORT_FRAGMENT";
+    public static final String SELL_FRAGMENT_TAG = "SELL_FRAGMENT";
+    public static final String BUY_FRAGMENT_TAG = "BUY_FRAGMENT";
+    public static final String CHARITY_FRAGMENT_TAG = "CHARITY_FRAGMENT";
+    public static final String MYLIKE_FRAGMENT_TAG = "MYLIKE_FRAGMENT";
 
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingTop="@dimen/common_padding_medium"
+                android:text="@string/setup_account"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_normal"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnMyPage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/setting_home_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common_padding_medium"
+                    android:text="@string/my_page"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/common_padding_small"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnMyAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_address_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/my_address"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="5.0dip"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnChangePass"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_password_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/change_pasword"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/common_padding_small"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnBlockList"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_block_list_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/block_list"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/common_padding_small"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="@dimen/common_padding_medium"
+                android:text="@string/about_account"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_normal"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnAccount"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_account_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/account"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/common_padding_small"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="@dimen/common_padding_medium"
+                android:text="@string/notification"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_normal"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnSetupNotification"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_noti_setting_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/setup_notification"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/common_padding_small"
+                    android:src="@drawable/sidemenu_next_arrow_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="@dimen/common_padding_medium"
+                android:text="@string/about_app"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_normal"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/btnVersion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/common_padding_medium"
+                android:paddingLeft="@dimen/common_padding_large"
+                android:paddingRight="@dimen/common_padding_medium"
+                android:paddingTop="@dimen/common_padding_medium">
+
+                <com.coho.moki.ui.custom.SquareImageView
+                    android:layout_width="@dimen/setting_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_padding_medium"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/setting_version_icon" />
+
+                <TextView
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:text="@string/version"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/common_text_size_small" />
+
+                <TextView
+                    android:id="@+id/txtVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="@dimen/common_padding_medium"
+                    android:paddingRight="@dimen/common_padding_medium"
+                    android:text="1.0"
+                    android:textColor="@color/red_dark" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/gray" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -41,7 +41,14 @@ import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.MessageFragment;
+import com.coho.moki.ui.fragment.NewsPager.BuyFragment;
+import com.coho.moki.ui.fragment.NewsPager.CharityFragment;
+import com.coho.moki.ui.fragment.NewsPager.InviteFragment;
+import com.coho.moki.ui.fragment.NewsPager.MyLikeFragment;
 import com.coho.moki.ui.fragment.NewsPager.NewsPagerFragment;
+import com.coho.moki.ui.fragment.NewsPager.SellFragment;
+import com.coho.moki.ui.fragment.NewsPager.SettingsFragment;
+import com.coho.moki.ui.fragment.NewsPager.SupportFragment;
 import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
@@ -71,6 +78,14 @@ public class MainActivity extends BaseActivity implements MainView{
     private Fragment currentDisplayFragment;
     private ProductPagerFragment productPagerFragment;
     private NewsPagerFragment mNewsPagerFragment;
+    private SettingsFragment mSettingsFragment;
+    private SupportFragment mSupportFragment;
+    private InviteFragment mInviteFragment;
+    private SellFragment mSellFragment;
+    private BuyFragment mBuyFragment;
+    private CharityFragment mCharityFragment;
+    private MyLikeFragment mMyLikeFragment;
+
     private int mCurrentMenuIndex = AppConstant.Home_MENU_INDEX;
 
     public int mViewType = AppConstant.GRID_VIEW_PRODUCT;
@@ -186,6 +201,13 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void initView() {
         this.productPagerFragment = new ProductPagerFragment();
+        this.mSettingsFragment = new SettingsFragment();
+        this.mInviteFragment = new InviteFragment();
+        this.mSupportFragment = new SupportFragment();
+        this.mSellFragment = new SellFragment();
+        this.mBuyFragment = new BuyFragment();
+        this.mCharityFragment = new CharityFragment();
+        this.mMyLikeFragment = new MyLikeFragment();
         addMessageFragment();
         addNotificationFragment();
         productPagerFragment.setSellListener(new OnClickSellListener() {
@@ -255,21 +277,23 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void showFragment(Fragment showFragment, String tag) {
-//        if (showFragment != this.currentDisplayFragment) {
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
-//                ft.add(R.id.main_content, showFragment, tag).addToBackStack(null);
-//            } else {
-//                ft.show(showFragment);
-//            }
-//            if (this.currentDisplayFragment != null) {
-//                ft.hide(this.currentDisplayFragment);
-//            }
-//            ft.commit();
-//            this.currentDisplayFragment = showFragment;
-//        }
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
+        if (showFragment != this.currentDisplayFragment) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
+                ft.add(R.id.main_content, showFragment, tag).addToBackStack(null);
+            } else {
+                ft.show(showFragment);
+            }
+            if (this.currentDisplayFragment != null) {
+                ft.hide(this.currentDisplayFragment);
+            }
+            ft.commit();
+            this.currentDisplayFragment = showFragment;
+        }
+
+
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.add(R.id.main_content, showFragment, tag).commit();
     }
 
     public void addMessageFragment() {
@@ -322,6 +346,30 @@ public class MainActivity extends BaseActivity implements MainView{
 
     private void setViewItemMenuSelect(int index){
         switch (index) {
+            case 0:
+                showFragment(productPagerFragment, "home");
+                break;
+            case 2:
+                showFragment(mMyLikeFragment, AppConstant.MYLIKE_FRAGMENT_TAG);
+                break;
+            case 3:
+                showFragment(mSellFragment, AppConstant.SELL_FRAGMENT_TAG);
+                break;
+            case 4:
+                showFragment(mBuyFragment, AppConstant.BUY_FRAGMENT_TAG);
+                break;
+            case 5:
+                showFragment(mCharityFragment, AppConstant.CHARITY_FRAGMENT_TAG);
+                break;
+            case 6:
+                showFragment(mSettingsFragment, AppConstant.SETTINGS_FRAGMENT_TAG);
+                break;
+            case 7:
+                showFragment(mSupportFragment, AppConstant.SUPPORT_FRAGMENT_TAG);
+                break;
+            case 8:
+                showFragment(mInviteFragment, AppConstant.INVITE_FRAGMENT_TAG);
+                break;
             case 9:
                 AccountUntil.removeInfoAccount();
                 Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
@@ -332,6 +380,11 @@ public class MainActivity extends BaseActivity implements MainView{
                 closeSlidingMenu(index);
                 break;
         }
+
+        if (index >= 0 && index <= 8){
+            closeSlidingMenu(index);
+        }
+
     }
 
     private void closeSlidingMenu(int index) {

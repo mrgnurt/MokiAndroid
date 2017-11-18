@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_padding_small">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.coho.moki.ui.custom.SquareImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="@dimen/sell_product_size"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/unknown_user" />
+
+            <ImageView
+                android:id="@+id/imgBanner"
+                android:layout_width="@dimen/sell_product_size"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/common_padding_small"
+                android:scaleType="fitXY" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="8.0"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_padding_small">
+
+            <TextView
+                android:id="@+id/txtNameProduct"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_marginLeft="@dimen/common_padding_medium"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/common_text_size_normal" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_marginLeft="@dimen/common_padding_medium"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/red_dark"
+                android:textSize="@dimen/common_text_size_normal" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="9.0dip"
+            android:layout_height="16.0dip"
+            android:layout_margin="10.0dip"
+            android:src="@drawable/icon_nextarrow_normal" />
+    </LinearLayout>
+</LinearLayout>
