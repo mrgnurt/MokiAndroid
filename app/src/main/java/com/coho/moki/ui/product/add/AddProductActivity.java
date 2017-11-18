@@ -440,13 +440,13 @@ public class AddProductActivity extends BaseActivity {
         if (response.getHasBrand() == 1) {
             llBrand.setVisibility(View.VISIBLE);
         } else {
-            llBrand.setVisibility(View.INVISIBLE);
+            llBrand.setVisibility(View.GONE);
         }
 
         if (response.getHasSize() == 1) {
             llSize.setVisibility(View.VISIBLE);
         } else {
-            llSize.setVisibility(View.INVISIBLE);
+            llSize.setVisibility(View.GONE);
         }
 
         llWeight.setVisibility(View.VISIBLE);
