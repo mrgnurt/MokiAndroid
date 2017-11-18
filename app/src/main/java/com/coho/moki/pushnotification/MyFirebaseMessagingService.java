@@ -15,6 +15,8 @@ import android.util.Log;
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.ui.login.LoginActivity;
+import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.ui.product.ProductChatActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
@@ -31,7 +33,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         Map<String, String> payload = remoteMessage.getData();
         String codeString = payload.get("code");
         int code = Integer.parseInt(codeString);
@@ -61,20 +62,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (code == AppConstant.LOGOUT_PUSH_CODE) {
-            AccountUntil.removeInfoAccount();
             if (currActivity != null) {
-                Intent intent = new Intent("com.coho.moki.push");
-                intent.putExtra("title", AppConstant.APP_NAME);
-                intent.putExtra("content", AppConstant.LOGOUT_PUSH_CONTENT);
-                LocalBroadcastManager.getInstance(currActivity).sendBroadcast(intent);
+                String pushTitle = AppConstant.APP_NAME;
+                String pushContent = AppConstant.LOGOUT_PUSH_CONTENT;
+                showNotification(code, pushTitle, pushContent, null);
             }
         }
     }
 
     public void showNotification(int code, String title, String content, Bundle extraData) {
-
         Context context = BaseApp.getContext();
-        Intent intent = new Intent(context, ProductChatActivity.class);
+        Intent intent;
+        if (code == AppConstant.CHAT_PUSH_CODE) {
+            intent = new Intent(context, ProductChatActivity.class);
+        } else if (code == AppConstant.LOGOUT_PUSH_CODE){
+            intent = new Intent(context, LoginActivity.class);
+        } else {
+            intent = new Intent(context, MainActivity.class);
+        }
         intent.putExtra(AppConstant.PACKAGE_TAG, extraData);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -85,13 +90,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setContentTitle(title);
         builder.setContentText(content);
 
-//        if (code == AppConstant.CHAT_PUSH_CODE) {
-//            builder.setSound(Uri.parse("android.resource://"
-//                    + context.getPackageName() + "/" + R.raw.new_message));
-//        } else if (code == AppConstant.LOGOUT_PUSH_CODE) {
-//            builder.setSound(Uri.parse("android.resource://"
-//                    + context.getPackageName() + "/" + R.raw.other_device_login));
-//        }
         builder.setAutoCancel(true);
 //        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon_app_name));
         builder.setSmallIcon(R.drawable.icon_app_name);
@@ -100,6 +98,4 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0, builder.build());
     }
-
-
 }

@@ -13,7 +13,12 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.product.ProductCategoryAdapter;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.ProductCategoryResponse;
+import com.coho.moki.data.remote.ProductCategoryResponse;
+import com.coho.moki.service.CategoryService;
+import com.coho.moki.service.CategoryServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.util.Utils;
 import com.costum.android.widget.PullAndLoadListView;
@@ -49,6 +54,7 @@ public class ProductCategoryActivity extends BaseActivity {
     List<ProductCategoryResponse> mCategoryList;
     ProductCategoryAdapter mCategoryAdapter;
     String categoryName;
+    CategoryService categoryService;
 
     @Override
     public int setContentViewId() {
@@ -61,10 +67,11 @@ public class ProductCategoryActivity extends BaseActivity {
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             public void onRefresh() {
                 // Do work to refresh the list here.
-                new ProductCategoryActivity.PullToRefreshDataTask().execute();
+//                new ProductCategoryActivity.PullToRefreshDataTask().execute();
             }
         });
         listView.setOnItemClickListener(new OnClickItemListCategory());
+        categoryService = new CategoryServiceImpl();
     }
 
     @Override
@@ -79,13 +86,11 @@ public class ProductCategoryActivity extends BaseActivity {
             response.setHasChild(0);
             response.setName(getResources().getString(R.string.all)); // this is parent category
             mCategoryList.add(response);
-            // TODO: call api to get list child category with categoryId
+            getCategoryList(response.getId());
         } else { // main category
             txtHeader.setText(Utils.toTitleCase(getResources().getString(R.string.category)));
-            // TODO: call api to get list category (if parentId = null => show in main category)
+            getCategoryList("");
         }
-        // TODO: remove fakeData() when call api
-        fakeData();
     }
 
     private void fakeData() {
@@ -133,7 +138,6 @@ public class ProductCategoryActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             // TODO: Handling when click "Tất cả" in child category
-
             Log.d(TAG, "click on item: " + position);
             ProductCategoryResponse response = mCategoryList.get(position - 1);
             if (response != null) {
@@ -202,6 +206,26 @@ public class ProductCategoryActivity extends BaseActivity {
             // Notify the loading more operation has finished
             listView.onRefreshComplete();
         }
+    }
+
+    public void getCategoryList(final String categoryId) {
+        categoryService.getCategoryList(categoryId, new ResponseListener<List<ProductCategoryResponse>>() {
+            @Override
+            public void onSuccess(List<ProductCategoryResponse> dataResponse) {
+                if (categoryId == "") {
+                    mCategoryList = dataResponse.subList(1, dataResponse.size() - 1);
+                } else {
+                    mCategoryList = dataResponse;
+                }
+                mCategoryAdapter = new ProductCategoryAdapter(ProductCategoryActivity.this, R.layout.product_category_item, mCategoryList);
+                listView.setAdapter(mCategoryAdapter);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Utils.toastShort(ProductCategoryActivity.this, errorMessage);
+            }
+        });
     }
 
 }

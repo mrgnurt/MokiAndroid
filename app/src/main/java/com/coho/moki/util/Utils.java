@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -326,6 +327,15 @@ public class Utils {
         df.setGroupingSize(3);
         res.append(df.format(Double.parseDouble(price)));
         return res.append(" VNĐ").toString();
+    }
+
+    public static String formatWeight(String weight) {
+        StringBuilder res = new StringBuilder();
+        String pattern = "###.#";
+        DecimalFormat df = new DecimalFormat(pattern);
+//        df.setGroupingSize(2);
+        res.append(df.format(Double.parseDouble(weight)));
+        return res.toString();
     }
 
     public static String formatPrice2(String price) {

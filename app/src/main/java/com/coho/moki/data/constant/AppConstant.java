@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.1.37:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.39:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -72,6 +72,7 @@ public class AppConstant {
     public static final String CATEGORY = "CATEGORY";
     public static final String CATEGORY_ID = "CATEGORY_ID";
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
+    public static final String PARENTID_TAG = "parentId";
 
     public static final String SOCKET_JOIN_ROOM_REQUEST = "join_room_request";
     public static final String SOCKET_JOIN_ROOM_RESPONSE = "join_room_response";
@@ -117,6 +118,14 @@ public class AppConstant {
 
     public static final String PACKAGE_TAG = "package";
 
+    public static final String TITLE_PUSH_TAG = "title";
+
+    public static final String CONTENT_PUSH_TAG = "content";
+
+    public static final int OTHER_PEOPLE_LOGIN = 2;
+
+    public static final String LOGIN_TYPE_TAG = "type";
+
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
     public static final String SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
     public static final String INVITE_FRAGMENT_TAG = "INVITE_FRAGMENT";
@@ -129,5 +138,4 @@ public class AppConstant {
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 
     public static final String POPUP_UNFOLLOW = "Bạn đã bỏ theo dõi";
-
 }

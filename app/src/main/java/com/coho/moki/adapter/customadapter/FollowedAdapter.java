@@ -1,6 +1,7 @@
 package com.coho.moki.adapter.customadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.UserFollowResponseData;
+import com.coho.moki.ui.login.LoginActivity;
+import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -71,14 +74,19 @@ public class FollowedAdapter extends ArrayAdapter {
         viewHolder.btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (userFollowResponseData.getFollowed() == 1) {
-                    DialogUtil.showPopupSuccess(context, AppConstant.POPUP_UNFOLLOW);
-                    userFollowResponseData.setFollowed(0);
-                    viewHolder.btnAction.setBackgroundResource(R.drawable.add);
+                if (AccountUntil.getUserToken() != null) {
+                    if (userFollowResponseData.getFollowed() == 1) {
+                        DialogUtil.showPopupSuccess(context, AppConstant.POPUP_UNFOLLOW);
+                        userFollowResponseData.setFollowed(0);
+                        viewHolder.btnAction.setBackgroundResource(R.drawable.add);
+                    } else {
+                        DialogUtil.showPopupSuccess(context, AppConstant.POPUP_FOLLOW + viewHolder.txtName.getText().toString());
+                        userFollowResponseData.setFollowed(1);
+                        viewHolder.btnAction.setBackgroundResource(R.drawable.delete);
+                    }
                 } else {
-                    DialogUtil.showPopupSuccess(context, AppConstant.POPUP_FOLLOW + viewHolder.txtName.getText().toString());
-                    userFollowResponseData.setFollowed(1);
-                    viewHolder.btnAction.setBackgroundResource(R.drawable.delete);
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
                 }
             }
         });
