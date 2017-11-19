@@ -52,6 +52,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.txtForgotPass)
     TextView txtForgotPass;
 
+    int loginType;
+
     @OnClick(R.id.login_button)
     public void onClickLoginButton(){
         checkLoginInput();
@@ -60,7 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @OnClick(R.id.btnCancel)
     public void onClickCancelButton(){
         Utils.hideSoftKeyboard(this);
-        openMainActivity();
+        openMainActivityAndFinish();
     }
 
     @Override
@@ -70,10 +72,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void handleIntent(Intent intent) {
-        int loginType = intent.getIntExtra(AppConstant.LOGIN_TYPE_TAG, 1);
-        Log.d("tuton", "login type: " + loginType);
+        loginType = intent.getIntExtra(AppConstant.LOGIN_TYPE_TAG, 1);
         if (loginType == AppConstant.OTHER_PEOPLE_LOGIN) {
             showPopup(AppConstant.LOGOUT_PUSH_CONTENT);
+        } else if (loginType == AppConstant.LOGIN_TO_ACTION) {
+            showPopup(AppConstant.LOGIN_TO_ACTION_TEXT);
         }
     }
 
@@ -104,7 +107,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         }
         else{
             Utils.hideSoftKeyboard(this);
-            if (Utils.checkInternetAvailable()){
+            if (Utils.checkInternetAvailable()) {
                 DialogUtil.showProgress(this);
                 mLoginPresenter.requestLoginRemote(txtPhoneNumber, txtPassword);
             }
@@ -115,10 +118,21 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
+    public void openMainActivityOrReturned() {
+        if (loginType != AppConstant.LOGIN_TO_ACTION) {
+            openMainActivity();
+        }
+        finishActivity();
+    }
+
+    public void openMainActivityAndFinish() {
+        openMainActivity();
+        finishActivity();
+    }
+
     public void openMainActivity() {
         Intent intent = new Intent(BaseApp.getContext(), MainActivity.class);
         startActivity(intent);
-        finishActivity();
     }
 
     public void finishActivity() {

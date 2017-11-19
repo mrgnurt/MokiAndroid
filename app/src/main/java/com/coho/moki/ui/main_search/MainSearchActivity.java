@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.brand_search.SearchBrandActivity;
 import com.coho.moki.ui.product_search.ProductSearchActivity;
 import com.coho.moki.ui.size.SizeActivity;
+import com.coho.moki.util.Utils;
 
 import javax.inject.Inject;
 
@@ -67,11 +69,8 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
 
         if (checkSearch){
             mKeyword = mEdtKeyword.getText().toString();
-
             openProductSearchActivity(mKeyword, mSizeId, mBrandId);
         }
-
-
     }
 
     @Override
@@ -99,6 +98,12 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
                 checkSearch();
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void btnNavaLeftOnClick() {
+        this.finish();
     }
 
     public void enableSearch(){

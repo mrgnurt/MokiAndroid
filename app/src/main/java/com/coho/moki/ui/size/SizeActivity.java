@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by trung on 07/11/2017.
@@ -60,6 +61,12 @@ public class SizeActivity extends BaseActivity implements SizeContract.View {
     public void showSizes(List<Size> sizes) {
         mListSizeAdapter.insertLastItem(sizes);
     }
+
+    @OnClick(R.id.btnNavLeft)
+    public void btnNavLeftOnClick() {
+        this.finish();
+    }
+
 
     public void initRV(){
 

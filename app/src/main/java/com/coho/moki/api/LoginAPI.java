@@ -24,4 +24,7 @@ public interface LoginAPI {
 
     @POST("devices/set-dev-token")
     Call<BaseResponse<String>> setDeviceToken(@Body Map<String, String> tag);
+
+    @POST("/logout")
+    Call<BaseResponse> logout(@Body Map<String, String> tag);
 }

@@ -3,7 +3,9 @@ package com.coho.moki.ui.product_search;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.coho.moki.ui.main_search.MainSearchContract;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
+import com.coho.moki.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
