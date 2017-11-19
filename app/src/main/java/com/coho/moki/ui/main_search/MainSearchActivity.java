@@ -69,7 +69,21 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
 
         if (checkSearch){
             mKeyword = mEdtKeyword.getText().toString();
-            openProductSearchActivity(mKeyword, mSizeId, mBrandId);
+
+            String header = "";
+            if (mKeyword != null){
+                header = header + mKeyword + ",";
+            }
+            if(mSizeId != null){
+                header = header + mTxtSize.getText() + ",";
+            }
+            if (mBrandId != null) {
+                header = header + mTxtBrand.getText() + ",";
+            }
+
+            header = header.substring(0, header.length() - 1);
+
+            openProductSearchActivity(mKeyword, mSizeId, mBrandId, header);
         }
     }
 
@@ -122,8 +136,9 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
     }
 
     @Override
-    public void openProductSearchActivity(String keyword, String sizeId, String brandId) {
+    public void openProductSearchActivity(String keyword, String sizeId, String brandId, String infoSearch) {
         Intent intent = new Intent(BaseApp.getContext(), ProductSearchActivity.class);
+        intent.putExtra(AppConstant.INFO_SEARCH_TAG, infoSearch);
         intent.putExtra(AppConstant.KEYWORD_TAG, keyword);
         intent.putExtra(AppConstant.PRODUCT_SIZE_ID_TAG, sizeId);
         intent.putExtra(AppConstant.PRODUCT_BRAND_ID_TAG, brandId);

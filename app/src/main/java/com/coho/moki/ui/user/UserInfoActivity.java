@@ -40,6 +40,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
 import ru.noties.scrollable.ScrollableLayout;
 
 /**
@@ -70,7 +71,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     FrameLayout userInfoLayout;
 
     @BindView(R.id.scrollable_layout)
-    ScrollableLayout scrollableLayout;
+    public ScrollableLayout scrollableLayout;
 
     @BindView(R.id.header)
     LinearLayout header;
@@ -340,7 +341,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
             public void onGlobalLayout() {
                 int[] locations = new int[2];
                 btnCollapse.getLocationInWindow(locations);
-                scrollableLayout.setMaxScrollY(locations[1] - 60);
+
+                header.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        scrollableLayout.setMaxScrollY(header.getHeight());
+                    }
+                });
+
                 if (firstSetShowHideButton) {
                     showHideMoreButton();
                     firstSetShowHideButton = false;

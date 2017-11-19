@@ -81,7 +81,6 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
 
     @Override
     public void initView() {
-        mTxtHeader.setText("Tìm Kiếm");
         initRV();
         initRefreshLayout();
     }
@@ -139,26 +138,13 @@ public class ProductSearchActivity extends BaseActivity implements ProductSearch
         String keyword = intent.getStringExtra(AppConstant.KEYWORD_TAG);
         String sizeId = intent.getStringExtra(AppConstant.PRODUCT_SIZE_ID_TAG);
         String brandId = intent.getStringExtra(AppConstant.PRODUCT_BRAND_ID_TAG);
+        String header = intent.getStringExtra(AppConstant.INFO_SEARCH_TAG);
 
-        setHeaderText(keyword, sizeId, brandId);
+        Log.d("trungsearch", header);
+        mTxtHeader.setText(header);
 
         mPresenter.initParamSearch(keyword, sizeId, brandId);
 
-    }
-
-    public void setHeaderText(String keyword, String sizeId, String brandId){
-        String header = "";
-        if (keyword != null){
-            header = header + keyword + ",";
-        }
-        if(sizeId != null){
-            header = header + sizeId + ",";
-        }
-        if (brandId != null) {
-            header = header + brandId + ",";
-        }
-
-        mTxtHeader.setText(header);
     }
 
     private void callSearchProduct(){

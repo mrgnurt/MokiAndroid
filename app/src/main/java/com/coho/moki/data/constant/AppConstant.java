@@ -132,6 +132,7 @@ public class AppConstant {
     public static final String LOGIN_TYPE_TAG = "type";
 
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+    public static final String INTROTUT_FRAGMENT_TAG = "INTROTUT_FRAGMENT";
     public static final String SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
     public static final String INVITE_FRAGMENT_TAG = "INVITE_FRAGMENT";
     public static final String SUPPORT_FRAGMENT_TAG = "SUPPORT_FRAGMENT";
@@ -164,4 +165,6 @@ public class AppConstant {
 
     public static final String LOGIN_TO_ACTION_TEXT = "Bạn cần đăng nhập để thực hiện chức năng này";
 
+
+    public static final String INFO_SEARCH_TAG = "INFO_SEARCH_TAG";
 }

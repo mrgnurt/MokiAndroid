@@ -45,7 +45,6 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
 
     @Override
     public void callSearchProduct() {
-        mView.setSearchHeader(mKeyword);
         mView.showLoadProgress();
         mSearchService.searchProduct(null, mKeyword, null, mBrandId, mSizeId, null, null, null, mIndex, AppConstant.COUNT_SEARCH_PRODUCT,
                 new ResponseListener<List<SearchProductResponseData>>() {
