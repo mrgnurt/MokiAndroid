@@ -8,5 +8,5 @@ public interface LoginView {
 
     void checkLoginInput();
 
-    void openMainActivity();
+    void openMainActivityOrReturned();
 }

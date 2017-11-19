@@ -40,6 +40,9 @@ import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
+import com.coho.moki.service.LogoutService;
+import com.coho.moki.service.LogoutServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.BuyFragment;
@@ -320,7 +323,6 @@ public class MainActivity extends BaseActivity implements MainView{
 
     public void hideNotificationFragment() {
         mLayoutNotification.setVisibility(View.GONE);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     }
 
     public void showNotificationFragment() {
@@ -371,10 +373,7 @@ public class MainActivity extends BaseActivity implements MainView{
                 showFragment(mInviteFragment, AppConstant.INVITE_FRAGMENT_TAG);
                 break;
             case 9:
-                AccountUntil.removeInfoAccount();
-                Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
-                startActivity(intent);
-                this.finish();
+                logout();
                 break;
             default:
                 closeSlidingMenu(index);
@@ -448,6 +447,28 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
         }
+    }
+
+    public void logout() {
+        String token = AccountUntil.getUserToken();
+        LogoutService logoutService = new LogoutServiceImpl();
+        DialogUtil.showProgress(this);
+        logoutService.logout(token, new ResponseListener() {
+            @Override
+            public void onSuccess(Object dataResponse) {
+                DialogUtil.hideProgress();
+                AccountUntil.removeInfoAccount();
+                Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
+                DialogUtil.showPopup(MainActivity.this, errorMessage);
+            }
+        });
     }
 
     @Override

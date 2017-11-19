@@ -155,4 +155,13 @@ public class AppConstant {
     public static final String SEARCH_NOT_FOUND = "not";
 
     public static final int RESULT_CODE_SHIPFORM = 1;
+
+    public static final String CAN_NOT_LOGOUT = "Có lỗi xảy ra, không thể đăng xuất lúc này";
+
+    public static final int LOGIN_REQUEST_CODE = 1;
+
+    public static final int LOGIN_TO_ACTION = 3;
+
+    public static final String LOGIN_TO_ACTION_TEXT = "Bạn cần đăng nhập để thực hiện chức năng này";
+
 }
