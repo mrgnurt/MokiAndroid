@@ -57,7 +57,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                     AccountUntil.saveDeviceId(finalDeviceId);
                 }
                 setDeviceToken();
-                mLoginView.openMainActivity();
+                mLoginView.openMainActivityOrReturned();
             }
 
             @Override

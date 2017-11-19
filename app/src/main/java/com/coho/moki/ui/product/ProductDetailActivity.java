@@ -5,7 +5,9 @@ import com.bluejamesbond.text.style.TextAlignment;
 import com.coho.moki.BaseApp;
 import com.coho.moki.adapter.product.ProductCommentAdapter;
 import com.coho.moki.adapter.product.ProductImageAdapter;
+import com.coho.moki.api.LoginAPI;
 import com.coho.moki.data.constant.AppConstant;
+import com.coho.moki.data.model.Product;
 import com.coho.moki.data.model.ProductComment;
 import com.coho.moki.data.remote.LikeResponseData;
 import com.coho.moki.data.remote.ProductCommentResponse;
@@ -140,7 +142,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private LinearLayout llCategoryParent;
 
     private String productId;
-    private String token;
 
     private String mProductAvatar;
 
@@ -188,11 +189,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         loadViewForCode();
         Intent intent = getIntent();
         productId = intent.getStringExtra(AppConstant.PRODUCT_ID);
-        token = AccountUntil.getUserToken();
-
-        if (AccountUntil.getAccountId() == null) {
-            btnBuy.setClickable(false);
-        }
 
 //        ActionBar mActionBar = getSupportActionBar();  //to support lower version too
 //        mActionBar.setDisplayShowHomeEnabled(false);
@@ -369,22 +365,27 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View v) {
 
-                if (AccountUntil.getAccountId().equals(mSellerId)) {
-                    Log.d(TAG, "La seller coi sp chinh no");
+                if (AccountUntil.getAccountId() == null) {
+                    Intent loginIntent = new Intent(ProductDetailActivity.this, LoginActivity.class);
+                    loginIntent.putExtra(AppConstant.LOGIN_TYPE_TAG, AppConstant.LOGIN_TO_ACTION);
+                    ProductDetailActivity.this.startActivityForResult(loginIntent, AppConstant.LOGIN_REQUEST_CODE);
                     return;
                 }
 
-                Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
-                // put data before switch activity
-                Bundle data = new Bundle();
-                data.putString(AppConstant.PRODUCT_ID_CHAT_TAG, productId);
-                data.putString(AppConstant.PRODUCT_AVATAR_CHAT_TAG, mProductAvatar);
-                data.putString(AppConstant.PARTNER_ID_CHAT_TAG, mPartnerId);
-                data.putString(AppConstant.PARTNER_USERNAME_CHAT_TAG, mPartnerUsername);
-                data.putString(AppConstant.PARTNER_AVATAR_CHAT_TAG, mPartnerAvatar);
+                if (AccountUntil.getAccountId().equals(mSellerId)) {
+                    Log.d(TAG, "La seller coi sp chinh no");
+                } else {
+                    Bundle data = new Bundle();
+                    data.putString(AppConstant.PRODUCT_ID_CHAT_TAG, productId);
+                    data.putString(AppConstant.PRODUCT_AVATAR_CHAT_TAG, mProductAvatar);
+                    data.putString(AppConstant.PARTNER_ID_CHAT_TAG, mPartnerId);
+                    data.putString(AppConstant.PARTNER_USERNAME_CHAT_TAG, mPartnerUsername);
+                    data.putString(AppConstant.PARTNER_AVATAR_CHAT_TAG, mPartnerAvatar);
 
-                intent.putExtra(AppConstant.PACKAGE_TAG, data);
-                startActivity(intent);
+                    Intent intent = new Intent(ProductDetailActivity.this, ProductChatActivity.class);
+                    intent.putExtra(AppConstant.PACKAGE_TAG, data);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -436,6 +437,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View view) {
                 DialogUtil.showProgress(ProductDetailActivity.this);
+                String token= AccountUntil.getUserToken();
                 if (token == null) {
                     ProductDetailActivity.this.finish();
                     Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
@@ -747,10 +749,10 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void onResume() {
+    protected void onStart() {
+        String token = AccountUntil.getUserToken();
         mProductDetailPresenter.getProductDetailRemote(token, productId);
         mProductDetailPresenter.getProductCommentRemote(productId);
-        super.onResume();
+        super.onStart();
     }
-
 }

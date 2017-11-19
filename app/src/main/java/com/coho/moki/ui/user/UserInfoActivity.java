@@ -1,6 +1,9 @@
 package com.coho.moki.ui.user;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.SpannableString;
@@ -9,6 +12,8 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -54,6 +59,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     private Integer numProduct;
     private Integer score;
     private boolean isFollowed = false;
+
 
     @Inject
     UserPresenter mUserPresenter;
@@ -166,6 +172,51 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     @Override
     public void initData() {
 
+    }
+
+    @OnClick(R.id.btnNavRight)
+    public void showMoreFeatureDialog() {
+//        final Dialog dialog = new Dialog(this, R.style.full_screen_dialog); // other solution for full screen dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_user_detail);
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setWindowAnimations(R.style.DialogAnimation);
+        View.OnClickListener closeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        };
+
+        View.OnClickListener shareListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                shareUserInfo();
+            }
+        };
+
+        View viewTop = dialog.findViewById(R.id.viewTop);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        Button btnShare = dialog.findViewById(R.id.btnShare);
+
+        viewTop.setOnClickListener(closeListener);
+        btnShare.setOnClickListener(shareListener);
+        btnCancel.setOnClickListener(closeListener);
+        dialog.show();
+    }
+
+    public void shareUserInfo() {
+        String userUrl = "https://mokivn.itch.io/";
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, userUrl);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
     private void showHideMoreButton() {
