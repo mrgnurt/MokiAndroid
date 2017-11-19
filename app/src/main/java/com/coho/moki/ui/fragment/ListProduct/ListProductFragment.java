@@ -324,7 +324,6 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 
     public void getProducts(){
         if (Utils.checkInternetAvailable()){
-            DialogUtil.showProgress(getActivity());
             mPresenter.callGetProducts();
         }
         else {

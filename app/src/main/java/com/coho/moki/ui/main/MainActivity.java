@@ -204,6 +204,7 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @Override
     public void initView() {
+        DialogUtil.showProgress(this);
         this.productPagerFragment = new ProductPagerFragment();
         this.mSettingsFragment = new SettingsFragment();
         this.mInviteFragment = new InviteFragment();
