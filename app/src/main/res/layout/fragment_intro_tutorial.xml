@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="0.8"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/slide1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/swipeImageView"
+            android:layout_width="@dimen/swipe_rect_size"
+            android:layout_height="@dimen/swipe_rect_size"
+            android:src="@drawable/tutorial_swipe" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/swipeImageView"
+            android:layout_margin="@dimen/common_padding_extra_large"
+            android:gravity="center"
+            android:text="@string/intro_text"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/actionbar_title_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/swipeImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/common_padding_medium"
+            android:layout_marginRight="@dimen/common_padding_medium"
+            android:gravity="center"
+            android:text="@string/intro_text1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/slide2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/changeModeBtn"
+            android:layout_width="@dimen/change_mode_rect_size"
+            android:layout_height="@dimen/change_mode_rect_size"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/common_padding_small"
+            android:background="@drawable/tutorial_change_viewmode" />
+
+        <ImageView
+            android:id="@+id/arrowChangeMode"
+            android:layout_width="50.0dip"
+            android:layout_height="46.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/changeModeBtn"
+            android:layout_marginRight="@dimen/change_mode_arrow__margin_right"
+            android:layout_marginTop="@dimen/common_padding_small"
+            android:src="@drawable/arrow_change_view_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/arrowChangeMode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/common_padding_extra_large"
+            android:gravity="center"
+            android:text="@string/intro_text2"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/slide3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true">
+
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="@dimen/swipe_rect_size"
+            android:layout_height="@dimen/swipe_rect_size"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sell_button" />
+
+        <ImageView
+            android:id="@+id/arrowCamera"
+            android:layout_width="50.0dip"
+            android:layout_height="46.0dip"
+            android:layout_above="@+id/btnCamera"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/common_padding_large"
+            android:layout_marginRight="@dimen/camera_arrow__margin_right"
+            android:src="@drawable/arrow_camera" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/arrowCamera"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/common_padding_extra_large"
+            android:gravity="center"
+            android:text="@string/intro_text3"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_size" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="@dimen/navi_bar_height"
+        android:layout_height="@dimen/navi_bar_height"
+        android:layout_gravity="center|left|top"
+        android:layout_marginLeft="@dimen/common_padding_medium"
+        android:layout_marginTop="@dimen/common_padding_medium"
+        android:background="@drawable/close_icon" />
+</FrameLayout>

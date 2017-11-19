@@ -36,6 +36,10 @@ public class AccountUntil {
         return SharedPrefUtils.getBoolean(AppConstant.IS_PASS_TUTORIALSCREEN, false);
     }
 
+    public static boolean isPassIntroTutFragment(){
+        return SharedPrefUtils.getBoolean(AppConstant.INTROTUT_FRAGMENT_TAG, false);
+    }
+
     public static void saveInfoAccount(final User user) {
 
         Log.d("trung", "token" + user.getToken());
@@ -54,7 +58,10 @@ public class AccountUntil {
 
     public synchronized static void passTutorialScreen() {
         SharedPrefUtils.putBoolean(AppConstant.IS_PASS_TUTORIALSCREEN, true);
+    }
 
+    public static void passIntroTutFRAGMENT() {
+        SharedPrefUtils.putBoolean(AppConstant.INTROTUT_FRAGMENT_TAG, true);
     }
 
     public static void saveDeviceId(final String deviceId) {

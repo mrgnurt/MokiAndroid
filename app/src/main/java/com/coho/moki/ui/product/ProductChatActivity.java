@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -50,6 +52,8 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
+import ru.noties.scrollable.ScrollableLayout;
 
 /**
  * Created by Khanh Nguyen on 10/19/2017.
@@ -91,6 +95,12 @@ public class ProductChatActivity extends BaseActivity {
 
     @BindView(R.id.edtComment)
     EditText editTextMessage;
+
+    @BindView(R.id.scrollable_layout)
+    ScrollableLayout mScrollableLayout;
+
+    @BindView(R.id.header)
+    LinearLayout mHeader;
 
     List<ProductChatItem> chatItemList;
 
@@ -219,14 +229,53 @@ public class ProductChatActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Log.d("tuton", "edit clicked");
-                int chatListSize = productChatAdapter.getItemCount();
-                if (chatListSize > 0) {
-                    Log.d("tuton", "chatListSize: " + chatListSize);
-                    mRvLayoutManager.scrollToPosition(chatListSize - 1);
+                mScrollableLayout.scrollTo(0, mScrollableLayout.getMaxScrollY());
+                rvMessage.smoothScrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+//                int chatListSize = productChatAdapter.getItemCount();
+//                if (chatListSize > 0) {
+//                    Log.d("tuton", "chatListSize: " + chatListSize);
+//                    mRvLayoutManager.scrollToPosition(chatListSize - 1);
+//
+//                }
+
+            }
+        });
+
+        editTextMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+
+                if (hasFocus){
+                    Log.d("trunggocus", "vaoday");
+                    mScrollableLayout.scrollTo(0, mScrollableLayout.getMaxScrollY());
+                    rvMessage.scrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+                }
+                else {
 
                 }
             }
         });
+
+
+
+        mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.d("tuton", mHeader.getHeight() + "");
+                mScrollableLayout.setMaxScrollY(mHeader.getHeight());
+            }
+        });
+
+        mScrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return rvMessage.canScrollVertically(direction);
+            }
+        });
+
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
     }
 
     @Override
@@ -337,6 +386,7 @@ public class ProductChatActivity extends BaseActivity {
 
             addItems.add(addItem);
         }
+
 
         int preItemCount = productChatAdapter.getItemCount();
         productChatAdapter.addItemsToFirst(addItems);

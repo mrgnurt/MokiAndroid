@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
 
 /**
  * Created by Khanh Nguyen on 10/16/2017.
@@ -117,6 +118,14 @@ public class UserProductFragment extends BaseFragment {
                 intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(getActivity());
                 startActivity(intent);
+            }
+        });
+
+        ((UserInfoActivity)getActivity()).scrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return mRVProductList.canScrollVertically(direction);
+
             }
         });
     }

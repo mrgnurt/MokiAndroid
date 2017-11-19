@@ -41,6 +41,7 @@ import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.fragment.IntroTutFragment;
 import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.BuyFragment;
 import com.coho.moki.ui.fragment.NewsPager.CharityFragment;
@@ -54,6 +55,7 @@ import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
+import com.coho.moki.ui.start_tutorial.Frame;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -139,8 +141,13 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.notification_fragment)
     FrameLayout mLayoutNotificationFragment;
 
+    @BindView(R.id.intro_tut_layout)
+    FrameLayout mIntroTutLayout;
+
     MessageFragment mMsgFragment;
     NotificationFragment mNotificationFragment;
+
+    public IntroTutFragment mIntroTutFragment;
 
     static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
 
@@ -227,6 +234,8 @@ public class MainActivity extends BaseActivity implements MainView{
         });
         initSlidingMenu();
         onMenuHomeSelect();
+
+        addIntroTutFragment();
     }
 
     @Override
@@ -320,11 +329,20 @@ public class MainActivity extends BaseActivity implements MainView{
 
     public void hideNotificationFragment() {
         mLayoutNotification.setVisibility(View.GONE);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     }
 
     public void showNotificationFragment() {
         mLayoutNotification.setVisibility(View.VISIBLE);
+    }
+
+    public void addIntroTutFragment() {
+
+        if (!AccountUntil.isPassIntroTutFragment()){
+            mIntroTutLayout.setVisibility(View.VISIBLE);
+            mIntroTutFragment = new IntroTutFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.intro_tut_layout, mIntroTutFragment, AppConstant.INTROTUT_FRAGMENT_TAG).commit();
+        }
     }
 
 
