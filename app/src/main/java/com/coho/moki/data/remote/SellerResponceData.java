@@ -11,12 +11,12 @@ import java.util.List;
 
 public class SellerResponceData {
     private String id;
-    private String userName;
+    private String username;
     private String avatar;
 
     public SellerResponceData(String id, String userName, String avatar) {
         this.id = id;
-        this.userName = userName;
+        this.username = userName;
         this.avatar = avatar;
     }
 
@@ -29,11 +29,11 @@ public class SellerResponceData {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getAvatar() {

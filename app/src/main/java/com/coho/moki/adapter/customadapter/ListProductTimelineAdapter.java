@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
 import com.coho.moki.R;
+import com.coho.moki.adapter.product.ProductChatAdapter;
 import com.coho.moki.callback.OnClickCommentListener;
 import com.coho.moki.callback.OnClickLikeListener;
 import com.coho.moki.callback.OnClickProductItemListenner;
@@ -26,6 +27,7 @@ import com.coho.moki.data.remote.ChatConsersation;
 import com.coho.moki.data.remote.ProductSmallResponceData;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
@@ -44,6 +46,11 @@ public class ListProductTimelineAdapter extends BaseAdapter implements StickyLis
     OnClickProductItemListenner mOnClickProductItemListenner;
     OnClickLikeListener mOnClickLikeListener;
     OnClickCommentListener mOnClickCommentListener;
+    ProductChatAdapter.ItemClickListener listener;
+
+    public void setListener(ProductChatAdapter.ItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ListProductTimelineAdapter(Context context, List<ProductSmallResponceData> products){
         mProducts = products;
@@ -302,12 +309,22 @@ public class ListProductTimelineAdapter extends BaseAdapter implements StickyLis
         return convertView;
     }
 
-    private void bindItemHeader(HeaderViewHolder viewHolder, int position) {
+    private void bindItemHeader(HeaderViewHolder viewHolder, final int position) {
         ProductSmallResponceData product = mProducts.get(position);
 
         LoadImageUtils.loadImageFromUrl(product.getSeller().getAvatar(),R.drawable.unknown_user, viewHolder.seller_avatar, null );
-        viewHolder.posted_time.setText(product.getCreated());
+        viewHolder.posted_time.setText(Utils.formatTime(product.getCreated()));
         viewHolder.seller_name.setText(product.getSeller().getUserName());
+
+        viewHolder.seller_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+
+                    listener.onClick(position);
+                }
+            }
+        });
 
     }
 
