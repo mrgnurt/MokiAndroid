@@ -67,7 +67,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     }
 
     public void getProductFromRemote() {
-        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, mIndex,
+        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", mLastId, mIndex,
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
             @Override
             public void onSuccess(GetListProductResponceData dataResponse) {
@@ -154,21 +154,51 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
     @Override
     public void callPullToRefreshProducts() {
-        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", mLastId, mIndex,
+//        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", mLastId, mIndex,
+//                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
+//                    @Override
+//                    public void onSuccess(GetListProductResponceData dataResponse) {
+//                        List<Product> products = convertDataResponsetoProducts(dataResponse.getProducts());
+//                        if (dataResponse.getProducts() != null && dataResponse.getProducts().size() > 0){
+//                            mView.showProductsRefresh(products);
+//                            mView.showProductsTimeLineRefresh(dataResponse.getProducts());
+//                            mIndex = dataResponse.getProducts().get(0).getId();
+//                            ArrayList<ProductSmallResponceData> tempProduct =
+//                                    (ArrayList<ProductSmallResponceData>) mView.getTimeLineAdapter().mProducts;
+//                            APICacheUtils.get().saveResult(tempProduct, mCategory.getCategoryId());
+//                        }
+//                        mView.invisibleRefresh();
+//                        mView.setVisibleNewItems(false);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String errorMessage) {
+//                        mView.invisibleRefresh();
+//                        Utils.toastShort(BaseApp.getContext(), errorMessage);
+//                    }
+//                });
+
+
+        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", "", "0",
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
                     @Override
                     public void onSuccess(GetListProductResponceData dataResponse) {
-                        List<Product> products = convertDataResponsetoProducts(dataResponse.getProducts());
-                        if (dataResponse.getProducts() != null && dataResponse.getProducts().size() > 0){
-                            mView.showProductsRefresh(products);
+                        DialogUtil.hideProgress();
+
+                        ArrayList<ProductSmallResponceData> products = dataResponse.getProducts();
+                        List<Product> products1 = convertDataResponsetoProducts(dataResponse.getProducts());
+
+                        if (products != null && products.size() > 0) {
+                            mView.showProductsRefresh(products1);
                             mView.showProductsTimeLineRefresh(dataResponse.getProducts());
-                            mIndex = dataResponse.getProducts().get(0).getId();
-                            ArrayList<ProductSmallResponceData> tempProduct =
-                                    (ArrayList<ProductSmallResponceData>) mView.getTimeLineAdapter().mProducts;
-                            APICacheUtils.get().saveResult(tempProduct, mCategory.getCategoryId());
+                            APICacheUtils.get().saveResult(products, mCategory.getCategoryId());
                         }
+
+                        if (dataResponse.getProducts() != null && dataResponse.getProducts().size() > 0){
+                            mIndex = dataResponse.getProducts().get(0).getId();
+                        }
+                        mLastId = dataResponse.getLastId();
                         mView.invisibleRefresh();
-                        mView.setVisibleNewItems(false);
                     }
 
                     @Override

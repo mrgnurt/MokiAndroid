@@ -63,6 +63,7 @@ import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
 import com.coho.moki.ui.start_tutorial.Frame;
+import com.coho.moki.ui.user.UserInfoActivity;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
@@ -302,6 +303,25 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void initMenu(){
+
+        LinearLayout llAvatar = (LinearLayout) findViewById(R.id.ll_avatar);
+        llAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AccountUntil.getUserToken() == null){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+                    DialogUtil.showProgress(MainActivity.this);
+                    intent.putExtra("userId", AccountUntil.getAccountId());
+                    intent.putExtra("numProduct", 0);
+                    intent.putExtra("score", 0);
+                    startActivity(intent);
+                    mSlidingMenu.toggle();
+                }
+            }
+        });
 
         mTxtUserName = (TextView) findViewById(R.id.user_name);
         mImgAvatar = (CircularImageView) findViewById(R.id.imgAvatar) ;

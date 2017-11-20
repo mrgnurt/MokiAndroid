@@ -376,11 +376,14 @@ public class ListProductTimelineAdapter extends BaseAdapter implements StickyLis
 
     public void insertHeadItem(List<ProductSmallResponceData> products){
 
-        if (products != null && products.size() > 0){
+//        if (products != null && products.size() > 0){
+//
+//            mProducts.addAll(0, products);
+//            notifyDataSetChanged();
+//        }
 
-            mProducts.addAll(0, products);
-            notifyDataSetChanged();
-        }
+        mProducts.addAll(products);
+        notifyDataSetChanged();
     }
 
     public void setmOnClickProductItemListenner(OnClickProductItemListenner listenner){

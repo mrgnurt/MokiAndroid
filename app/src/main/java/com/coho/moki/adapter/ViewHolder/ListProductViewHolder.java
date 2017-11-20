@@ -73,9 +73,13 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
 
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
-
+        Log.d("trunglike", product.getIsLiked() + " " + product.getName());
         if (product.getIsLiked() == 1){
+
             mImgLikeIcon.setImageResource(R.drawable.grid_heart_on);
+        }
+        else {
+            mImgLikeIcon.setImageResource(R.drawable.grid_heart_off);
         }
 
         mTxtComment.setText(product.getNumComment() + "");

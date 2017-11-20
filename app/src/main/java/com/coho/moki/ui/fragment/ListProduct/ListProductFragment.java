@@ -34,6 +34,7 @@ import com.coho.moki.service.ProductDetailServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
+import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
@@ -206,6 +207,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                     mIsLikeTimeLine = isLike;
                     DialogUtil.showProgress(getActivity());
                     mPresenter.likeProductRemote(token, product.getId());
+                }
+                else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
         });
