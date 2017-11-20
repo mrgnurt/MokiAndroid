@@ -487,6 +487,9 @@ public class ProductChatActivity extends BaseActivity {
         }
 
         ProductChatItem addItem = getMyProductChatItem(input);
+        if (productChatAdapter.getItemCount() == 0) {
+            displayInstruction(View.GONE);
+        }
         productChatAdapter.addItem(addItem);
         doSend(input);
     }
@@ -509,6 +512,9 @@ public class ProductChatActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (productChatAdapter.getItemCount() == 0) {
+                    displayInstruction(View.GONE);
+                }
                 productChatAdapter.addItem(receiveItem);
             }
         });
