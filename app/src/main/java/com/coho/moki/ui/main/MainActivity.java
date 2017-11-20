@@ -66,6 +66,7 @@ import com.coho.moki.ui.start_tutorial.Frame;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
+import com.coho.moki.util.network.LoadImageUtils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -102,7 +103,7 @@ public class MainActivity extends BaseActivity implements MainView{
     public int mViewType = AppConstant.GRID_VIEW_PRODUCT;
 
 //    @BindView(R.id.imgAvatar)
-//    CircularImageView mImgAvatar;
+    CircularImageView mImgAvatar;
 
 //    @BindView(R.id.user_name)
     TextView mTxtUserName;
@@ -181,12 +182,29 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @OnClick(R.id.btnChat)
     public void onClickButtonChat(){
-        showMessageFragment();
+
+        if (AccountUntil.getUserToken() != null){
+            showMessageFragment();
+        }
+        else {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+            this.finish();
+        }
+
     }
 
     @OnClick(R.id.btnAlert)
     public void onClickButtonAlert(){
-        showNotificationFragment();
+
+        if (AccountUntil.getUserToken() != null){
+            showNotificationFragment();
+        }
+        else {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+            this.finish();
+        }
     }
 
     @OnClick(R.id.layout_message)
@@ -232,6 +250,7 @@ public class MainActivity extends BaseActivity implements MainView{
         this.mBuyFragment = new BuyFragment();
         this.mCharityFragment = new CharityFragment();
         this.mMyLikeFragment = new MyLikeFragment();
+        this.mNewsPagerFragment = new NewsPagerFragment();
         addMessageFragment();
         addNotificationFragment();
         productPagerFragment.setSellListener(new OnClickSellListener() {
@@ -285,8 +304,10 @@ public class MainActivity extends BaseActivity implements MainView{
     private void initMenu(){
 
         mTxtUserName = (TextView) findViewById(R.id.user_name);
+        mImgAvatar = (CircularImageView) findViewById(R.id.imgAvatar) ;
         if (AccountUntil.getAccountId() != null){
             showUserName();
+            LoadImageUtils.loadImageFromUrl(AccountUntil.getAvatarUrl(), R.drawable.unknown_user, mImgAvatar, null);
         }
 
         mRVSideMenu = (RecyclerView) findViewById(R.id.side_menu_list);
@@ -392,9 +413,29 @@ public class MainActivity extends BaseActivity implements MainView{
     }
 
     private void setViewItemMenuSelect(int index){
+
+        if (index >= 2 && index <=6){
+            if (AccountUntil.getUserToken() == null){
+//                View v = mRVSideMenu.getLayoutManager().findViewByPosition(mCurrentMenuIndex);
+//                TextView textView = (TextView) v.findViewById(R.id.item_title);
+//                textView.setTextColor(Color.BLACK);
+//                mCurrentMenuIndex = index;
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+//                loginIntent.putExtra(AppConstant.LOGIN_TYPE_TAG, AppConstant.LOGIN_TO_ACTION);
+                startActivity(loginIntent);
+//                closeSlidingMenu(index);
+                this.finish();
+                return;
+            }
+        }
+
         switch (index) {
             case 0:
                 showFragment(productPagerFragment, "home");
+                break;
+            case 1:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_news).toString());
+                showFragment(mNewsPagerFragment, AppConstant.NEWS_FRAGMENT_TAG);
                 break;
             case 2:
                 mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_like).toString());
@@ -606,4 +647,28 @@ public class MainActivity extends BaseActivity implements MainView{
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTxtUserName = (TextView) findViewById(R.id.user_name);
+        mImgAvatar = (CircularImageView) findViewById(R.id.imgAvatar) ;
+        if (AccountUntil.getAccountId() != null){
+            showUserName();
+            LoadImageUtils.loadImageFromUrl(AccountUntil.getAvatarUrl(), R.drawable.unknown_user, mImgAvatar, null);
+            mRVSideMenu.getAdapter().notifyDataSetChanged();
+        }
+
+//        if (mCurrentMenuIndex == 2){
+//            mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_like).toString());
+//            showFragment(mMyLikeFragment, AppConstant.MYLIKE_FRAGMENT_TAG);
+//        }
+
+//        View v = mRVSideMenu.getLayoutManager().findViewByPosition(mCurrentMenuIndex);
+//        TextView textView = (TextView) v.findViewById(R.id.item_title);
+//        textView.setTextColor(Color.RED);
+//
+//        View vHome = mRVSideMenu.getLayoutManager().findViewByPosition(0);
+//        TextView textViewHome = (TextView) v.findViewById(R.id.item_title);
+//        textViewHome.setTextColor(Color.BLACK);
+    }
 }

@@ -230,7 +230,10 @@ public class ProductChatActivity extends BaseActivity {
             public void onClick(View view) {
                 Log.d("tuton", "edit clicked");
                 mScrollableLayout.scrollTo(0, mScrollableLayout.getMaxScrollY());
-                rvMessage.smoothScrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+
+                if (rvMessage.getAdapter().getItemCount() > 0){
+                    rvMessage.smoothScrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+                }
 //                int chatListSize = productChatAdapter.getItemCount();
 //                if (chatListSize > 0) {
 //                    Log.d("tuton", "chatListSize: " + chatListSize);
@@ -248,7 +251,9 @@ public class ProductChatActivity extends BaseActivity {
                 if (hasFocus){
                     Log.d("trunggocus", "vaoday");
                     mScrollableLayout.scrollTo(0, mScrollableLayout.getMaxScrollY());
-                    rvMessage.scrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+                    if (rvMessage.getAdapter().getItemCount() > 0){
+                        rvMessage.smoothScrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+                    }
                 }
                 else {
 
@@ -273,8 +278,8 @@ public class ProductChatActivity extends BaseActivity {
             }
         });
 
-        this.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        this.getWindow().setSoftInputMode(
+//                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }
 
@@ -488,6 +493,9 @@ public class ProductChatActivity extends BaseActivity {
 
         ProductChatItem addItem = getMyProductChatItem(input);
         productChatAdapter.addItem(addItem);
+        if (rvMessage.getAdapter().getItemCount() > 0){
+            rvMessage.smoothScrollToPosition(rvMessage.getAdapter().getItemCount() - 1);
+        }
         doSend(input);
     }
 

@@ -140,6 +140,7 @@ public class AppConstant {
     public static final String BUY_FRAGMENT_TAG = "BUY_FRAGMENT";
     public static final String CHARITY_FRAGMENT_TAG = "CHARITY_FRAGMENT";
     public static final String MYLIKE_FRAGMENT_TAG = "MYLIKE_FRAGMENT";
+    public static final String NEWS_FRAGMENT_TAG = "NEWS_FRAGMENT";
 
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 

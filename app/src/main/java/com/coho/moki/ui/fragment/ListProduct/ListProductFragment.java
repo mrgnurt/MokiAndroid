@@ -334,7 +334,14 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 
-                mPresenter.callPullToRefreshProducts();
+                if (Utils.checkInternetAvailable()){
+                    mPresenter.callPullToRefreshProducts();
+                }
+                else {
+                    mRefreshLayout.finishRefresh();
+                    DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+                }
+
             }
         });
 
@@ -342,7 +349,14 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
 
-                mPresenter.callGetLoadMoreProducts();
+                if (Utils.checkInternetAvailable()){
+                    mPresenter.callGetLoadMoreProducts();
+                }
+                else {
+                    mRefreshLayout.finishLoadmore();
+                    DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+                }
+
             }
         });
     }
@@ -362,6 +376,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 //        }
 
 //        if (Utils.checkInternetAvailable()){
+        if (!Utils.checkInternetAvailable()){
+            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
             mPresenter.callGetProducts();
 //        }
 //        else {
