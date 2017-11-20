@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+//import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
+//import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
 import com.coho.moki.di.component.ActivityComponent;
 import com.coho.moki.di.component.DaggerActivityComponent;
 import com.coho.moki.di.component.DaggerServiceComponent;
@@ -31,7 +33,9 @@ import java.util.Locale;
  * Created by trung on 21/09/2017.
  */
 
-public class BaseApp extends Application {
+public class BaseApp extends Application
+//        implements IAdobeAuthClientCredentials
+{
 
     private static Context mContext;
     private static SharedPrefUtils mSharedPreferences;
@@ -64,7 +68,7 @@ public class BaseApp extends Application {
 
         setDefaultRefreshLayout();
 
-
+//        AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
 
     }
 
@@ -107,6 +111,24 @@ public class BaseApp extends Application {
         return mContext;
     }
 
-
+//    @Override
+//    public String getClientID() {
+//        return CREATIVE_SDK_CLIENT_ID;
+//    }
+//
+//    @Override
+//    public String getClientSecret() {
+//        return CREATIVE_SDK_CLIENT_SECRET;
+//    }
+//
+//    @Override
+//    public String[] getAdditionalScopesList() {
+//        return CREATIVE_SDK_SCOPES;
+//    }
+//
+//    @Override
+//    public String getRedirectURI() {
+//        return CREATIVE_SDK_REDIRECT_URI;
+//    }
 
 }

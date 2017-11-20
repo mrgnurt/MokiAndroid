@@ -10,6 +10,10 @@ buildscript {
         classpath 'com.google.gms:google-services:3.1.1' // google-services plugin
 
 
+
+        /* 1) Add the Gradle Retrolambda Plugin */
+//        classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,7 +25,21 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
+        maven { url "https://jitpack.io" }
         google()
+
+        /* 2) Add mavenCentral */
+//        mavenCentral()
+//
+//        /* 3) Add the Creative SDK Maven repo URL */
+//        maven {
+//            url 'https://repo.adobe.com/nexus/content/repositories/releases/'
+//        }
+//
+//        maven {
+//            url 'http://maven.localytics.com/public'
+//        }
+
     }
 }
 
