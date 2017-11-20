@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/imgItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:scaleType="centerCrop" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical" />
 </LinearLayout>
