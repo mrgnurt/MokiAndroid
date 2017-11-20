@@ -21,6 +21,7 @@ import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerContract;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerPresenter;
+import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
@@ -40,6 +41,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     ArrayList<Product> mProducts;
     Category mCategory;
     String mLastId = "";
+    String mIndex = "0";
 
     public ListProductPresenter(){
         mProductService = new ProductServiceImpl();
@@ -54,13 +56,19 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     @Override
     public void callGetProducts() {
         convertDataResponsetoProducts(new ArrayList<ProductSmallResponceData>());
-        mProductService.getListProduct("", mCategory.getCategoryId(), "", "", "0",
+
+        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", mLastId, mIndex,
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
             @Override
             public void onSuccess(GetListProductResponceData dataResponse) {
                 DialogUtil.hideProgress();
                 convertDataResponsetoProducts(dataResponse.getProducts());
                 mView.showProductsTimeLine(dataResponse.getProducts());
+
+                if (dataResponse.getProducts() != null && dataResponse.getProducts().size() > 0){
+                    mIndex = dataResponse.getProducts().get(0).getId();
+                }
+                mLastId = dataResponse.getLastId();
             }
 
             @Override
@@ -73,7 +81,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
 
     @Override
     public void callGetLoadMoreProducts() {
-        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, "0",
+        mProductService.getListProduct(getToken(), mCategory.getCategoryId(), "", mLastId, mIndex,
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
                     @Override
                     public void onSuccess(GetListProductResponceData dataResponse) {
@@ -118,7 +126,8 @@ public class ListProductPresenter implements ListProductContract.Presenter {
                     productSmallResponceData.getImage(),
                     productSmallResponceData.getPrice(),
                     productSmallResponceData.getPricePercent(),
-                    brands,
+                    productSmallResponceData.getIsLiked(),
+                    productSmallResponceData.getBanned(),
                     productSmallResponceData.getDescribed(),
                     productSmallResponceData.getLike(),
                     productSmallResponceData.getComment());
@@ -160,5 +169,15 @@ public class ListProductPresenter implements ListProductContract.Presenter {
                 Utils.toastShort(BaseApp.getContext(), errorMessage);
             }
         });
+    }
+
+    private String getToken(){
+        String token = "";
+
+        if (AccountUntil.getUserToken() != null){
+            token = AccountUntil.getUserToken();
+        }
+
+        return token;
     }
 }

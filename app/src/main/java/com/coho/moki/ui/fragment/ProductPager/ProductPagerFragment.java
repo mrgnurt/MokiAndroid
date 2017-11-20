@@ -54,7 +54,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     BannerSlider mBannerSlider;
 
     @BindView(R.id.btnCamera)
-    Button mBtnCamera;
+    public Button mBtnCamera;
 
     ProductPagerContract.Presenter mPresenter;
     private OnClickSellListener mOnClickSellListener;
@@ -100,7 +100,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     }
 
     public void initTabLayout(){
-//        categories.add(new Category("", "Tất cả"));
+        categories.add(new Category("", "Tất cả"));
 //        categories.add(new Category("", "Miễn phí"));
 //        categories.add(new Category("", "Bé ăn"));
 //        categories.add(new Category("", "Bé mặc"));

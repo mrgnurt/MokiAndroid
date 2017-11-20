@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -20,9 +21,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -61,6 +65,7 @@ import com.coho.moki.ui.product.add.CameraActivity;
 import com.coho.moki.ui.start_tutorial.Frame;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -104,6 +109,9 @@ public class MainActivity extends BaseActivity implements MainView{
 
 //    @BindView(R.id.side_menu_list)
     RecyclerView mRVSideMenu;
+
+    @BindView(R.id.txtHeader)
+    TextView mTxtHeader;
 
     @BindView(R.id.btnSearch)
     ImageButton mBtnSearch;
@@ -153,6 +161,10 @@ public class MainActivity extends BaseActivity implements MainView{
     public IntroTutFragment mIntroTutFragment;
 
     static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
+
+    int devHeight;
+    int heightTopBar;
+    int statusBarHeight;
 
     @OnClick(R.id.btnMenu)
     public void onClickButtonMenu(){
@@ -240,6 +252,8 @@ public class MainActivity extends BaseActivity implements MainView{
         onMenuHomeSelect();
 
         addIntroTutFragment();
+
+        initDeviceNumber();
     }
 
     @Override
@@ -357,13 +371,16 @@ public class MainActivity extends BaseActivity implements MainView{
         this.mBtnSwitch.setVisibility(View.VISIBLE);
         this.mBtnMenu.setVisibility(View.VISIBLE);
         this.mIconAppName.setVisibility(View.VISIBLE);
+        this.mTxtHeader.setVisibility(View.GONE);
     }
 
     private void hideTopButton(){
+        this.mTxtHeader.setVisibility(View.VISIBLE);
         this.mBtnSearch.setVisibility(View.GONE);
         this.mLLNotiCount.setVisibility(View.GONE);
         this.mLLMessageCount.setVisibility(View.GONE);
         this.mBtnSwitch.setVisibility(View.GONE);
+        this.mIconAppName.setVisibility(View.GONE);
     }
 
     private void setViewItemMenuSelect(int index){
@@ -372,28 +389,43 @@ public class MainActivity extends BaseActivity implements MainView{
                 showFragment(productPagerFragment, "home");
                 break;
             case 2:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_like).toString());
                 showFragment(mMyLikeFragment, AppConstant.MYLIKE_FRAGMENT_TAG);
                 break;
             case 3:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_exhibit).toString());
                 showFragment(mSellFragment, AppConstant.SELL_FRAGMENT_TAG);
                 break;
             case 4:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_buy).toString());
                 showFragment(mBuyFragment, AppConstant.BUY_FRAGMENT_TAG);
                 break;
             case 5:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_charity).toString());
                 showFragment(mCharityFragment, AppConstant.CHARITY_FRAGMENT_TAG);
                 break;
             case 6:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_setting).toString());
                 showFragment(mSettingsFragment, AppConstant.SETTINGS_FRAGMENT_TAG);
                 break;
             case 7:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_contact).toString());
                 showFragment(mSupportFragment, AppConstant.SUPPORT_FRAGMENT_TAG);
                 break;
             case 8:
+                mTxtHeader.setText(getResources().getText(R.string.sidemenu_title_invite).toString());
                 showFragment(mInviteFragment, AppConstant.INVITE_FRAGMENT_TAG);
                 break;
             case 9:
-                logout();
+                if (AccountUntil.getUserToken() == null){
+                    Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+                else {
+                    logout();
+                }
+
                 break;
             default:
                 closeSlidingMenu(index);
@@ -402,6 +434,13 @@ public class MainActivity extends BaseActivity implements MainView{
 
         if (index >= 0 && index <= 8){
             closeSlidingMenu(index);
+        }
+
+        if (index == 0){
+            showTopButton();
+        }
+        else {
+            hideTopButton();
         }
 
     }
@@ -427,7 +466,7 @@ public class MainActivity extends BaseActivity implements MainView{
 //            btnCamera.setLayoutParams(layoutParams);
 
             btnCamera.animate()
-                    .translationY(-mTopBar.getHeight())
+                    .translationY(-btnCamera.getHeight() + heightTopBar - statusBarHeight)
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
 
@@ -440,7 +479,7 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animator) {
-                            mMainLayoutContainer.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2000));
+                            mMainLayoutContainer.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, devHeight + heightTopBar));
 //                            RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(btnCamera.getWidth(), btnCamera.getHeight());
 //                            layoutParams.setMargin;
 //                            btnCamera.setLayoutParams(layoutParams);
@@ -539,6 +578,23 @@ public class MainActivity extends BaseActivity implements MainView{
     public void openCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
+    }
+
+    private void initDeviceNumber(){
+        DisplayMetrics metrics = this.getApplication().getResources().getDisplayMetrics();
+        this.devHeight = metrics.heightPixels;
+
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+
+        mTopBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                heightTopBar = mTopBar.getHeight();
+            }
+        });
     }
 
 }

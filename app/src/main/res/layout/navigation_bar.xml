@@ -4,7 +4,7 @@
     android:layout_height="@dimen/navi_bar_height"
     android:background="@android:color/white">
 
-    <com.coho.moki.ui.custom.CapitalizedTextView
+    <TextView
         android:id="@+id/txtHeader"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
