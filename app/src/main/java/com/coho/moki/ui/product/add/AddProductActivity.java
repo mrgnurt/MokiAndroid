@@ -9,8 +9,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,6 +189,7 @@ public class AddProductActivity extends BaseActivity {
     TextView btnDone;
 
     private int editFocusPosition;
+    private String[] dimens = new String[2];
 
     private int imgPos;
     private List<Uri> uriList = new ArrayList<>();
@@ -203,6 +212,7 @@ public class AddProductActivity extends BaseActivity {
         img1.setVisibility(View.VISIBLE);
         img2.setVisibility(View.VISIBLE);
         initHeader();
+        initServiceArticle();
         initListenerChooseImage();
         initFocusListenerForEditText();
         initClickListener();
@@ -210,6 +220,26 @@ public class AddProductActivity extends BaseActivity {
         initListenerForSwitchButton();
         switchAutoAccept.setChecked(true);
         topKeyboardLayout.setVisibility(View.GONE);
+    }
+
+    private void initServiceArticle() {
+        txtServiceArticle.setText(R.string.service_article);
+        String content = txtServiceArticle.getText().toString();
+        SpannableString ss = new SpannableString(content);
+        int startIndex = content.indexOf("C");
+        int endIndex = content.indexOf("I") + 1;
+        ss.setSpan(new UnderlineSpan(), startIndex, endIndex, 0);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.red_dark)), startIndex, endIndex, 0);
+        txtServiceArticle.setMovementMethod(LinkMovementMethod.getInstance());
+        txtServiceArticle.setText(content, TextView.BufferType.SPANNABLE);
+        Spannable spannable = (Spannable) txtServiceArticle.getText();
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Log.d(TAG, "clicked on txtServiceArticle");
+            }
+        };
+        spannable.setSpan(clickableSpan, startIndex, endIndex, 0);
     }
 
     private void initListenerChooseImage() {
@@ -560,6 +590,9 @@ public class AddProductActivity extends BaseActivity {
                     case R.id.btnAddProduct:
                         // TODO: call api to add product
                         break;
+                    case R.id.txtServiceArticle:
+
+                        break;
                 }
             }
         };
@@ -628,7 +661,7 @@ public class AddProductActivity extends BaseActivity {
                 switch(v.getId()) {
                     case R.id.btnExit:
                     case R.id.btnChoose:
-                        edtDimension.setText(txtSelectedDimension.getText());
+                        edtDimension.setText(dimens[0] + " x " + dimens[1] + " x " + dimens[2]);
                         dialog.dismiss();
                 }
             }
@@ -657,9 +690,12 @@ public class AddProductActivity extends BaseActivity {
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-                txtSelectedDimension.setText(dataList.get(lengthWheel.getCurrentItem()) + " dài x " +
-                        dataList.get(widthWheel.getCurrentItem()) + " rộng x " +
-                        dataList.get(heightWheel.getCurrentItem()) + " cao"
+                dimens[0] = dataList.get(lengthWheel.getCurrentItem());
+                dimens[1] = dataList.get(widthWheel.getCurrentItem());
+                dimens[2] = dataList.get(heightWheel.getCurrentItem());
+                txtSelectedDimension.setText(dimens[0] + " dài x " +
+                        dimens[1] + " rộng x " +
+                        dimens[2] + " cao"
                 );
             }
         };

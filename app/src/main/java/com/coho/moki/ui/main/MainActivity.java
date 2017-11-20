@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity implements MainView{
         onMenuHomeSelect();
 
         // check neu dang load thi co hien tutorial k
-        addIntroTutFragment();
+//        addIntroTutFragment();
 
         if (!Utils.checkInternetAvailable()) {
             DialogUtil.showPopup(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
