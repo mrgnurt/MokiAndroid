@@ -59,8 +59,9 @@ public class NotificationReceiver extends WakefulBroadcastReceiver {
 
     public void openLoginActivity(Context context, Intent intent) {
         Intent loginIntent = new Intent(context, LoginActivity.class);
-        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         loginIntent.putExtra(AppConstant.LOGIN_TYPE_TAG, AppConstant.OTHER_PEOPLE_LOGIN);
         context.startActivity(loginIntent);
         if (BaseApp.currActivity != null) {

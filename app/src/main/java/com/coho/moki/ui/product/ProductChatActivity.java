@@ -283,7 +283,7 @@ public class ProductChatActivity extends BaseActivity {
         mProductCons = null;
         conversationService = new ConversationServiceImpl();
         currIndex = 0;
-        limitPerLoad = 20;
+        limitPerLoad = 40;
         loadMyInfo();
 
         if (Utils.checkInternetAvailable()) {
