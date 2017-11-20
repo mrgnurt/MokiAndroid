@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="0.2"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/common_padding_small"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/layout_white_bg_top_border"
+            android:text="Chia sẻ"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <LinearLayout
+            android:id="@+id/layout_report_user"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <Button
+                android:id="@+id/btnReportUser"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/layout_white_no_corner"
+                android:text="Chặn người dùng"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_copy_share_link"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/divider" />
+
+            <Button
+                android:id="@+id/btnCopyShareLink"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/layout_white_bg_bottom_corner"
+                android:text="Sao chép link chia sẻ"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/divider" />
+
+        <Button
+            android:id="@+id/btnCopyLink"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/layout_white_bg_bottom_corner"
+            android:text="@string/copy_share_link"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@id/btnCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/common_padding_small"
+            android:background="@drawable/layout_red_bg_corner"
+            android:text="@string/close"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12sdp" />
+    </LinearLayout>
+</RelativeLayout>

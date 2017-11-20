@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import com.coho.moki.data.remote.sub.Brand;
 import com.coho.moki.data.remote.sub.Size;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -164,6 +166,11 @@ public class ProductCategoryResponse implements Parcelable {
         dest.writeString(createdAt);
         dest.writeList(sizes);
         dest.writeList(brands);
+    }
+
+    public static Type getType() {
+        return new TypeToken<List<ProductCategoryResponse>>() {
+        }.getType();
     }
 
 }

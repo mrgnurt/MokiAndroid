@@ -40,7 +40,11 @@ import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
+import com.coho.moki.service.LogoutService;
+import com.coho.moki.service.LogoutServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
+import com.coho.moki.ui.fragment.IntroTutFragment;
 import com.coho.moki.ui.fragment.MessageFragment;
 import com.coho.moki.ui.fragment.NewsPager.BuyFragment;
 import com.coho.moki.ui.fragment.NewsPager.CharityFragment;
@@ -54,8 +58,10 @@ import com.coho.moki.ui.fragment.NotificationFragment;
 import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main_search.MainSearchActivity;
 import com.coho.moki.ui.product.add.CameraActivity;
+import com.coho.moki.ui.start_tutorial.Frame;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -139,8 +145,13 @@ public class MainActivity extends BaseActivity implements MainView{
     @BindView(R.id.notification_fragment)
     FrameLayout mLayoutNotificationFragment;
 
+    @BindView(R.id.intro_tut_layout)
+    FrameLayout mIntroTutLayout;
+
     MessageFragment mMsgFragment;
     NotificationFragment mNotificationFragment;
+
+    public IntroTutFragment mIntroTutFragment;
 
     static final String MESSAGE_FRAGMENT_TAG = "message_fragment";
 
@@ -201,6 +212,7 @@ public class MainActivity extends BaseActivity implements MainView{
 
     @Override
     public void initView() {
+        DialogUtil.showProgress(this);
         this.productPagerFragment = new ProductPagerFragment();
         this.mSettingsFragment = new SettingsFragment();
         this.mInviteFragment = new InviteFragment();
@@ -231,11 +243,17 @@ public class MainActivity extends BaseActivity implements MainView{
         });
         initSlidingMenu();
         onMenuHomeSelect();
+
+        // check neu dang load thi co hien tutorial k
+        addIntroTutFragment();
+
+        if (!Utils.checkInternetAvailable()) {
+            DialogUtil.showPopup(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
     }
 
     @Override
     public void initData() {
-
     }
 
     public void initSlidingMenu(){
@@ -324,11 +342,20 @@ public class MainActivity extends BaseActivity implements MainView{
 
     public void hideNotificationFragment() {
         mLayoutNotification.setVisibility(View.GONE);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     }
 
     public void showNotificationFragment() {
         mLayoutNotification.setVisibility(View.VISIBLE);
+    }
+
+    public void addIntroTutFragment() {
+
+        if (!AccountUntil.isPassIntroTutFragment()){
+            mIntroTutLayout.setVisibility(View.VISIBLE);
+            mIntroTutFragment = new IntroTutFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.intro_tut_layout, mIntroTutFragment, AppConstant.INTROTUT_FRAGMENT_TAG).commit();
+        }
     }
 
 
@@ -375,10 +402,7 @@ public class MainActivity extends BaseActivity implements MainView{
                 showFragment(mInviteFragment, AppConstant.INVITE_FRAGMENT_TAG);
                 break;
             case 9:
-                AccountUntil.removeInfoAccount();
-                Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
-                startActivity(intent);
-                this.finish();
+                logout();
                 break;
             default:
                 closeSlidingMenu(index);
@@ -452,6 +476,28 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
         }
+    }
+
+    public void logout() {
+        String token = AccountUntil.getUserToken();
+        LogoutService logoutService = new LogoutServiceImpl();
+        DialogUtil.showProgress(this);
+        logoutService.logout(token, new ResponseListener() {
+            @Override
+            public void onSuccess(Object dataResponse) {
+                DialogUtil.hideProgress();
+                AccountUntil.removeInfoAccount();
+                Intent intent = new Intent(BaseApp.getContext(), LoginActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
+                DialogUtil.showPopup(MainActivity.this, errorMessage);
+            }
+        });
     }
 
     @Override

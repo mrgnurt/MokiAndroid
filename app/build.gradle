@@ -120,6 +120,7 @@ dependencies {
     compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
     compile 'com.github.omadahealth:swipy:1.2.3@aar'
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile project(':SlidingMenu')
     compile project(':pulltorefresh-and-loadmore')
     compile project(':mediapicker')

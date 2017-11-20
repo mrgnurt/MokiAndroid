@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 
 /**
@@ -70,6 +72,12 @@ public class SearchBrandActivity extends BaseActivity {
                 searchText(editable.toString());
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void btnNavLeftOnClick() {
+        this.finish();
     }
 
     private void initStickyList(){

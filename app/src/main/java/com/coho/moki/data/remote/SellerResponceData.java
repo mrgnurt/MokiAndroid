@@ -1,5 +1,10 @@
 package com.coho.moki.data.remote;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by trung on 17/10/2017.
  */
@@ -37,5 +42,10 @@ public class SellerResponceData {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public static Type getType() {
+        return new TypeToken<SellerResponceData>() {
+        }.getType();
     }
 }

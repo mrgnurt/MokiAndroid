@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.43.165:3000";
+    public static final String BASEURL_TAG = "http://192.168.1.37:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -74,7 +74,7 @@ public class AppConstant {
     public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
 
     // for category
-    public static final String CATEGORY = "i";
+    public static final String CATEGORY = "CATEGORY";
     public static final String CATEGORY_ID = "CATEGORY_ID";
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
     public static final String PARENTID_TAG = "parentId";
@@ -132,6 +132,7 @@ public class AppConstant {
     public static final String LOGIN_TYPE_TAG = "type";
 
     public static final String NOTIFICATION_FRAGMENT_TAG = "NOTIFICATION_FRAGMENT";
+    public static final String INTROTUT_FRAGMENT_TAG = "INTROTUT_FRAGMENT";
     public static final String SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
     public static final String INVITE_FRAGMENT_TAG = "INVITE_FRAGMENT";
     public static final String SUPPORT_FRAGMENT_TAG = "SUPPORT_FRAGMENT";
@@ -155,6 +156,18 @@ public class AppConstant {
     public static final String SEARCH_NOT_FOUND = "not";
 
     public static final int RESULT_CODE_SHIPFORM = 1;
+
+    public static final String CAN_NOT_LOGOUT = "Có lỗi xảy ra, không thể đăng xuất lúc này";
+
+    public static final int LOGIN_REQUEST_CODE = 1;
+
+    public static final int LOGIN_TO_ACTION = 3;
+
+    public static final String LOGIN_TO_ACTION_TEXT = "Bạn cần đăng nhập để thực hiện chức năng này";
+
+
+    public static final String INFO_SEARCH_TAG = "INFO_SEARCH_TAG";
+
 
     public static final String NAME = "name";
     public static final String PRICE = "price";

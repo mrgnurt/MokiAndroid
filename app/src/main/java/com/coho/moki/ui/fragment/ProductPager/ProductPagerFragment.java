@@ -3,6 +3,7 @@ package com.coho.moki.ui.fragment.ProductPager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,9 +12,16 @@ import com.coho.moki.adapter.customadapter.CategoryPagerAdapter;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.data.model.Category;
+import com.coho.moki.data.remote.ProductCategoryResponse;
+import com.coho.moki.service.CategoryService;
+import com.coho.moki.service.CategoryServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ListProduct.ListProductFragment;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.APICacheUtils;
+import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +65,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
 
     List<Banner> banners = new ArrayList<Banner>();
     List<Category> categories = new ArrayList<Category>();
+    private CategoryService categoryService = new CategoryServiceImpl();
 
     public static ProductPagerFragment newInstance(){
         ProductPagerFragment productPagerFragment = new ProductPagerFragment();
@@ -81,6 +90,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
         initTabLayout();
         showBannerSlider();
         mPresenter.callServiceGetCampaigns();
+
 //        mScrollableLayout.addOnScrollChangedListener(onScrollChangedListener);
         initClickSellListener();
 
@@ -93,18 +103,69 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     }
 
     public void initTabLayout(){
-        categories.add(new Category("", "Tất cả"));
-        categories.add(new Category("", "Miễn phí"));
-        categories.add(new Category("", "Bé ăn"));
-        categories.add(new Category("", "Bé mặc"));
-        categories.add(new Category("", "Bé ngủ"));
-        categories.add(new Category("", "Bé tắm"));
-        categories.add(new Category("", "Bé vệ sinh"));
-        categories.add(new Category("", "Bé khỏe - an toàn"));
-        categories.add(new Category("", "Bé đi ra ngoài"));
+//        categories.add(new Category("", "Tất cả"));
+//        categories.add(new Category("", "Miễn phí"));
+//        categories.add(new Category("", "Bé ăn"));
+//        categories.add(new Category("", "Bé mặc"));
+//        categories.add(new Category("", "Bé ngủ"));
+//        categories.add(new Category("", "Bé tắm"));
+//        categories.add(new Category("", "Bé vệ sinh"));
+//        categories.add(new Category("", "Bé khỏe - an toàn"));
+//        categories.add(new Category("", "Bé đi ra ngoài"));
         mCategoryPagerAdapter = new CategoryPagerAdapter(getFragmentManager(), categories);
         mVPContent.setAdapter(mCategoryPagerAdapter);
         mTLCategories.setupWithViewPager(mVPContent);
+        mCategoryPagerAdapter.notifyDataSetChanged();
+        loadCategories();
+    }
+
+    public void loadCategories() {
+        if (Utils.checkInternetAvailable()) {
+            loadCategoriesFromRemote();
+        } else {
+            loadCategoriesFromLocal();
+        }
+    }
+
+    public void loadCategoriesFromRemote() {
+        categoryService.getCategoryList("", new ResponseListener<List<ProductCategoryResponse>>() {
+            @Override
+            public void onSuccess(List<ProductCategoryResponse> dataResponse) {
+                if (dataResponse != null && dataResponse.size() > 0) {
+                    showCategories(dataResponse);
+                    APICacheUtils.get().saveResult(dataResponse, AppConstant.CATEGORY_TAG);
+                } else {
+                    DialogUtil.hideProgress();
+                }
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                DialogUtil.hideProgress();
+                DialogUtil.showPopup(getActivity(), errorMessage);
+            }
+        });
+    }
+
+    public void loadCategoriesFromLocal() {
+        List<ProductCategoryResponse> categoryResponses =
+                APICacheUtils
+                .get()
+                .getCategories(AppConstant.CATEGORY_TAG, ProductCategoryResponse.getType());
+
+        if (categoryResponses != null && categoryResponses.size() > 0) {
+            showCategories(categoryResponses);
+        } else {
+            DialogUtil.hideProgress();
+        }
+    }
+
+    public void showCategories(List<ProductCategoryResponse> categoryResponses) {
+        for(ProductCategoryResponse item: categoryResponses) {
+            Category category = new Category(item.getId(), item.getName());
+            categories.add(category);
+        }
+        mCategoryPagerAdapter.notifyDataSetChanged();
     }
 
     private OnScrollChangedListener onScrollChangedListener = new OnScrollChangedListener() {

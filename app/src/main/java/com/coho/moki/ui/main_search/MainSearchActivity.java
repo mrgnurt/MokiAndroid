@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.brand_search.SearchBrandActivity;
 import com.coho.moki.ui.product_search.ProductSearchActivity;
 import com.coho.moki.ui.size.SizeActivity;
+import com.coho.moki.util.Utils;
 
 import javax.inject.Inject;
 
@@ -68,10 +70,21 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
         if (checkSearch){
             mKeyword = mEdtKeyword.getText().toString();
 
-            openProductSearchActivity(mKeyword, mSizeId, mBrandId);
+            String header = "";
+            if (mKeyword != null){
+                header = header + mKeyword + ",";
+            }
+            if(mSizeId != null){
+                header = header + mTxtSize.getText() + ",";
+            }
+            if (mBrandId != null) {
+                header = header + mTxtBrand.getText() + ",";
+            }
+
+            header = header.substring(0, header.length() - 1);
+
+            openProductSearchActivity(mKeyword, mSizeId, mBrandId, header);
         }
-
-
     }
 
     @Override
@@ -99,6 +112,12 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
                 checkSearch();
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void btnNavaLeftOnClick() {
+        this.finish();
     }
 
     public void enableSearch(){
@@ -117,8 +136,9 @@ public class MainSearchActivity extends BaseActivity implements MainSearchContra
     }
 
     @Override
-    public void openProductSearchActivity(String keyword, String sizeId, String brandId) {
+    public void openProductSearchActivity(String keyword, String sizeId, String brandId, String infoSearch) {
         Intent intent = new Intent(BaseApp.getContext(), ProductSearchActivity.class);
+        intent.putExtra(AppConstant.INFO_SEARCH_TAG, infoSearch);
         intent.putExtra(AppConstant.KEYWORD_TAG, keyword);
         intent.putExtra(AppConstant.PRODUCT_SIZE_ID_TAG, sizeId);
         intent.putExtra(AppConstant.PRODUCT_BRAND_ID_TAG, brandId);

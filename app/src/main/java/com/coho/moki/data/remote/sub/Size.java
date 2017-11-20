@@ -3,6 +3,11 @@ package com.coho.moki.data.remote.sub;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by Khanh Nguyen on 11/17/2017.
  */
@@ -55,5 +60,10 @@ public class Size implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(name);
+    }
+
+    public static Type getType() {
+        return new TypeToken<List<Size>>() {
+        }.getType();
     }
 }
