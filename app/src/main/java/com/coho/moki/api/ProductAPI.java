@@ -4,6 +4,7 @@ import com.coho.moki.data.remote.BaseResponse;
 import com.coho.moki.data.remote.CheckNewItemResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.MyLikeResponseData;
+import com.coho.moki.data.remote.ProductResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
 
 /**
@@ -32,4 +35,7 @@ public interface ProductAPI {
 
     @POST("/products/new-item")
     Call<BaseResponse<CheckNewItemResponse>> callCheckNewItem(@Body Map<String, String> tag);
+
+    @POST("/products/add-product")
+    Call<BaseResponse<ProductResponseData>> callAddProduct(@Body Map<String, Object>tag);
 }

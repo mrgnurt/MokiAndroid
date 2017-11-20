@@ -47,8 +47,8 @@ public class ProductDetailPresenterImpl implements ProductDetailPresenter {
             @Override
             public void onSuccess(ProductDetailResponse dataResponse) {
                 Log.d(LOG_TAG, dataResponse.toString());
-                DialogUtil.hideProgress();
                 mProductDetailView.setData(dataResponse);
+                DialogUtil.hideProgress();
             }
 
             @Override

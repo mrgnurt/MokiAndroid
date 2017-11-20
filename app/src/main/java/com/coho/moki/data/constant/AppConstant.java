@@ -168,4 +168,19 @@ public class AppConstant {
 
     public static final String INFO_SEARCH_TAG = "INFO_SEARCH_TAG";
 
+
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String IMAGE = "image";
+    public static final String VIDEO = "video";
+    public static final String THUMB = "thumb";
+    public static final String DESCRIBED = "described";
+    public static final String SHIPSFROM = "shipsFrom";
+    public static final String SHIPSFROM_ID = "shipsFromId";
+    public static final String CONDITION = "condition";
+    public static final String DIMENSION = "dimension";
+    public static final String WEIGHT = "weight";
+    public static final String BRANDID = "brandId";
+
+    public static final Integer IMAGE_MAX_SIZE = 100000;
 }

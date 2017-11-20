@@ -6,11 +6,9 @@
 
     <include layout="@layout/nav_bar_custom" />
 
-    <com.costum.android.widget.PullAndLoadListView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="pullDownFromTop" />
+        />
 </LinearLayout>
