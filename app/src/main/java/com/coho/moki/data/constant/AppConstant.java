@@ -168,4 +168,10 @@ public class AppConstant {
 
     public static final String INFO_SEARCH_TAG = "INFO_SEARCH_TAG";
 
+    public static final String PRODUCT_NEW = "Mới";
+    public static final String PRODUCT_LIKE_NEW = "Gần như mới";
+    public static final String PRODUCT_GOOD = "Tốt";
+    public static final String PRODUCT_GOODISH = "Khá tốt";
+    public static final String PRODUCT_OLD = "Sản phẩm cũ";
+
 }
