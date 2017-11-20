@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.coho.moki.R;
 import com.coho.moki.data.remote.ChatConsersation;
 import com.coho.moki.data.remote.ListConversationResponceData;
+import com.coho.moki.util.Utils;
 import com.coho.moki.util.network.LoadImageUtils;
 
 import java.util.ArrayList;
@@ -65,7 +66,8 @@ public class NotificationAdapter extends ArrayAdapter<ChatConsersation> {
         LoadImageUtils.loadImageFromUrl(chat.product.image, R.drawable.unknown_user, viewHolder.imgAvatar, null);
         viewHolder.txtTitle.setText(chat.partner.username);
         viewHolder.txtMessContent.setText(chat.lastMessage.message);
-        viewHolder.txtDate.setText(chat.lastMessage.created);
+        String sendAt = Utils.formatTime(chat.lastMessage.created);
+        viewHolder.txtDate.setText(sendAt);
     }
 
     private static class ViewHolder {
