@@ -298,9 +298,12 @@ public class Utils {
         try {
             date = sdf.parse(time);
         } catch (ParseException e) {
+            date = new Date();
             e.printStackTrace();
         }
-        long diffMilliSecond = new Date().getTime() - date.getTime(); // return diff in milliseconds
+
+        long realVNTime = new Date().getTime() - 7 * 60 * 60 * 1000;
+        long diffMilliSecond = realVNTime - date.getTime(); // return diff in milliseconds
         long diffSeconds = diffMilliSecond / 1000;
         long diffMinutes = diffSeconds / 60;
         long diffHours = diffMinutes / 60;
