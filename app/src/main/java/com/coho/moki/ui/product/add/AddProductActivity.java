@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -38,11 +40,23 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.remote.ProductCategoryResponse;
+import com.coho.moki.data.remote.ProductResponseData;
+import com.coho.moki.data.remote.ProductSellAddressResponse;
+import com.coho.moki.service.ProductService;
+import com.coho.moki.service.ProductServiceImpl;
+import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseActivity;
 import com.coho.moki.ui.brand_search.SearchBrandActivity;
+import com.coho.moki.ui.login.LoginActivity;
+import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.AccountUntil;
+import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +81,12 @@ public class AddProductActivity extends BaseActivity {
     private static final int REQUEST_PRODUCT_CATEGORY = 2;
     private static final int REQUEST_SELL_ADDRESS = 3;
     private static final int REQUEST_CAMERA = 1001;
+    private String categoryId = null;
+    private Integer condition = -1;
+    private List<Integer> shipsFromId = new ArrayList<>();
+    private String defaultShipFrom = "Số 10, Phường Bách Khoa, Quận Hai Bà Trưng, TP.Hà Nội";
 
+    ProductService mProductService;
     @BindView(R.id.img1)
     ImageView img1;
 
@@ -201,6 +220,7 @@ public class AddProductActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mProductService = new ProductServiceImpl();
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
         imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
@@ -220,6 +240,7 @@ public class AddProductActivity extends BaseActivity {
         initListenerForSwitchButton();
         switchAutoAccept.setChecked(true);
         topKeyboardLayout.setVisibility(View.GONE);
+        edtSellAddress.setText(defaultShipFrom);
     }
 
     private void initServiceArticle() {
@@ -457,12 +478,24 @@ public class AddProductActivity extends BaseActivity {
     private void setResultFromProductStatus(Intent data) {
         Bundle bundle = data.getBundleExtra(AppConstant.PRODUCT_STATUS);
         String status = bundle.getString(AppConstant.PRODUCT_STATUS_VALUE);
+        if (status.equals("Mới")) {
+            condition = 0;
+        } else if (status.equals("Gần như mới")) {
+            condition = 1;
+        } else if (status.equals("Tốt")) {
+            condition = 2;
+        } else if (status.equals("Khá tốt")) {
+            condition = 3;
+        } else {
+            condition = 4;
+        }
         edtStatus.setText(status);
         edtStatus.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
     }
 
     private void setResultFromProductCategory(Intent data) {
         ProductCategoryResponse response = data.getParcelableExtra(AppConstant.CATEGORY);
+        categoryId = response.getId();
         edtCategory.setText(response.getName());
         edtCategory.setTextColor(Utils.getColorWrapper(this, R.color.red_dark));
         // TODO: show dimension, weight, brand if have
@@ -483,7 +516,7 @@ public class AddProductActivity extends BaseActivity {
     }
 
     private void setResultFromProductSellAddress(Intent data) {
-
+        edtSellAddress.setText(defaultShipFrom);
     }
 
     private void initFocusListenerForEditText() {
@@ -588,7 +621,7 @@ public class AddProductActivity extends BaseActivity {
                         showWeightDialog();
                         break;
                     case R.id.btnAddProduct:
-                        // TODO: call api to add product
+                        addProduct();
                         break;
                     case R.id.txtServiceArticle:
 
@@ -761,4 +794,71 @@ public class AddProductActivity extends BaseActivity {
         return dimensionList;
     }
 
+    private void addProduct() {
+        String token = AccountUntil.getUserToken();
+        if (token != null) {
+            String name = edtName.getText().toString() + "";
+            int price = 0;
+            try {
+                price = Integer.parseInt(edtBuyPrice.getText().toString());
+            } catch(Exception e) {
+
+            }
+            String productSizeId = null;
+            String brandId = null;
+            String described = edtDescription.getText().toString() + "";
+            String shipsFrom = "Số 10";
+            shipsFromId.add(1);
+            shipsFromId.add(2);
+            shipsFromId.add(3);
+            String weight = edtWeight.getText().toString();
+            if (name == "") {
+                DialogUtil.showPopupError(AddProductActivity.this, "Chưa nhập tên sản phẩm");
+            } else if (described == "") {
+                DialogUtil.showPopupError(AddProductActivity.this, "Chưa nhập mô tả");
+            }  else if (categoryId == null) {
+                DialogUtil.showPopupError(AddProductActivity.this, "Chưa chọn loại sản phẩm");
+            } else if (condition == -1) {
+                DialogUtil.showPopupError(AddProductActivity.this, "Chưa chọn trạng thái sản phẩm");
+            } else if (price == 0) {
+                DialogUtil.showPopupError(AddProductActivity.this, "Chưa nhập giá sản phẩm");
+            } else {
+                DialogUtil.showProgress(AddProductActivity.this);
+                mProductService.addProduct(token, name, price,
+                        productSizeId, brandId, categoryId, uriList,
+                        null, null, described, shipsFrom, shipsFromId,
+                        condition, null, weight,
+                        new ResponseListener<ProductResponseData>() {
+                            @Override
+                            public void onSuccess(ProductResponseData dataResponse) {
+                                DialogUtil.hideProgress();
+                                DialogUtil.showPopupSuccess(AddProductActivity.this, "Thêm sản phẩm thành công");
+                                Intent intent = new Intent(AddProductActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(String errorMessage) {
+                                Log.d("ErrorAdd", errorMessage);
+                                DialogUtil.hideProgress();
+                                DialogUtil.showPopupError(AddProductActivity.this, "Thêm sản phẩm thất bại");
+                            }
+                        });
+            }
+        } else {
+            Intent intent = new Intent(AddProductActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @OnClick(R.id.btnNavLeft)
+    public void finishActivity() {
+        onBackPressed();
+    }
 }

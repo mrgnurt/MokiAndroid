@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.coho.moki.BaseApp;
@@ -40,7 +41,7 @@ public class ProductCategoryActivity extends BaseActivity {
     private final int REQUEST_CHILD_CATEGORY = 111;
 
     @BindView(R.id.listView)
-    PullAndLoadListView listView;
+    ListView listView;
 
     @BindView(R.id.btnNavLeft)
     ImageButton btnBack;
@@ -64,12 +65,6 @@ public class ProductCategoryActivity extends BaseActivity {
     @Override
     public void initView() {
         btnNavRight.setVisibility(View.GONE);
-        listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-            public void onRefresh() {
-                // Do work to refresh the list here.
-//                new ProductCategoryActivity.PullToRefreshDataTask().execute();
-            }
-        });
         listView.setOnItemClickListener(new OnClickItemListCategory());
         categoryService = new CategoryServiceImpl();
     }
@@ -139,7 +134,7 @@ public class ProductCategoryActivity extends BaseActivity {
 
             // TODO: Handling when click "Tất cả" in child category
             Log.d(TAG, "click on item: " + position);
-            ProductCategoryResponse response = mCategoryList.get(position - 1);
+            ProductCategoryResponse response = mCategoryList.get(position);
             if (response != null) {
                 Integer hasChild = response.getHasChild();
                 if (hasChild != null) {
@@ -166,47 +161,47 @@ public class ProductCategoryActivity extends BaseActivity {
 
     }
 
-    private class PullToRefreshDataTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            if (isCancelled()) {
-                return null;
-            }
-
-            // Simulates a background task
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-
-//            for (int i = 0; i < mAnimals.length; i++)
-//                mListItems.addFirst(mAnimals[i]);
-//            commentList.addFirst(fake());
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-//            mListItems.addFirst("Added after pull to refresh");
-
-            // We need notify the adapter that the data have been changed
-//            commentAdapter.notifyDataSetChanged();
-
-            // Call onLoadMoreComplete when the LoadMore task, has finished
-            listView.onRefreshComplete();
-
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onCancelled() {
-            // Notify the loading more operation has finished
-            listView.onRefreshComplete();
-        }
-    }
+//    private class PullToRefreshDataTask extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//
+//            if (isCancelled()) {
+//                return null;
+//            }
+//
+//            // Simulates a background task
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//            }
+//
+////            for (int i = 0; i < mAnimals.length; i++)
+////                mListItems.addFirst(mAnimals[i]);
+////            commentList.addFirst(fake());
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+////            mListItems.addFirst("Added after pull to refresh");
+//
+//            // We need notify the adapter that the data have been changed
+////            commentAdapter.notifyDataSetChanged();
+//
+//            // Call onLoadMoreComplete when the LoadMore task, has finished
+//            listView.onRefreshComplete();
+//
+//            super.onPostExecute(result);
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            // Notify the loading more operation has finished
+//            listView.onRefreshComplete();
+//        }
+//    }
 
     public void getCategoryList(final String categoryId) {
         categoryService.getCategoryList(categoryId, new ResponseListener<List<ProductCategoryResponse>>() {
@@ -215,7 +210,7 @@ public class ProductCategoryActivity extends BaseActivity {
                 if (categoryId == "") {
                     mCategoryList = dataResponse.subList(1, dataResponse.size() - 1);
                 } else {
-                    mCategoryList = dataResponse;
+                    mCategoryList.addAll(dataResponse);
                 }
                 mCategoryAdapter = new ProductCategoryAdapter(ProductCategoryActivity.this, R.layout.product_category_item, mCategoryList);
                 listView.setAdapter(mCategoryAdapter);

@@ -13,6 +13,7 @@ import com.coho.moki.R;
 import com.coho.moki.callback.OnClickSideMenuItemListener;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.SideMenuItem;
+import com.coho.moki.util.AccountUntil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,20 @@ public class SideMenuViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(SideMenuItem sideMenuItem){
         mSideMenuItem = sideMenuItem;
+
+        if (sideMenuItem.getIndex() == 9){
+            mImgItemIcon.setImageResource(sideMenuItem.getIcon());
+
+
+            if (AccountUntil.getUserToken() != null){
+                mTVItemTitle.setText(BaseApp.getContext().getResources().getText(R.string.sidemenu_title_logout).toString());
+            }
+            else {
+                mTVItemTitle.setText(BaseApp.getContext().getResources().getText(R.string.sidemenu_icon_login).toString());
+            }
+            return;
+        }
+
         mImgItemIcon.setImageResource(sideMenuItem.getIcon());
         mTVItemTitle.setText(sideMenuItem.getTitle());
         if (sideMenuItem.getIndex() == AppConstant.Home_MENU_INDEX){

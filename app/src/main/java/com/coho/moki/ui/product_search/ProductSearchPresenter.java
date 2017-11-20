@@ -103,8 +103,9 @@ public class ProductSearchPresenter implements ProductSearchContract.Presenter {
                     productImages,
                     item.getPrice(),
                     item.getPricePercent(),
-                    null,
-                    null,
+                    item.getIsLiked(),
+                    0,
+                    "",
                     item.getLike(),
                     item.getComment());
 

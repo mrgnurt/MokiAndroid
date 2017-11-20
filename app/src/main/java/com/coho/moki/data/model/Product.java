@@ -30,17 +30,17 @@ public class Product {
 
     private int banned;
 
-    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, List<Brand> brands, String description, int numLike, int numComment) {
-        this.productId = productId;
-        this.name = name;
-        this.imageUrls = imageUrls;
-        this.price = price;
-        this.pricePercent = pricePercent;
-        this.brand = brands;
-        this.description = description;
-        this.numLike = numLike;
-        this.numComment = numComment;
-    }
+//    public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, List<Brand> brands, String description, int numLike, int numComment) {
+//        this.productId = productId;
+//        this.name = name;
+//        this.imageUrls = imageUrls;
+//        this.price = price;
+//        this.pricePercent = pricePercent;
+//        this.brand = brands;
+//        this.description = description;
+//        this.numLike = numLike;
+//        this.numComment = numComment;
+//    }
 
     public Product(String productId, String name, List<String> imageUrls, int price, int pricePercent, int isLiked, int banned, String description, int numLike, int numComment) {
         this.productId = productId;

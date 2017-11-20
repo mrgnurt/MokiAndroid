@@ -100,10 +100,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
         String txtPassword = mEditTextPassword.getText().toString();
 
         if (txtPhoneNumber.equals("")){
-            Utils.toastShort(LoginActivity.this, R.string.phone_number_empty);
+//            Utils.toastShort(LoginActivity.this, R.string.phone_number_empty);
+            DialogUtil.showPopupError(this, BaseApp.getContext().getString(R.string.phone_number_empty));
         }
         else if (txtPassword.equals((""))){
-            Utils.toastShort(LoginActivity.this, R.string.password_empty);
+//            Utils.toastShort(LoginActivity.this, R.string.password_empty);
+            DialogUtil.showPopupError(this, BaseApp.getContext().getString(R.string.password_empty));
         }
         else{
             Utils.hideSoftKeyboard(this);

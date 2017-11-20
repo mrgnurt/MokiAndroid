@@ -15,7 +15,7 @@ public class AppConstant {
     public static final String TOKEN_TAG = "token";
     public static final String CATEGORYID_TAG = "categoryId";
     public static final String CAMPAIGNID_TAG = "campaignId";
-    public static final String LASTID_TAG = "lastID";
+    public static final String LASTID_TAG = "lastId";
     public static final String INDEX_TAG = "index";
     public static final String COUNT_TAG = "count";
     public static final String KEYWORD_TAG = "keyword";
@@ -140,6 +140,7 @@ public class AppConstant {
     public static final String BUY_FRAGMENT_TAG = "BUY_FRAGMENT";
     public static final String CHARITY_FRAGMENT_TAG = "CHARITY_FRAGMENT";
     public static final String MYLIKE_FRAGMENT_TAG = "MYLIKE_FRAGMENT";
+    public static final String NEWS_FRAGMENT_TAG = "NEWS_FRAGMENT";
 
     public static final String POPUP_FOLLOW = "Bạn đã theo dõi ";
 
@@ -174,4 +175,18 @@ public class AppConstant {
     public static final String PRODUCT_GOODISH = "Khá tốt";
     public static final String PRODUCT_OLD = "Sản phẩm cũ";
 
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String IMAGE = "image";
+    public static final String VIDEO = "video";
+    public static final String THUMB = "thumb";
+    public static final String DESCRIBED = "described";
+    public static final String SHIPSFROM = "shipsFrom";
+    public static final String SHIPSFROM_ID = "shipsFromId";
+    public static final String CONDITION = "condition";
+    public static final String DIMENSION = "dimension";
+    public static final String WEIGHT = "weight";
+    public static final String BRANDID = "brandId";
+
+    public static final Integer IMAGE_MAX_SIZE = 100000;
 }

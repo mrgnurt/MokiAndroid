@@ -6,12 +6,14 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.CategoryPagerAdapter;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.callback.OnClickSellListener;
 import com.coho.moki.data.model.Category;
+import com.coho.moki.data.model.Image;
 import com.coho.moki.data.remote.ProductCategoryResponse;
 import com.coho.moki.service.CategoryService;
 import com.coho.moki.service.CategoryServiceImpl;
@@ -57,7 +59,10 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     BannerSlider mBannerSlider;
 
     @BindView(R.id.btnCamera)
-    Button mBtnCamera;
+    public Button mBtnCamera;
+
+    @BindView(R.id.new_items_btn)
+    public ImageButton mNewItemsBtn;
 
     ProductPagerContract.Presenter mPresenter;
     private OnClickSellListener mOnClickSellListener;
@@ -103,7 +108,7 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     }
 
     public void initTabLayout(){
-//        categories.add(new Category("", "Tất cả"));
+        categories.add(new Category("", "Tất cả"));
 //        categories.add(new Category("", "Miễn phí"));
 //        categories.add(new Category("", "Bé ăn"));
 //        categories.add(new Category("", "Bé mặc"));

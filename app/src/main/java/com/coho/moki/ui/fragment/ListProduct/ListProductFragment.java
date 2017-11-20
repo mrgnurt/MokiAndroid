@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -38,6 +39,7 @@ import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.ui.product.ProductDetailPresenter;
 import com.coho.moki.ui.product.ProductDetailPresenterImpl;
+import com.coho.moki.util.APICacheUtils;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
@@ -52,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
 import ru.noties.scrollable.OnScrollChangedListener;
 import ru.noties.scrollable.ScrollableLayout;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -122,6 +125,13 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mProductPagerFragment= (ProductPagerFragment) getFragmentManager().findFragmentByTag("home");
         mRVProductList.addOnScrollListener(onScrollListener);
         mLayoutTimeLine.setOnScrollListener(onScrollListenerTimeLine);
+
+        mProductPagerFragment.mScrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return mLayoutTimeLine.canScrollVertically(direction);
+            }
+        });
 
     }
 
@@ -233,6 +243,22 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         }
     }
 
+    @Override
+    public void setVisibleNewItems(boolean visible) {
+
+        if (visible){
+            mProductPagerFragment.mNewItemsBtn.setVisibility(View.GONE);
+        }
+        else {
+            mProductPagerFragment.mNewItemsBtn.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public ListProductTimelineAdapter getTimeLineAdapter() {
+        return mListProductTimelineAdapter;
+    }
+
     private void startActivityProductDetail(String productId){
         Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
         intent.putExtra(AppConstant.PRODUCT_ID, productId);
@@ -277,15 +303,15 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-//            Log.d("trung", firstVisibleItem + "  " + visibleItemCount + "  " + totalItemCount + " " + mLayoutTimeLine.getHeight());
+            Log.d("trung", firstVisibleItem + "  " + visibleItemCount + "  " + totalItemCount + " " + mLayoutTimeLine.getHeight());
 
             if (totalItemCount > 0){
-                if (firstVisibleItem == 0 && visibleItemCount == 1){
-                    mProductPagerFragment.setVisibleScrollableLayout(true);
-                }
-                else {
-                    mProductPagerFragment.setVisibleScrollableLayout(false);
-                }
+//                if (firstVisibleItem == 0 && visibleItemCount == 1){
+//                    mProductPagerFragment.setVisibleScrollableLayout(true);
+//                }
+//                else {
+//                    mProductPagerFragment.setVisibleScrollableLayout(false);
+//                }
 
 
                 if (mLastFirstVisibleItem < firstVisibleItem){
@@ -308,7 +334,14 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 
-                refreshlayout.finishRefresh(2000);
+                if (Utils.checkInternetAvailable()){
+                    mPresenter.callPullToRefreshProducts();
+                }
+                else {
+                    mRefreshLayout.finishRefresh();
+                    DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+                }
+
             }
         });
 
@@ -316,17 +349,40 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
 
-                mPresenter.callGetLoadMoreProducts();
+                if (Utils.checkInternetAvailable()){
+                    mPresenter.callGetLoadMoreProducts();
+                }
+                else {
+                    mRefreshLayout.finishLoadmore();
+                    DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+                }
+
             }
         });
     }
 
     public void getProducts(){
-        mPresenter.callGetProducts();
-//        if (Utils.checkInternetAvailable()){
+
+//        ArrayList<ProductSmallResponceData> products = APICacheUtils.get()
+//                        .getProducts(mPresenter.getCategoty().getCategoryId(), ProductSmallResponceData.getType());
+//
+//
+//        if (products == null){
 //            mPresenter.callGetProducts();
 //        }
 //        else {
+//            mPresenter.getProductFromLocal();
+//            mPresenter.checkNewItem();
+//        }
+
+//        if (Utils.checkInternetAvailable()){
+        if (!Utils.checkInternetAvailable()){
+            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
+            mPresenter.callGetProducts();
+//        }
+//        else {
+//            mPresenter.getProductFromLocal();
 //            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
 //        }
     }
@@ -335,8 +391,20 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mListProductAdapter.insertLastItem(products);
     }
 
+
+
     public void showProductsTimeLine(List<ProductSmallResponceData> products){
         mListProductTimelineAdapter.insertLastItem(products);
+    }
+
+    @Override
+    public void showProductsRefresh(List<Product> products) {
+        mListProductAdapter.insertHeadItem(products);
+    }
+
+    @Override
+    public void showProductsTimeLineRefresh(List<ProductSmallResponceData> products) {
+        mListProductTimelineAdapter.insertHeadItem(products);
     }
 
     public void invisibleLoadMore(){
@@ -366,4 +434,6 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mRVProductList.getLayoutManager().scrollToPosition(0);
         mLayoutTimeLine.setSelection(0);
     }
+
+
 }

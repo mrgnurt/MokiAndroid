@@ -39,7 +39,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class ListProductTimelineAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
-    List<ProductSmallResponceData> mProducts;
+    public List<ProductSmallResponceData> mProducts;
     LayoutInflater mLayoutInflater;
     OnClickProductItemListenner mOnClickProductItemListenner;
     OnClickLikeListener mOnClickLikeListener;
@@ -370,6 +370,15 @@ public class ListProductTimelineAdapter extends BaseAdapter implements StickyLis
         if (products != null && products.size() > 0){
 
             mProducts.addAll(products);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void insertHeadItem(List<ProductSmallResponceData> products){
+
+        if (products != null && products.size() > 0){
+
+            mProducts.addAll(0, products);
             notifyDataSetChanged();
         }
     }

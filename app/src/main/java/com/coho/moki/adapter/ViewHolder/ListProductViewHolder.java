@@ -35,6 +35,9 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.like)
     TextView mTxtLike;
 
+    @BindView(R.id.likeIcon)
+    ImageView mImgLikeIcon;
+
     @BindView(R.id.comment)
     TextView mTxtComment;
 
@@ -70,6 +73,11 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
 
         mTxtName.setText(product.getName());
         mTxtLike.setText(product.getNumLike() + "");
+
+        if (product.getIsLiked() == 1){
+            mImgLikeIcon.setImageResource(R.drawable.grid_heart_on);
+        }
+
         mTxtComment.setText(product.getNumComment() + "");
         mTxtPrice.setText(product.getPrice() + "");
         mFrameProgress.setVisibility(View.VISIBLE);
@@ -86,17 +94,21 @@ public class ListProductViewHolder extends RecyclerView.ViewHolder {
             firstImageUrl = product.getImageUrls().get(0);
         }
 
-        LoadImageUtils.loadImageFromUrl(firstImageUrl, R.drawable.no_image, mFirstImage, new OnLoadImageListener() {
-            @Override
-            public void onSuccess() {
-                mFrameProgress.setVisibility(View.GONE);
-            }
+        if (firstImageUrl != null && firstImageUrl != ""){
+            LoadImageUtils.loadImageFromUrl(firstImageUrl, R.drawable.no_image, mFirstImage, new OnLoadImageListener() {
+                @Override
+                public void onSuccess() {
+                    mFrameProgress.setVisibility(View.GONE);
+                }
 
-            @Override
-            public void onError() {
+                @Override
+                public void onError() {
 
-            }
-        });
+                }
+            });
+        }
+
+
 
     }
 
