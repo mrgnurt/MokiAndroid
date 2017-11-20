@@ -21,6 +21,7 @@ import com.coho.moki.service.ProductServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerContract;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerPresenter;
+import com.coho.moki.util.APICacheUtils;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.Utils;
 
@@ -40,6 +41,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     ArrayList<Product> mProducts;
     Category mCategory;
     String mLastId = "";
+    int mIndex = 0;
 
     public ListProductPresenter(){
         mProductService = new ProductServiceImpl();
@@ -54,26 +56,55 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     @Override
     public void callGetProducts() {
         convertDataResponsetoProducts(new ArrayList<ProductSmallResponceData>());
-        mProductService.getListProduct("", mCategory.getCategoryId(), "", "", "0",
-                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
-            @Override
-            public void onSuccess(GetListProductResponceData dataResponse) {
-                DialogUtil.hideProgress();
-                convertDataResponsetoProducts(dataResponse.getProducts());
-                mView.showProductsTimeLine(dataResponse.getProducts());
-            }
+        if (Utils.checkInternetAvailable()) {
+            getProductFromRemote();
+        } else {
+            getProductFromLocal();
+        }
+    }
 
-            @Override
-            public void onFailure(String errorMessage) {
-                DialogUtil.hideProgress();
-                Utils.toastShort(BaseApp.getContext(), errorMessage);
-            }
-        });
+    public void getProductFromRemote() {
+        mProductService.getListProduct("", mCategory.getCategoryId(), "", "", mIndex + "",
+                AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
+                    @Override
+                    public void onSuccess(GetListProductResponceData dataResponse) {
+                        DialogUtil.hideProgress();
+                        ArrayList<ProductSmallResponceData> products = dataResponse.getProducts();
+                        if (products != null && products.size() > 0) {
+                            mIndex = products.size();
+                            showProducts(products);
+                            APICacheUtils.get().saveResult(products, mCategory.getCategoryId());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        DialogUtil.hideProgress();
+                        Utils.toastShort(BaseApp.getContext(), errorMessage);
+                    }
+                });
+    }
+
+    public void getProductFromLocal() {
+        DialogUtil.hideProgress();
+        ArrayList<ProductSmallResponceData> products =
+                APICacheUtils
+                        .get()
+                        .getProducts(mCategory.getCategoryId(), ProductSmallResponceData.getType());
+        if (products != null && products.size() > 0) {
+            mIndex = products.size();
+            showProducts(products);
+        }
+    }
+
+    public void showProducts(ArrayList<ProductSmallResponceData> products) {
+        convertDataResponsetoProducts(products);
+        mView.showProductsTimeLine(products);
     }
 
     @Override
     public void callGetLoadMoreProducts() {
-        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, "0",
+        mProductService.getListProduct("", mCategory.getCategoryId(), "", mLastId, mIndex + "",
                 AppConstant.COUNT_PRODUCTS_GET, new ResponseListener<GetListProductResponceData>() {
                     @Override
                     public void onSuccess(GetListProductResponceData dataResponse) {

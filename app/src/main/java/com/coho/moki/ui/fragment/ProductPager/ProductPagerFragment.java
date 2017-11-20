@@ -3,6 +3,7 @@ package com.coho.moki.ui.fragment.ProductPager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,7 +19,9 @@ import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ListProduct.ListProductFragment;
 import com.coho.moki.ui.main.MainActivity;
+import com.coho.moki.util.APICacheUtils;
 import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,15 +120,20 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
     }
 
     public void loadCategories() {
+        if (Utils.checkInternetAvailable()) {
+            loadCategoriesFromRemote();
+        } else {
+            loadCategoriesFromLocal();
+        }
+    }
+
+    public void loadCategoriesFromRemote() {
         categoryService.getCategoryList("", new ResponseListener<List<ProductCategoryResponse>>() {
             @Override
             public void onSuccess(List<ProductCategoryResponse> dataResponse) {
                 if (dataResponse != null && dataResponse.size() > 0) {
-                    for(ProductCategoryResponse item: dataResponse) {
-                        Category category = new Category(item.getId(), item.getName());
-                        categories.add(category);
-                    }
-                    mCategoryPagerAdapter.notifyDataSetChanged();
+                    showCategories(dataResponse);
+                    APICacheUtils.get().saveResult(dataResponse, AppConstant.CATEGORY_TAG);
                 } else {
                     DialogUtil.hideProgress();
                 }
@@ -137,6 +145,27 @@ public class ProductPagerFragment extends BaseFragment implements ProductPagerCo
                 DialogUtil.showPopup(getActivity(), errorMessage);
             }
         });
+    }
+
+    public void loadCategoriesFromLocal() {
+        List<ProductCategoryResponse> categoryResponses =
+                APICacheUtils
+                .get()
+                .getCategories(AppConstant.CATEGORY_TAG, ProductCategoryResponse.getType());
+
+        if (categoryResponses != null && categoryResponses.size() > 0) {
+            showCategories(categoryResponses);
+        } else {
+            DialogUtil.hideProgress();
+        }
+    }
+
+    public void showCategories(List<ProductCategoryResponse> categoryResponses) {
+        for(ProductCategoryResponse item: categoryResponses) {
+            Category category = new Category(item.getId(), item.getName());
+            categories.add(category);
+        }
+        mCategoryPagerAdapter.notifyDataSetChanged();
     }
 
     private OnScrollChangedListener onScrollChangedListener = new OnScrollChangedListener() {

@@ -94,6 +94,10 @@ public class SharedPrefUtils {
         }
     }
 
+    public void putObject(Object object) {
+
+    }
+
     public static void putList(List<String> key, String value) {
         BaseApp.getSharedPreferences().putList(key, value);
     }
@@ -157,5 +161,6 @@ public class SharedPrefUtils {
     private void clearAllData() {
         preferences.edit().clear().commit();
     }
+
 
 }
