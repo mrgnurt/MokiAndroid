@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity implements MainView{
         onMenuHomeSelect();
 
         // check neu dang load thi co hien tutorial k
-        addIntroTutFragment();
+//        addIntroTutFragment();
 
         initDeviceNumber();
 

@@ -50,6 +50,7 @@ public class CameraActivity extends BaseActivity {
     private static final int REQ_CODE_GALLERY_PICKER = 20;
     private static final int REQUEST_MEDIA = 100;
     private static final int REQUEST_CAMERA = 1888; // field
+    private static final int DEFAULT_IMG_POS = 1000;
 
     @BindView(R.id.preview)
     FrameLayout preview;
@@ -133,7 +134,7 @@ public class CameraActivity extends BaseActivity {
 
         // get data from AddProductActivity
         Intent intent = getIntent();
-        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
+        imgPos = intent.getIntExtra(AppConstant.ADD_PRODUCT_IMG_POS, DEFAULT_IMG_POS);
 
     }
 
@@ -270,7 +271,7 @@ public class CameraActivity extends BaseActivity {
 //                    uri = saveImage(picture);
                     uri = data.getParcelableExtra(AppConstant.ADD_PRODUCT_IMG);
                     Log.d(TAG, "uri img = " + uri);
-                    if (imgPos == 0) {
+                    if (imgPos == DEFAULT_IMG_POS) {
                         intent = new Intent(CameraActivity.this, AddProductActivity.class);
                         intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
                         intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
@@ -291,7 +292,7 @@ public class CameraActivity extends BaseActivity {
                     /* 1) Create a new Intent */
                         Log.d(TAG, "uri = " + uri.getPath());
                         if (uri != null) {
-                            if (imgPos == 0) {
+                            if (imgPos == DEFAULT_IMG_POS) {
                                 intent = new Intent(CameraActivity.this, AddProductActivity.class);
                                 intent.putExtra(AppConstant.ADD_PRODUCT_IMG, uri);
                                 intent.putExtra(AppConstant.ADD_PRODUCT_IMG_POS, 0);
@@ -335,9 +336,6 @@ public class CameraActivity extends BaseActivity {
 
     @OnClick(R.id.imgCapturePhoto)
     public void onClickCapturePhoto() {
-//        takePicture();
-
-        Log.d(TAG, "click take pictrue");
         if (mCamera != null) {
             mCamera.takePicture(null, null, new PhotoHandler(this, new OnTakePhotoListener() {
                 @Override

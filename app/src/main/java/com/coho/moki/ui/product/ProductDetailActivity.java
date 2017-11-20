@@ -437,7 +437,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             @Override
             public void onClick(View view) {
                 DialogUtil.showProgress(ProductDetailActivity.this);
-                String token= AccountUntil.getUserToken();
+                String token = AccountUntil.getUserToken();
                 if (token == null) {
                     ProductDetailActivity.this.finish();
                     Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
@@ -644,7 +644,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         }
         String weight = response.getWeight();
         if (weight != null) {
-            txtWeight.setText(weight + " kg");
+            txtWeight.setText(weight);
             txtWeight.setVisibility(View.VISIBLE);
             llWeight.setVisibility(View.VISIBLE);
         } else {
@@ -653,15 +653,39 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         List<ProductDetailResponse.Image> imgList = response.getImage();
         if (imgList != null && imgList.size() > 0) {
             List<String> urlList = new ArrayList<>();
-            for (int i  = 0; i < imgList.size(); ++i) {
+            for (int i = 0; i < imgList.size(); ++i) {
                 urlList.add(imgList.get(i).getUrl());
             }
             loadImageViewPager(urlList);
         }
         String condition = response.getCondition();
         if (condition != null) {
-            txtProductStatus.setText(condition);
-            llProductStatus.setVisibility(View.VISIBLE);
+            try {
+                int status = Integer.parseInt(condition);
+                String value = null;
+                switch(status) {
+                    case 1:
+                        value = AppConstant.PRODUCT_NEW;
+                        break;
+                    case 2:
+                        value = AppConstant.PRODUCT_LIKE_NEW;
+                        break;
+                    case 3:
+                        value = AppConstant.PRODUCT_GOOD;
+                            break;
+                    case 4:
+                        value = AppConstant.PRODUCT_GOODISH;
+                        break;
+                    case 5:
+                        value = AppConstant.PRODUCT_OLD;
+                        break;
+                }
+                txtProductStatus.setText(value);
+                llProductStatus.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                txtProductStatus.setText(condition);
+                llProductStatus.setVisibility(View.VISIBLE);
+            }
         } else {
             llProductStatus.setVisibility(View.GONE);
         }
@@ -718,7 +742,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
     @Override
-    public void setProductComment(List<ProductCommentResponse > commentList) {
+    public void setProductComment(List<ProductCommentResponse> commentList) {
         if (commentList != null && commentList.size() > 0) {
             Collections.reverse(commentList);
             int listSize = commentList.size();
