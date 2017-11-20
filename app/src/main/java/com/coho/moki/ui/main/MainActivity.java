@@ -214,15 +214,19 @@ public class MainActivity extends BaseActivity implements MainView{
         productPagerFragment.setSellListener(new OnClickSellListener() {
             @Override
             public void onClick() {
-                if (ContextCompat.checkSelfPermission(MainActivity.this,
-                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    openCamera();
+                if (AccountUntil.getUserToken() != null) {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        openCamera();
+                    } else {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                PERMISSIONS_REQUEST_CAMERA);
+                    }
                 } else {
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            new String[]{Manifest.permission.CAMERA},
-                            PERMISSIONS_REQUEST_CAMERA);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
-
             }
         });
         initSlidingMenu();
@@ -403,7 +407,7 @@ public class MainActivity extends BaseActivity implements MainView{
                     .setInterpolator(new LinearInterpolator())
                     .setDuration(500);
 
-//            LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(btnCamera.getWidth(), btnCamera.getHeight());
+//            LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(CaCamera.getWidth(), btnCamera.getHeight());
 //            layoutParams.setMargins(0,0,0,100);
 //            btnCamera.setLayoutParams(layoutParams);
 
@@ -479,6 +483,7 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d(TAG, "onRequestPermissionsResult");
+
         switch (requestCode) {
             case PERMISSIONS_REQUEST_CAMERA:
                 // If request is cancelled, the result arrays are empty.

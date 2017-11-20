@@ -1,6 +1,7 @@
 package com.coho.moki.util;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -32,8 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coho.moki.BaseApp;
+import com.coho.moki.data.constant.AppConstant;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -44,6 +47,8 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.google.android.gms.internal.zzt.TAG;
 
 public class Utils {
 
@@ -418,4 +423,63 @@ public class Utils {
         return BaseApp.getContext().getResources().getString(resId);
     }
 
+    public static Bitmap getScaleImage(Context context, Uri uri) {
+
+        InputStream in = null;
+        try {
+            in = context.getContentResolver().openInputStream(uri);
+
+            // Decode image size
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, options);
+            in.close();
+
+
+
+            int scale = 1;
+            while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
+                    AppConstant.IMAGE_MAX_SIZE) {
+                scale++;
+            }
+            Log.d(TAG, "scale = " + scale + ", orig-width: " + options.outWidth + ", orig-height: " + options.outHeight);
+
+            Bitmap resultBitmap = null;
+            in = context.getContentResolver().openInputStream(uri);
+            if (scale > 1) {
+                scale--;
+                // scale to max possible inSampleSize that still yields an image
+                // larger than target
+                options = new BitmapFactory.Options();
+                options.inSampleSize = scale;
+                resultBitmap = BitmapFactory.decodeStream(in, null, options);
+
+                // resize to desired dimensions
+                int height = resultBitmap.getHeight();
+                int width = resultBitmap.getWidth();
+                Log.d(TAG, "1th scale operation dimenions - width: " + width + ", height: " + height);
+
+                double y = Math.sqrt(AppConstant.IMAGE_MAX_SIZE
+                        / (((double) width) / height));
+                double x = (y / height) * width;
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(resultBitmap, (int) x,
+                        (int) y, true);
+                resultBitmap.recycle();
+                resultBitmap = scaledBitmap;
+
+                System.gc();
+            } else {
+                resultBitmap = BitmapFactory.decodeStream(in);
+            }
+            in.close();
+
+            Log.d(TAG, "bitmap size - width: " +resultBitmap.getWidth() + ", height: " +
+                    resultBitmap.getHeight());
+            return resultBitmap;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(),e);
+            return null;
+        }
+    }
 }

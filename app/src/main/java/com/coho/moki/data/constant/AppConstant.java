@@ -8,7 +8,7 @@ public class AppConstant {
 
     //tag api request
 
-    public static final String BASEURL_TAG = "http://192.168.1.37:3000";
+    public static final String BASEURL_TAG = "http://192.168.43.165:3000";
     public static final String PHONE_NUMBER_TAG = "phoneNumber";
 
     public static final String PASSWORD_TAG = "password";
@@ -74,7 +74,7 @@ public class AppConstant {
     public static final String PRODUCT_STATUS_VALUE = "PRODUCT_STATUS_VALUE";
 
     // for category
-    public static final String CATEGORY = "CATEGORY";
+    public static final String CATEGORY = "i";
     public static final String CATEGORY_ID = "CATEGORY_ID";
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
     public static final String PARENTID_TAG = "parentId";
@@ -155,4 +155,19 @@ public class AppConstant {
     public static final String SEARCH_NOT_FOUND = "not";
 
     public static final int RESULT_CODE_SHIPFORM = 1;
+
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String IMAGE = "image";
+    public static final String VIDEO = "video";
+    public static final String THUMB = "thumb";
+    public static final String DESCRIBED = "described";
+    public static final String SHIPSFROM = "shipsFrom";
+    public static final String SHIPSFROM_ID = "shipsFromId";
+    public static final String CONDITION = "condition";
+    public static final String DIMENSION = "dimension";
+    public static final String WEIGHT = "weight";
+    public static final String BRANDID = "brandId";
+
+    public static final Integer IMAGE_MAX_SIZE = 100000;
 }
