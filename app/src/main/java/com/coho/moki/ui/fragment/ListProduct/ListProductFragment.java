@@ -319,17 +319,16 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                 mPresenter.callGetLoadMoreProducts();
             }
         });
-
     }
 
     public void getProducts(){
-        if (Utils.checkInternetAvailable()){
-            mPresenter.callGetProducts();
-        }
-        else {
-            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
-        }
-
+        mPresenter.callGetProducts();
+//        if (Utils.checkInternetAvailable()){
+//            mPresenter.callGetProducts();
+//        }
+//        else {
+//            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+//        }
     }
 
     public void showProducts(List<Product> products){
@@ -359,7 +358,6 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             refreshView();
             AnimationFactory.flipTransition(this.mViewFlipper, AnimationFactory.FlipDirection.LEFT_RIGHT);
         }
-
     }
 
     public void refreshView(){

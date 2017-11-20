@@ -61,6 +61,7 @@ import com.coho.moki.ui.product.add.CameraActivity;
 import com.coho.moki.ui.start_tutorial.Frame;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
+import com.coho.moki.util.Utils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -233,18 +234,21 @@ public class MainActivity extends BaseActivity implements MainView{
                             new String[]{Manifest.permission.CAMERA},
                             PERMISSIONS_REQUEST_CAMERA);
                 }
-
             }
         });
         initSlidingMenu();
         onMenuHomeSelect();
 
+        // check neu dang load thi co hien tutorial k
         addIntroTutFragment();
+
+        if (!Utils.checkInternetAvailable()) {
+            DialogUtil.showPopup(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
     }
 
     @Override
     public void initData() {
-
     }
 
     public void initSlidingMenu(){

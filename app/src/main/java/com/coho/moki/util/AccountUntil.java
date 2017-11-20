@@ -41,7 +41,6 @@ public class AccountUntil {
     }
 
     public static void saveInfoAccount(final User user) {
-
         Log.d("trung", "token" + user.getToken());
         SharedPrefUtils.putString(AppConstant.MY_ID, user.getUserId());
         SharedPrefUtils.putString(AppConstant.MY_USERNAME, user.getUsername());

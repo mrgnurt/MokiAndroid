@@ -167,4 +167,5 @@ public class AppConstant {
 
 
     public static final String INFO_SEARCH_TAG = "INFO_SEARCH_TAG";
+
 }
