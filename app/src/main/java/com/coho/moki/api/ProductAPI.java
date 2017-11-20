@@ -1,6 +1,7 @@
 package com.coho.moki.api;
 
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.CheckNewItemResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
@@ -28,4 +29,7 @@ public interface ProductAPI {
 
     @POST("/products/my-like")
     Call<BaseResponse<List<MyLikeResponseData>>> callGetMyLikeProduct(@Body Map<String, Object> tag);
+
+    @POST("/products/new-item")
+    Call<BaseResponse<CheckNewItemResponse>> callCheckNewItem(@Body Map<String, String> tag);
 }

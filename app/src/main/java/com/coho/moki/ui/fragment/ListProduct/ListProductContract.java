@@ -3,6 +3,7 @@ package com.coho.moki.ui.fragment.ListProduct;
 import android.view.View;
 
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
+import com.coho.moki.adapter.customadapter.ListProductTimelineAdapter;
 import com.coho.moki.data.model.Category;
 import com.coho.moki.data.model.Product;
 import com.coho.moki.data.remote.GetListProductResponceData;
@@ -25,6 +26,10 @@ public interface ListProductContract {
 
         void showProductsTimeLine(List<ProductSmallResponceData> products);
 
+        void showProductsRefresh(List<Product> products);
+
+        void showProductsTimeLineRefresh(List<ProductSmallResponceData> products);
+
         void getProducts();
 
         void invisibleLoadMore();
@@ -32,6 +37,10 @@ public interface ListProductContract {
         void invisibleRefresh();
 
         void setViewLikeTimeLine(int numLike);
+
+        void setVisibleNewItems(boolean visible);
+
+        ListProductTimelineAdapter getTimeLineAdapter();
     }
 
     public interface Presenter extends BasePresenter<View>{
@@ -46,8 +55,16 @@ public interface ListProductContract {
 
         void callGetLoadMoreProducts();
 
+        void callPullToRefreshProducts();
+
         void setCategory(Category category);
 
+        Category getCategoty();
+
         void likeProductRemote(String token, String productId);
+
+        void getProductFromLocal();
+
+        void checkNewItem();
     }
 }

@@ -1,5 +1,8 @@
 package com.coho.moki.data.remote;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -161,4 +164,10 @@ public class ProductSmallResponceData {
     public void setImage(List<String> image) {
         this.image = image;
     }
+
+    public static Type getType() {
+        return new TypeToken<List<ProductSmallResponceData>>() {
+        }.getType();
+    }
+
 }

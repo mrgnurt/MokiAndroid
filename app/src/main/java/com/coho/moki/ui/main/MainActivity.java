@@ -245,20 +245,23 @@ public class MainActivity extends BaseActivity implements MainView{
                             new String[]{Manifest.permission.CAMERA},
                             PERMISSIONS_REQUEST_CAMERA);
                 }
-
             }
         });
         initSlidingMenu();
         onMenuHomeSelect();
 
+        // check neu dang load thi co hien tutorial k
         addIntroTutFragment();
 
         initDeviceNumber();
+
+        if (!Utils.checkInternetAvailable()) {
+            DialogUtil.showPopup(this, BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+        }
     }
 
     @Override
     public void initData() {
-
     }
 
     public void initSlidingMenu(){

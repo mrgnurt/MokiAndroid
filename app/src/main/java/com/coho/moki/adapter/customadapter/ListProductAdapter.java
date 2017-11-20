@@ -78,7 +78,8 @@ public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (products != null && products.size() > 0){
 
             mProducts.addAll(0, products);
-            notifyItemRangeInserted(0, products.size());
+//            notifyItemRangeInserted(0, products.size());
+            notifyDataSetChanged();
         }
     }
 }

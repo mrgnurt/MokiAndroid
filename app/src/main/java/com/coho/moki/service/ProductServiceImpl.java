@@ -6,6 +6,7 @@ import com.coho.moki.api.ProductAPI;
 import com.coho.moki.data.constant.AppConstant;
 import com.coho.moki.data.constant.ResponseCode;
 import com.coho.moki.data.remote.BaseResponse;
+import com.coho.moki.data.remote.CheckNewItemResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
@@ -141,6 +142,53 @@ public class ProductServiceImpl implements ProductService {
         });
 
 
+
+    }
+
+    @Override
+    public void checkNewItem(String lastId, String categoryId, final ResponseListener<CheckNewItemResponse> listener) {
+
+        Map<String, String> data = new HashMap<>();
+        data.put(AppConstant.LASTID_TAG, lastId);
+
+        if (!categoryId.equals("") && categoryId != null){
+            data.put(AppConstant.CAMPAIGNID_TAG, categoryId);
+        }
+
+        ProductAPI service = ServiceGenerator.createService(ProductAPI.class);
+        Call<BaseResponse<CheckNewItemResponse>> call = service.callCheckNewItem(data);
+        call.enqueue(new Callback<BaseResponse<CheckNewItemResponse>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<CheckNewItemResponse>> call, Response<BaseResponse<CheckNewItemResponse>> response) {
+                BaseResponse<CheckNewItemResponse> bodyResponse = response.body();
+
+                if (bodyResponse == null) {
+                    listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    if (response.code() == 401) {
+                        listener.onFailure(AppConstant.UNAUTHENTICATED);
+                    } else {
+                        listener.onFailure(AppConstant.NO_FETCH_DATA);
+                    }
+                    return;
+                }
+
+                if (bodyResponse.getCode() != ResponseCode.OK.code) {
+                    listener.onFailure(bodyResponse.getMessage());
+                    return;
+                }
+
+                listener.onSuccess(response.body().getData());
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<CheckNewItemResponse>> call, Throwable t) {
+                listener.onFailure(t.getMessage());
+            }
+        });
 
     }
 }

@@ -39,6 +39,7 @@ import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.ui.product.ProductDetailPresenter;
 import com.coho.moki.ui.product.ProductDetailPresenterImpl;
+import com.coho.moki.util.APICacheUtils;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
 import com.coho.moki.util.SpaceItem;
@@ -131,6 +132,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                 return mLayoutTimeLine.canScrollVertically(direction);
             }
         });
+
     }
 
     @Override
@@ -163,25 +165,25 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
 
         List<ProductSmallResponceData> product = new ArrayList<ProductSmallResponceData>();
 
-        List<String> image1 = new ArrayList<String>();
-        image1.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
-
-        List<String> image2 = new ArrayList<String>();
-        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
-        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
-
-        List<String> image3 = new ArrayList<String>();
-        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
-        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
-        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
-        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
-
-        product.add(new ProductSmallResponceData("", "khan tam1", image3, 20000, 0, null, "Chat mem xin", "8 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
-        product.add(new ProductSmallResponceData("", "khan tam2", image2, 20000, 0, null, "Chat mem xin", "7 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung2", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
-        product.add(new ProductSmallResponceData("", "khan tam3", image2, 20000, 0, null, "Chat mem xin", "6 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung3", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
-        product.add(new ProductSmallResponceData("", "khan tam4", image3, 20000, 0, null, "Chat mem xin", "5 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung4", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
-        product.add(new ProductSmallResponceData("", "khan tam5", image1, 20000, 0, null, "Chat mem xin", "4 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung5", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
-        product.add(new ProductSmallResponceData("", "khan tam6", image1, 20000, 0, null, "Chat mem xin", "3 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung6", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        List<String> image1 = new ArrayList<String>();
+//        image1.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//
+//        List<String> image2 = new ArrayList<String>();
+//        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//        image2.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//
+//        List<String> image3 = new ArrayList<String>();
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA5JFj6p6JLc4IZ6rid_4e_O2GGPtFJXH8e2Ji-9y0yUTpx4gT");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//        image3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5qZC0nGLRNSCMxdFDyg6c0eG395runV_JYyDyVdwxpjhFkyZO-A");
+//
+//        product.add(new ProductSmallResponceData("", "khan tam1", image3, 20000, 0, null, "Chat mem xin", "8 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam2", image2, 20000, 0, null, "Chat mem xin", "7 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung2", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam3", image2, 20000, 0, null, "Chat mem xin", "6 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung3", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam4", image3, 20000, 0, null, "Chat mem xin", "5 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung4", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam5", image1, 20000, 0, null, "Chat mem xin", "4 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung5", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
+//        product.add(new ProductSmallResponceData("", "khan tam6", image1, 20000, 0, null, "Chat mem xin", "3 gio truoc", 10, 10, 0, 0, 0, 0, new SellerResponceData("", "trung6", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh7OTh5WxNuFFcsfgj7dQhY7r0S_XKiZxUChQs0NCyFgZ8NmRzw")));
 
         mListProductTimelineAdapter = new ListProductTimelineAdapter(BaseApp.getContext(), product);
         mLayoutTimeLine.setAdapter(mListProductTimelineAdapter);
@@ -241,6 +243,22 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         }
     }
 
+    @Override
+    public void setVisibleNewItems(boolean visible) {
+
+        if (visible){
+            mProductPagerFragment.mNewItemsBtn.setVisibility(View.GONE);
+        }
+        else {
+            mProductPagerFragment.mNewItemsBtn.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public ListProductTimelineAdapter getTimeLineAdapter() {
+        return mListProductTimelineAdapter;
+    }
+
     private void startActivityProductDetail(String productId){
         Intent intent = new Intent(BaseApp.getContext(), ProductDetailActivity.class);
         intent.putExtra(AppConstant.PRODUCT_ID, productId);
@@ -285,7 +303,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         @Override
         public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-//            Log.d("trung", firstVisibleItem + "  " + visibleItemCount + "  " + totalItemCount + " " + mLayoutTimeLine.getHeight());
+            Log.d("trung", firstVisibleItem + "  " + visibleItemCount + "  " + totalItemCount + " " + mLayoutTimeLine.getHeight());
 
             if (totalItemCount > 0){
 //                if (firstVisibleItem == 0 && visibleItemCount == 1){
@@ -316,7 +334,7 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 
-                refreshlayout.finishRefresh(2000);
+                mPresenter.callPullToRefreshProducts();
             }
         });
 
@@ -327,25 +345,49 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                 mPresenter.callGetLoadMoreProducts();
             }
         });
-
     }
 
     public void getProducts(){
-        if (Utils.checkInternetAvailable()){
-            mPresenter.callGetProducts();
-        }
-        else {
-            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
-        }
 
+//        ArrayList<ProductSmallResponceData> products = APICacheUtils.get()
+//                        .getProducts(mPresenter.getCategoty().getCategoryId(), ProductSmallResponceData.getType());
+//
+//
+//        if (products == null){
+//            mPresenter.callGetProducts();
+//        }
+//        else {
+//            mPresenter.getProductFromLocal();
+//            mPresenter.checkNewItem();
+//        }
+
+//        if (Utils.checkInternetAvailable()){
+            mPresenter.callGetProducts();
+//        }
+//        else {
+//            mPresenter.getProductFromLocal();
+//            DialogUtil.showPopupError(getActivity(), BaseApp.getContext().getString(R.string.error_msg_internet_not_connect));
+//        }
     }
 
     public void showProducts(List<Product> products){
         mListProductAdapter.insertLastItem(products);
     }
 
+
+
     public void showProductsTimeLine(List<ProductSmallResponceData> products){
         mListProductTimelineAdapter.insertLastItem(products);
+    }
+
+    @Override
+    public void showProductsRefresh(List<Product> products) {
+        mListProductAdapter.insertHeadItem(products);
+    }
+
+    @Override
+    public void showProductsTimeLineRefresh(List<ProductSmallResponceData> products) {
+        mListProductTimelineAdapter.insertHeadItem(products);
     }
 
     public void invisibleLoadMore(){
@@ -367,7 +409,6 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
             refreshView();
             AnimationFactory.flipTransition(this.mViewFlipper, AnimationFactory.FlipDirection.LEFT_RIGHT);
         }
-
     }
 
     public void refreshView(){
@@ -376,4 +417,6 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
         mRVProductList.getLayoutManager().scrollToPosition(0);
         mLayoutTimeLine.setSelection(0);
     }
+
+
 }

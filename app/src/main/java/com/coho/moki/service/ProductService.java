@@ -1,5 +1,6 @@
 package com.coho.moki.service;
 
+import com.coho.moki.data.remote.CheckNewItemResponse;
 import com.coho.moki.data.remote.GetListProductResponceData;
 import com.coho.moki.data.remote.MyLikeResponseData;
 import com.coho.moki.data.remote.UserProductResponseData;
@@ -21,4 +22,5 @@ public interface ProductService {
 
     public void getMyLikeProduct(String token, int index, int count, final ResponseListener<List<MyLikeResponseData>> listener);
 
+    void checkNewItem(String lastId, String categoryId, final ResponseListener<CheckNewItemResponse> listener);
 }
