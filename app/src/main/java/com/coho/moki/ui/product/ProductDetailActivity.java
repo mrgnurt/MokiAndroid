@@ -72,11 +72,11 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     ProductDetailPresenter mProductDetailPresenter;
 
     private static final String TAG = "ProductDetailActivity";
-    private boolean isExpand = false;
+    private boolean isExpand = true;
     private static final Integer DESCRIPTION_NO_EXPAND_MAX = 2;
     private static final Integer DESCRIPTION_EXPAND_MAX = 40;
     private boolean isFirstSetDocument = true;
-    private boolean isLiked = false;
+    private boolean isLiked = true;
 
     // bind view from product_detail
 //    @BindView(R.id.bottom_sheet)
@@ -479,6 +479,14 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         Button btnCancel = dialog.findViewById(R.id.btnCancel);
         viewTop.setOnClickListener(closeListener);
         btnCancel.setOnClickListener(closeListener);
+        Button btnBack = dialog.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
         dialog.show();
     }
 
@@ -519,7 +527,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         dvDescription.setText("Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao" +
                 "Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao - Gấu Bông Sỉ Hàn Quốc Chất Lượng Cao"
         );
-        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_EXPAND_MAX);
+        dvDescription.getDocumentLayoutParams().setMaxLines(DESCRIPTION_NO_EXPAND_MAX);
         dvDescription.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
 
 //        dvDescription.setText(response.getDescribed());
@@ -758,6 +766,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     @OnClick(R.id.btnNavLeft)
     public void onClickButtonNavLeft() {
         onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override

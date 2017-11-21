@@ -292,6 +292,7 @@ public class Utils {
         String current = "vừa xong";
         String yesterday = "hôm qua";
         String dayAgo = " ngày trước";
+        String monthAgo = " tháng trước";
         String yearAgo = " năm trước";
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = null;
@@ -301,14 +302,14 @@ public class Utils {
             date = new Date();
             e.printStackTrace();
         }
-
         long realVNTime = new Date().getTime() - 7 * 60 * 60 * 1000;
         long diffMilliSecond = realVNTime - date.getTime(); // return diff in milliseconds
         long diffSeconds = diffMilliSecond / 1000;
         long diffMinutes = diffSeconds / 60;
         long diffHours = diffMinutes / 60;
         long diffDays = diffHours / 24;
-        long diffYears = diffDays / 365;
+        long diffMonths = diffDays / 30;
+        long diffYears = diffMonths / 12;
         if (diffSeconds < 60) {
             res.append(current);
         } else if (diffMinutes < 60) {
@@ -317,11 +318,10 @@ public class Utils {
             res.append(diffHours).append(hourAgo);
         } else if (diffDays == 1) {
             res.append(yesterday);
-        } else if (diffDays < 365) {
-            if (diffDays < 2) {
-
-            }
+        } else if (diffDays < 30) {
             res.append(diffDays).append(dayAgo);
+        } else if (diffMonths < 12) {
+            res.append(diffMonths).append(monthAgo);
         } else {
             res.append(diffYears).append(yearAgo);
         }
@@ -439,7 +439,6 @@ public class Utils {
             in.close();
 
 
-
             int scale = 1;
             while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
                     AppConstant.IMAGE_MAX_SIZE) {
@@ -477,11 +476,11 @@ public class Utils {
             }
             in.close();
 
-            Log.d(TAG, "bitmap size - width: " +resultBitmap.getWidth() + ", height: " +
+            Log.d(TAG, "bitmap size - width: " + resultBitmap.getWidth() + ", height: " +
                     resultBitmap.getHeight());
             return resultBitmap;
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage(),e);
+            Log.e(TAG, e.getMessage(), e);
             return null;
         }
     }
