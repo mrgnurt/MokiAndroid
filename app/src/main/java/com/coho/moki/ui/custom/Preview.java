@@ -9,6 +9,7 @@ import android.view.ViewGroup;
  * Created by Khanh Nguyen on 11/9/2017.
  */
 
+@SuppressWarnings("deprecation")
 public class Preview extends ViewGroup implements SurfaceHolder.Callback {
 
     private SurfaceView mSurfaceView;

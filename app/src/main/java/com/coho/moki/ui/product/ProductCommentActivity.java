@@ -245,4 +245,10 @@ public class ProductCommentActivity extends BaseActivity implements CommentView 
         onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }
