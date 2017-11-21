@@ -13,14 +13,16 @@ import java.io.IOException;
  * Created by Khanh Nguyen on 11/9/2017.
  */
 
+@SuppressWarnings("deprecation")
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
+
+    private static final String TAG = "CameraView";
 
     private SurfaceHolder mHolder;
     private Camera mCamera;
 
     public CameraView(Context context, Camera camera){
         super(context);
-
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
         //get the holder and set this class as the callback, so we can get camera data here
@@ -36,7 +38,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
         } catch (IOException e) {
-            Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
+            Log.d(TAG, "Camera error on surfaceCreated " + e.getMessage());
         }
     }
 
@@ -45,19 +47,17 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         //before changing the application orientation, you need to stop the preview, rotate and then start it again
         if(mHolder.getSurface() == null)//check if the surface is ready to receive camera data
             return;
-
         try{
             mCamera.stopPreview();
         } catch (Exception e){
             //this will happen when you are trying the camera if it's not running
         }
-
         //now, recreate the camera preview
         try{
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
         } catch (IOException e) {
-            Log.d("ERROR", "Camera error on surfaceChanged " + e.getMessage());
+            Log.d(TAG, "Camera error on surfaceChanged " + e.getMessage());
         }
     }
 
@@ -67,9 +67,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         //if you are unsing with more screens, please move this code your activity
         mCamera.stopPreview();
         mCamera.release();
-
-
-
     }
 
 }

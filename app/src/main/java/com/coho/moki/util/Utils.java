@@ -44,13 +44,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.google.android.gms.internal.zzt.TAG;
-
-public class Utils {
+public final class Utils {
 
     private Utils() {
     }

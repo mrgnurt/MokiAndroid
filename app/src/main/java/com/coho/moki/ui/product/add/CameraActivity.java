@@ -44,6 +44,8 @@ import vn.tungdx.mediapicker.activities.MediaPickerActivity;
 @SuppressWarnings("deprecation")
 public class CameraActivity extends BaseActivity {
 
+    // TODO: Add CSDK of Adobe to edit image after capture or select
+
     private final String TAG = "CameraActivity";
 
     private static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;

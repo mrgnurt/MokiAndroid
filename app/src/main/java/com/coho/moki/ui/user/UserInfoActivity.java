@@ -423,4 +423,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
         onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }
