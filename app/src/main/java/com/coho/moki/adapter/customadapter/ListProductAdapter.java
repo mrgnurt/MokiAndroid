@@ -75,11 +75,15 @@ public class ListProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void insertHeadItem(List<Product> products){
 
-        if (products != null && products.size() > 0){
+//        if (products != null && products.size() > 0){
+//
+//            mProducts.addAll(0, products);
+////            notifyItemRangeInserted(0, products.size());
+//            notifyDataSetChanged();
+//        }
 
-            mProducts.addAll(0, products);
-//            notifyItemRangeInserted(0, products.size());
-            notifyDataSetChanged();
-        }
+        mProducts.clear();
+        mProducts.addAll(products);
+        notifyDataSetChanged();
     }
 }

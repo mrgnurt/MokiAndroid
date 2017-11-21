@@ -17,6 +17,7 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.adapter.customadapter.ListProductAdapter;
 import com.coho.moki.adapter.customadapter.ListProductTimelineAdapter;
+import com.coho.moki.adapter.product.ProductChatAdapter;
 import com.coho.moki.callback.OnClickCommentListener;
 import com.coho.moki.callback.OnClickLikeListener;
 import com.coho.moki.callback.OnClickProductItemListenner;
@@ -34,11 +35,13 @@ import com.coho.moki.service.ProductDetailServiceImpl;
 import com.coho.moki.service.ResponseListener;
 import com.coho.moki.ui.base.BaseFragment;
 import com.coho.moki.ui.fragment.ProductPager.ProductPagerFragment;
+import com.coho.moki.ui.login.LoginActivity;
 import com.coho.moki.ui.main.MainActivity;
 import com.coho.moki.ui.product.ProductCommentActivity;
 import com.coho.moki.ui.product.ProductDetailActivity;
 import com.coho.moki.ui.product.ProductDetailPresenter;
 import com.coho.moki.ui.product.ProductDetailPresenterImpl;
+import com.coho.moki.ui.user.UserInfoActivity;
 import com.coho.moki.util.APICacheUtils;
 import com.coho.moki.util.AccountUntil;
 import com.coho.moki.util.DialogUtil;
@@ -207,6 +210,9 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                     DialogUtil.showProgress(getActivity());
                     mPresenter.likeProductRemote(token, product.getId());
                 }
+                else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -216,6 +222,20 @@ public class ListProductFragment extends BaseFragment implements ListProductCont
                 Intent intent = new Intent(BaseApp.getContext(), ProductCommentActivity.class);
                 intent.putExtra(AppConstant.PRODUCT_ID, productId);
                 DialogUtil.showProgress(getActivity());
+                startActivity(intent);
+            }
+        });
+
+        mListProductTimelineAdapter.setListener(new ProductChatAdapter.ItemClickListener() {
+            @Override
+            public void onClick(int position) {
+
+                String userId = mListProductTimelineAdapter.mProducts.get(position).getSeller().getId();
+                Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                DialogUtil.showProgress(getActivity());
+                intent.putExtra("userId", userId);
+                intent.putExtra("numProduct", 0);
+                intent.putExtra("score", 0);
                 startActivity(intent);
             }
         });

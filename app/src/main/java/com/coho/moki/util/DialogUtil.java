@@ -21,12 +21,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class DialogUtil {
-    static final int MSG_DISMISS_DIALOG = 0;
-    private static final String TAG = DialogUtil.class.getSimpleName();
-    static final int TIME_OUT = 3000;
+
     static SweetAlertDialog mAlertDialog;
     private static ProgressDialog mDlg = null;
-    static Handler mHandler = new C29764();
 
     static class OnDialogShow implements DialogInterface.OnShowListener {
         OnDialogShow() {
@@ -35,39 +32,6 @@ public class DialogUtil {
         public void onShow(DialogInterface dialog) {
             ((Button) DialogUtil.mAlertDialog.findViewById(R.id.confirm_button)).setTextSize(1, 14.0f);
             ((Button) DialogUtil.mAlertDialog.findViewById(R.id.cancel_button)).setTextSize(1, 14.0f);
-        }
-    }
-
-    static class C29764 extends Handler {
-        C29764() {
-        }
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    try {
-                        DialogUtil.dismissToast();
-                        return;
-                    } catch (IllegalArgumentException e) {
-                        return;
-                    } catch (Exception e2) {
-                        return;
-                    } finally {
-                        DialogUtil.mAlertDialog = null;
-                    }
-                default:
-                    return;
-            }
-        }
-    }
-
-    static class C29775 implements SweetAlertDialog.OnSweetClickListener {
-        C29775() {
-        }
-
-        public void onClick(SweetAlertDialog sweetAlertDialog) {
-            DialogUtil.mHandler.removeCallbacksAndMessages(null);
-            sweetAlertDialog.dismiss();
         }
     }
 
@@ -103,10 +67,6 @@ public class DialogUtil {
         }
     }
 
-    public static void showPopup(Context context, String content, String title) {
-        showPopUp(context, SweetAlertDialog.NORMAL_TYPE, content, title, context.getString(R.string.close), null, null, null);
-    }
-
     public static void showPopup(Context context, String content) {
         showPopUp(context, SweetAlertDialog.NORMAL_TYPE, content, context.getString(R.string.alert_title), context.getString(R.string.close), null, null, null);
     }
@@ -117,18 +77,6 @@ public class DialogUtil {
 
     public static void showPopupSuccess(Context context, String content){
         showPopUp(context, SweetAlertDialog.SUCCESS_TYPE, content, context.getString(R.string.alert_title), context.getString(R.string.close), null, null, null);
-    }
-
-    public static void showPopupClick(Context context, String message, OnClickListener onOk, OnClickListener onCancel) {
-        showPopUp(context, SweetAlertDialog.WARNING_TYPE, message, context.getString(R.string.alert_title), context.getString(R.string.alert_confirm_text_agree), context.getString(R.string.alert_cancel), onOk, onCancel);
-    }
-
-    public static void showPopupClickOK(Context context, String message, OnClickListener onOk) {
-        showPopUp(context, SweetAlertDialog.NORMAL_TYPE, message, context.getString(R.string.alert_title), context.getString(R.string.close), null, onOk, null);
-    }
-
-    public static void showPopUpNormal(Context context, String message, String title, String confirmText, String cancelText, OnClickListener onOK) {
-        showPopUp(context, SweetAlertDialog.NORMAL_TYPE, message, title, confirmText, cancelText, onOK, null);
     }
 
     public static void showPopUpWarning(Context context, String message, String title, String confirmText, String cancelText, OnClickListener onOK, OnClickListener onCancel) {
@@ -170,32 +118,6 @@ public class DialogUtil {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
             mAlertDialog = null;
-        }
-    }
-
-    public static void showToastTopSuccess(Context context, String mess) {
-        showToast(context, 2, mess, context.getString(R.string.alert_title), context.getString(R.string.close));
-    }
-
-    public static void showToastTopWarning(Context context, String mess) {
-        showToast(context, 3, mess, context.getString(R.string.alert_title), context.getString(R.string.close));
-    }
-
-    public static void showToastTop(Context context, String mess) {
-        showToast(context, 1, mess, context.getString(R.string.alert_title), context.getString(R.string.close));
-    }
-
-    private static void showToast(Context context, int toastType, String message, String title, String confirmText) {
-        try {
-            dismissToast();
-            mAlertDialog = new SweetAlertDialog(context, toastType);
-            mAlertDialog.setTitleText(title);
-            mAlertDialog.setContentText(message);
-            mAlertDialog.setConfirmText(confirmText);
-            mAlertDialog.show();
-            mAlertDialog.setConfirmClickListener(new C29775());
-            mHandler.sendEmptyMessageDelayed(0, 3000);
-        } catch (Throwable e) {
         }
     }
 }

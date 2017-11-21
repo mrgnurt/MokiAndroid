@@ -21,8 +21,8 @@ public class CircularImageViewFrame extends CircularImageView {
         if (param != null) {
             param.width = frame.width;
             param.height = frame.height;
-            setX((float) frame.f170x);
-            setY((float) frame.f171y);
+            setX((float) frame.x);
+            setY((float) frame.y);
             setLayoutParams(param);
         }
     }
@@ -33,14 +33,14 @@ public class CircularImageViewFrame extends CircularImageView {
 
     public float getY() {
         if (this.frame != null) {
-            return (float) this.frame.f171y;
+            return (float) this.frame.y;
         }
         return super.getY();
     }
 
     public float getX() {
         if (this.frame != null) {
-            return (float) this.frame.f170x;
+            return (float) this.frame.x;
         }
         return super.getX();
     }

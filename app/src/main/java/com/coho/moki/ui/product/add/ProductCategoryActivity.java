@@ -161,48 +161,6 @@ public class ProductCategoryActivity extends BaseActivity {
 
     }
 
-//    private class PullToRefreshDataTask extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//
-//            if (isCancelled()) {
-//                return null;
-//            }
-//
-//            // Simulates a background task
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//            }
-//
-////            for (int i = 0; i < mAnimals.length; i++)
-////                mListItems.addFirst(mAnimals[i]);
-////            commentList.addFirst(fake());
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-////            mListItems.addFirst("Added after pull to refresh");
-//
-//            // We need notify the adapter that the data have been changed
-////            commentAdapter.notifyDataSetChanged();
-//
-//            // Call onLoadMoreComplete when the LoadMore task, has finished
-//            listView.onRefreshComplete();
-//
-//            super.onPostExecute(result);
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            // Notify the loading more operation has finished
-//            listView.onRefreshComplete();
-//        }
-//    }
-
     public void getCategoryList(final String categoryId) {
         categoryService.getCategoryList(categoryId, new ResponseListener<List<ProductCategoryResponse>>() {
             @Override
