@@ -35,13 +35,13 @@ public class MotionImage extends AppCompatImageView {
 
     public void moving(float distance) {
         if ((this.motionRate != 0.0f ? 1 : 0) == 1) {
-            setX(((float) this.desirePosition.f170x) + (this.motionRate * distance));
+            setX(((float) this.desirePosition.x) + (this.motionRate * distance));
         } else if (distance < 0.0f) {
-            setX(((float) this.desirePosition.f170x) + distance);
+            setX(((float) this.desirePosition.x) + distance);
         } else {
             float zoom = distance / ((float) getContext().getResources().getDisplayMetrics().widthPixels);
-            int x = (int) (((float) this.desirePosition.f170x) + (((float) (this.startPosition.f170x - this.desirePosition.f170x)) * zoom));
-            int y = (int) (((float) this.desirePosition.f171y) + (((float) (this.startPosition.f171y - this.desirePosition.f171y)) * zoom));
+            int x = (int) (((float) this.desirePosition.x) + (((float) (this.startPosition.x - this.desirePosition.x)) * zoom));
+            int y = (int) (((float) this.desirePosition.y) + (((float) (this.startPosition.y - this.desirePosition.y)) * zoom));
             int width = (int) (((float) this.desirePosition.width) + (((float) (this.startPosition.width - this.desirePosition.width)) * zoom));
             int height = (int) (((float) this.desirePosition.height) + (((float) (this.startPosition.height - this.desirePosition.height)) * zoom));
             this.param = getLayoutParams();
@@ -62,7 +62,7 @@ public class MotionImage extends AppCompatImageView {
         this.desirePosition = positionAndSize;
         this.motionRate = motionRate;
         int devWidth = getContext().getResources().getDisplayMetrics().widthPixels;
-        setX(((float) positionAndSize.f170x) * motionRate);
-        setY((float) positionAndSize.f171y);
+        setX(((float) positionAndSize.x) * motionRate);
+        setY((float) positionAndSize.y);
     }
 }

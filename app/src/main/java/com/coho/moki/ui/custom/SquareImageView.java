@@ -31,23 +31,11 @@ public class SquareImageView extends AppCompatImageView {
 
     }
 
-//     require min API 21, current: API 18
-
-//    public SquareImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-
-//        super(context, attrs, defStyleAttr, defStyleRes);
-
-//    }
-
     @Override
 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-//        Log.d(TAG, "width = " + widthMeasureSpec);
-
-//        Log.d(TAG, "height = " + heightMeasureSpec);
 
         int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
 

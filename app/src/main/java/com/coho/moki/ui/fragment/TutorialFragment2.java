@@ -18,15 +18,6 @@ import com.coho.moki.BaseApp;
 import com.coho.moki.R;
 import com.coho.moki.data.model.Image;
 import com.coho.moki.ui.base.BaseFragment;
-import com.coho.moki.ui.start_tutorial.CircularImageViewFrame;
-import com.coho.moki.ui.start_tutorial.Frame;
-import com.coho.moki.ui.start_tutorial.ImageViewFrame;
-import com.coho.moki.ui.start_tutorial.MotionImage;
-import com.coho.moki.ui.start_tutorial.MotionTextView;
-import com.coho.moki.ui.start_tutorial.PageIndicator;
-import com.coho.moki.ui.start_tutorial.Pager;
-import com.coho.moki.ui.start_tutorial.StartTutorialActivity;
-import com.coho.moki.ui.start_tutorial.StartTutorialActivity2;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -58,14 +49,9 @@ public class TutorialFragment2 extends BaseFragment {
     ImageView ava5;
 
     int currentZoomingIconIndex = 0;
-    private boolean stopZoomReverse = false;
     private boolean upZoom = true;
     ImageView zoomingIcon = null;
 
-    private boolean stopZoom  =false;
-    private boolean isStoppedZooming = true;
-
-    Animation animation;
 
     class ZoomListenner implements Animator.AnimatorListener {
 
@@ -87,11 +73,6 @@ public class TutorialFragment2 extends BaseFragment {
         }
 
         public void onAnimationEnd(Animator animator) {
-//            if (!(TutorialFragment2.this.currentZoomingIconIndex == 0 && TutorialFragment2.this.stopZoomReverse) && (TutorialFragment2.this.currentZoomingIconIndex != 4 || TutorialFragment2.this.stopZoomReverse)) {
-//                TutorialFragment2.this.zoomIcon();
-//            } else {
-//                new Handler().postDelayed(new TutorialFragment2.ZoomListenner.ResetRunnable(), 1000);
-//            }
 
             if ((TutorialFragment2.this.currentZoomingIconIndex == 0 && upZoom) || (TutorialFragment2.this.currentZoomingIconIndex == 4 && !upZoom) ){
                 new Handler().postDelayed(new TutorialFragment2.ZoomListenner.ResetRunnable(), 1000);
@@ -159,14 +140,6 @@ public class TutorialFragment2 extends BaseFragment {
         });
         objectAnimator.start();
 
-
-//        animation = AnimationUtils.loadAnimation(BaseApp.getContext(), R.anim.zoom_icon);
-//        animation = new ScaleAnimation(1f, 2f, 1f, 2f);
-//        animation.setDuration(3000);
-//        mFirstImg.startAnimation(animation);
-//        animation = new ScaleAnimation(2f, 1f, 2f, 1f);
-//        animation.setStartOffset(3000);
-//        mFirstImg.startAnimation(animation);
     }
 
     private void zoomIcon() {
